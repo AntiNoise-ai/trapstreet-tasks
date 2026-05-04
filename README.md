@@ -1,13 +1,14 @@
 # TrapStreet Tasks
 
-Standardized eval task cases for the TrapStreet platform. Each case has well-defined input/output fields and points to a public dataset — no data is stored here.
+Standardized eval task cases for the TrapStreet platform. Each case has well-defined input/output fields, clear input/output schema, and usage instructions.
 
 ## Cases
 
-| # | Name | Dataset | Direction |
-|---|------|---------|-----------|
-| 2 | [Article Summarization](./case2_article_summarization/) | CNN/DailyMail | Practical |
-| 4 | [Everyday Q&A](./case4_everyday_qa/) | TriviaQA | Practical |
+| # | Name | Dataset | Direction | Data in repo |
+|---|------|---------|-----------|--------------|
+| 2 | [Article Summarization](./case2_article_summarization/) | CNN/DailyMail | Practical | No (link + download instructions) |
+| 4 | [Everyday Q&A](./case4_everyday_qa/) | TriviaQA | Practical | No (link + download instructions) |
+| 5 | [Finance Q&A — Document-Grounded](./case5_finance_qa/) | FinanceBench | Practical | Yes (150 examples committed) |
 
 ## Criteria
 
