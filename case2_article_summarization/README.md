@@ -75,16 +75,34 @@ output_text = example["highlights"]
 
 ### Direct file download (Parquet)
 
-Each split is available as Parquet files without any library:
+Download individual Parquet files directly — no library needed. Use `pandas.read_parquet()` or any Parquet reader.
 
+**Test split** (11,490 rows, recommended for demos — 1 file):
 ```
-https://huggingface.co/datasets/abisee/cnn_dailymail/resolve/main/data/train-*.parquet
-https://huggingface.co/datasets/abisee/cnn_dailymail/resolve/main/data/validation-*.parquet
-https://huggingface.co/datasets/abisee/cnn_dailymail/resolve/main/data/test-*.parquet
+https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/test/0.parquet
 ```
 
-Or browse the file tree at:
-https://huggingface.co/datasets/abisee/cnn_dailymail/tree/main/data
+**Validation split** (13,368 rows — 1 file):
+```
+https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/validation/0.parquet
+```
+
+**Train split** (287,113 rows — 3 files):
+```
+https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/train/0.parquet
+https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/train/1.parquet
+https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/train/2.parquet
+```
+
+```python
+import pandas as pd
+
+url = "https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/test/0.parquet"
+df = pd.read_parquet(url)
+
+input_text  = df["article"][0]
+output_text = df["highlights"][0]
+```
 
 ---
 

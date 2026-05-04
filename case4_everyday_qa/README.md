@@ -87,12 +87,33 @@ output_aliases = example["answer"]["aliases"]   # all valid answers
 
 ### Direct file download (Parquet)
 
+Download individual Parquet files directly — no library needed. Use `pandas.read_parquet()` or any Parquet reader.
+
+**Validation split** (recommended for demos — 5 files):
 ```
-https://huggingface.co/datasets/mandarjoshi/trivia_qa/resolve/main/data/unfiltered/
+https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/0.parquet
+https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/1.parquet
+https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/2.parquet
+https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/3.parquet
+https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/4.parquet
 ```
 
-Or browse the file tree at:
-https://huggingface.co/datasets/mandarjoshi/trivia_qa/tree/main/data
+**Train split** (8 files, numbered 0–7):
+```
+https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/train/0.parquet
+```
+_(replace `0` with `1`–`7` for remaining files)_
+
+```python
+import pandas as pd
+
+url = "https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/0.parquet"
+df = pd.read_parquet(url)
+
+input_text     = df["question"][0]
+output_value   = df["answer"][0]["value"]      # primary answer
+output_aliases = df["answer"][0]["aliases"]    # all valid answers
+```
 
 ### Original download (JSON)
 
