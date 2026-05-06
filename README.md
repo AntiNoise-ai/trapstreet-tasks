@@ -11,6 +11,7 @@ Standardized eval cases for the TrapStreet platform. Each case defines a clear *
 | 2 | [Article Summarization](#case-2-article-summarization) | CNN/DailyMail | News article | Bullet-point summary |
 | 4 | [Everyday Q&A](#case-4-everyday-qa) | TriviaQA | Trivia question | Short factual answer |
 | 5 | [Finance Q&A](#case-5-finance-qa--document-grounded) | FinanceBench | Financial question + SEC filing PDF | Exact dollar/number answer |
+| 12 | [Legal — Contract Clause Extraction](#case-12-legal--contract-clause-extraction) | CUAD | Contract text + clause type | Exact clause span (or "no clause") |
 
 ---
 
@@ -121,6 +122,40 @@ example = questions[0]
 input_question = example["question"]
 input_pdf_url  = doc_info[example["doc_name"]]["doc_link"]  # → send question + this PDF to model
 output_answer  = example["answer"]                          # → compare against model response
+```
+
+---
+
+## Case 12: Legal — Contract Clause Extraction
+
+**"There are 20+ legal AI tools claiming to review contracts. But can they find the termination clause? That's step 1."**
+
+| | |
+|---|---|
+| Dataset | CUAD (Contract Understanding Atticus Dataset) |
+| Full case doc | [case12_legal_clause_extraction/](./case12_legal_clause_extraction/) |
+| Data (eval-ready, SQuAD format) | https://huggingface.co/datasets/theatticusproject/cuad-qa |
+| Raw PDFs + master CSV | https://huggingface.co/datasets/theatticusproject/cuad |
+
+A real commercial contract goes in with a question targeting one of 41 clause types (Anti-Assignment, Change of Control, Cap on Liability, etc.). The model must return the exact clause span — or correctly say none exists. Models have a known **"laziness"** problem: they confidently say "no clause found" when one is plainly there.
+
+| Role | Field | Description |
+|------|-------|-------------|
+| Input | `context` | Full contract text |
+| Input | `question` | Templated prompt naming one of 41 clause categories |
+| Output | `answers.text[]` | Expert-labeled clause spans (empty list = "no such clause") |
+| Output | `answers.answer_start[]` | Character offsets into `context` |
+
+**Quick start:**
+```python
+from datasets import load_dataset
+
+ds = load_dataset("theatticusproject/cuad-qa", split="test")
+row = ds[0]
+
+input_question = row["question"]
+input_context  = row["context"]            # → send question + context to model
+output_spans   = row["answers"]["text"]    # → compare against model response
 ```
 
 ---
