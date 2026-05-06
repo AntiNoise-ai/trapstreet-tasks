@@ -1,5 +1,7 @@
 # Case 12: Legal — Contract Clause Extraction
 
+> Live demo flow for this case: see [DEMO.md](./DEMO.md).
+
 **Concept:** "There are 20+ legal AI tools claiming to review contracts. But can they actually find the termination clause? That's step 1."
 
 A real commercial contract goes in, along with a question targeting one of 41 specific clause types (Anti-Assignment, Change of Control, Cap on Liability, etc.). The model must return the exact clause span — or correctly say none exists. Models have a known "laziness" problem on this task: they confidently say "no clause found" even when one is plainly there.
