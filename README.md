@@ -12,6 +12,7 @@ Standardized eval cases for the TrapStreet platform. Each case defines a clear *
 | 4 | [Everyday Q&A](#case-4-everyday-qa) | TriviaQA | Trivia question | Short factual answer |
 | 5 | [Finance Q&A](#case-5-finance-qa--document-grounded) | FinanceBench | Financial question + SEC filing PDF | Exact dollar/number answer |
 | 12 | [Legal — Contract Clause Extraction](#case-12-legal--contract-clause-extraction) | CUAD | Contract text + clause type | Exact clause span (or "no clause") |
+| 19 | [Agent Tool Use / Function Calling](#case-19-agent-tool-use--function-calling) ⭐ | BFCL v4 | User query + function schema | Correct function call (name + args) |
 
 ---
 
@@ -157,6 +158,50 @@ input_question = row["question"]
 input_context  = row["context"]            # → send question + context to model
 output_spans   = row["answers"]["text"]    # → compare against model response
 ```
+
+---
+
+## Case 19: Agent Tool Use / Function Calling
+
+**"Every 'autonomous agent' claims to use tools. Did it actually call the right function with the right arguments?"** ⭐ priority
+
+| | |
+|---|---|
+| Dataset | Berkeley Function Calling Leaderboard (BFCL) v4 |
+| Full case doc | [case19_agent_tool_use/](./case19_agent_tool_use/) |
+| Data (per category) | `https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_<category>.json` |
+| Gold answers | `https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/bfcl_eval/data/possible_answer/BFCL_v4_<category>.json` |
+| Live leaderboard | https://gorilla.cs.berkeley.edu/leaderboard.html |
+
+Foundational sub-step for every "one-person company" agent claim. If function calling fails, every workflow built on top is theater. v4 specifically tests agentic failures — multi-turn memory, deciding when not to act, recovering from tool errors. Top 2026 models split-brained: ace single-turn, fail on multi-turn (~30 percentage points between top models on the same questions).
+
+| Role | Field | Description |
+|------|-------|-------------|
+| Input | `question` | User messages (doubly-nested array for multi-turn) |
+| Input | `function` | List of available functions (name + JSON Schema) |
+| Output | `ground_truth` | List of accepted function calls — each parameter has a list of acceptable values |
+
+**Quick start:**
+```python
+import json, urllib.request
+
+def load_jsonl(url):
+    with urllib.request.urlopen(url) as f:
+        return [json.loads(line) for line in f]
+
+CAT  = "multi_turn_miss_param"   # or simple_python, irrelevance, parallel, etc.
+BASE = "https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/bfcl_eval/data"
+
+questions = load_jsonl(f"{BASE}/BFCL_v4_{CAT}.json")
+answers   = {a["id"]: a["ground_truth"] for a in load_jsonl(f"{BASE}/possible_answer/BFCL_v4_{CAT}.json")}
+
+row = questions[0]
+input_messages  = row["question"][0]    # → user messages
+input_functions = row["function"]       # → tool schema
+gold = answers[row["id"]]               # → list of accepted calls
+```
+
+> Use the official `bfcl-eval` CLI (Apache 2.0) for grading rather than re-implementing AST comparison.
 
 ---
 
