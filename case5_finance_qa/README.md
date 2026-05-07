@@ -1,5 +1,7 @@
 # Case 5: Finance Q&A — Document-Grounded
 
+> Live demo flow for this case: see [DEMO.md](./DEMO.md).
+
 **Concept:** "Read this SEC filing and answer my question."
 
 A financial question about a real public company goes in, along with the full SEC filing PDF. A precise, human-verified answer comes out. Errors are immediately obvious — getting revenue wrong by $1B is not a gray area.
