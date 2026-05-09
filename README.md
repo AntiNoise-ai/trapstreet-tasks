@@ -13,6 +13,7 @@ Standardized eval cases for the TrapStreet platform. Each case defines a clear *
 | 5 | [Finance Q&A](#case-5-finance-qa--document-grounded) | FinanceBench | Financial question + SEC filing PDF | Exact dollar/number answer |
 | 12 | [Legal — Contract Clause Extraction](#case-12-legal--contract-clause-extraction) | CUAD | Contract text + clause type | Exact clause span (or "no clause") |
 | 19 | [Agent Tool Use / Function Calling](#case-19-agent-tool-use--function-calling) ⭐ | BFCL v4 | User query + function schema | Correct function call (name + args) |
+| 20 | [PDF Pricing Extraction](#case-20-pdf-pricing-extraction) ⭐ | 4 hand-curated public pricing PDFs | Pricing PDF + row query | Cell value(s) for the matched row |
 
 ---
 
@@ -202,6 +203,46 @@ gold = answers[row["id"]]               # → list of accepted calls
 ```
 
 > Use the official `bfcl-eval` CLI (Apache 2.0) for grading rather than re-implementing AST comparison.
+
+---
+
+## Case 20: PDF Pricing Extraction
+
+**"There are 50+ community AI repos that 'parse PDFs to structured data.' Can they actually pull the right number out of a real pricing PDF — including the asterisked footnote that adds £40K/year to the bill?"** ⭐ priority
+
+| | |
+|---|---|
+| Test corpus | 4 hand-curated public pricing PDFs (London-flavoured) |
+| Full case doc | [case20_pdf_pricing_extraction/](./case20_pdf_pricing_extraction/) |
+| Live demo flow | [case20_pdf_pricing_extraction/DEMO.md](./case20_pdf_pricing_extraction/DEMO.md) |
+
+A real-world pricing PDF (multi-tier, multi-page, footnoted) goes in. A structured representation of pricing (cell values for queried rows) comes out. Foundational sub-step for every "AI procurement assistant," "AI cost optimiser," "AI vendor comparison" workflow. Discrimination empirically confirmed: Docling 2.93 produces >50% structurally broken rows on the multi-page Snowflake table; Claude 4.7 vision parses the same table cleanly.
+
+| Role | Source | Description |
+|------|--------|-------------|
+| Input | PDF file (download fresh from URL) | Real pricing PDF — see corpus below |
+| Input | Row query | Structured spec of which row + columns to extract |
+| Output | Cell values | Cell-level exact match against hand-curated gold (~10 rows per PDF) |
+
+**Test corpus (download URLs):**
+
+| # | PDF | Pages | URL |
+|---|-----|-------|-----|
+| 1 ⭐ | Royal Mail 2026 Business Price Guide | 35 | https://www.mymailingroom.com/wp-content/uploads/Royal-Mail-2026-Business-Price-Guide.pdf |
+| 2 ⭐ | Snowflake Service Consumption Table | 21 | https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf |
+| 3 | HSBC Business Price List | 40 | https://www.business.hsbc.uk/-/media/media/uk/pdfs/regulations/business-price-list.pdf |
+| 4 | Vodafone Business Advance (control / easy) | 24 | https://www.vodafone.co.uk/cs/groups/configfiles/documents/document/vfcon072748.pdf |
+
+**Quick start:**
+```bash
+mkdir -p data
+curl -sL -o data/royalmail.pdf  "https://www.mymailingroom.com/wp-content/uploads/Royal-Mail-2026-Business-Price-Guide.pdf"
+curl -sL -o data/snowflake.pdf  "https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf"
+curl -sL -o data/hsbc.pdf       "https://www.business.hsbc.uk/-/media/media/uk/pdfs/regulations/business-price-list.pdf"
+curl -sL -o data/vodafone.pdf   "https://www.vodafone.co.uk/cs/groups/configfiles/documents/document/vfcon072748.pdf"
+```
+
+> Use `pdftotext -raw <pdf>` to verify gold cells before publishing — it's a faithful baseline of what's actually in the document.
 
 ---
 
