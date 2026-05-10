@@ -1,0 +1,11 @@
+.DS_Store
+__pycache__/
+*.pyc
+
+# Local-only files for Case 21 — never commit the original (un-sanitised) signed contract PDF.
+# Only the sanitised version (named *_Sanitised.pdf) should be committed.
+case21_lease_review/AST_Issue_1_CanaryWharf.pdf
+case21_lease_review/AST_Issue_1_-_50_Gainsborough_House.pdf
+case21_lease_review/*_Original.pdf
+case21_lease_review/.venv/
+case21_lease_review/tools/.venv/
