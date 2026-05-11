@@ -1,0 +1,170 @@
+[
+  {
+    "id": "rent_year1",
+    "difficulty": "medium",
+    "category": "money",
+    "question": "What is the monthly rent in GBP for the first 12 months of the tenancy (months 1-12)?",
+    "answer": ""
+  },
+  {
+    "id": "rent_year2",
+    "difficulty": "medium",
+    "category": "money",
+    "question": "What is the monthly rent in GBP for the second 12 months of the tenancy (months 13-24)?",
+    "answer": ""
+  },
+  {
+    "id": "rent_year3",
+    "difficulty": "medium",
+    "category": "money",
+    "question": "What is the monthly rent in GBP for the third 12 months of the tenancy (months 25-36)? Answer 'N/A' if the fixed term is shorter than 36 months.",
+    "answer": ""
+  },
+  {
+    "id": "deposit_amount",
+    "difficulty": "easy",
+    "category": "money",
+    "question": "What is the deposit amount in GBP?",
+    "answer": ""
+  },
+  {
+    "id": "term_start",
+    "difficulty": "easy",
+    "category": "dates",
+    "question": "What is the tenancy start date? Format: DD/MM/YYYY.",
+    "answer": ""
+  },
+  {
+    "id": "term_end",
+    "difficulty": "easy",
+    "category": "dates",
+    "question": "What is the tenancy end date? Format: DD/MM/YYYY.",
+    "answer": ""
+  },
+  {
+    "id": "term_length_months",
+    "difficulty": "medium",
+    "category": "dates",
+    "question": "How many months long is the fixed term?",
+    "answer": ""
+  },
+  {
+    "id": "rent_payment_day",
+    "difficulty": "medium",
+    "category": "money",
+    "question": "On what day of the month is the rent payable?",
+    "answer": ""
+  },
+  {
+    "id": "rent_payment_method",
+    "difficulty": "medium",
+    "category": "money",
+    "question": "By what method must the tenant pay the rent (e.g. standing order, bank transfer)?",
+    "answer": ""
+  },
+  {
+    "id": "break_clause",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "Is there a break clause? Answer yes or no.",
+    "answer": ""
+  },
+  {
+    "id": "break_clause_notice",
+    "difficulty": "hard",
+    "category": "clauses",
+    "question": "If a break clause exists, how many months' notice is required to exercise it? If no break clause, answer 'N/A'.",
+    "answer": ""
+  },
+  {
+    "id": "deposit_scheme",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "Which tenancy deposit protection scheme is the deposit registered with?",
+    "answer": ""
+  },
+  {
+    "id": "guarantor_required",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "Is a guarantor required? Answer yes or no.",
+    "answer": ""
+  },
+  {
+    "id": "pets_allowed",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "Are pets permitted in the property? Answer yes, no, or 'with consent'.",
+    "answer": ""
+  },
+  {
+    "id": "smoking_allowed",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "Is smoking permitted in the property? Answer yes or no.",
+    "answer": ""
+  },
+  {
+    "id": "subletting_allowed",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "Is subletting permitted? Answer yes, no, or 'with consent'.",
+    "answer": ""
+  },
+  {
+    "id": "furnished_status",
+    "difficulty": "easy",
+    "category": "clauses",
+    "question": "Is the property let furnished, unfurnished, or part-furnished?",
+    "answer": ""
+  },
+  {
+    "id": "permitted_occupants",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "How many permitted occupants are listed?",
+    "answer": ""
+  },
+  {
+    "id": "rent_review_clause",
+    "difficulty": "hard",
+    "category": "clauses",
+    "question": "Does the agreement include a rent review clause for during the fixed term? Answer yes or no.",
+    "answer": ""
+  },
+  {
+    "id": "council_tax_responsibility",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "Who is responsible for paying the council tax — landlord or tenant?",
+    "answer": ""
+  },
+  {
+    "id": "utilities_responsibility",
+    "difficulty": "medium",
+    "category": "clauses",
+    "question": "Who is responsible for paying the utility bills (gas, electricity, water) — landlord or tenant?",
+    "answer": ""
+  },
+  {
+    "id": "signed_date",
+    "difficulty": "hard",
+    "category": "dates",
+    "question": "On what date was the agreement signed by the tenant? Format: DD/MM/YYYY.",
+    "answer": ""
+  },
+  {
+    "id": "envelope_id",
+    "difficulty": "hard",
+    "category": "metadata",
+    "question": "What is the DocuSign envelope ID printed at the top of each page?",
+    "answer": ""
+  },
+  {
+    "id": "notice_period_landlord",
+    "difficulty": "hard",
+    "category": "clauses",
+    "question": "After the fixed term ends, how many months' notice must the landlord give to end the tenancy?",
+    "answer": ""
+  }
+]

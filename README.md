@@ -1,10 +1,27 @@
 # TrapStreet Tasks
 
-Standardized eval cases for the TrapStreet platform. Each case defines a clear **input** (what gets sent to the model) and **output** (what the correct answer looks like), sourced from public, human-labeled datasets.
+Standardized eval cases for the TrapStreet platform. Each case defines a clear **input** (what gets sent to the model) and **output** (what the correct answer looks like).
+
+## Layout
+
+```
+tasks/        ← active tasks
+  pdf_reader/
+    tenancy_agreement/   ← UK Assured Shorthold Tenancy parsing
+archive/      ← previously-explored cases (not actively maintained)
+```
+
+## Active tasks
+
+| Path | Task | Input | Output |
+|------|------|-------|--------|
+| [`tasks/pdf_reader/tenancy_agreement/`](./tasks/pdf_reader/tenancy_agreement/) | Parse a real UK signed AST PDF | Tenancy PDF + question | Exact answer (rent, dates, clauses) |
 
 ---
 
-## Cases
+## Archived cases
+
+The cases below were earlier explorations. They live under [`archive/`](./archive/) for reference.
 
 | # | Name | Dataset | Input | Output |
 |---|------|---------|-------|--------|
@@ -12,8 +29,8 @@ Standardized eval cases for the TrapStreet platform. Each case defines a clear *
 | 4 | [Everyday Q&A](#case-4-everyday-qa) | TriviaQA | Trivia question | Short factual answer |
 | 5 | [Finance Q&A](#case-5-finance-qa--document-grounded) | FinanceBench | Financial question + SEC filing PDF | Exact dollar/number answer |
 | 12 | [Legal — Contract Clause Extraction](#case-12-legal--contract-clause-extraction) | CUAD | Contract text + clause type | Exact clause span (or "no clause") |
-| 19 | [Agent Tool Use / Function Calling](#case-19-agent-tool-use--function-calling) ⭐ | BFCL v4 | User query + function schema | Correct function call (name + args) |
-| 20 | [PDF Pricing Extraction](#case-20-pdf-pricing-extraction) ⭐ | 4 hand-curated public pricing PDFs | Pricing PDF + row query | Cell value(s) for the matched row |
+| 19 | [Agent Tool Use / Function Calling](#case-19-agent-tool-use--function-calling) | BFCL v4 | User query + function schema | Correct function call (name + args) |
+| 20 | [PDF Pricing Extraction](#case-20-pdf-pricing-extraction) | 4 hand-curated public pricing PDFs | Pricing PDF + row query | Cell value(s) for the matched row |
 
 ---
 
@@ -38,7 +55,7 @@ Each case folder has its own README with the full schema. The pattern is the sam
 | | |
 |---|---|
 | Dataset | CNN/DailyMail |
-| Full case doc | [case2_article_summarization/](./case2_article_summarization/) |
+| Full case doc | [case2_article_summarization/](./archive/case2_article_summarization/) |
 | Data (test split, 1 file) | https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/test/0.parquet |
 
 | Role | Field | Description |
@@ -65,7 +82,7 @@ output_text = df["highlights"][0]   # → compare against model response
 | | |
 |---|---|
 | Dataset | TriviaQA |
-| Full case doc | [case4_everyday_qa/](./case4_everyday_qa/) |
+| Full case doc | [case4_everyday_qa/](./archive/case4_everyday_qa/) |
 | Data (validation split, file 0 of 5) | https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/0.parquet |
 
 > Use `validation` here, not `test` — TriviaQA's test split has no public gold answers.
@@ -96,7 +113,7 @@ output_aliases = df["answer"][0]["aliases"]    # → all valid answers
 | | |
 |---|---|
 | Dataset | FinanceBench |
-| Full case doc | [case5_finance_qa/](./case5_finance_qa/) |
+| Full case doc | [case5_finance_qa/](./archive/case5_finance_qa/) |
 | Questions + answers | https://raw.githubusercontent.com/patronus-ai/financebench/main/data/financebench_open_source.jsonl |
 | Document metadata (PDF links) | https://raw.githubusercontent.com/patronus-ai/financebench/main/data/financebench_document_information.jsonl |
 
@@ -135,7 +152,7 @@ output_answer  = example["answer"]                          # → compare agains
 | | |
 |---|---|
 | Dataset | CUAD (Contract Understanding Atticus Dataset) |
-| Full case doc | [case12_legal_clause_extraction/](./case12_legal_clause_extraction/) |
+| Full case doc | [case12_legal_clause_extraction/](./archive/case12_legal_clause_extraction/) |
 | Data (eval-ready, SQuAD format) | https://huggingface.co/datasets/theatticusproject/cuad-qa |
 | Raw PDFs + master CSV | https://huggingface.co/datasets/theatticusproject/cuad |
 
@@ -169,7 +186,7 @@ output_spans   = row["answers"]["text"]    # → compare against model response
 | | |
 |---|---|
 | Dataset | Berkeley Function Calling Leaderboard (BFCL) v4 |
-| Full case doc | [case19_agent_tool_use/](./case19_agent_tool_use/) |
+| Full case doc | [case19_agent_tool_use/](./archive/case19_agent_tool_use/) |
 | Data (per category) | `https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_<category>.json` |
 | Gold answers | `https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/bfcl_eval/data/possible_answer/BFCL_v4_<category>.json` |
 | Live leaderboard | https://gorilla.cs.berkeley.edu/leaderboard.html |
@@ -213,8 +230,8 @@ gold = answers[row["id"]]               # → list of accepted calls
 | | |
 |---|---|
 | Test corpus | 4 hand-curated public pricing PDFs (London-flavoured) |
-| Full case doc | [case20_pdf_pricing_extraction/](./case20_pdf_pricing_extraction/) |
-| Live demo flow | [case20_pdf_pricing_extraction/DEMO.md](./case20_pdf_pricing_extraction/DEMO.md) |
+| Full case doc | [case20_pdf_pricing_extraction/](./archive/case20_pdf_pricing_extraction/) |
+| Live demo flow | [case20_pdf_pricing_extraction/DEMO.md](./archive/case20_pdf_pricing_extraction/DEMO.md) |
 
 A real-world pricing PDF (multi-tier, multi-page, footnoted) goes in. A structured representation of pricing (cell values for queried rows) comes out. Foundational sub-step for every "AI procurement assistant," "AI cost optimiser," "AI vendor comparison" workflow. Discrimination empirically confirmed: Docling 2.93 produces >50% structurally broken rows on the multi-page Snowflake table; Claude 4.7 vision parses the same table cleanly.
 
