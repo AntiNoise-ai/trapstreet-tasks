@@ -2,10 +2,10 @@
 __pycache__/
 *.pyc
 
-# Local-only files for Case 21 — never commit the original (un-sanitised) signed contract PDF.
-# Only the sanitised version (named *_Sanitised.pdf) should be committed.
-case21_lease_review/AST_Issue_1_CanaryWharf.pdf
-case21_lease_review/AST_Issue_1_-_50_Gainsborough_House.pdf
-case21_lease_review/*_Original.pdf
-case21_lease_review/.venv/
-case21_lease_review/tools/.venv/
+# Local-only PII files for the tenancy_agreement task.
+# Tracked:  AST_Issue_1_CanaryWharf.pdf (sanitised) + gold.candidates.json
+# Ignored:  everything under the per-task archive/ folder + any *_Original.pdf
+tasks/pdf_reader/tenancy_agreement/archive/
+tasks/pdf_reader/tenancy_agreement/*_Original.pdf
+tasks/pdf_reader/tenancy_agreement/.venv/
+tasks/pdf_reader/tenancy_agreement/tools/.venv/

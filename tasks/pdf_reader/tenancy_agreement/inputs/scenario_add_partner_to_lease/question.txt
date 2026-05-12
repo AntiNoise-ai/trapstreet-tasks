@@ -1,0 +1,1 @@
+Scenario: The Tenant wants their partner to move into the property and be added to the tenancy agreement. Based on the agreement, (a) is this permitted (yes / no / with consent), and (b) what specific action(s) must the Tenant take to obtain approval? Reference the relevant clauses (e.g. occupants, subletting, assignment).

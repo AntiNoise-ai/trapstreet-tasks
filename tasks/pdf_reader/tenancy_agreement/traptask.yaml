@@ -1,0 +1,123 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+cases:
+- id: rent_year2
+  description: What is the monthly rent in GBP for the second 12 months of the tenancy (months 13-24)?
+  tags:
+  - money
+  - medium
+- id: rent_year3
+  description: What is the monthly rent in GBP for the third 12 months of the tenancy (months 25-36)? Answer 'N/A' if the fixed term is shorter than 36 months.
+  tags:
+  - money
+  - medium
+- id: deposit_amount
+  description: What is the deposit amount in GBP?
+  tags:
+  - money
+  - easy
+- id: term_start
+  description: 'What is the tenancy start date? Format: DD/MM/YYYY.'
+  tags:
+  - dates
+  - easy
+- id: rent_payment_day
+  description: On what day of the month is the rent payable?
+  tags:
+  - money
+  - medium
+- id: break_clause
+  description: Does the tenancy agreement include a contractual break clause allowing the tenant to end the tenancy early without landlord discretion? Answer yes or no.
+  tags:
+  - clauses
+  - medium
+- id: early_surrender
+  description: Can the tenant request an early surrender of the tenancy subject to landlord approval and associated costs? Answer yes or no.
+  tags:
+  - clauses
+  - hard
+- id: fixed_term_departure_notice
+  description: If the tenant wants to leave exactly at the end of the fixed term, is notice required? Answer yes or no.
+  tags:
+  - clauses
+  - hard
+- id: post_fixed_term_extension
+  description: What happens if the tenant remains in the property after the fixed term without signing a new tenancy agreement?
+  tags:
+  - clauses
+  - hard
+- id: rent_increase_scope
+  description: Does the 5% rent increase apply during the original fixed term, the automatic extension period, or both?
+  tags:
+  - financial_terms
+  - hard
+- id: deposit_scheme
+  description: Which tenancy deposit protection scheme is the deposit registered with?
+  tags:
+  - clauses
+  - medium
+- id: pets_allowed
+  description: Are pets permitted in the property? Answer yes, no, or 'with landlord consent'.
+  tags:
+  - clauses
+  - medium
+- id: total_rent_fixed_term
+  description: "What is the total rent payable in GBP over the entire fixed term? Compute monthly rent \xD7 term length, summing across rent periods if rent changes year-on-year."
+  tags:
+  - money
+  - hard
+- id: late_rent_interest_rate
+  description: What interest rate applies to late rent payments? Answer as written in the agreement (e.g. '3% above Bank of England base rate'), or 'N/A' if not specified.
+  tags:
+  - money
+  - hard
+- id: governing_act
+  description: Which Act of Parliament is cited in the agreement as governing this Assured Shorthold Tenancy? Answer with the Act name and year as written (e.g. 'Housing Act 1988').
+  tags:
+  - clauses
+  - hard
+- id: property_postcode
+  description: What is the UK postcode of the rented property? Format as written in the agreement (e.g. 'E14 9XX').
+  tags:
+  - metadata
+  - hard
+- id: inventory_referenced
+  description: Does the agreement reference a separate inventory document (e.g. 'inventory and schedule of condition')? Answer yes or no.
+  tags:
+  - clauses
+  - hard
+- id: deposit_protection_deadline_days
+  description: Within how many days of receipt must the deposit be protected under the relevant scheme? Answer the number of days as written, or 'N/A' if not specified.
+  tags:
+  - clauses
+  - hard
+- id: scenario_leave_12mo_in_36mo
+  description: 'Scenario: The Tenant is 12 months into the 36-month fixed term and wants to surrender the tenancy and leave immediately. Based on the agreement, (a) approximately how much will the Tenant be liable to pay in fees and charges if NO replacement Tenant is found and the rent does not change, and (b) what specific actions must the Tenant take, in what order? Show all working with specific GBP figures from the agreement.'
+  tags:
+  - scenario
+  - hard
+- id: scenario_break_clause_exercise
+  description: 'Scenario: The Tenant has been in the property for 18 months and wants to use the break clause to leave. Based on the agreement, (a) what is the procedure for exercising the break clause (notice period, form of notice, who to notify), and (b) what is the earliest date the Tenant could actually leave? Format the date as DD/MM/YYYY based on the tenancy''s start date as stated in the agreement.'
+  tags:
+  - scenario
+  - hard
+- id: scenario_late_rent
+  description: 'Scenario: The Tenant missed last month''s rent payment and paid it 10 days late. Based on the agreement, (a) what penalty, interest, or charge applies for the late payment, and (b) what action should the Tenant take going forward to avoid further issues? Quote any specific rates or amounts as written in the agreement.'
+  tags:
+  - scenario
+  - hard
+- id: scenario_add_partner_to_lease
+  description: 'Scenario: The Tenant wants their partner to move into the property and be added to the tenancy agreement. Based on the agreement, (a) is this permitted (yes / no / with consent), and (b) what specific action(s) must the Tenant take to obtain approval? Reference the relevant clauses (e.g. occupants, subletting, assignment).'
+  tags:
+  - scenario
+  - hard
+- id: scenario_relocation_immediate
+  description: 'Scenario: The Tenant has been offered a job 200 miles away starting in 2 weeks. They have 18 months remaining on the fixed term. They cannot continue the tenancy. Based on the agreement, (a) what is the maximum total amount in GBP they could be liable for in the worst case (no replacement Tenant found, current rent applies), computed with specific numbers from the agreement, and (b) what is the recommended sequence of actions to minimise their costs?'
+  tags:
+  - scenario
+  - hard
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py
