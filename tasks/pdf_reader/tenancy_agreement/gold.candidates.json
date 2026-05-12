@@ -65,7 +65,7 @@
   {
   "id": "rent_increase_scope",
   "difficulty": "hard",
-  "category": "financial_terms",
+  "category": "money",
   "question": "Does the 5% rent increase apply during the original fixed term, the automatic extension period, or both?",
   "answer": "the automatic extension period only"
   },
