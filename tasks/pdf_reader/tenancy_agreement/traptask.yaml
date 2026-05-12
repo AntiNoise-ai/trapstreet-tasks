@@ -50,7 +50,7 @@ cases:
 - id: rent_increase_scope
   description: Does the 5% rent increase apply during the original fixed term, the automatic extension period, or both?
   tags:
-  - financial_terms
+  - money
   - hard
 - id: deposit_scheme
   description: Which tenancy deposit protection scheme is the deposit registered with?
