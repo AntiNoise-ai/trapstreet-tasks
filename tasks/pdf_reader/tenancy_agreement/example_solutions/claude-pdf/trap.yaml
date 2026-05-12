@@ -1,0 +1,8 @@
+tasks:
+  tenancy-agreement:
+    description: Claude PDF agent — direct vision-LLM, no separate parser
+    cmd: uv run python solution.py
+    traptask: ../../        # points at tenancy_agreement task directory
+    timeout: 600             # allow for retries on 429/529 with exponential backoff
+    file_outputs:
+      - usage.json           # token counts + cost estimate per case

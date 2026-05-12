@@ -1,0 +1,9 @@
+[project]
+name = "docling-claude-solution"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "anthropic>=0.40.0",
+    "docling>=2.0.0",
+    "trap @ git+https://github.com/AntiNoise-ai/trap.git@feat/tp-submit",
+]

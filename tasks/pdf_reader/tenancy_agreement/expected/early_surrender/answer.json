@@ -1,6 +1,13 @@
 {
+  "id": "early_surrender",
   "answer": "yes",
-  "accepted": [],
+  "type": "boolean",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "yes"
+    }
+  ],
   "category": "clauses",
   "difficulty": "hard"
 }

@@ -1,6 +1,20 @@
 {
+  "id": "deposit_scheme",
   "answer": "TDS",
-  "accepted": [],
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "keywords_any",
+      "values": [
+        "TDS",
+        "Tenancy Deposit Scheme",
+        "The Dispute Service"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
   "category": "clauses",
   "difficulty": "medium"
 }

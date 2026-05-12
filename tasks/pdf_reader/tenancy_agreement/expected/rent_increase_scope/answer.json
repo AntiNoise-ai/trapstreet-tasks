@@ -1,6 +1,25 @@
 {
+  "id": "rent_increase_scope",
   "answer": "the automatic extension period only",
-  "accepted": [],
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "extension"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "only",
+        "automatic"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
   "category": "money",
   "difficulty": "hard"
 }

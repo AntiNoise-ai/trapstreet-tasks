@@ -32,7 +32,7 @@
     "difficulty": "medium",
     "category": "money",
     "question": "On what day of the month is the rent payable?",
-    "answer": ""
+    "answer": "on or prior 5th of the month"
   },
   {
     "id": "break_clause",
@@ -88,76 +88,48 @@
     "difficulty": "hard",
     "category": "money",
     "question": "What is the total rent payable in GBP over the entire fixed term? Compute monthly rent \u00d7 term length, summing across rent periods if rent changes year-on-year.",
-    "answer": ""
+    "answer": "77400"
   },
   {
     "id": "late_rent_interest_rate",
     "difficulty": "hard",
     "category": "money",
     "question": "What interest rate applies to late rent payments? Answer as written in the agreement (e.g. '3% above Bank of England base rate'), or 'N/A' if not specified.",
-    "answer": ""
+    "answer": "3% per annum above Bank of England base rate"
   },
   {
     "id": "governing_act",
     "difficulty": "hard",
     "category": "clauses",
     "question": "Which Act of Parliament is cited in the agreement as governing this Assured Shorthold Tenancy? Answer with the Act name and year as written (e.g. 'Housing Act 1988').",
-    "answer": "Housing Act 2004"
-  },
-  {
-    "id": "property_postcode",
-    "difficulty": "hard",
-    "category": "metadata",
-    "question": "What is the UK postcode of the rented property? Format as written in the agreement (e.g. 'E14 9XX').",
-    "answer": ""
+    "answer": "Housing Act 1988"
   },
   {
     "id": "inventory_referenced",
     "difficulty": "hard",
     "category": "clauses",
     "question": "Does the agreement reference a separate inventory document (e.g. 'inventory and schedule of condition')? Answer yes or no.",
-    "answer": ""
+    "answer": "no"
   },
   {
-    "id": "deposit_protection_deadline_days",
-    "difficulty": "hard",
-    "category": "clauses",
-    "question": "Within how many days of receipt must the deposit be protected under the relevant scheme? Answer the number of days as written, or 'N/A' if not specified.",
-    "answer": ""
+  "id": "deposit_dispute_escalation",
+  "difficulty": "hard",
+  "category": "deposit",
+  "question": "What happens if the Tenant disputes the proposed deposit deductions and the dispute remains unresolved after reasonable attempts to resolve it?",
+  "answer": "The dispute may be submitted to the Independent Case Examiner (ICE) for adjudication."
   },
   {
-    "id": "scenario_leave_12mo_in_36mo",
-    "difficulty": "hard",
-    "category": "scenario",
-    "question": "Scenario: The Tenant is 12 months into the 36-month fixed term and wants to surrender the tenancy and leave immediately. Based on the agreement, (a) approximately how much will the Tenant be liable to pay in fees and charges if NO replacement Tenant is found and the rent does not change, and (b) what specific actions must the Tenant take, in what order? Show all working with specific GBP figures from the agreement.",
-    "answer": ""
-  },
-  {
-    "id": "scenario_break_clause_exercise",
+    "id": "scenario_leave_22mo_in_36mo_no_replacement",
     "difficulty": "hard",
     "category": "scenario",
-    "question": "Scenario: The Tenant has been in the property for 18 months and wants to use the break clause to leave. Based on the agreement, (a) what is the procedure for exercising the break clause (notice period, form of notice, who to notify), and (b) what is the earliest date the Tenant could actually leave? Format the date as DD/MM/YYYY based on the tenancy's start date as stated in the agreement.",
-    "answer": ""
+    "question": "The tenant is 22 months into a 36-month fixed term and wants to surrender the tenancy immediately. Using the rent schedule in the agreement, calculate the approximate total rent liability if the Landlord agrees to early surrender but NO replacement Tenant is found. Show the calculation by rent period and give the final GBP total.",
+    "answer": "£37,542.67"
   },
   {
-    "id": "scenario_late_rent",
-    "difficulty": "hard",
-    "category": "scenario",
-    "question": "Scenario: The Tenant missed last month's rent payment and paid it 10 days late. Based on the agreement, (a) what penalty, interest, or charge applies for the late payment, and (b) what action should the Tenant take going forward to avoid further issues? Quote any specific rates or amounts as written in the agreement.",
-    "answer": ""
-  },
-  {
-    "id": "scenario_add_partner_to_lease",
-    "difficulty": "hard",
-    "category": "scenario",
-    "question": "Scenario: The Tenant wants their partner to move into the property and be added to the tenancy agreement. Based on the agreement, (a) is this permitted (yes / no / with consent), and (b) what specific action(s) must the Tenant take to obtain approval? Reference the relevant clauses (e.g. occupants, subletting, assignment).",
-    "answer": ""
-  },
-  {
-    "id": "scenario_relocation_immediate",
-    "difficulty": "hard",
-    "category": "scenario",
-    "question": "Scenario: The Tenant has been offered a job 200 miles away starting in 2 weeks. They have 18 months remaining on the fixed term. They cannot continue the tenancy. Based on the agreement, (a) what is the maximum total amount in GBP they could be liable for in the worst case (no replacement Tenant found, current rent applies), computed with specific numbers from the agreement, and (b) what is the recommended sequence of actions to minimise their costs?",
-    "answer": ""
+  "id": "early_surrender_economic_incentive",
+  "difficulty": "expert",
+  "category": "scenario_reasoning",
+  "question": "Based on the agreement, could early surrender potentially cost the tenant more than simply continuing to pay rent until the end of the fixed term? Answer yes or no and explain briefly.",
+  "answer": "yes"
   }
 ]

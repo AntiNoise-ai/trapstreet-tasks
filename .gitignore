@@ -2,10 +2,18 @@
 __pycache__/
 *.pyc
 
+# Local Claude Code state — not part of the repo
+.claude/
+
+# trap CLI run artifacts (regeneratable; may contain agent stdout/stderr from
+# private API responses — never commit)
+.trap/
+
+# Python venvs anywhere in the tree
+**/.venv/
+
 # Local-only PII files for the tenancy_agreement task.
 # Tracked:  AST_Issue_1_CanaryWharf.pdf (sanitised) + gold.candidates.json
 # Ignored:  everything under the per-task archive/ folder + any *_Original.pdf
 tasks/pdf_reader/tenancy_agreement/archive/
 tasks/pdf_reader/tenancy_agreement/*_Original.pdf
-tasks/pdf_reader/tenancy_agreement/.venv/
-tasks/pdf_reader/tenancy_agreement/tools/.venv/

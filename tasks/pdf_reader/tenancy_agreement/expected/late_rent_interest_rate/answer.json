@@ -1,6 +1,26 @@
 {
-  "answer": "",
-  "accepted": [],
+  "id": "late_rent_interest_rate",
+  "answer": "3% per annum above Bank of England base rate",
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "3%",
+        "base rate"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "bank of england",
+        "boe"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
   "category": "money",
   "difficulty": "hard"
 }

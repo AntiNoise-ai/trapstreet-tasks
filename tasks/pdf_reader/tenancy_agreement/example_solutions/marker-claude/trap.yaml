@@ -1,0 +1,6 @@
+tasks:
+  test:
+    description: Marker parser → Claude reasoning
+    cmd: uv run python solution.py
+    traptask: ../../
+    timeout: 600             # first case downloads ~2GB of Marker model weights

@@ -1,1 +1,0 @@
-Scenario: The Tenant missed last month's rent payment and paid it 10 days late. Based on the agreement, (a) what penalty, interest, or charge applies for the late payment, and (b) what action should the Tenant take going forward to avoid further issues? Quote any specific rates or amounts as written in the agreement.

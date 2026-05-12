@@ -1,5 +1,5 @@
 {
-  "id": "fixed_term_departure_notice",
+  "id": "early_surrender_economic_incentive",
   "answer": "yes",
   "type": "boolean",
   "matchers": [
@@ -8,6 +8,6 @@
       "value": "yes"
     }
   ],
-  "category": "clauses",
-  "difficulty": "hard"
+  "category": "scenario_reasoning",
+  "difficulty": "expert"
 }

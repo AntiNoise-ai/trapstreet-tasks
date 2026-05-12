@@ -1,0 +1,8 @@
+[project]
+name = "claude-pdf-solution"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "anthropic>=0.40.0",
+    "trap @ git+https://github.com/AntiNoise-ai/trap.git@feat/tp-submit",
+]

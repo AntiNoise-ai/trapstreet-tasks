@@ -1,6 +1,25 @@
 {
-  "answer": "",
-  "accepted": [],
+  "id": "rent_payment_day",
+  "answer": "on or prior 5th of the month",
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "regex_required",
+      "pattern": "\\b5(?:th)?\\b"
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "before",
+        "prior",
+        "on or",
+        "by the"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
   "category": "money",
   "difficulty": "medium"
 }

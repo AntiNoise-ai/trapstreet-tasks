@@ -1,6 +1,14 @@
 {
+  "id": "deposit_amount",
   "answer": "2250",
-  "accepted": [],
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": 2250.0,
+      "tolerance": 0.01
+    }
+  ],
   "category": "money",
   "difficulty": "easy"
 }

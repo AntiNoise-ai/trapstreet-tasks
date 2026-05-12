@@ -1,6 +1,26 @@
 {
+  "id": "pets_allowed",
   "answer": "with landlord consent",
-  "accepted": [],
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "keywords_any",
+      "values": [
+        "consent",
+        "permission",
+        "approval"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "landlord"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
   "category": "clauses",
   "difficulty": "medium"
 }

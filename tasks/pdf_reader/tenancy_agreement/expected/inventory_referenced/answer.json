@@ -1,6 +1,13 @@
 {
-  "answer": "",
-  "accepted": [],
+  "id": "inventory_referenced",
+  "answer": "no",
+  "type": "boolean",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "no"
+    }
+  ],
   "category": "clauses",
   "difficulty": "hard"
 }

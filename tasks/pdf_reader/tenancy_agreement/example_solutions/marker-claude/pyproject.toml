@@ -1,0 +1,9 @@
+[project]
+name = "marker-claude-solution"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "anthropic>=0.40.0",
+    "marker-pdf>=1.0.0",
+    "trap @ file:///tmp/trap-cli",
+]

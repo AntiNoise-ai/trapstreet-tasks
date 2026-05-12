@@ -1,6 +1,14 @@
 {
+  "id": "rent_year3",
   "answer": "2400",
-  "accepted": [],
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": 2400.0,
+      "tolerance": 0.01
+    }
+  ],
   "category": "money",
   "difficulty": "medium"
 }

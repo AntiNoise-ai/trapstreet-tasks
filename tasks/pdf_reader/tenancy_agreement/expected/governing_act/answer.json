@@ -1,6 +1,19 @@
 {
-  "answer": "Housing Act 2004",
-  "accepted": [],
+  "id": "governing_act",
+  "answer": "Housing Act 1988",
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "housing act",
+        "1988"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
   "category": "clauses",
   "difficulty": "hard"
 }

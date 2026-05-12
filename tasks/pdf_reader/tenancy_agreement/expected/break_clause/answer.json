@@ -1,6 +1,13 @@
 {
+  "id": "break_clause",
   "answer": "no",
-  "accepted": [],
+  "type": "boolean",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "no"
+    }
+  ],
   "category": "clauses",
   "difficulty": "medium"
 }
