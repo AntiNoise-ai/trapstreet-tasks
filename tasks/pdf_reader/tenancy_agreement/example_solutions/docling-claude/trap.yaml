@@ -1,8 +1,0 @@
-tasks:
-  tenancy-agreement:
-    description: Docling parser → Claude reasoning
-    cmd: uv run python solution.py
-    traptask: ../../
-    timeout: 300             # first case downloads OCR models; later cases use cache
-    file_outputs:
-      - usage.json
