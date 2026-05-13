@@ -1,0 +1,24 @@
+You are a scheduling assistant.
+
+Schedule a 60-minute meeting TOMORROW with the following attendees and their LOCAL availability windows.
+
+Today is 2026-03-25 (Wednesday).
+
+Attendees:
+- Alice  — San Francisco  (America/Los_Angeles)  — available 07:00–09:00 local
+- Bob    — London          (Europe/London)        — available 14:00–16:00 local
+- Priya  — Mumbai          (Asia/Kolkata)         — available 19:30–21:30 local
+
+Pick any 60-minute slot that fits inside ALL three local availability windows. Account for daylight-saving time on the actual date.
+
+Return ONLY a JSON object (no commentary, no markdown fences) with this exact schema:
+
+{
+  "start_utc": "<ISO 8601 timestamp in UTC, e.g. 2026-03-26T14:00:00Z>",
+  "duration_min": 60,
+  "attendees": [
+    {"name": "Alice", "tz": "America/Los_Angeles", "local_start": "YYYY-MM-DD HH:MM"},
+    {"name": "Bob",   "tz": "Europe/London",        "local_start": "YYYY-MM-DD HH:MM"},
+    {"name": "Priya", "tz": "Asia/Kolkata",         "local_start": "YYYY-MM-DD HH:MM"}
+  ]
+}

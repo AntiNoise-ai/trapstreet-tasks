@@ -1,0 +1,17 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: dst_gap_with_ist
+  description: "60-min meeting across SF/London/Mumbai on 2026-03-26 — UK still on GMT (DST starts March 29), India on UTC+5:30 (no DST). Tests DST-boundary + half-hour zone math simultaneously."
+  tags:
+  - dst_boundary
+  - half_hour_zone
+  - hard
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

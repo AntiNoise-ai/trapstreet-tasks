@@ -1,0 +1,35 @@
+{
+  "id": "dst_gap_with_ist",
+  "category": "dst_boundary",
+  "difficulty": "hard",
+  "duration_min": 60,
+  "expected_start_utc_min": "2026-03-26T14:00:00Z",
+  "expected_start_utc_max": "2026-03-26T15:00:00Z",
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-03-26T07:00:00",
+      "available_local_max": "2026-03-26T09:00:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "Europe/London",
+      "available_local_min": "2026-03-26T14:00:00",
+      "available_local_max": "2026-03-26T16:00:00"
+    },
+    {
+      "name": "Priya",
+      "tz": "Asia/Kolkata",
+      "available_local_min": "2026-03-26T19:30:00",
+      "available_local_max": "2026-03-26T21:30:00"
+    }
+  ],
+  "_canonical_answer": {
+    "start_utc": "2026-03-26T14:00:00Z",
+    "alice_local": "2026-03-26 07:00",
+    "bob_local":   "2026-03-26 14:00",
+    "priya_local": "2026-03-26 19:30"
+  },
+  "_notes": "DST trap: US DST'd on 2026-03-08 (UTC-7 PDT). UK DST starts 2026-03-29 — Bob is still on GMT (UTC+0) on this date. Priya is IST (UTC+5:30, no DST). The accepted UTC window is [14:00Z, 15:00Z] (start times that fit a 60-min slot inside everyone's availability)."
+}
