@@ -28,11 +28,12 @@ cross_timezone/
         └── answer.json       # gold UTC window + per-attendee availability + canonical answer
 ```
 
-## Cases (v0 — 1 case)
+## Cases (v0 — 2 cases)
 
 | id | category | difficulty | what it tests |
 |---|---|---|---|
 | `dst_gap_with_ist` | `dst_boundary` | hard | UK still on GMT (DST starts 2026-03-29) **and** India on UTC+5:30 — catches models that assume "London in spring = BST" or round India to UTC+5 |
+| `dst_quarter_hour_sydney` | `multi_zone_expert` | expert | 5 attendees · all of `dst_gap_with_ist`'s traps **plus** Nepal `UTC+5:45` (quarter-hour) + Sydney `UTC+11` (southern-hemisphere DST in March) + day-shift for Sam (their local date is the next day). Exactly **one** valid start time exists. |
 
 Planned additions (still to draft):
 

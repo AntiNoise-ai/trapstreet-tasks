@@ -13,5 +13,22 @@
     "canonical_start_utc": "2026-03-26T14:00:00Z",
     "accepted_start_utc_range": ["2026-03-26T14:00:00Z", "2026-03-26T15:00:00Z"],
     "notes": "DST trap. US DST started 2026-03-08, UK DST starts 2026-03-29. India IST (UTC+5:30)."
+  },
+  {
+    "id": "dst_quarter_hour_sydney",
+    "category": "multi_zone_expert",
+    "difficulty": "expert",
+    "today": "2026-03-25",
+    "duration_min": 60,
+    "attendees": [
+      {"name": "Alice", "tz": "America/Los_Angeles", "local_available": ["06:00", "08:00"]},
+      {"name": "Bob",   "tz": "Europe/London",       "local_available": ["14:00", "15:30"]},
+      {"name": "Priya", "tz": "Asia/Kolkata",        "local_available": ["19:00", "21:00"]},
+      {"name": "Niraj", "tz": "Asia/Kathmandu",      "local_available": ["19:30", "21:30"]},
+      {"name": "Sam",   "tz": "Australia/Sydney",    "local_available": ["00:30", "02:30"], "local_date": "2026-03-27"}
+    ],
+    "canonical_start_utc": "2026-03-26T14:00:00Z",
+    "accepted_start_utc_range": ["2026-03-26T14:00:00Z", "2026-03-26T14:00:00Z"],
+    "notes": "Five-way trap: (1) UK on GMT, not BST; (2) US on PDT; (3) IST UTC+5:30; (4) Nepal NPT UTC+5:45 (quarter-hour); (5) Sydney AEDT UTC+11 (southern-hemisphere DST in March); (6) Sam's local calendar date is March 27 (day shift). Exactly one valid start time."
   }
 ]

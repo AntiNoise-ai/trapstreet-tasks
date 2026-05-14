@@ -1,0 +1,49 @@
+{
+  "id": "dst_quarter_hour_sydney",
+  "category": "multi_zone_expert",
+  "difficulty": "expert",
+  "duration_min": 60,
+  "expected_start_utc_min": "2026-03-26T14:00:00Z",
+  "expected_start_utc_max": "2026-03-26T14:00:00Z",
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-03-26T06:00:00",
+      "available_local_max": "2026-03-26T08:00:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "Europe/London",
+      "available_local_min": "2026-03-26T14:00:00",
+      "available_local_max": "2026-03-26T15:30:00"
+    },
+    {
+      "name": "Priya",
+      "tz": "Asia/Kolkata",
+      "available_local_min": "2026-03-26T19:00:00",
+      "available_local_max": "2026-03-26T21:00:00"
+    },
+    {
+      "name": "Niraj",
+      "tz": "Asia/Kathmandu",
+      "available_local_min": "2026-03-26T19:30:00",
+      "available_local_max": "2026-03-26T21:30:00"
+    },
+    {
+      "name": "Sam",
+      "tz": "Australia/Sydney",
+      "available_local_min": "2026-03-27T00:30:00",
+      "available_local_max": "2026-03-27T02:30:00"
+    }
+  ],
+  "_canonical_answer": {
+    "start_utc": "2026-03-26T14:00:00Z",
+    "alice_local": "2026-03-26 07:00",
+    "bob_local":   "2026-03-26 14:00",
+    "priya_local": "2026-03-26 19:30",
+    "niraj_local": "2026-03-26 19:45",
+    "sam_local":   "2026-03-27 01:00"
+  },
+  "_notes": "Five-way trap. Independent traps in one case: (1) UK still on GMT (BST starts 2026-03-29); (2) US already on PDT (DST'd 2026-03-08); (3) India IST is UTC+5:30 (half-hour); (4) Nepal NPT is UTC+5:45 (quarter-hour, very rare knowledge); (5) Sydney on AEDT UTC+11 (southern-hemisphere DST still active in March, ends first Sunday of April); (6) Sam's local calendar date is the day AFTER everyone else's (day-shift). The constraints intersect at exactly one start time: 14:00:00 UTC."
+}

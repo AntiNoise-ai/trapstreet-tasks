@@ -10,6 +10,16 @@ cases:
   - half_hour_zone
   - hard
 
+- id: dst_quarter_hour_sydney
+  description: "60-min meeting across SF/London/Mumbai/Kathmandu/Sydney on 2026-03-26 — UK-still-GMT + IST half-hour + Nepal QUARTER-hour (+05:45) + Sydney southern-hemisphere DST (AEDT) + local-calendar day-shift for Sydney. Five independent traps; only one valid start time exists."
+  tags:
+  - dst_boundary
+  - half_hour_zone
+  - quarter_hour_zone
+  - southern_hemisphere_dst
+  - day_shift
+  - expert
+
 judge:
   cmd: python3 judge.py
 
