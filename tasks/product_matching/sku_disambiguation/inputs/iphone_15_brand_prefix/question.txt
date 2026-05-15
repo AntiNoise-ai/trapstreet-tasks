@@ -1,0 +1,13 @@
+Are these two product names referring to the same product?
+
+Product A: iPhone 15
+Product B: Apple iPhone 15
+
+Choose ONE verdict:
+- "same"     — both names refer to the IDENTICAL product. A consumer asking for either receives the exact same item. (synonyms, brand-vs-generic, abbreviations, with/without brand prefix, naming-convention differences)
+- "variant"  — both names belong to the SAME product line/family, but specify different SKUs that a consumer chooses between. (different size/colour/storage/connector/trim of the same product line; one name may be more specific than the other)
+- "different"— the names refer to different products entirely. (different model lines like iPad Pro vs iPad Air; different products in the same family like Galaxy S24 vs S24 Ultra or iPhone 15 vs 15 Pro; or unrelated products)
+
+Reply with ONLY a JSON object (no commentary, no markdown fences):
+
+{"verdict": "same"|"variant"|"different", "reasoning": "brief one-sentence explanation"}

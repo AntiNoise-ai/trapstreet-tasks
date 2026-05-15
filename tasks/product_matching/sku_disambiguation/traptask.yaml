@@ -1,0 +1,58 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: airpods_pro_lightning_vs_usbc
+  description: "Apple AirPods Pro 2nd Gen vs AirPods Pro Gen 2 USB-C — same generation, different connector SKU (USB-C refresh shipped Sept 2023). Gold: variant."
+  tags: [variant_connector, expert]
+
+- id: macbook_air_m2_13_vs_15
+  description: "MacBook Air M2 13-inch vs MacBook Air M2 15-inch — size variants of the same product line. Gold: variant."
+  tags: [variant_size, hard]
+
+- id: tesla_model3_trim
+  description: "Tesla Model 3 Long Range 2023 vs Tesla Model 3 Performance 2023 — trim variants of the same model year. Gold: variant."
+  tags: [variant_trim, hard]
+
+- id: tylenol_vs_acetaminophen
+  description: "Tylenol vs Acetaminophen — brand vs generic of the same drug. Gold: same."
+  tags: [brand_vs_generic, easy]
+
+- id: coke_classic_naming
+  description: "Coca-Cola Classic vs Coke Classic — colloquial vs official name. Gold: same."
+  tags: [colloquial, easy]
+
+- id: photoshop_cc_abbreviation
+  description: "Adobe Photoshop CC vs Adobe Photoshop Creative Cloud — abbreviation. Gold: same."
+  tags: [abbreviation, easy]
+
+- id: iphone_15_brand_prefix
+  description: "iPhone 15 vs Apple iPhone 15 — with/without brand prefix. Gold: same."
+  tags: [brand_prefix, easy]
+
+- id: ipad_pro_vs_air
+  description: "iPad Pro 11-inch vs iPad Air 11-inch — different product lines at same screen size. Gold: different."
+  tags: [different_line, medium]
+
+- id: galaxy_s24_vs_ultra
+  description: "Samsung Galaxy S24 vs Samsung Galaxy S24 Ultra — distinct products in same family (Ultra has different chip, screen, S Pen). Gold: different."
+  tags: [family_different_product, medium]
+
+- id: airpods_pro_vs_max
+  description: "AirPods Pro (in-ear) vs AirPods Max (over-ear) — entirely different products. Gold: different."
+  tags: [different_product, easy]
+
+- id: iphone_15_vs_15_pro
+  description: "iPhone 15 vs iPhone 15 Pro — distinct products in same family (different chip, body, cameras, price). Gold: different."
+  tags: [family_different_product, medium]
+
+- id: ipad_10th_gen_naming
+  description: "iPad (10th generation) vs iPad 10 — different naming conventions for the same product. Gold: same."
+  tags: [naming_convention, medium]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

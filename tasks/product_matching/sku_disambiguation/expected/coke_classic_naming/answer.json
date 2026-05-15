@@ -1,0 +1,9 @@
+{
+  "id": "coke_classic_naming",
+  "category": "colloquial",
+  "difficulty": "easy",
+  "product_a": "Coca-Cola Classic",
+  "product_b": "Coke Classic",
+  "verdict": "same",
+  "notes": "Colloquial vs official name for the same product."
+}

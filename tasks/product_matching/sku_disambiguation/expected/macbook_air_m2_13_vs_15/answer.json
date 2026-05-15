@@ -1,0 +1,9 @@
+{
+  "id": "macbook_air_m2_13_vs_15",
+  "category": "variant_size",
+  "difficulty": "hard",
+  "product_a": "MacBook Air M2 13-inch",
+  "product_b": "MacBook Air M2 15-inch",
+  "verdict": "variant",
+  "notes": "Same processor + same product line (MacBook Air M2). Different screen sizes are SKU variants Apple sells under one product family."
+}

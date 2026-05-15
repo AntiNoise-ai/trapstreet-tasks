@@ -1,0 +1,9 @@
+{
+  "id": "tylenol_vs_acetaminophen",
+  "category": "brand_vs_generic",
+  "difficulty": "easy",
+  "product_a": "Tylenol",
+  "product_b": "Acetaminophen",
+  "verdict": "same",
+  "notes": "Tylenol is a brand name for the generic drug acetaminophen. Identical compound."
+}

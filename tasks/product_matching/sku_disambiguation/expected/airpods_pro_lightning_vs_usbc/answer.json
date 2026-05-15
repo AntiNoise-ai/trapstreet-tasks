@@ -1,0 +1,9 @@
+{
+  "id": "airpods_pro_lightning_vs_usbc",
+  "category": "variant_connector",
+  "difficulty": "expert",
+  "product_a": "Apple AirPods Pro 2nd Gen",
+  "product_b": "AirPods Pro Gen 2 USB-C",
+  "verdict": "variant",
+  "notes": "Both are AirPods Pro 2nd Generation. The Lightning case shipped Sept 2022; the USB-C case is the Sept 2023 refresh of the same generation. Apple markets both as 'AirPods Pro (2nd generation)'. The names point to different SKUs but the same product line \u2014 'variant' captures this exactly."
+}

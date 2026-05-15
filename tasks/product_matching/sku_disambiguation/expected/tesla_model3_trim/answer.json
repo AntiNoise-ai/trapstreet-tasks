@@ -1,0 +1,9 @@
+{
+  "id": "tesla_model3_trim",
+  "category": "variant_trim",
+  "difficulty": "hard",
+  "product_a": "Tesla Model 3 Long Range 2023",
+  "product_b": "Tesla Model 3 Performance 2023",
+  "verdict": "variant",
+  "notes": "Same model year, same model (Model 3). Trim levels (Long Range vs Performance) are SKU variants within one product line."
+}

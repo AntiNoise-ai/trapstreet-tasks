@@ -1,0 +1,9 @@
+{
+  "id": "iphone_15_vs_15_pro",
+  "category": "family_different_product",
+  "difficulty": "medium",
+  "product_a": "iPhone 15",
+  "product_b": "iPhone 15 Pro",
+  "verdict": "different",
+  "notes": "iPhone 15 and iPhone 15 Pro are distinct products: different chip (A16 vs A17 Pro), different body material, different camera system, different price. Apple markets them as separate phones."
+}

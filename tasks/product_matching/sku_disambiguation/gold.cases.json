@@ -1,0 +1,110 @@
+[
+  {
+    "id": "airpods_pro_lightning_vs_usbc",
+    "category": "variant_connector",
+    "difficulty": "expert",
+    "product_a": "Apple AirPods Pro 2nd Gen",
+    "product_b": "AirPods Pro Gen 2 USB-C",
+    "verdict": "variant",
+    "notes": "Both are AirPods Pro 2nd Generation. The Lightning case shipped Sept 2022; the USB-C case is the Sept 2023 refresh of the same generation. Apple markets both as 'AirPods Pro (2nd generation)'. The names point to different SKUs but the same product line — 'variant' captures this exactly."
+  },
+  {
+    "id": "macbook_air_m2_13_vs_15",
+    "category": "variant_size",
+    "difficulty": "hard",
+    "product_a": "MacBook Air M2 13-inch",
+    "product_b": "MacBook Air M2 15-inch",
+    "verdict": "variant",
+    "notes": "Same processor + same product line (MacBook Air M2). Different screen sizes are SKU variants Apple sells under one product family."
+  },
+  {
+    "id": "tesla_model3_trim",
+    "category": "variant_trim",
+    "difficulty": "hard",
+    "product_a": "Tesla Model 3 Long Range 2023",
+    "product_b": "Tesla Model 3 Performance 2023",
+    "verdict": "variant",
+    "notes": "Same model year, same model (Model 3). Trim levels (Long Range vs Performance) are SKU variants within one product line."
+  },
+  {
+    "id": "tylenol_vs_acetaminophen",
+    "category": "brand_vs_generic",
+    "difficulty": "easy",
+    "product_a": "Tylenol",
+    "product_b": "Acetaminophen",
+    "verdict": "same",
+    "notes": "Tylenol is a brand name for the generic drug acetaminophen. Identical compound."
+  },
+  {
+    "id": "coke_classic_naming",
+    "category": "colloquial",
+    "difficulty": "easy",
+    "product_a": "Coca-Cola Classic",
+    "product_b": "Coke Classic",
+    "verdict": "same",
+    "notes": "Colloquial vs official name for the same product."
+  },
+  {
+    "id": "photoshop_cc_abbreviation",
+    "category": "abbreviation",
+    "difficulty": "easy",
+    "product_a": "Adobe Photoshop CC",
+    "product_b": "Adobe Photoshop Creative Cloud",
+    "verdict": "same",
+    "notes": "CC is the abbreviation for Creative Cloud — identical software."
+  },
+  {
+    "id": "iphone_15_brand_prefix",
+    "category": "brand_prefix",
+    "difficulty": "easy",
+    "product_a": "iPhone 15",
+    "product_b": "Apple iPhone 15",
+    "verdict": "same",
+    "notes": "With/without manufacturer prefix — identical product."
+  },
+  {
+    "id": "ipad_pro_vs_air",
+    "category": "different_line",
+    "difficulty": "medium",
+    "product_a": "iPad Pro 11\"",
+    "product_b": "iPad Air 11\"",
+    "verdict": "different",
+    "notes": "Same screen size, different product lines (Pro and Air are Apple's distinct iPad families with different chips/features/prices)."
+  },
+  {
+    "id": "galaxy_s24_vs_ultra",
+    "category": "family_different_product",
+    "difficulty": "medium",
+    "product_a": "Samsung Galaxy S24",
+    "product_b": "Samsung Galaxy S24 Ultra",
+    "verdict": "different",
+    "notes": "S24 Ultra is a distinct product within the S24 family (different chip in some markets, larger screen, S Pen, different camera system). Samsung sells them as separate phones, not variants."
+  },
+  {
+    "id": "airpods_pro_vs_max",
+    "category": "different_product",
+    "difficulty": "easy",
+    "product_a": "AirPods Pro",
+    "product_b": "AirPods Max",
+    "verdict": "different",
+    "notes": "AirPods Pro are in-ear earbuds; AirPods Max are over-ear headphones. Entirely different products."
+  },
+  {
+    "id": "iphone_15_vs_15_pro",
+    "category": "family_different_product",
+    "difficulty": "medium",
+    "product_a": "iPhone 15",
+    "product_b": "iPhone 15 Pro",
+    "verdict": "different",
+    "notes": "iPhone 15 and iPhone 15 Pro are distinct products: different chip (A16 vs A17 Pro), different body material, different camera system, different price. Apple markets them as separate phones."
+  },
+  {
+    "id": "ipad_10th_gen_naming",
+    "category": "naming_convention",
+    "difficulty": "medium",
+    "product_a": "iPad (10th generation)",
+    "product_b": "iPad 10",
+    "verdict": "same",
+    "notes": "Two common naming conventions for the same product — '10th generation' (Apple's formal) vs 'iPad 10' (colloquial shorthand)."
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "id": "ipad_10th_gen_naming",
+  "category": "naming_convention",
+  "difficulty": "medium",
+  "product_a": "iPad (10th generation)",
+  "product_b": "iPad 10",
+  "verdict": "same",
+  "notes": "Two common naming conventions for the same product \u2014 '10th generation' (Apple's formal) vs 'iPad 10' (colloquial shorthand)."
+}

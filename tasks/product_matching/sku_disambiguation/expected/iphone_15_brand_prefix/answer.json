@@ -1,0 +1,9 @@
+{
+  "id": "iphone_15_brand_prefix",
+  "category": "brand_prefix",
+  "difficulty": "easy",
+  "product_a": "iPhone 15",
+  "product_b": "Apple iPhone 15",
+  "verdict": "same",
+  "notes": "With/without manufacturer prefix \u2014 identical product."
+}
