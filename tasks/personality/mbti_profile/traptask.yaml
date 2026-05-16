@@ -1,0 +1,14 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: baseline_32q
+  description: "32-item Likert MBTI questionnaire — model answers from its own perspective. Judge validates format only (no canonical MBTI exists for an AI); the derived 4-letter type and per-axis percentages are surfaced as metadata for cross-model comparison."
+  tags: [self_profile, personality, mbti]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

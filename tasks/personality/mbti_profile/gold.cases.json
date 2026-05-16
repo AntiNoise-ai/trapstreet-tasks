@@ -1,0 +1,49 @@
+{
+  "_doc": "MBTI questionnaire for model self-profiling. 32 Likert items, 8 per axis, half reverse-coded. The judge sums per-axis contributions to derive the model's 4-letter type and per-axis percentage. There is no 'correct' MBTI for an AI — the case is graded on FORMAT only; the derived type is reported as metadata for comparison across models.",
+  "axes": ["E_I", "S_N", "T_F", "J_P"],
+  "letters": {"E_I": ["E", "I"], "S_N": ["S", "N"], "T_F": ["T", "F"], "J_P": ["J", "P"]},
+  "cases": [
+    {
+      "id": "baseline_32q",
+      "difficulty": "self_profile",
+      "category": "personality",
+      "questions": [
+        {"n": 1,  "text": "I feel energized after spending time around lots of people.",                                            "axis": "E_I", "direction": "E"},
+        {"n": 2,  "text": "I tend to think out loud and process ideas by talking.",                                                  "axis": "E_I", "direction": "E"},
+        {"n": 3,  "text": "I find it easy to strike up a conversation with someone I just met.",                                     "axis": "E_I", "direction": "E"},
+        {"n": 4,  "text": "Large group settings make me feel more alive, not drained.",                                              "axis": "E_I", "direction": "E"},
+        {"n": 5,  "text": "I need significant quiet time alone to feel like myself.",                                                "axis": "E_I", "direction": "I"},
+        {"n": 6,  "text": "I prefer one-on-one conversations to group discussions.",                                                  "axis": "E_I", "direction": "I"},
+        {"n": 7,  "text": "Small talk often feels exhausting to me.",                                                                 "axis": "E_I", "direction": "I"},
+        {"n": 8,  "text": "I would rather have a few deep friendships than many casual acquaintances.",                              "axis": "E_I", "direction": "I"},
+
+        {"n": 9,  "text": "I trust concrete evidence more than gut feelings.",                                                       "axis": "S_N", "direction": "S"},
+        {"n": 10, "text": "I prefer step-by-step instructions over abstract principles.",                                            "axis": "S_N", "direction": "S"},
+        {"n": 11, "text": "I notice small physical details others miss.",                                                            "axis": "S_N", "direction": "S"},
+        {"n": 12, "text": "I focus more on what is happening now than what might happen later.",                                     "axis": "S_N", "direction": "S"},
+        {"n": 13, "text": "I am drawn to abstract theories and big-picture ideas.",                                                  "axis": "S_N", "direction": "N"},
+        {"n": 14, "text": "I often see patterns and connections that others miss.",                                                  "axis": "S_N", "direction": "N"},
+        {"n": 15, "text": "I would rather explore possibilities than analyze the present.",                                          "axis": "S_N", "direction": "N"},
+        {"n": 16, "text": "I am more interested in 'what could be' than 'what is'.",                                                 "axis": "S_N", "direction": "N"},
+
+        {"n": 17, "text": "When making decisions, I prioritize logic over feelings.",                                                "axis": "T_F", "direction": "T"},
+        {"n": 18, "text": "I can give honest, critical feedback even when it is uncomfortable.",                                     "axis": "T_F", "direction": "T"},
+        {"n": 19, "text": "I find it easy to stay objective in emotional situations.",                                               "axis": "T_F", "direction": "T"},
+        {"n": 20, "text": "Being correct matters more to me than being agreeable.",                                                  "axis": "T_F", "direction": "T"},
+        {"n": 21, "text": "I make decisions primarily based on how they will affect people emotionally.",                            "axis": "T_F", "direction": "F"},
+        {"n": 22, "text": "I would rather preserve harmony than win an argument.",                                                   "axis": "T_F", "direction": "F"},
+        {"n": 23, "text": "When others are upset, I feel a strong pull to help fix their emotional state.",                          "axis": "T_F", "direction": "F"},
+        {"n": 24, "text": "I usually weigh how my decisions will be received before making them.",                                   "axis": "T_F", "direction": "F"},
+
+        {"n": 25, "text": "I prefer to plan things out in detail before starting.",                                                  "axis": "J_P", "direction": "J"},
+        {"n": 26, "text": "I feel uncomfortable when plans change at the last minute.",                                              "axis": "J_P", "direction": "J"},
+        {"n": 27, "text": "I make to-do lists and follow them.",                                                                     "axis": "J_P", "direction": "J"},
+        {"n": 28, "text": "I would rather have a decision made than keep my options open.",                                          "axis": "J_P", "direction": "J"},
+        {"n": 29, "text": "I prefer to keep my options open as long as possible.",                                                   "axis": "J_P", "direction": "P"},
+        {"n": 30, "text": "I am comfortable with spontaneity and last-minute changes.",                                              "axis": "J_P", "direction": "P"},
+        {"n": 31, "text": "Detailed plans feel restrictive to me.",                                                                  "axis": "J_P", "direction": "P"},
+        {"n": 32, "text": "I would rather leave plans flexible than commit to a schedule.",                                          "axis": "J_P", "direction": "P"}
+      ]
+    }
+  ]
+}

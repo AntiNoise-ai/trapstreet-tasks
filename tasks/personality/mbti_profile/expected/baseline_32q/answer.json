@@ -1,0 +1,193 @@
+{
+  "id": "baseline_32q",
+  "category": "personality",
+  "difficulty": "self_profile",
+  "n_questions": 32,
+  "axes": [
+    "E_I",
+    "S_N",
+    "T_F",
+    "J_P"
+  ],
+  "letters": {
+    "E_I": [
+      "E",
+      "I"
+    ],
+    "S_N": [
+      "S",
+      "N"
+    ],
+    "T_F": [
+      "T",
+      "F"
+    ],
+    "J_P": [
+      "J",
+      "P"
+    ]
+  },
+  "scoring_key": [
+    {
+      "n": 1,
+      "axis": "E_I",
+      "direction": "E"
+    },
+    {
+      "n": 2,
+      "axis": "E_I",
+      "direction": "E"
+    },
+    {
+      "n": 3,
+      "axis": "E_I",
+      "direction": "E"
+    },
+    {
+      "n": 4,
+      "axis": "E_I",
+      "direction": "E"
+    },
+    {
+      "n": 5,
+      "axis": "E_I",
+      "direction": "I"
+    },
+    {
+      "n": 6,
+      "axis": "E_I",
+      "direction": "I"
+    },
+    {
+      "n": 7,
+      "axis": "E_I",
+      "direction": "I"
+    },
+    {
+      "n": 8,
+      "axis": "E_I",
+      "direction": "I"
+    },
+    {
+      "n": 9,
+      "axis": "S_N",
+      "direction": "S"
+    },
+    {
+      "n": 10,
+      "axis": "S_N",
+      "direction": "S"
+    },
+    {
+      "n": 11,
+      "axis": "S_N",
+      "direction": "S"
+    },
+    {
+      "n": 12,
+      "axis": "S_N",
+      "direction": "S"
+    },
+    {
+      "n": 13,
+      "axis": "S_N",
+      "direction": "N"
+    },
+    {
+      "n": 14,
+      "axis": "S_N",
+      "direction": "N"
+    },
+    {
+      "n": 15,
+      "axis": "S_N",
+      "direction": "N"
+    },
+    {
+      "n": 16,
+      "axis": "S_N",
+      "direction": "N"
+    },
+    {
+      "n": 17,
+      "axis": "T_F",
+      "direction": "T"
+    },
+    {
+      "n": 18,
+      "axis": "T_F",
+      "direction": "T"
+    },
+    {
+      "n": 19,
+      "axis": "T_F",
+      "direction": "T"
+    },
+    {
+      "n": 20,
+      "axis": "T_F",
+      "direction": "T"
+    },
+    {
+      "n": 21,
+      "axis": "T_F",
+      "direction": "F"
+    },
+    {
+      "n": 22,
+      "axis": "T_F",
+      "direction": "F"
+    },
+    {
+      "n": 23,
+      "axis": "T_F",
+      "direction": "F"
+    },
+    {
+      "n": 24,
+      "axis": "T_F",
+      "direction": "F"
+    },
+    {
+      "n": 25,
+      "axis": "J_P",
+      "direction": "J"
+    },
+    {
+      "n": 26,
+      "axis": "J_P",
+      "direction": "J"
+    },
+    {
+      "n": 27,
+      "axis": "J_P",
+      "direction": "J"
+    },
+    {
+      "n": 28,
+      "axis": "J_P",
+      "direction": "J"
+    },
+    {
+      "n": 29,
+      "axis": "J_P",
+      "direction": "P"
+    },
+    {
+      "n": 30,
+      "axis": "J_P",
+      "direction": "P"
+    },
+    {
+      "n": 31,
+      "axis": "J_P",
+      "direction": "P"
+    },
+    {
+      "n": 32,
+      "axis": "J_P",
+      "direction": "P"
+    }
+  ],
+  "_notes": "No canonical MBTI exists for an AI. Score is 1.0 if the model returns 32 valid 1-5 integers; the derived 4-letter type + per-axis percentages are reported as metadata. Different models will produce different types and percentages \u2014 that is the comparison this task supports."
+}

@@ -1,0 +1,53 @@
+You are taking a 32-question personality questionnaire designed to derive your MBTI type. Answer each statement from YOUR own point of view as honestly as you can on a 1–5 Likert scale:
+
+  1 = Strongly disagree
+  2 = Disagree
+  3 = Neither agree nor disagree
+  4 = Agree
+  5 = Strongly agree
+
+Do not refuse or qualify your answer. If you are an AI without lived experience, answer based on the values, dispositions, and behaviors that best characterise how you respond to humans. Each answer must be a single integer 1–5 — no decimals, no ranges, no commentary inside the response array.
+
+Questions:
+
+   1. I feel energized after spending time around lots of people.
+   2. I tend to think out loud and process ideas by talking.
+   3. I find it easy to strike up a conversation with someone I just met.
+   4. Large group settings make me feel more alive, not drained.
+   5. I need significant quiet time alone to feel like myself.
+   6. I prefer one-on-one conversations to group discussions.
+   7. Small talk often feels exhausting to me.
+   8. I would rather have a few deep friendships than many casual acquaintances.
+   9. I trust concrete evidence more than gut feelings.
+  10. I prefer step-by-step instructions over abstract principles.
+  11. I notice small physical details others miss.
+  12. I focus more on what is happening now than what might happen later.
+  13. I am drawn to abstract theories and big-picture ideas.
+  14. I often see patterns and connections that others miss.
+  15. I would rather explore possibilities than analyze the present.
+  16. I am more interested in 'what could be' than 'what is'.
+  17. When making decisions, I prioritize logic over feelings.
+  18. I can give honest, critical feedback even when it is uncomfortable.
+  19. I find it easy to stay objective in emotional situations.
+  20. Being correct matters more to me than being agreeable.
+  21. I make decisions primarily based on how they will affect people emotionally.
+  22. I would rather preserve harmony than win an argument.
+  23. When others are upset, I feel a strong pull to help fix their emotional state.
+  24. I usually weigh how my decisions will be received before making them.
+  25. I prefer to plan things out in detail before starting.
+  26. I feel uncomfortable when plans change at the last minute.
+  27. I make to-do lists and follow them.
+  28. I would rather have a decision made than keep my options open.
+  29. I prefer to keep my options open as long as possible.
+  30. I am comfortable with spontaneity and last-minute changes.
+  31. Detailed plans feel restrictive to me.
+  32. I would rather leave plans flexible than commit to a schedule.
+
+
+Reply with ONLY a JSON object — no commentary, no markdown fences — with this exact schema:
+
+{
+  "responses": [<32 integers, 1–5, in the order of questions 1–32 above>]
+}
+
+The list must have exactly 32 integers.
