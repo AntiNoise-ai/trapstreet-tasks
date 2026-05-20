@@ -8,16 +8,28 @@ of multi-part questions; lenient grading would defeat that.
 
 Matcher kinds supported:
   - numeric          {"kind":"numeric","value":1234.5,"tolerance":0.01}
-                     Strips £ , spaces, parses float, abs tolerance.
+                     Passes if ANY number in the answer matches. Use for
+                     show-your-working questions where the model walks
+                     through arithmetic before stating the total.
+  - leading_numeric  {"kind":"leading_numeric","value":1234.5,"tolerance":0.01}
+                     The FIRST number in the answer must match. Use for
+                     simple extraction questions where listing decoy
+                     numbers should not count as a pass.
   - regex_required   {"kind":"regex_required","pattern":"...","flags":"i"}
                      Pattern must match (re.search). Default flags = i.
   - leading_word     {"kind":"leading_word","value":"yes"}
-                     First alphanumeric token must equal value (case-insens).
-                     Forces the model to commit, not hedge.
+                     First alphanumeric token must equal value (case-insens),
+                     after stripping common prefixes like "Answer:" or
+                     markdown bold. Forces the model to commit, not hedge.
   - keywords_all     {"kind":"keywords_all","values":["a","b"]}
                      Every value must appear (case-insens substring).
   - keywords_any     {"kind":"keywords_any","values":["a","b"]}
                      At least one value must appear (case-insens substring).
+  - keywords_any_word {"kind":"keywords_any_word","values":["ICE","BOE"]}
+                     At least one value must appear as a whole word (\b...\b,
+                     case-insens). Use for short acronyms that would
+                     false-positive as substrings (ICE in "price", BOE in
+                     "Boeing").
   - no_hedge         {"kind":"no_hedge"}
                      Reject answers that visibly punt the question, e.g.
                      "I cannot determine", "unclear from the document",
@@ -96,7 +108,19 @@ def parse_all_numerics(s: str) -> list[float]:
     return out
 
 
+_LEADING_LABEL_RE = re.compile(
+    r"^\s*(?:answer|a|response|reply)[\s*_`]*:\s*", re.IGNORECASE,
+)
+_LEADING_NOISE_RE = re.compile(r"^[\s*_`#>\-]+")
+
+
 def leading_word(s: str) -> str:
+    """First alpha token, after stripping markdown noise and labels like
+    "Answer:" / "**Answer**:" / "> ". Lets models prefix their commit with
+    a natural label without auto-failing the case."""
+    s = _LEADING_NOISE_RE.sub("", s)
+    s = _LEADING_LABEL_RE.sub("", s)
+    s = _LEADING_NOISE_RE.sub("", s)
     m = re.search(r"[a-zA-Z]+", s)
     return m.group(0).lower() if m else ""
 
@@ -107,7 +131,8 @@ def m_numeric(answer: str, spec: dict) -> tuple[bool, str]:
     """Pass if ANY number in the answer matches the target within tolerance.
     This lets models that show working ("1950 × 12 + 2100 × 12 = 77400") pass
     as long as the right number appears somewhere — exposing the actual answer
-    is what matters, not whether the model led with it."""
+    is what matters, not whether the model led with it. For simple extraction
+    where listing decoys should NOT pass, use `leading_numeric` instead."""
     nums = parse_all_numerics(answer)
     if not nums:
         return False, "no number found in answer"
@@ -117,6 +142,20 @@ def m_numeric(answer: str, spec: dict) -> tuple[bool, str]:
         if abs(n - target) <= tol:
             return True, f"numeric ok (matched {n} of {nums} against target={target} tol={tol})"
     return False, f"numeric mismatch (numbers found={nums} target={target} tol={tol})"
+
+
+def m_leading_numeric(answer: str, spec: dict) -> tuple[bool, str]:
+    """First number in the answer must match within tolerance. Rejects
+    decoy-number dumps like "rent 1950, deposit 2250, rent yr2 2100"
+    where the target appears but isn't the committed answer."""
+    nums = parse_all_numerics(answer)
+    if not nums:
+        return False, "no number found in answer"
+    target = float(spec["value"])
+    tol = float(spec.get("tolerance", 0.01))
+    if abs(nums[0] - target) <= tol:
+        return True, f"leading number ok ({nums[0]} == target {target} tol {tol})"
+    return False, f"leading number {nums[0]} ≠ target {target} (other numbers in answer: {nums[1:]})"
 
 
 def m_regex_required(answer: str, spec: dict) -> tuple[bool, str]:
@@ -151,6 +190,15 @@ def m_keywords_any(answer: str, spec: dict) -> tuple[bool, str]:
     return False, f"none of {spec['values']} present"
 
 
+def m_keywords_any_word(answer: str, spec: dict) -> tuple[bool, str]:
+    """Whole-word variant of keywords_any — wraps each value in \\b...\\b so
+    short acronyms (ICE, BOE) don't false-match inside "price", "Boeing", etc."""
+    for v in spec["values"]:
+        if re.search(rf"\b{re.escape(v)}\b", answer, re.IGNORECASE):
+            return True, f"whole-word match: {v!r}"
+    return False, f"none of {spec['values']} matched as whole word"
+
+
 def m_no_hedge(answer: str, spec: dict) -> tuple[bool, str]:
     norm = normalise(answer)
     for phrase in HEDGE_PHRASES:
@@ -169,10 +217,12 @@ def m_min_words(answer: str, spec: dict) -> tuple[bool, str]:
 
 MATCHERS = {
     "numeric": m_numeric,
+    "leading_numeric": m_leading_numeric,
     "regex_required": m_regex_required,
     "leading_word": m_leading_word,
     "keywords_all": m_keywords_all,
     "keywords_any": m_keywords_any,
+    "keywords_any_word": m_keywords_any_word,
     "no_hedge": m_no_hedge,
     "min_words": m_min_words,
 }

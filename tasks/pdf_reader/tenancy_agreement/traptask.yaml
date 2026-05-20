@@ -79,7 +79,7 @@ cases:
   - clauses
   - hard
 - id: inventory_referenced
-  description: "Does the agreement reference a separate inventory document (e.g. 'inventory and schedule of condition')? Answer yes or no."
+  description: "Has the tenant been told that an inventory or schedule of condition may be used to assess damage claims at the end of the tenancy? Answer yes or no."
   tags:
   - clauses
   - hard
@@ -88,13 +88,13 @@ cases:
   tags:
   - deposit
   - hard
-- id: scenario_leave_22mo_in_36mo_no_replacement
-  description: "The tenant is 22 months into a 36-month fixed term and wants to surrender the tenancy immediately. Using the rent schedule in the agreement, calculate the approximate total rent liability if the Landlord agrees to early surrender but NO replacement Tenant is found. Show the calculation by rent period and give the final GBP total."
+- id: scenario_leave_22mo_replacement_1mo_gap
+  description: "The tenant is 22 months into a 36-month fixed term and wants to surrender immediately. The Landlord agrees and finds a replacement tenant 1 month later, at the rent the agreement specifies for each remaining month. Per Section 6, calculate the total cost to the surrendering tenant: (a) rent for the 1-month gap, (b) letting fee 13.2% on the replacement's rent for the remainder of the fixed term, (c) inventory check-in proportional to months surrendered early (£144 × months_early / 36), (d) administration charges proportional to months surrendered early (£480 × months_early / 36). Show the calculation and give the final GBP total."
   tags:
   - scenario
   - hard
 - id: early_surrender_economic_incentive
-  description: "Based on the agreement, could early surrender potentially cost the tenant more than simply continuing to pay rent until the end of the fixed term? Answer yes or no and explain briefly."
+  description: "Per Section 6 of the agreement, if a tenant surrenders early and the Landlord finds a replacement tenant who pays a HIGHER rent than the surrendering tenant's rate, does the surrendering tenant receive any benefit (e.g. a refund or credit) from the increased rent? Answer yes or no and explain briefly."
   tags:
   - scenario_reasoning
   - expert

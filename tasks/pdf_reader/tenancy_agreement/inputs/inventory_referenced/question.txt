@@ -1,1 +1,1 @@
-Does the agreement reference a separate inventory document (e.g. 'inventory and schedule of condition')? Answer yes or no.
+Has the tenant been told that an inventory or schedule of condition may be used to assess damage claims at the end of the tenancy? Answer yes or no.

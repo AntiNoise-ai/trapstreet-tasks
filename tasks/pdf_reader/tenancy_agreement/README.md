@@ -1,7 +1,7 @@
 # Tenancy Agreement — PDF Reader task
 
 A trap-compatible task that asks an agent to extract facts from a real UK
-Assured Shorthold Tenancy (AST) PDF and answer 23 questions across rent,
+Assured Shorthold Tenancy (AST) PDF and answer 19 questions across rent,
 dates, clauses, scenarios, and reasoning. Designed to be **harsh**: agents
 that hedge, skip parts of multi-part questions, or use the wrong format fail
 the relevant case outright.
@@ -16,7 +16,7 @@ points `traptask:` at this directory and run `uv run tp run`.
 
 ```
 tenancy_agreement/
-├── traptask.yaml             # case list (23 cases) + judge/grader cmds
+├── traptask.yaml             # case list (19 cases) + judge/grader cmds
 ├── judge.py                  # per-case scorer (harsh, type-aware matchers)
 ├── grader.py                 # aggregator (score, pass/fail, by-category breakdown)
 ├── gold.candidates.json      # source-of-truth for question wording + gold answers
@@ -102,18 +102,20 @@ supported matcher kinds and why they're strict:
 
 | Kind | Purpose |
 |---|---|
-| `numeric` | Parses first number; strips `£`/`$`/`,`/spaces; abs tolerance. Wrong number → 0. |
+| `numeric` | Passes if ANY number in the answer matches (within tolerance). Use for show-your-working cases where intermediate numbers appear. |
+| `leading_numeric` | The FIRST number must match. Use for simple extraction where listing decoy numbers should not pass. |
 | `regex_required` | Pattern must match. Used for dates (`05/09/2022`), postcodes (`E14 9LQ`). |
-| `leading_word` | First alpha token must equal target. Forces yes/no to commit, not hedge. |
-| `keywords_all` | Every listed keyword must appear (case-insensitive). |
-| `keywords_any` | At least one synonym must appear (e.g. `TDS` / `Tenancy Deposit Scheme`). |
+| `leading_word` | First alpha token must equal target (after stripping markdown noise + labels like `"Answer:"` / `"**Answer**:"`). Forces yes/no to commit, not hedge. |
+| `keywords_all` | Every listed keyword must appear (case-insensitive substring). |
+| `keywords_any` | At least one synonym must appear (case-insensitive substring). |
+| `keywords_any_word` | At least one value must appear as a whole word (`\b…\b`). Use for short acronyms (`ICE`, `BOE`) that would false-match inside `"price"` or `"Boeing"`. |
 | `no_hedge` | Rejects "I cannot determine", "as an AI", "unclear from the document", etc. |
 | `min_words` | For multi-part questions: rejects one-word answers that skip the explanation. |
 
-Cases without curated matchers (scenarios with `"answer": null`) currently
-score **`None`** — they're surfaced in the report as "not yet graded"
-rather than penalising the agent. Add matchers as you finalise the gold
-answers.
+All 19 cases currently have curated gold and matchers. If a future case is
+added without matchers (e.g. `"answer": null`), the judge returns
+`score: null` so it's surfaced in the report as "not yet graded" rather
+than penalising the agent.
 
 ---
 
@@ -159,8 +161,4 @@ all-correct pass bar.
 
 ## Status
 
-- 18/23 cases have curated gold + matchers (scoring is fully automatic)
-- 5 scenario cases (`scenario_*`, `deposit_protection_deadline_days`)
-  currently have no gold — they're included in the case list so agents
-  see the question, but the judge returns `score: null` until matchers
-  are added.
+- 19/19 cases have curated gold + matchers (scoring is fully automatic).

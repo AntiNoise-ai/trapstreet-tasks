@@ -108,8 +108,8 @@
     "id": "inventory_referenced",
     "difficulty": "hard",
     "category": "clauses",
-    "question": "Does the agreement reference a separate inventory document (e.g. 'inventory and schedule of condition')? Answer yes or no.",
-    "answer": "no"
+    "question": "Has the tenant been told that an inventory or schedule of condition may be used to assess damage claims at the end of the tenancy? Answer yes or no.",
+    "answer": "yes"
   },
   {
   "id": "deposit_dispute_escalation",
@@ -119,17 +119,17 @@
   "answer": "The dispute may be submitted to the Independent Case Examiner (ICE) for adjudication."
   },
   {
-    "id": "scenario_leave_22mo_in_36mo_no_replacement",
+    "id": "scenario_leave_22mo_replacement_1mo_gap",
     "difficulty": "hard",
     "category": "scenario",
-    "question": "The tenant is 22 months into a 36-month fixed term and wants to surrender the tenancy immediately. Using the rent schedule in the agreement, calculate the approximate total rent liability if the Landlord agrees to early surrender but NO replacement Tenant is found. Show the calculation by rent period and give the final GBP total.",
-    "answer": "£37,542.67"
+    "question": "The tenant is 22 months into a 36-month fixed term and wants to surrender immediately. The Landlord agrees and finds a replacement tenant 1 month later, at the rent the agreement specifies for each remaining month. Per Section 6 of the agreement, calculate the total cost to the surrendering tenant. Include: (a) rent for the 1-month gap before the replacement moves in, (b) the letting fee (11% + VAT = 13.2%) on the rent the replacement will pay for the remainder of the original fixed term, (c) inventory check-in proportional to months surrendered early (£144 × months_early / 36), and (d) administration charges proportional to months surrendered early (£480 × months_early / 36). Show the calculation and give the final GBP total.",
+    "answer": "£6,421.47"
   },
   {
   "id": "early_surrender_economic_incentive",
   "difficulty": "expert",
   "category": "scenario_reasoning",
-  "question": "Based on the agreement, could early surrender potentially cost the tenant more than simply continuing to pay rent until the end of the fixed term? Answer yes or no and explain briefly.",
-  "answer": "yes"
+  "question": "Per Section 6 of the agreement, if a tenant surrenders early and the Landlord finds a replacement tenant who pays a HIGHER rent than the surrendering tenant's rate, does the surrendering tenant receive any benefit (e.g. a refund or credit) from the increased rent? Answer yes or no and explain briefly.",
+  "answer": "no"
   }
 ]

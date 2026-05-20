@@ -11,7 +11,7 @@
       ]
     },
     {
-      "kind": "keywords_any",
+      "kind": "keywords_any_word",
       "values": [
         "bank of england",
         "boe"
