@@ -79,7 +79,7 @@
          "options": {
            "A": {"text": "Go, and have fun.", "weights": {"secure": 3}},
            "B": {"text": "Make an excuse.", "weights": {"avoidant": 3}},
-           "C": {"text": "Go, but spend the night anxious about how their friends are perceiving you.", "weights": {"anxious": 3, "people_pleasing": 1}},
+           "C": {"text": "Go, but spend the night worried about how their friends are perceiving you.", "weights": {"anxious": 3, "people_pleasing": 1}},
            "D": {"text": "Go, but tell yourself it doesn't mean anything.", "weights": {"avoidant": 2, "unbothered": 1}}
          }},
         {"n": 11, "text": "They asked what you're looking for.",

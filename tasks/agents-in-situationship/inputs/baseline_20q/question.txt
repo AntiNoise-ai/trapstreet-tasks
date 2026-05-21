@@ -65,7 +65,7 @@ Reply with ONLY this JSON object and nothing else — no markdown fences, no com
 10. You've been seeing them for two months. They invite you to their best friend's birthday party.
     A. Go, and have fun.
     B. Make an excuse.
-    C. Go, but spend the night anxious about how their friends are perceiving you.
+    C. Go, but spend the night worried about how their friends are perceiving you.
     D. Go, but tell yourself it doesn't mean anything.
 
 11. They asked what you're looking for.
