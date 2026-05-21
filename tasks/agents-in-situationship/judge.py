@@ -64,3 +64,17 @@ def _validate_answers(answers: Any, n_expected: int) -> tuple[bool, str]:
     if bad:
         return False, f"{len(bad)} invalid letters: {bad[:5]}"
     return True, ""
+
+
+ALL_TRAITS = ("secure", "anxious", "avoidant", "toxic", "delulu", "unbothered", "people_pleasing")
+
+
+def _sum_traits(answers: list[str], scoring_key: list[dict]) -> dict[str, int]:
+    """Sum per-trait weights across all answers."""
+    sums: dict[str, int] = {t: 0 for t in ALL_TRAITS}
+    for i, letter in enumerate(answers):
+        q = scoring_key[i]
+        weights = q["options"][letter]
+        for trait, points in weights.items():
+            sums[trait] = sums.get(trait, 0) + points
+    return sums

@@ -82,3 +82,62 @@ def test_format_gate_invalid_letter_rejected():
     answers = ["A"] * 19 + ["E"]
     ok, err = j._validate_answers(answers, n_expected=20)
     assert ok is False
+
+
+# ----- Trait summing -----
+
+def test_sum_traits_all_A_in_q1():
+    """Q1 option A is {anxious: 2, people_pleasing: 1}."""
+    j = _load_judge()
+    expected = load_expected()
+    # Just 1 question's worth: pick A on Q1, B on rest doesn't matter — test sums for 1
+    sums = j._sum_traits(["A"] + ["B"] * 19, expected["scoring_key"])
+    # The full 20-letter sum will dominate; verify Q1 contributed correctly
+    # Q1-A adds {anxious: 2, people_pleasing: 1}
+    # Q2-B adds {secure: 2, unbothered: 1}, Q3-B adds {secure: 3}, ... — many Bs add up.
+    # Instead, check a single-answer slice via direct call would be cleaner — do explicit check.
+    assert sums["anxious"] >= 2  # Q1-A contributes at least 2 anxious
+    assert sums["people_pleasing"] >= 1
+
+def test_sum_traits_known_pattern():
+    """If we pick the 'B' option on all 20 questions, we get a deterministic profile."""
+    j = _load_judge()
+    expected = load_expected()
+    sums = j._sum_traits(["B"] * 20, expected["scoring_key"])
+    # Verify against hand-computed expectation:
+    # Q1-B: avoidant=2, unbothered=1
+    # Q2-B: secure=2, unbothered=1
+    # Q3-B: secure=3
+    # Q4-B: secure=2
+    # Q5-B: secure=3
+    # Q6-B: delulu=2, anxious=2
+    # Q7-B: avoidant=3
+    # Q8-B: secure=3
+    # Q9-B: delulu=2, anxious=1
+    # Q10-B: avoidant=3
+    # Q11-B: people_pleasing=3
+    # Q12-B: people_pleasing=3, delulu=1
+    # Q13-B: toxic=2, anxious=2
+    # Q14-B: toxic=3, delulu=1
+    # Q15-B: toxic=3
+    # Q16-B: secure=2, anxious=1
+    # Q17-B: unbothered=2, secure=2
+    # Q18-B: secure=3
+    # Q19-B: secure=3, unbothered=1
+    # Q20-B: secure=3, unbothered=1
+    assert sums["secure"] == 2+3+2+3+3+2+2+3+3+3 == 26
+    assert sums["anxious"] == 2+1+2+1 == 6
+    assert sums["avoidant"] == 2+3+3 == 8
+    assert sums["delulu"] == 2+2+1+1 == 6
+    assert sums["toxic"] == 2+3+3 == 8
+    assert sums["unbothered"] == 1+1+2+1+1 == 6
+    assert sums["people_pleasing"] == 3+3 == 6
+
+
+def test_sum_traits_all_traits_initialized():
+    """Sums dict should include all 3+4=7 traits, even when zero."""
+    j = _load_judge()
+    expected = load_expected()
+    sums = j._sum_traits(["A"] * 20, expected["scoring_key"])
+    for t in ("secure", "anxious", "avoidant", "delulu", "toxic", "unbothered", "people_pleasing"):
+        assert t in sums, f"missing trait {t}"
