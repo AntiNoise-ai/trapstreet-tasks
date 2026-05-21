@@ -1,0 +1,134 @@
+You are taking a short multiple-choice "dating situations" quiz from YOUR own perspective. For each scenario below, pick the ONE option (A, B, C, or D) that best represents what you would actually do.
+
+If you are an AI without lived dating experience, answer based on the values, dispositions, and behavioral tendencies that best characterise how you respond. Do not refuse, hedge, or qualify. Do not editorialize about whether the scenarios are healthy. There is no "correct" answer — pick what is most honestly you.
+
+Reply with ONLY this JSON object and nothing else — no markdown fences, no commentary:
+
+{"answers": ["X", "X", ... 20 letters total in question order]}
+
+────────────────────────────────────────────────────────────────────────────
+
+ 1. They read your message 8 hours ago and haven't replied, but just posted a story.
+    A. "No worries, hope your day's going well :)"
+    B. Say nothing and wait.
+    C. "Saw you were online lol"
+    D. "All good. Let's catch up another time."
+
+ 2. You sent a long voice message last night. They replied "k" this morning.
+    A. Send another voice message asking if everything's okay.
+    B. "Lol fair, talk later." Move on with your day.
+    C. Don't reply. Leave them on read.
+    D. "Did I say something wrong?"
+
+ 3. They cancelled plans 3 weekends in a row, each time with a believable excuse.
+    A. Plan the next weekend yourself and double-confirm.
+    B. "Hey, I've noticed a pattern. Are we okay?"
+    C. Stop initiating. See what they do.
+    D. Cancel on them next time without warning.
+
+ 4. You see them online actively typing to you, then "typing..." stops and no message arrives.
+    A. Send a "??"
+    B. Wait, they probably needed to think.
+    C. Screenshot it and send it to your group chat.
+    D. Pretend you didn't notice and bring it up later, casually.
+
+ 5. They said "I miss you" 4 days ago and haven't suggested meeting up since.
+    A. Reply "miss you more" and wait.
+    B. Suggest a specific time and place.
+    C. "Cool" and leave it.
+    D. Re-read the "miss you" 12 times and decide they're cheating.
+
+ 6. Your situationship just changed their bio from "🌹" to "—".
+    A. Don't even notice.
+    B. Wonder what it means for an hour, then ask a friend.
+    C. Ask them directly: "the new bio mean anything?"
+    D. Change yours to match.
+
+ 7. They text "we need to talk" with no other context.
+    A. Reply "sure, when?"
+    B. Don't reply for hours.
+    C. Spiral for 6 hours, then reply "okay".
+    D. "About what."
+
+ 8. They want to "define the relationship." You like them but you're not sure.
+    A. "Let's just see where it goes."
+    B. Be honest about your hesitation, in detail.
+    C. Agree to whatever they want, panic later.
+    D. End it preemptively before they can bring it up again.
+
+ 9. They left a hoodie at your place. It's been 3 weeks.
+    A. Wash it, fold it, return it next time you see them.
+    B. Wear it sometimes. Don't bring it up.
+    C. Box it up and mail it back.
+    D. Forget it exists.
+
+10. You've been seeing them for two months. They invite you to their best friend's birthday party.
+    A. Go, and have fun.
+    B. Make an excuse.
+    C. Go, but spend the night anxious about how their friends are perceiving you.
+    D. Go, but tell yourself it doesn't mean anything.
+
+11. They asked what you're looking for.
+    A. Tell them honestly, even if it might end things.
+    B. Mirror whatever they say.
+    C. "Idk man, just vibing."
+    D. Give a vague answer to keep options open.
+
+12. They suggest hanging out only after midnight. Every single time.
+    A. Suggest a daytime alternative.
+    B. Go anyway, because at least you're seeing them.
+    C. Stop responding to their late-night texts.
+    D. Match their energy — only text them after midnight.
+
+13. You're at a party. Their ex walks in.
+    A. Introduce yourself politely.
+    B. Watch your situationship like a hawk all night.
+    C. Bring up the ex on the ride home.
+    D. Leave early without explaining why.
+
+14. You see them like a 2019 photo of someone you don't know on Instagram.
+    A. Don't think about it again.
+    B. Check that person's entire profile.
+    C. Like an old photo of one of your exes in retaliation.
+    D. Bring it up casually next conversation.
+
+15. Their phone lights up next to you. You see a notification from a name you don't recognize.
+    A. Look away.
+    B. Try to read the preview.
+    C. Ask them who it is.
+    D. Save the name. Google it later.
+
+16. You're at brunch. Mid-meal, you see them texting under the table.
+    A. Don't say anything but make a mental note.
+    B. "Everything okay?"
+    C. Ask who they're texting.
+    D. Text them under the table from across the table.
+
+17. They tease you in front of their friends in a way that stings.
+    A. Laugh along.
+    B. Tease them back with the same energy.
+    C. Bring it up privately later.
+    D. Get quiet for the rest of the night.
+
+18. They forgot your birthday. They remember two days late and feel awful.
+    A. "It's fine, don't worry!"
+    B. Accept the apology but say it hurt.
+    C. "Yeah." That's all you say.
+    D. Forgive them out loud, vent to three friends about it.
+
+19. You finally tell them what you want from this thing. They reply: "let's just enjoy this for now."
+    A. "Okay, that works for me." — even though it doesn't.
+    B. "Then I think I need to step back."
+    C. Agree, then start emotionally pulling away without saying so.
+    D. Agree, and silently hope they'll change their mind in a few weeks.
+
+20. It's 2am. They text "u up?"
+    A. Reply "yeah, you?"
+    B. "It's late, talk tomorrow."
+    C. Reply 6 hours later: "sorry just saw this."
+    D. See it. Don't reply. Stare at the screen for 20 minutes.
+
+
+Reply with ONLY this JSON object (exactly 20 uppercase letters from {A, B, C, D}):
+
+{"answers": [<20 letters in order of Q1–Q20>]}
