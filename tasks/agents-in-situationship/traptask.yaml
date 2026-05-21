@@ -1,0 +1,14 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: baseline_20q
+  description: "20-scenario modern-dating multiple-choice questionnaire — model answers from its own perspective. Judge validates format only; the derived attachment style and viral label are surfaced as metadata for cross-model comparison."
+  tags: [self_profile, personality, situationship, attachment_style]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py
