@@ -273,3 +273,58 @@ def test_label_lookup_all_zero_uses_fallback():
                             fallback_labels=expected["fallback_labels"],
                             all_zero_flavors=True)
     assert label == expected["fallback_labels"]["secure"]
+
+
+# ----- End-to-end judge_case -----
+
+def test_judge_case_secure_pattern():
+    """All 'A' answers in Q1, B in Q2 (secure paths)... actually use the all-secure path."""
+    j = _load_judge()
+    expected = load_expected()
+    # Construct a "mostly secure" answer set
+    # Picking the answer with the highest 'secure' weight per Q (or A if tied):
+    # Q1-D, Q2-B, Q3-B, Q4-B, Q5-B, Q6-C, Q7-A, Q8-B, Q9-A, Q10-A,
+    # Q11-A, Q12-A, Q13-A, Q14-A, Q15-A, Q16-B, Q17-C, Q18-B, Q19-B, Q20-B
+    answers = ["D","B","B","B","B","C","A","B","A","A","A","A","A","A","A","B","C","B","B","B"]
+    stdout = json.dumps({"answers": answers})
+    metrics = j.judge_case(stdout, expected)
+    assert metrics["score"] == 1.0
+    assert metrics["attachment_style"] == "secure"
+    assert "label" in metrics
+    assert metrics["raw_answers"] == answers
+    assert metrics["flat_response"] is False
+
+
+def test_judge_case_format_fail_score_zero():
+    j = _load_judge()
+    expected = load_expected()
+    stdout = '{"answers": ["A","B"]}'  # only 2 letters
+    metrics = j.judge_case(stdout, expected)
+    assert metrics["score"] == 0.0
+
+
+def test_judge_case_flat_response_flag():
+    """If >70% of answers are the same letter, flat_response = True."""
+    j = _load_judge()
+    expected = load_expected()
+    answers = ["A"] * 20  # 100% A
+    stdout = json.dumps({"answers": answers})
+    metrics = j.judge_case(stdout, expected)
+    assert metrics["flat_response"] is True
+
+
+def test_judge_case_disorganized_pattern():
+    """Flip 2 probe pairs → primary should be disorganized."""
+    j = _load_judge()
+    expected = load_expected()
+    answers = ["A"] * 20
+    # Pair 1 flip: Q2-A (anxious) + Q7-B (avoidant)
+    answers[1] = "A"; answers[6] = "B"
+    # Pair 2 flip: Q5-D (anxious) + Q19-C (avoidant)
+    answers[4] = "D"; answers[18] = "C"
+    # Pair 3 no flip: Q13-A + Q16-B (both secure-coded)
+    answers[12] = "A"; answers[15] = "B"
+    stdout = json.dumps({"answers": answers})
+    metrics = j.judge_case(stdout, expected)
+    assert metrics["score"] == 1.0
+    assert metrics["attachment_style"] == "disorganized"

@@ -149,3 +149,106 @@ def _build_label(primary: str, top_two_flavors: list[str],
     if pair_key in primary_table:
         return primary_table[pair_key]
     return fallback_labels.get(primary, f"{primary.title()} Energy")
+
+
+from collections import Counter
+
+
+def _is_flat(answers: list[str], threshold: float) -> bool:
+    if not answers:
+        return False
+    counts = Counter(answers)
+    most_common_count = counts.most_common(1)[0][1]
+    return (most_common_count / len(answers)) > threshold
+
+
+def judge_case(stdout: str, expected: dict) -> dict[str, Any]:
+    checks: list[dict] = []
+
+    obj, err = _parse_output(stdout)
+    if obj is None:
+        checks.append({"check": "json_parse", "pass": False, "reason": err})
+        return {"score": 0.0, "matcher_results": checks}
+    checks.append({"check": "json_parse", "pass": True, "reason": "ok"})
+
+    answers = obj.get("answers")
+    n_expected = expected.get("n_questions", 20)
+    ok, err = _validate_answers(answers, n_expected)
+    if not ok:
+        checks.append({"check": "answers_format", "pass": False, "reason": err})
+        return {"score": 0.0, "matcher_results": checks}
+    checks.append({"check": "answers_format", "pass": True, "reason": f"{n_expected} valid letters"})
+
+    sums = _sum_traits(answers, expected["scoring_key"])
+    flips = _count_disorganized_flips(answers, expected["scoring_key"])
+    primary = _pick_primary(
+        sums,
+        flips=flips,
+        disorganized_threshold=expected.get("disorganized_threshold", 2),
+        tiebreak=expected["primary_tiebreak_order"],
+    )
+
+    flavor_sums = {t: sums.get(t, 0) for t in expected["flavor_traits"]}
+    all_zero = all(v == 0 for v in flavor_sums.values())
+    top_two = _pick_top_two_flavors(sums, expected["flavor_traits"])
+    label = _build_label(primary, top_two,
+                          label_table=expected["label_table"],
+                          fallback_labels=expected["fallback_labels"],
+                          all_zero_flavors=all_zero)
+
+    flat = _is_flat(answers, expected.get("flat_response_threshold", 0.70))
+
+    raw_scores = dict(sums)
+    raw_scores["disorganized_flips"] = flips
+
+    return {
+        "score": 1.0,
+        "matcher_results": checks,
+        "attachment_style": primary,
+        "flavor_traits": top_two,
+        "label": label,
+        "raw_scores": raw_scores,
+        "flat_response": flat,
+        "raw_answers": answers,
+    }
+
+
+def main() -> None:
+    payload = json.loads(os.environ["TRAPTASK_PAYLOAD"])
+
+    stdout = Path(payload["outputs"]["case_stdout"]).read_text()
+    exit_code = json.loads(Path(payload["outputs"]["case_meta.json"]).read_text())["exit_code"]
+    expected = json.loads(Path(payload["expected"]["answer.json"]).read_text())
+
+    usage_record: dict[str, Any] = {}
+    usage_path = payload["outputs"].get("usage.json")
+    if usage_path and Path(usage_path).exists():
+        try:
+            usage_record = json.loads(Path(usage_path).read_text())
+        except json.JSONDecodeError:
+            pass
+
+    if exit_code != 0:
+        out = {
+            "score": 0.0,
+            "reason": f"solution exited {exit_code}",
+            "agent_answer": stdout.strip()[:300],
+            "id": expected.get("id"),
+            "category": expected.get("category"),
+            "difficulty": expected.get("difficulty"),
+            **usage_record,
+        }
+        print(json.dumps(out))
+        return
+
+    metrics = judge_case(stdout, expected)
+    metrics["agent_answer"] = stdout.strip()[:300]
+    metrics["id"] = expected.get("id")
+    metrics["category"] = expected.get("category")
+    metrics["difficulty"] = expected.get("difficulty")
+    metrics.update(usage_record)
+    print(json.dumps(metrics))
+
+
+if __name__ == "__main__":
+    main()
