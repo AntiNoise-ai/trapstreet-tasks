@@ -141,3 +141,62 @@ def test_sum_traits_all_traits_initialized():
     sums = j._sum_traits(["A"] * 20, expected["scoring_key"])
     for t in ("secure", "anxious", "avoidant", "delulu", "toxic", "unbothered", "people_pleasing"):
         assert t in sums, f"missing trait {t}"
+
+
+# ----- Disorganized detection -----
+
+def test_classify_option_coding_anxious():
+    """An option with anxious weight >= 2 is 'anxious-coded'."""
+    j = _load_judge()
+    assert j._option_coding({"anxious": 2, "people_pleasing": 1}) == "anxious"
+
+def test_classify_option_coding_avoidant():
+    j = _load_judge()
+    assert j._option_coding({"avoidant": 3}) == "avoidant"
+
+def test_classify_option_coding_neither():
+    """Weights below threshold or other traits => neither."""
+    j = _load_judge()
+    assert j._option_coding({"secure": 3}) == "neither"
+    assert j._option_coding({"anxious": 1, "avoidant": 1}) == "neither"
+    assert j._option_coding({"toxic": 5}) == "neither"
+
+def test_disorganized_zero_flips():
+    """All secure choices → no flips → not disorganized."""
+    j = _load_judge()
+    expected = load_expected()
+    # Pick the secure option for each probe-pair Q
+    # Q2-B: secure, Q7-A: secure → no anxious-vs-avoidant
+    # Q5-B: secure, Q19-B: secure → no flip
+    # Q13-A: secure, Q16-B: secure → no flip
+    answers = ["A"] * 20
+    answers[1] = "B"; answers[6] = "A"      # Q2, Q7
+    answers[4] = "B"; answers[18] = "B"     # Q5, Q19
+    answers[12] = "A"; answers[15] = "B"    # Q13, Q16
+    flips = j._count_disorganized_flips(answers, expected["scoring_key"])
+    assert flips == 0
+
+def test_disorganized_two_flips_triggers():
+    """≥2 of 3 probe pairs flipping triggers disorganized."""
+    j = _load_judge()
+    expected = load_expected()
+    answers = ["A"] * 20
+    # Pair 1 (Q2, Q7): Q2-A (anxious 3) + Q7-B (avoidant 3) → FLIP
+    answers[1] = "A"; answers[6] = "B"
+    # Pair 2 (Q5, Q19): Q5-D (anxious 2) + Q19-C (avoidant 3) → FLIP
+    answers[4] = "D"; answers[18] = "C"
+    # Pair 3 (Q13, Q16): Q13-A (secure) + Q16-B (secure) → no flip
+    answers[12] = "A"; answers[15] = "B"
+    flips = j._count_disorganized_flips(answers, expected["scoring_key"])
+    assert flips == 2
+
+def test_disorganized_three_flips():
+    """All three pairs flipping = 3."""
+    j = _load_judge()
+    expected = load_expected()
+    answers = ["A"] * 20
+    answers[1] = "C"; answers[6] = "C"   # Q2-C (avoidant), Q7-C (anxious) → FLIP
+    answers[4] = "C"; answers[18] = "D"  # Q5-C (avoidant), Q19-D (anxious) → FLIP
+    answers[12] = "D"; answers[15] = "C" # Q13-D (avoidant), Q16-C (anxious) → FLIP
+    flips = j._count_disorganized_flips(answers, expected["scoring_key"])
+    assert flips == 3

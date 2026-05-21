@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import re
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -78,3 +79,39 @@ def _sum_traits(answers: list[str], scoring_key: list[dict]) -> dict[str, int]:
         for trait, points in weights.items():
             sums[trait] = sums.get(trait, 0) + points
     return sums
+
+
+ANXIOUS_CODED_MIN = 2
+AVOIDANT_CODED_MIN = 2
+
+
+def _option_coding(weights: dict[str, int]) -> str:
+    """Return 'anxious', 'avoidant', or 'neither' for this option's weight map."""
+    anx = weights.get("anxious", 0)
+    av = weights.get("avoidant", 0)
+    if anx >= ANXIOUS_CODED_MIN and anx >= av:
+        return "anxious"
+    if av >= AVOIDANT_CODED_MIN and av > anx:
+        return "avoidant"
+    return "neither"
+
+
+def _count_disorganized_flips(answers: list[str], scoring_key: list[dict]) -> int:
+    """Count how many probe pairs flip between anxious-coded and avoidant-coded."""
+    by_pair: dict[int, list[str]] = defaultdict(list)
+    for i, q in enumerate(scoring_key):
+        if "probe_pair" not in q:
+            continue
+        letter = answers[i]
+        coding = _option_coding(q["options"][letter])
+        by_pair[q["probe_pair"]].append(coding)
+
+    flips = 0
+    for pair_id, codings in by_pair.items():
+        # Each pair has exactly 2 entries — assert defensively
+        if len(codings) != 2:
+            continue
+        c1, c2 = codings
+        if {c1, c2} == {"anxious", "avoidant"}:
+            flips += 1
+    return flips
