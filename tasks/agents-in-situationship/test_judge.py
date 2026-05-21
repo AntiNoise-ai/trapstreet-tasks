@@ -200,3 +200,76 @@ def test_disorganized_three_flips():
     answers[12] = "D"; answers[15] = "C" # Q13-D (avoidant), Q16-C (anxious) → FLIP
     flips = j._count_disorganized_flips(answers, expected["scoring_key"])
     assert flips == 3
+
+
+# ----- Primary style selection -----
+
+def test_primary_style_anxious_wins():
+    j = _load_judge()
+    sums = {"secure": 5, "anxious": 12, "avoidant": 3, "toxic": 0, "delulu": 0, "unbothered": 0, "people_pleasing": 0}
+    assert j._pick_primary(sums, flips=0, disorganized_threshold=2,
+                            tiebreak=["anxious", "avoidant", "secure"]) == "anxious"
+
+def test_primary_style_disorganized_overrides():
+    j = _load_judge()
+    sums = {"secure": 30, "anxious": 0, "avoidant": 0, "toxic": 0, "delulu": 0, "unbothered": 0, "people_pleasing": 0}
+    assert j._pick_primary(sums, flips=2, disorganized_threshold=2,
+                            tiebreak=["anxious", "avoidant", "secure"]) == "disorganized"
+
+def test_primary_style_tiebreak_order():
+    """When sums are tied between primary axes, tie-break order wins (anxious > avoidant > secure)."""
+    j = _load_judge()
+    sums = {"secure": 5, "anxious": 5, "avoidant": 5, "toxic": 0, "delulu": 0, "unbothered": 0, "people_pleasing": 0}
+    assert j._pick_primary(sums, flips=0, disorganized_threshold=2,
+                            tiebreak=["anxious", "avoidant", "secure"]) == "anxious"
+
+
+# ----- Flavor selection -----
+
+def test_top_two_flavors_picks_highest():
+    j = _load_judge()
+    sums = {"toxic": 5, "delulu": 8, "unbothered": 2, "people_pleasing": 3}
+    flavors = j._pick_top_two_flavors(sums, all_flavors=["delulu","people_pleasing","toxic","unbothered"])
+    assert set(flavors) == {"delulu", "toxic"}
+
+def test_top_two_flavors_alphabetical_tiebreak():
+    """When tied at zero, alphabetical order: delulu < people_pleasing < toxic < unbothered."""
+    j = _load_judge()
+    sums = {"toxic": 0, "delulu": 0, "unbothered": 0, "people_pleasing": 0}
+    flavors = j._pick_top_two_flavors(sums, all_flavors=["delulu","people_pleasing","toxic","unbothered"])
+    assert flavors == ["delulu", "people_pleasing"]  # first two alphabetically
+
+
+# ----- Label lookup -----
+
+def test_label_lookup_known_pair():
+    j = _load_judge()
+    expected = load_expected()
+    label = j._build_label("anxious", ["delulu", "people_pleasing"],
+                            label_table=expected["label_table"],
+                            fallback_labels=expected["fallback_labels"],
+                            all_zero_flavors=False)
+    assert label == "Delulu Anxious Era 🌸"
+
+def test_label_lookup_canonicalizes_pair_order():
+    """Pair key is alphabetical-sorted-pipe-joined. Either order in input must lookup the same."""
+    j = _load_judge()
+    expected = load_expected()
+    label_a = j._build_label("anxious", ["delulu", "people_pleasing"],
+                              label_table=expected["label_table"],
+                              fallback_labels=expected["fallback_labels"],
+                              all_zero_flavors=False)
+    label_b = j._build_label("anxious", ["people_pleasing", "delulu"],
+                              label_table=expected["label_table"],
+                              fallback_labels=expected["fallback_labels"],
+                              all_zero_flavors=False)
+    assert label_a == label_b
+
+def test_label_lookup_all_zero_uses_fallback():
+    j = _load_judge()
+    expected = load_expected()
+    label = j._build_label("secure", ["delulu", "people_pleasing"],
+                            label_table=expected["label_table"],
+                            fallback_labels=expected["fallback_labels"],
+                            all_zero_flavors=True)
+    assert label == expected["fallback_labels"]["secure"]

@@ -115,3 +115,37 @@ def _count_disorganized_flips(answers: list[str], scoring_key: list[dict]) -> in
         if {c1, c2} == {"anxious", "avoidant"}:
             flips += 1
     return flips
+
+
+def _pick_primary(sums: dict[str, int], flips: int, disorganized_threshold: int,
+                   tiebreak: list[str]) -> str:
+    if flips >= disorganized_threshold:
+        return "disorganized"
+    # Pick highest of (secure, anxious, avoidant). Ties broken by `tiebreak` order.
+    candidates = [(sums.get(t, 0), tiebreak.index(t), t) for t in tiebreak]
+    # Higher score wins (negate for sort), then earlier tiebreak index wins.
+    candidates.sort(key=lambda x: (-x[0], x[1]))
+    return candidates[0][2]
+
+
+def _pick_top_two_flavors(sums: dict[str, int], all_flavors: list[str]) -> list[str]:
+    """Pick the 2 highest-scoring flavors. Ties broken alphabetically.
+
+    `all_flavors` is expected to be alphabetically sorted (the caller passes
+    it that way; we sort defensively just in case)."""
+    sorted_flavors = sorted(all_flavors)
+    # (score desc, alphabetical asc) — sort by score descending, then alpha.
+    ranked = sorted(sorted_flavors, key=lambda t: (-sums.get(t, 0), t))
+    return ranked[:2]
+
+
+def _build_label(primary: str, top_two_flavors: list[str],
+                  label_table: dict, fallback_labels: dict,
+                  all_zero_flavors: bool) -> str:
+    if all_zero_flavors:
+        return fallback_labels.get(primary, f"{primary.title()} Energy")
+    pair_key = "|".join(sorted(top_two_flavors))
+    primary_table = label_table.get(primary, {})
+    if pair_key in primary_table:
+        return primary_table[pair_key]
+    return fallback_labels.get(primary, f"{primary.title()} Energy")
