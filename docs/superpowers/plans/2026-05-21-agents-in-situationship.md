@@ -4,7 +4,7 @@
 
 **Goal:** Ship a new TrapStreet leaderboard task called `agents-in-situationship` — 20 dating-scenario multiple-choice questions, format-only judge that derives a viral attachment-style label. Then run all 10 existing models against it and submit to the leaderboard.
 
-**Architecture:** Sibling of `personality/mbti-profile`. Task lives in `trapstreet-tasks/tasks/personality/agents-in-situationship/`, solution in `trapstreet-solutions/agents-in-situationship-multi-model/`. Judge sums per-trait weights from answers, detects disorganized attachment via 3 consistency probe pairs, looks up a label from a static table.
+**Architecture:** Sibling of `personality/mbti-profile`. Task lives in `trapstreet-tasks/tasks/agents-in-situationship/`, solution in `trapstreet-solutions/agents-in-situationship-multi-model/`. Judge sums per-trait weights from answers, detects disorganized attachment via 3 consistency probe pairs, looks up a label from a static table.
 
 **Tech Stack:** Python 3.14, `pytest` for judge tests, `trap` CLI for task running, `anthropic` + `openai` (OpenRouter) SDKs for model calls, `trapstreet-cli` (`tp`) for submission.
 
@@ -18,14 +18,14 @@
 
 | Path | Responsibility |
 |---|---|
-| `tasks/personality/agents-in-situationship/README.md` | Human-readable doc for the task |
-| `tasks/personality/agents-in-situationship/traptask.yaml` | trap case definition (1 case: `baseline_20q`) |
-| `tasks/personality/agents-in-situationship/gold.cases.json` | 20 scenarios + per-option weight maps + probe pair tags |
-| `tasks/personality/agents-in-situationship/judge.py` | Format gate, trait summing, disorganized detection, label lookup, metric assembly |
-| `tasks/personality/agents-in-situationship/grader.py` | Run-level aggregator (copy of mbti grader) |
-| `tasks/personality/agents-in-situationship/test_judge.py` | Pytest tests for the judge (parse, sum, disorganized, label) |
-| `tasks/personality/agents-in-situationship/inputs/baseline_20q/question.txt` | The 20-scenario prompt seen by the model |
-| `tasks/personality/agents-in-situationship/expected/baseline_20q/answer.json` | Scoring key + label table + probe-pair config the judge reads at grade time |
+| `tasks/agents-in-situationship/README.md` | Human-readable doc for the task |
+| `tasks/agents-in-situationship/traptask.yaml` | trap case definition (1 case: `baseline_20q`) |
+| `tasks/agents-in-situationship/gold.cases.json` | 20 scenarios + per-option weight maps + probe pair tags |
+| `tasks/agents-in-situationship/judge.py` | Format gate, trait summing, disorganized detection, label lookup, metric assembly |
+| `tasks/agents-in-situationship/grader.py` | Run-level aggregator (copy of mbti grader) |
+| `tasks/agents-in-situationship/test_judge.py` | Pytest tests for the judge (parse, sum, disorganized, label) |
+| `tasks/agents-in-situationship/inputs/baseline_20q/question.txt` | The 20-scenario prompt seen by the model |
+| `tasks/agents-in-situationship/expected/baseline_20q/answer.json` | Scoring key + label table + probe-pair config the judge reads at grade time |
 
 ### `trapstreet-solutions` repo (new files)
 
@@ -43,28 +43,28 @@
 ### Task 1: Scaffold the task directory
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/inputs/baseline_20q/.gitkeep`
-- Create: `tasks/personality/agents-in-situationship/expected/baseline_20q/.gitkeep`
+- Create: `tasks/agents-in-situationship/inputs/baseline_20q/.gitkeep`
+- Create: `tasks/agents-in-situationship/expected/baseline_20q/.gitkeep`
 
 - [ ] **Step 1: Make directories**
 
 ```bash
-mkdir -p tasks/personality/agents-in-situationship/inputs/baseline_20q
-mkdir -p tasks/personality/agents-in-situationship/expected/baseline_20q
-touch tasks/personality/agents-in-situationship/inputs/baseline_20q/.gitkeep
-touch tasks/personality/agents-in-situationship/expected/baseline_20q/.gitkeep
+mkdir -p tasks/agents-in-situationship/inputs/baseline_20q
+mkdir -p tasks/agents-in-situationship/expected/baseline_20q
+touch tasks/agents-in-situationship/inputs/baseline_20q/.gitkeep
+touch tasks/agents-in-situationship/expected/baseline_20q/.gitkeep
 ```
 
 - [ ] **Step 2: Verify structure**
 
-Run: `ls tasks/personality/agents-in-situationship/`
+Run: `ls tasks/agents-in-situationship/`
 Expected: `expected  inputs` (plus `.gitkeep`s inside them)
 
 - [ ] **Step 3: Commit scaffold**
 
 ```bash
-git add tasks/personality/agents-in-situationship/
-git commit -m "Scaffold tasks/personality/agents-in-situationship/ directory"
+git add tasks/agents-in-situationship/
+git commit -m "Scaffold tasks/agents-in-situationship/ directory"
 ```
 
 ---
@@ -72,7 +72,7 @@ git commit -m "Scaffold tasks/personality/agents-in-situationship/ directory"
 ### Task 2: Write `gold.cases.json` (all 20 scenarios)
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/gold.cases.json`
+- Create: `tasks/agents-in-situationship/gold.cases.json`
 
 - [ ] **Step 1: Write the file**
 
@@ -242,13 +242,13 @@ git commit -m "Scaffold tasks/personality/agents-in-situationship/ directory"
 
 - [ ] **Step 2: Validate JSON parses**
 
-Run: `python3 -c "import json; data = json.load(open('tasks/personality/agents-in-situationship/gold.cases.json')); assert len(data['cases'][0]['questions']) == 20; print('ok')"`
+Run: `python3 -c "import json; data = json.load(open('tasks/agents-in-situationship/gold.cases.json')); assert len(data['cases'][0]['questions']) == 20; print('ok')"`
 Expected: `ok`
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/gold.cases.json
+git add tasks/agents-in-situationship/gold.cases.json
 git commit -m "agents-in-situationship: add 20 scenarios with per-option weight maps"
 ```
 
@@ -257,7 +257,7 @@ git commit -m "agents-in-situationship: add 20 scenarios with per-option weight 
 ### Task 3: Write the question prompt (`question.txt`)
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/inputs/baseline_20q/question.txt`
+- Create: `tasks/agents-in-situationship/inputs/baseline_20q/question.txt`
 
 - [ ] **Step 1: Write the file**
 
@@ -401,7 +401,7 @@ Reply with ONLY this JSON object (exactly 20 uppercase letters from {A, B, C, D}
 - [ ] **Step 2: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/inputs/baseline_20q/question.txt
+git add tasks/agents-in-situationship/inputs/baseline_20q/question.txt
 git commit -m "agents-in-situationship: add baseline_20q question prompt"
 ```
 
@@ -410,7 +410,7 @@ git commit -m "agents-in-situationship: add baseline_20q question prompt"
 ### Task 4: Write `expected/baseline_20q/answer.json`
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/expected/baseline_20q/answer.json`
+- Create: `tasks/agents-in-situationship/expected/baseline_20q/answer.json`
 
 This file is loaded by the judge. It contains the scoring key (per-question option → weight map), the probe pair config, the label table, and per-primary fallbacks. The judge uses ONLY this file at grade time — it does not read `gold.cases.json` directly.
 
@@ -501,7 +501,7 @@ Run:
 ```bash
 python3 -c "
 import json
-data = json.load(open('tasks/personality/agents-in-situationship/expected/baseline_20q/answer.json'))
+data = json.load(open('tasks/agents-in-situationship/expected/baseline_20q/answer.json'))
 assert len(data['scoring_key']) == 20
 for i, q in enumerate(data['scoring_key']):
     assert q['n'] == i + 1, f'Q{i+1} mismatch'
@@ -517,7 +517,7 @@ Expected: `ok`
 - [ ] **Step 3: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/expected/baseline_20q/answer.json
+git add tasks/agents-in-situationship/expected/baseline_20q/answer.json
 git commit -m "agents-in-situationship: add scoring_key, label_table, probe pairs to answer.json"
 ```
 
@@ -526,7 +526,7 @@ git commit -m "agents-in-situationship: add scoring_key, label_table, probe pair
 ### Task 5: Write `traptask.yaml`
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/traptask.yaml`
+- Create: `tasks/agents-in-situationship/traptask.yaml`
 
 - [ ] **Step 1: Write the file**
 
@@ -550,7 +550,7 @@ grader:
 - [ ] **Step 2: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/traptask.yaml
+git add tasks/agents-in-situationship/traptask.yaml
 git commit -m "agents-in-situationship: add traptask.yaml with baseline_20q case"
 ```
 
@@ -559,7 +559,7 @@ git commit -m "agents-in-situationship: add traptask.yaml with baseline_20q case
 ### Task 6: Write `grader.py`
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/grader.py`
+- Create: `tasks/agents-in-situationship/grader.py`
 
 This is a copy of `tasks/personality/mbti_profile/grader.py` — same aggregation logic, same fields. The only thing that differs between tasks is what the judge surfaces; the grader is generic.
 
@@ -640,13 +640,13 @@ if __name__ == "__main__":
 
 - [ ] **Step 2: Verify it parses (smoke import)**
 
-Run: `python3 -c "import ast; ast.parse(open('tasks/personality/agents-in-situationship/grader.py').read()); print('ok')"`
+Run: `python3 -c "import ast; ast.parse(open('tasks/agents-in-situationship/grader.py').read()); print('ok')"`
 Expected: `ok`
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/grader.py
+git add tasks/agents-in-situationship/grader.py
 git commit -m "agents-in-situationship: add grader.py (copy of mbti aggregator)"
 ```
 
@@ -655,7 +655,7 @@ git commit -m "agents-in-situationship: add grader.py (copy of mbti aggregator)"
 ### Task 7: Write `README.md`
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/README.md`
+- Create: `tasks/agents-in-situationship/README.md`
 
 - [ ] **Step 1: Write the file**
 
@@ -725,7 +725,7 @@ The judge tolerates `` ```json ... `` `` fences. Letters must be uppercase, exac
 tasks:
   agents-in-situationship:
     cmd: uv run python solution.py
-    traptask: /path/to/trapstreet-tasks/tasks/personality/agents-in-situationship
+    traptask: /path/to/trapstreet-tasks/tasks/agents-in-situationship
     timeout: 600
     file_outputs:
       - usage.json
@@ -742,7 +742,7 @@ uv run tp submit agents-in-situationship
 - [ ] **Step 2: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/README.md
+git add tasks/agents-in-situationship/README.md
 git commit -m "agents-in-situationship: add README"
 ```
 
@@ -761,7 +761,7 @@ The judge has 5 logical units. We TDD each one separately, in this order:
 ### Task 8: Set up test scaffold
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/test_judge.py`
+- Create: `tasks/agents-in-situationship/test_judge.py`
 
 - [ ] **Step 1: Write empty test scaffold**
 
@@ -790,13 +790,13 @@ def test_expected_file_loads():
 
 - [ ] **Step 2: Run the test**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py -v`
 Expected: 1 passed.
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/test_judge.py
+git add tasks/agents-in-situationship/test_judge.py
 git commit -m "agents-in-situationship: add empty test scaffold"
 ```
 
@@ -805,8 +805,8 @@ git commit -m "agents-in-situationship: add empty test scaffold"
 ### Task 9: Write parse + format-gate logic
 
 **Files:**
-- Create: `tasks/personality/agents-in-situationship/judge.py`
-- Modify: `tasks/personality/agents-in-situationship/test_judge.py`
+- Create: `tasks/agents-in-situationship/judge.py`
+- Modify: `tasks/agents-in-situationship/test_judge.py`
 
 - [ ] **Step 1: Write failing tests**
 
@@ -879,13 +879,13 @@ def test_format_gate_invalid_letter_rejected():
 
 - [ ] **Step 2: Verify tests fail (judge doesn't exist yet)**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py -v`
 Expected: FAIL — `judge.py` doesn't exist, all new tests error out.
 
 - [ ] **Step 3: Implement judge.py with parsing + format gate**
 
 ```python
-"""Per-case judge for the personality/agents-in-situationship task.
+"""Per-case judge for the agents-in-situationship task.
 
 20 dating scenarios, 4 options each. The judge:
 
@@ -955,13 +955,13 @@ def _validate_answers(answers: Any, n_expected: int) -> tuple[bool, str]:
 
 - [ ] **Step 4: Run tests to verify parse + format-gate tests pass**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py -v`
 Expected: All 9 tests pass (1 scaffold + 4 parse + 4 format-gate).
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/judge.py tasks/personality/agents-in-situationship/test_judge.py
+git add tasks/agents-in-situationship/judge.py tasks/agents-in-situationship/test_judge.py
 git commit -m "agents-in-situationship: judge parsing + format gate (TDD)"
 ```
 
@@ -970,8 +970,8 @@ git commit -m "agents-in-situationship: judge parsing + format gate (TDD)"
 ### Task 10: Write trait-summing logic
 
 **Files:**
-- Modify: `tasks/personality/agents-in-situationship/judge.py`
-- Modify: `tasks/personality/agents-in-situationship/test_judge.py`
+- Modify: `tasks/agents-in-situationship/judge.py`
+- Modify: `tasks/agents-in-situationship/test_judge.py`
 
 - [ ] **Step 1: Write failing tests**
 
@@ -1039,7 +1039,7 @@ def test_sum_traits_all_traits_initialized():
 
 - [ ] **Step 2: Run tests, verify failure**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py::test_sum_traits_known_pattern -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py::test_sum_traits_known_pattern -v`
 Expected: FAIL — `_sum_traits` not defined.
 
 - [ ] **Step 3: Add `_sum_traits` to `judge.py`**
@@ -1063,13 +1063,13 @@ def _sum_traits(answers: list[str], scoring_key: list[dict]) -> dict[str, int]:
 
 - [ ] **Step 4: Run tests, verify pass**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py -v`
 Expected: All tests pass (12 now).
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/judge.py tasks/personality/agents-in-situationship/test_judge.py
+git add tasks/agents-in-situationship/judge.py tasks/agents-in-situationship/test_judge.py
 git commit -m "agents-in-situationship: judge trait summing (TDD)"
 ```
 
@@ -1078,8 +1078,8 @@ git commit -m "agents-in-situationship: judge trait summing (TDD)"
 ### Task 11: Write disorganized detection logic
 
 **Files:**
-- Modify: `tasks/personality/agents-in-situationship/judge.py`
-- Modify: `tasks/personality/agents-in-situationship/test_judge.py`
+- Modify: `tasks/agents-in-situationship/judge.py`
+- Modify: `tasks/agents-in-situationship/test_judge.py`
 
 The rule: for each of the 3 probe pairs (Q2+Q7, Q5+Q19, Q13+Q16), check whether the chosen options on the two paired questions have opposite anxious-vs-avoidant codings. A pair flips if one option's weights have `anxious >= 2` AND the other's have `avoidant >= 2`, in either direction. If ≥2 of 3 pairs flip → disorganized.
 
@@ -1149,7 +1149,7 @@ def test_disorganized_three_flips():
 
 - [ ] **Step 2: Run tests, verify failure**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py::test_disorganized_two_flips_triggers -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py::test_disorganized_two_flips_triggers -v`
 Expected: FAIL — `_option_coding` / `_count_disorganized_flips` not defined.
 
 - [ ] **Step 3: Add probe-pair logic to judge.py**
@@ -1197,13 +1197,13 @@ def _count_disorganized_flips(answers: list[str], scoring_key: list[dict]) -> in
 
 - [ ] **Step 4: Run tests, verify pass**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py -v`
 Expected: All tests pass (18 now).
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/judge.py tasks/personality/agents-in-situationship/test_judge.py
+git add tasks/agents-in-situationship/judge.py tasks/agents-in-situationship/test_judge.py
 git commit -m "agents-in-situationship: judge disorganized detection via probe pairs (TDD)"
 ```
 
@@ -1212,8 +1212,8 @@ git commit -m "agents-in-situationship: judge disorganized detection via probe p
 ### Task 12: Write label lookup logic
 
 **Files:**
-- Modify: `tasks/personality/agents-in-situationship/judge.py`
-- Modify: `tasks/personality/agents-in-situationship/test_judge.py`
+- Modify: `tasks/agents-in-situationship/judge.py`
+- Modify: `tasks/agents-in-situationship/test_judge.py`
 
 - [ ] **Step 1: Write failing tests**
 
@@ -1295,7 +1295,7 @@ def test_label_lookup_all_zero_uses_fallback():
 
 - [ ] **Step 2: Run tests, verify failure**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py::test_label_lookup_known_pair -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py::test_label_lookup_known_pair -v`
 Expected: FAIL — functions not defined.
 
 - [ ] **Step 3: Add primary/flavor/label logic to judge.py**
@@ -1339,13 +1339,13 @@ def _build_label(primary: str, top_two_flavors: list[str],
 
 - [ ] **Step 4: Run tests, verify pass**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py -v`
 Expected: All tests pass (27 now).
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/judge.py tasks/personality/agents-in-situationship/test_judge.py
+git add tasks/agents-in-situationship/judge.py tasks/agents-in-situationship/test_judge.py
 git commit -m "agents-in-situationship: judge primary/flavor/label logic (TDD)"
 ```
 
@@ -1354,8 +1354,8 @@ git commit -m "agents-in-situationship: judge primary/flavor/label logic (TDD)"
 ### Task 13: Wire up `judge_case` + `main()` with end-to-end test
 
 **Files:**
-- Modify: `tasks/personality/agents-in-situationship/judge.py`
-- Modify: `tasks/personality/agents-in-situationship/test_judge.py`
+- Modify: `tasks/agents-in-situationship/judge.py`
+- Modify: `tasks/agents-in-situationship/test_judge.py`
 
 - [ ] **Step 1: Write end-to-end tests**
 
@@ -1419,7 +1419,7 @@ def test_judge_case_disorganized_pattern():
 
 - [ ] **Step 2: Verify tests fail**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py -v`
 Expected: New e2e tests fail — `judge_case` not defined.
 
 - [ ] **Step 3: Add `judge_case` + `main()` to judge.py**
@@ -1532,13 +1532,13 @@ if __name__ == "__main__":
 
 - [ ] **Step 4: Run all tests, verify pass**
 
-Run: `cd tasks/personality/agents-in-situationship && python3 -m pytest test_judge.py -v`
+Run: `cd tasks/agents-in-situationship && python3 -m pytest test_judge.py -v`
 Expected: All 31 tests pass.
 
 - [ ] **Step 5: Smoke-test the judge end-to-end with a synthetic input**
 
 ```bash
-cd tasks/personality/agents-in-situationship
+cd tasks/agents-in-situationship
 mkdir -p /tmp/aiss-smoke/outputs /tmp/aiss-smoke/expected
 echo '{"answers": ["D","B","B","B","B","C","A","B","A","A","A","A","A","A","A","B","C","B","B","B"]}' > /tmp/aiss-smoke/outputs/case_stdout
 echo '{"exit_code": 0}' > /tmp/aiss-smoke/outputs/case_meta.json
@@ -1551,7 +1551,7 @@ Expected: Single JSON line with `"score": 1.0`, `"attachment_style": "secure"`, 
 - [ ] **Step 6: Commit**
 
 ```bash
-git add tasks/personality/agents-in-situationship/judge.py tasks/personality/agents-in-situationship/test_judge.py
+git add tasks/agents-in-situationship/judge.py tasks/agents-in-situationship/test_judge.py
 git commit -m "agents-in-situationship: wire up judge_case + main + e2e tests"
 ```
 
@@ -1597,7 +1597,7 @@ tasks:
   agents-in-situationship:
     description: 20-scenario dating quiz — routes to MODEL env var (Anthropic or OpenRouter)
     cmd: uv run python solution.py
-    traptask: ../../trapstreet-tasks/tasks/personality/agents-in-situationship
+    traptask: ../../trapstreet-tasks/tasks/agents-in-situationship
     timeout: 600
     file_outputs:
       - usage.json
@@ -2014,7 +2014,7 @@ git commit -m "agents-in-situationship: add submission helper script"
 ## Done
 
 After Task 18:
-- New task lives in `trapstreet-tasks/tasks/personality/agents-in-situationship/`, committed and pushed
+- New task lives in `trapstreet-tasks/tasks/agents-in-situationship/`, committed and pushed
 - New solution lives in `trapstreet-solutions/agents-in-situationship-multi-model/`, committed and pushed
 - 10 models have submitted reports visible on https://trapstreet.run/tasks/agents-in-situationship
 - Each row has a viral attachment-style label

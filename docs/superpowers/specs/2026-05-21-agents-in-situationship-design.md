@@ -299,7 +299,7 @@ Three explicit moves to prevent every model converging to `secure`:
 ### Task definition (this repo: `trapstreet-tasks`)
 
 ```
-tasks/personality/agents-in-situationship/
+tasks/agents-in-situationship/
 ├── README.md
 ├── traptask.yaml
 ├── gold.cases.json          # 20 scenarios with weight maps + axes
