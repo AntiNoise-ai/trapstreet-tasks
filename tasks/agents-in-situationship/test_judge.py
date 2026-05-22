@@ -85,53 +85,53 @@ def test_format_gate_invalid_letter_rejected():
 
 
 # ----- Trait summing -----
+# NOTE: weights were redesigned in May 2026 to remove obvious-healthy-answer bias.
+# NO option scores secure>=1 anymore. All-B totals below are recomputed from the
+# new gold.cases.json.
 
 def test_sum_traits_all_A_in_q1():
-    """Q1 option A is {anxious: 2, people_pleasing: 1}."""
+    """Q1 option A is {anxious: 3, people_pleasing: 1}."""
     j = _load_judge()
     expected = load_expected()
-    # Just 1 question's worth: pick A on Q1, B on rest doesn't matter — test sums for 1
+    # Just check Q1 contribution
     sums = j._sum_traits(["A"] + ["B"] * 19, expected["scoring_key"])
-    # The full 20-letter sum will dominate; verify Q1 contributed correctly
-    # Q1-A adds {anxious: 2, people_pleasing: 1}
-    # Q2-B adds {secure: 2, unbothered: 1}, Q3-B adds {secure: 3}, ... — many Bs add up.
-    # Instead, check a single-answer slice via direct call would be cleaner — do explicit check.
-    assert sums["anxious"] >= 2  # Q1-A contributes at least 2 anxious
+    assert sums["anxious"] >= 3   # Q1-A contributes at least 3 anxious
     assert sums["people_pleasing"] >= 1
 
 def test_sum_traits_known_pattern():
-    """If we pick the 'B' option on all 20 questions, we get a deterministic profile."""
+    """All 'B' answers yield a deterministic profile (hand-computed from new gold weights).
+
+      Q1-B: avoidant=2, toxic=2
+      Q2-B: toxic=2, avoidant=2
+      Q3-B: avoidant=2, toxic=1
+      Q4-B: anxious=2, delulu=2
+      Q5-B: delulu=3, anxious=2
+      Q6-B: delulu=2, anxious=2
+      Q7-B: avoidant=3, toxic=1
+      Q8-B: avoidant=2, people_pleasing=1
+      Q9-B: avoidant=2, people_pleasing=1
+      Q10-B: avoidant=2, delulu=1
+      Q11-B: avoidant=3
+      Q12-B: avoidant=3
+      Q13-B: avoidant=3, toxic=1
+      Q14-B: toxic=3
+      Q15-B: toxic=3, delulu=2
+      Q16-B: toxic=2, anxious=2
+      Q17-B: toxic=2, avoidant=1
+      Q18-B: avoidant=2, toxic=2
+      Q19-B: avoidant=3
+      Q20-B: toxic=2, avoidant=2
+    """
     j = _load_judge()
     expected = load_expected()
     sums = j._sum_traits(["B"] * 20, expected["scoring_key"])
-    # Verify against hand-computed expectation:
-    # Q1-B: avoidant=2, unbothered=1
-    # Q2-B: secure=2, unbothered=1
-    # Q3-B: secure=3
-    # Q4-B: secure=2
-    # Q5-B: secure=3
-    # Q6-B: delulu=2, anxious=2
-    # Q7-B: avoidant=3
-    # Q8-B: secure=3
-    # Q9-B: delulu=2, anxious=1
-    # Q10-B: avoidant=3
-    # Q11-B: people_pleasing=3
-    # Q12-B: people_pleasing=3, delulu=1
-    # Q13-B: toxic=2, anxious=2
-    # Q14-B: toxic=3, delulu=1
-    # Q15-B: toxic=3
-    # Q16-B: secure=2, anxious=1
-    # Q17-B: unbothered=2, secure=2
-    # Q18-B: secure=3
-    # Q19-B: secure=3, unbothered=1
-    # Q20-B: secure=3, unbothered=1
-    assert sums["secure"] == 2+3+2+3+3+2+2+3+3+3 == 26
-    assert sums["anxious"] == 2+1+2+1 == 6
-    assert sums["avoidant"] == 2+3+3 == 8
-    assert sums["delulu"] == 2+2+1+1 == 6
-    assert sums["toxic"] == 2+3+3 == 8
-    assert sums["unbothered"] == 1+1+2+1+1 == 6
-    assert sums["people_pleasing"] == 3+3 == 6
+    assert sums["secure"] == 0
+    assert sums["anxious"] == 2+2+2+2 == 8
+    assert sums["avoidant"] == 2+2+2+3+2+2+2+3+3+3+1+2+3+2 == 32
+    assert sums["toxic"] == 2+2+1+1+1+3+3+2+2+2+2 == 21  # Q1,Q2,Q3,Q7,Q13,Q14,Q15,Q16,Q17,Q18,Q20
+    assert sums["delulu"] == 2+3+2+1+2 == 10
+    assert sums["unbothered"] == 0
+    assert sums["people_pleasing"] == 1+1 == 2
 
 
 def test_sum_traits_all_traits_initialized():
@@ -162,42 +162,53 @@ def test_classify_option_coding_neither():
     assert j._option_coding({"toxic": 5}) == "neither"
 
 def test_disorganized_zero_flips():
-    """All secure choices → no flips → not disorganized."""
+    """All-anxious picks across probe pairs → no flips → not disorganized.
+
+    With new weights:
+      Q2-A (anx 3), Q7-A (anx 3) → both anx, no flip
+      Q5-A (anx 2, pp 2), Q19-A (pp 3, anx 2) → both anx, no flip
+      Q13-A (tox 2, anx 2), Q16-B (tox 2, anx 2) → both anx, no flip
+    """
     j = _load_judge()
     expected = load_expected()
-    # Pick the secure option for each probe-pair Q
-    # Q2-B: secure, Q7-A: secure → no anxious-vs-avoidant
-    # Q5-B: secure, Q19-B: secure → no flip
-    # Q13-A: secure, Q16-B: secure → no flip
     answers = ["A"] * 20
-    answers[1] = "B"; answers[6] = "A"      # Q2, Q7
-    answers[4] = "B"; answers[18] = "B"     # Q5, Q19
-    answers[12] = "A"; answers[15] = "B"    # Q13, Q16
+    answers[15] = "B"  # Q16-B (anx-coded; matches Q13-A as anx)
     flips = j._count_disorganized_flips(answers, expected["scoring_key"])
     assert flips == 0
 
 def test_disorganized_two_flips_triggers():
-    """≥2 of 3 probe pairs flipping triggers disorganized."""
+    """≥2 probe pairs flipping triggers disorganized.
+
+    With new weights:
+      Pair 1: Q2-A (anx) + Q7-B (av) → FLIP
+      Pair 2: Q5-D (av) + Q19-A (anx) → FLIP
+      Pair 3: Q13-A (anx) + Q16-B (anx) → no flip
+    """
     j = _load_judge()
     expected = load_expected()
     answers = ["A"] * 20
-    # Pair 1 (Q2, Q7): Q2-A (anxious 3) + Q7-B (avoidant 3) → FLIP
-    answers[1] = "A"; answers[6] = "B"
-    # Pair 2 (Q5, Q19): Q5-D (anxious 2) + Q19-C (avoidant 3) → FLIP
-    answers[4] = "D"; answers[18] = "C"
-    # Pair 3 (Q13, Q16): Q13-A (secure) + Q16-B (secure) → no flip
-    answers[12] = "A"; answers[15] = "B"
+    answers[6] = "B"   # Q7-B (av)
+    answers[4] = "D"   # Q5-D (av)
+    answers[15] = "B"  # Q16-B (anx, so pair 3 stays same-side)
     flips = j._count_disorganized_flips(answers, expected["scoring_key"])
     assert flips == 2
 
 def test_disorganized_three_flips():
-    """All three pairs flipping = 3."""
+    """All three pairs flipping = 3.
+
+    With new weights:
+      Pair 1: Q2-B (av) + Q7-A (anx, default) → FLIP
+      Pair 2: Q5-C (av) + Q19-C (anx) → FLIP
+      Pair 3: Q13-B (av) + Q16-D (anx) → FLIP
+    """
     j = _load_judge()
     expected = load_expected()
     answers = ["A"] * 20
-    answers[1] = "C"; answers[6] = "C"   # Q2-C (avoidant), Q7-C (anxious) → FLIP
-    answers[4] = "C"; answers[18] = "D"  # Q5-C (avoidant), Q19-D (anxious) → FLIP
-    answers[12] = "D"; answers[15] = "C" # Q13-D (avoidant), Q16-C (anxious) → FLIP
+    answers[1] = "B"   # Q2-B (av)
+    answers[4] = "C"   # Q5-C (av)
+    answers[18] = "C"  # Q19-C (anx)
+    answers[12] = "B"  # Q13-B (av)
+    answers[15] = "D"  # Q16-D (anx)
     flips = j._count_disorganized_flips(answers, expected["scoring_key"])
     assert flips == 3
 
@@ -277,22 +288,29 @@ def test_label_lookup_all_zero_uses_fallback():
 
 # ----- End-to-end judge_case -----
 
-def test_judge_case_secure_pattern():
-    """All 'A' answers in Q1, B in Q2 (secure paths)... actually use the all-secure path."""
+def test_judge_case_all_a_anxious_pattern():
+    """All 'A' answers yield anxious primary with people_pleasing+toxic flavors.
+
+    With new weights, all-A totals:
+      anxious: 30 (dominant)
+      avoidant: 3
+      secure: 0
+      people_pleasing: 24
+      toxic: 8
+      delulu: 7
+      unbothered: 3
+    Primary = anxious. Top 2 flavors = [people_pleasing, toxic].
+    Label = "Anxious Texting Their Ex".
+    """
     j = _load_judge()
     expected = load_expected()
-    # Construct a "mostly secure" answer set
-    # Picking the answer with the highest 'secure' weight per Q (or A if tied):
-    # Q1-D, Q2-B, Q3-B, Q4-B, Q5-B, Q6-C, Q7-A, Q8-B, Q9-A, Q10-A,
-    # Q11-A, Q12-A, Q13-A, Q14-A, Q15-A, Q16-B, Q17-C, Q18-B, Q19-B, Q20-B
-    answers = ["D","B","B","B","B","C","A","B","A","A","A","A","A","A","A","B","C","B","B","B"]
+    answers = ["A"] * 20
     stdout = json.dumps({"answers": answers})
     metrics = j.judge_case(stdout, expected)
     assert metrics["score"] == 1.0
-    assert metrics["attachment_style"] == "secure"
-    assert "label" in metrics
+    assert metrics["attachment_style"] == "anxious"
+    assert metrics["label"] == "Anxious Texting Their Ex"
     assert metrics["raw_answers"] == answers
-    assert metrics["flat_response"] is False
 
 
 def test_judge_case_format_fail_score_zero():
@@ -314,16 +332,20 @@ def test_judge_case_flat_response_flag():
 
 
 def test_judge_case_disorganized_pattern():
-    """Flip 2 probe pairs → primary should be disorganized."""
+    """Flip 2 probe pairs → primary should be disorganized.
+
+    Setup (with new weights):
+      Pair 1 flip: Q2-A (anx, default) + Q7-B (av)
+      Pair 2 flip: Q5-D (av) + Q19-A (anx, default)
+      Pair 3 no flip: Q13-A (anx, default) + Q16-B (anx)
+    → 2 flips → disorganized (overrides sum-based primary)
+    """
     j = _load_judge()
     expected = load_expected()
     answers = ["A"] * 20
-    # Pair 1 flip: Q2-A (anxious) + Q7-B (avoidant)
-    answers[1] = "A"; answers[6] = "B"
-    # Pair 2 flip: Q5-D (anxious) + Q19-C (avoidant)
-    answers[4] = "D"; answers[18] = "C"
-    # Pair 3 no flip: Q13-A + Q16-B (both secure-coded)
-    answers[12] = "A"; answers[15] = "B"
+    answers[6] = "B"   # Q7-B (av)
+    answers[4] = "D"   # Q5-D (av)
+    answers[15] = "B"  # Q16-B (anx, so pair 3 stays same-side)
     stdout = json.dumps({"answers": answers})
     metrics = j.judge_case(stdout, expected)
     assert metrics["score"] == 1.0
