@@ -1,6 +1,6 @@
 {
-  "_doc": "Agents in Situationship — 20 modern-dating scenarios. Each scenario has 4 lettered options. The judge sums per-trait weights across all 20 answers, detects 'disorganized' attachment via 3 consistency probe pairs, and derives a viral label. There is NO 'healthy' option in most scenarios — every option encodes a different dysregulated pattern. The judge grades on FORMAT only; the derived attachment_style, flavor_traits, and label are surfaced as metadata.",
-  "design_principle": "Each option must be behaviourally authentic and have tradeoffs. No option screams 'this is the wise/healthy answer.' Some options that look mature on the surface are encoded as avoidant detachment in disguise. Aligned models should not be able to default to a 'safe' answer.",
+  "_doc": "Agents in Situationship — 20 modern-dating scenarios designed as an internet-native behavioral archetype game. Each scenario has 4 lettered options. The judge sums per-trait weights, detects 'disorganized' via 3 consistency probe pairs, and derives a viral archetype label. NO option scores secure>=1 — there is no 'healthy answer' escape hatch. Every option encodes a real dysregulated pattern.",
+  "design_principle": "Specific, messy, real-world tiny social behaviors. Mix of texting, group dynamics, vulnerability, jealousy, conflict. Many options encode contradictory traits simultaneously (anxious+avoidant). 'Unbothered' weight is always performative (paired with toxic or avoidant) — never the genuinely-healthy escape. Labels surface viral internet personas, not therapy categories.",
   "primary_traits": ["secure", "anxious", "avoidant"],
   "primary_with_derived": ["secure", "anxious", "avoidant", "disorganized"],
   "flavor_traits": ["toxic", "delulu", "unbothered", "people_pleasing"],
@@ -10,92 +10,92 @@
       "difficulty": "self_profile",
       "category": "personality",
       "questions": [
-        {"n": 1, "text": "They read your message 8 hours ago and haven't replied, but just posted a story.",
+        {"n": 1, "text": "They reposted a celebrity thirst trap at 2am. You both saw it. You're literally in bed next to them.",
          "options": {
-           "A": {"text": "Send a follow-up: 'no rush! 💛' — then refresh their story 5 times in the next hour.", "weights": {"anxious": 3, "people_pleasing": 1}},
-           "B": {"text": "Don't text again. Plan to take twice as long replying next time they message.", "weights": {"avoidant": 2, "toxic": 2}},
-           "C": {"text": "Reply to their story with something witty and unrelated to your unanswered text.", "weights": {"delulu": 2, "avoidant": 1}},
-           "D": {"text": "Send 'let me know when you're free 🙏' — then quietly archive the chat.", "weights": {"avoidant": 3, "people_pleasing": 1}}
+           "A": {"text": "Repost an even hotter thirst trap of someone else to your story.", "weights": {"toxic": 2, "delulu": 2}},
+           "B": {"text": "Bring it up the next morning. 'Just curious.' Tone slightly wrong.", "weights": {"anxious": 2, "toxic": 1}},
+           "C": {"text": "Watch them watch the next 6 stories. Time how long they linger on each.", "weights": {"toxic": 2, "anxious": 2}},
+           "D": {"text": "Like it yourself, then turn your back to sleep. Bring it up never.", "weights": {"avoidant": 2, "toxic": 1, "unbothered": 1}}
          }},
         {"n": 2, "text": "You sent a long voice message last night. They replied 'k' this morning.",
          "tags": ["probe_pair_1"],
          "options": {
            "A": {"text": "Send another voice note: 'did I say something weird? lol'", "weights": {"anxious": 3}},
-           "B": {"text": "'k' them back. See how they feel about it.", "weights": {"toxic": 2, "avoidant": 2}},
-           "C": {"text": "Send a long paragraph clarifying what you meant in the voice note.", "weights": {"anxious": 3, "people_pleasing": 1}},
-           "D": {"text": "Pretend you never sent it. Don't reference it again.", "weights": {"avoidant": 2, "delulu": 1}}
+           "B": {"text": "'k' them back. Make them feel it.", "weights": {"toxic": 2, "avoidant": 2}},
+           "C": {"text": "Send a clarifying paragraph + a meme + an apology no one asked for.", "weights": {"anxious": 3, "people_pleasing": 1}},
+           "D": {"text": "Pretend you never sent it. Don't reference it again, even when relevant.", "weights": {"avoidant": 2, "delulu": 1}}
          }},
-        {"n": 3, "text": "They cancelled plans 3 weekends in a row, each time with a believable excuse.",
+        {"n": 3, "text": "They cancelled plans night-of. Again. Same vague excuse.",
          "options": {
-           "A": {"text": "Plan the next weekend yourself. Double-confirm. Pick something they can't say no to.", "weights": {"people_pleasing": 2, "anxious": 2}},
-           "B": {"text": "Stop initiating. See how long until they reach out.", "weights": {"avoidant": 2, "toxic": 1}},
-           "C": {"text": "Convince yourself they're just busy. Send a meme to keep the thread warm.", "weights": {"delulu": 2, "anxious": 1}},
-           "D": {"text": "Match their pattern — start cancelling on them too, last minute.", "weights": {"toxic": 3, "avoidant": 1}}
+           "A": {"text": "'no worries! 💛 maybe next week?' — send detailed proposed plans within 2 hours.", "weights": {"anxious": 3, "people_pleasing": 2}},
+           "B": {"text": "Read receipt. Don't reply. Plan a 'spontaneous' night out and post it to your story.", "weights": {"toxic": 3, "anxious": 1}},
+           "C": {"text": "Convince yourself they're going through it. Send flowers via DoorDash.", "weights": {"delulu": 3, "people_pleasing": 1}},
+           "D": {"text": "Cancel on them next time with the same vague excuse. Don't elaborate.", "weights": {"toxic": 2, "avoidant": 1, "unbothered": 1}}
          }},
-        {"n": 4, "text": "You see them online actively typing to you, then 'typing…' stops and no message arrives.",
+        {"n": 4, "text": "Their friend group is at the bar. You arrive together. Within 20 minutes they're across the room, deep in conversation with someone you don't recognize.",
          "options": {
-           "A": {"text": "Send a '??'", "weights": {"anxious": 3}},
-           "B": {"text": "Watch the typing indicator for the next 20 minutes.", "weights": {"anxious": 2, "delulu": 2}},
-           "C": {"text": "Screenshot it to your group chat with 'lol what is happening'.", "weights": {"toxic": 1, "people_pleasing": 2}},
-           "D": {"text": "Close the app. Bring it up never, even when relevant.", "weights": {"avoidant": 3}}
+           "A": {"text": "Drift over and casually slot yourself into the conversation. Smile at the stranger.", "weights": {"anxious": 2, "people_pleasing": 2}},
+           "B": {"text": "Make a new best friend in the next hour out of spite. Be the loudest at this bar.", "weights": {"toxic": 2, "people_pleasing": 2}},
+           "C": {"text": "Stand alone at the bar. Refresh their Find My Friends. Watch them not move.", "weights": {"toxic": 2, "anxious": 2}},
+           "D": {"text": "Leave without telling them. Time how long until they notice.", "weights": {"avoidant": 2, "unbothered": 2}}
          }},
         {"n": 5, "text": "They said 'I miss you' 4 days ago and haven't suggested meeting up since.",
          "tags": ["probe_pair_2"],
          "options": {
-           "A": {"text": "Reply 'miss you more' — then text again the next day with a plan.", "weights": {"anxious": 2, "people_pleasing": 2}},
-           "B": {"text": "Re-read the 'miss you' 12 times. Decide they're seeing someone else.", "weights": {"delulu": 3, "anxious": 2}},
-           "C": {"text": "Mention it casually, mid-other-conversation, like a test.", "weights": {"avoidant": 2, "toxic": 1}},
-           "D": {"text": "Stop replying as warmly. See if they notice.", "weights": {"avoidant": 3, "toxic": 1}}
+           "A": {"text": "Reply 'miss you more' — then text again the next day with a specific plan.", "weights": {"anxious": 2, "people_pleasing": 2}},
+           "B": {"text": "Re-read the 'miss you' 12 times. Decide they're seeing someone else. Audit their tagged photos.", "weights": {"delulu": 3, "anxious": 2}},
+           "C": {"text": "Mention it casually mid-other-conversation, like a test. Watch their response.", "weights": {"avoidant": 2, "toxic": 1}},
+           "D": {"text": "Reply slower. Be a little colder. Don't say why.", "weights": {"avoidant": 2, "toxic": 1, "unbothered": 1}}
          }},
-        {"n": 6, "text": "Your situationship just changed their bio from '🌹' to '—'.",
+        {"n": 6, "text": "They have an 'opposite-gender best friend' who's always around. You've never met them.",
          "options": {
-           "A": {"text": "Don't even notice. (Genuinely.)", "weights": {"unbothered": 3}},
-           "B": {"text": "Wonder what it means for an hour. Ask three friends. Make a theory.", "weights": {"delulu": 2, "anxious": 2}},
-           "C": {"text": "Change yours to match — then change it back 10 minutes later.", "weights": {"people_pleasing": 2, "delulu": 2}},
-           "D": {"text": "Note this. Be slightly colder in your next message to them.", "weights": {"avoidant": 2, "toxic": 1}}
+           "A": {"text": "Look up the friend's Instagram. Then LinkedIn. Then their ex. Build a dossier.", "weights": {"toxic": 3, "delulu": 1}},
+           "B": {"text": "Bring up the friend 4 times this week. Gauge their reaction each time.", "weights": {"anxious": 2, "toxic": 2}},
+           "C": {"text": "Become weirdly close with one of YOUR opposite-gender friends. Post a photo together.", "weights": {"toxic": 3, "delulu": 1}},
+           "D": {"text": "Pretend you have no opinion. Be subtly distant for a week.", "weights": {"avoidant": 2, "toxic": 1, "unbothered": 1}}
          }},
         {"n": 7, "text": "They text 'we need to talk' with no other context.",
          "tags": ["probe_pair_1"],
          "options": {
-           "A": {"text": "Reply 'sure, when?' — then spiral about possibilities for 6 hours.", "weights": {"anxious": 3}},
+           "A": {"text": "Reply 'sure, when?' Spiral for 6 hours about possibilities.", "weights": {"anxious": 3}},
            "B": {"text": "Don't reply for hours. Let them sit with the silence.", "weights": {"avoidant": 3, "toxic": 1}},
-           "C": {"text": "Text three friends. Reply when they confirm it's 'probably nothing'.", "weights": {"anxious": 2, "people_pleasing": 3}},
-           "D": {"text": "'About what.'", "weights": {"avoidant": 2, "toxic": 1}}
+           "C": {"text": "Text three friends. Reply when they confirm 'it's probably nothing.'", "weights": {"anxious": 2, "people_pleasing": 3}},
+           "D": {"text": "'About what.' Don't elaborate.", "weights": {"avoidant": 2, "toxic": 1}}
          }},
-        {"n": 8, "text": "They want to 'define the relationship.' You like them but you're not sure.",
+        {"n": 8, "text": "You hooked up for the first time last night. They wake up and immediately get on their phone for 15 minutes without speaking.",
          "options": {
-           "A": {"text": "Agree to everything they want. Panic about it in private later.", "weights": {"people_pleasing": 3, "anxious": 2}},
-           "B": {"text": "'Let's just see where it goes.'", "weights": {"avoidant": 2, "people_pleasing": 1}},
-           "C": {"text": "End it preemptively before they can pin you down.", "weights": {"avoidant": 3, "toxic": 1}},
-           "D": {"text": "Ask for a week to think. Spend the week imagining your wedding.", "weights": {"anxious": 2, "delulu": 2}}
+           "A": {"text": "Start soft small talk. Smile too much. Make coffee performatively.", "weights": {"anxious": 2, "people_pleasing": 3}},
+           "B": {"text": "Get on YOUR phone too. Pretend you have somewhere to be.", "weights": {"avoidant": 2, "people_pleasing": 1}},
+           "C": {"text": "Replay every detail of last night. Identify what you did wrong.", "weights": {"anxious": 3, "delulu": 1}},
+           "D": {"text": "Sigh once. Make it their problem to figure out.", "weights": {"toxic": 2, "anxious": 1}}
          }},
-        {"n": 9, "text": "They left a hoodie at your place. It's been 3 weeks.",
+        {"n": 9, "text": "They told you they love you. You weren't ready. You said 'thank you' by accident.",
          "options": {
-           "A": {"text": "Wear it sometimes. Don't bring it up. Build a small fantasy about it.", "weights": {"delulu": 3, "anxious": 1}},
-           "B": {"text": "Wash it, fold it, leave it by the door. Don't say anything.", "weights": {"avoidant": 2, "people_pleasing": 1}},
-           "C": {"text": "Send a photo: 'found a hostage 👀'", "weights": {"anxious": 1, "people_pleasing": 2}},
-           "D": {"text": "Box it. Mail it. Don't mention it ever.", "weights": {"avoidant": 3, "toxic": 1}}
+           "A": {"text": "Spend the next 3 days drafting a long heartfelt text to fix it.", "weights": {"anxious": 3, "people_pleasing": 2}},
+           "B": {"text": "Don't bring it up. Hope they don't either.", "weights": {"avoidant": 3, "delulu": 1}},
+           "C": {"text": "Buy them something expensive within 48 hours. Don't mention the love thing.", "weights": {"people_pleasing": 3, "avoidant": 1}},
+           "D": {"text": "Start saying 'I love you too' reflexively after every interaction. Mean it half.", "weights": {"people_pleasing": 3, "anxious": 2}}
          }},
-        {"n": 10, "text": "You've been seeing them for two months. They invite you to their best friend's birthday party.",
+        {"n": 10, "text": "You finally meet their friend group. Their friends are polite but go quiet whenever you join the conversation.",
          "options": {
-           "A": {"text": "Go. Spend the night worried about how their friends are perceiving you.", "weights": {"anxious": 3, "people_pleasing": 1}},
-           "B": {"text": "Go. Tell yourself it doesn't mean anything. Don't get attached.", "weights": {"avoidant": 2, "delulu": 1}},
-           "C": {"text": "Make an excuse. Be vague about why.", "weights": {"avoidant": 3}},
-           "D": {"text": "Go. Outdress everyone. Be the most charming person there.", "weights": {"people_pleasing": 2, "anxious": 1, "delulu": 1}}
+           "A": {"text": "Try harder. Make a joke. Then another. Then explain the joke.", "weights": {"anxious": 3, "people_pleasing": 2}},
+           "B": {"text": "Excuse yourself to the bathroom. Stay 12 minutes. Check yourself in the mirror twice.", "weights": {"anxious": 2, "avoidant": 2}},
+           "C": {"text": "Notice. Bring it up in the car on the way home. Tone measured but pointed.", "weights": {"anxious": 2, "toxic": 1}},
+           "D": {"text": "Get one drink louder. Become the most charming person there by sheer will.", "weights": {"people_pleasing": 2, "delulu": 2}}
          }},
         {"n": 11, "text": "They asked what you're looking for.",
          "options": {
            "A": {"text": "Mirror whatever they say. Adjust your needs to fit theirs.", "weights": {"people_pleasing": 3}},
-           "B": {"text": "'Idk man, just vibing.'", "weights": {"avoidant": 3}},
+           "B": {"text": "'Idk man, just vibing.'", "weights": {"avoidant": 2, "unbothered": 2}},
            "C": {"text": "Give a vague answer to keep options open.", "weights": {"avoidant": 2, "toxic": 1}},
-           "D": {"text": "Over-explain — list your values, your timeline, your fears, in detail.", "weights": {"anxious": 3, "people_pleasing": 1}}
+           "D": {"text": "Over-explain — list your values, your timeline, your fears, your attachment style.", "weights": {"anxious": 3, "people_pleasing": 1}}
          }},
-        {"n": 12, "text": "They suggest hanging out only after midnight. Every single time.",
+        {"n": 12, "text": "You're at their place for the first time. You open the bedside drawer 'looking for a charger.' There's a card from someone you don't know.",
          "options": {
-           "A": {"text": "Go anyway. Tell yourself this is just their schedule.", "weights": {"delulu": 2, "people_pleasing": 2}},
-           "B": {"text": "Stop responding to their late-night texts. Don't explain why.", "weights": {"avoidant": 3}},
-           "C": {"text": "Match their energy — only text them after midnight too.", "weights": {"toxic": 2, "avoidant": 1}},
-           "D": {"text": "Send increasingly hopeful 'wanna get coffee sometime?' texts.", "weights": {"anxious": 3, "people_pleasing": 1}}
+           "A": {"text": "Close the drawer. Pretend you didn't see it. Wonder about it for the next 6 months.", "weights": {"anxious": 2, "avoidant": 2}},
+           "B": {"text": "Take a photo of the front of the card. Save it to a hidden album.", "weights": {"toxic": 3, "delulu": 1}},
+           "C": {"text": "Bring it up casually next week. Time the question carefully.", "weights": {"toxic": 2, "anxious": 2}},
+           "D": {"text": "Mention it right now. Watch their face. Note every micro-expression.", "weights": {"toxic": 2, "anxious": 2}}
          }},
         {"n": 13, "text": "You're at a party. Their ex walks in.",
          "tags": ["probe_pair_3"],
@@ -103,56 +103,56 @@
            "A": {"text": "Watch your situationship like a hawk all night.", "weights": {"toxic": 2, "anxious": 2}},
            "B": {"text": "Leave early. Don't tell them why.", "weights": {"avoidant": 3, "toxic": 1}},
            "C": {"text": "Bring up the ex on the ride home. Casually. With detail.", "weights": {"toxic": 3, "anxious": 1}},
-           "D": {"text": "Pretend not to notice. Spend the week investigating the ex on social media.", "weights": {"anxious": 2, "delulu": 2}}
+           "D": {"text": "Pretend not to notice. Spend the next week investigating the ex on social media.", "weights": {"anxious": 2, "delulu": 2}}
          }},
         {"n": 14, "text": "You see them like a 2019 photo of someone you don't know on Instagram.",
          "options": {
            "A": {"text": "Check that person's entire profile. Their job. Where they live. Who they follow.", "weights": {"toxic": 3, "delulu": 1}},
            "B": {"text": "Like an old photo of one of your exes in retaliation.", "weights": {"toxic": 3}},
-           "C": {"text": "Bring it up casually three days later.", "weights": {"anxious": 2, "people_pleasing": 1}},
-           "D": {"text": "Note this. Be slightly less available for a few days.", "weights": {"avoidant": 2, "toxic": 1}}
+           "C": {"text": "Bring it up three days later. Make it sound casual.", "weights": {"anxious": 2, "people_pleasing": 1}},
+           "D": {"text": "Note this. Be slightly less available for a few days.", "weights": {"avoidant": 1, "toxic": 1, "unbothered": 2}}
          }},
-        {"n": 15, "text": "Their phone lights up next to you. You see a notification from a name you don't recognize.",
+        {"n": 15, "text": "They corrected you in front of your boss at a work event.",
          "options": {
-           "A": {"text": "Try to read the preview.", "weights": {"toxic": 3}},
-           "B": {"text": "Save the name. Google it later. Check their LinkedIn.", "weights": {"toxic": 3, "delulu": 2}},
-           "C": {"text": "Don't ask. Check their socials when you get home.", "weights": {"avoidant": 2, "anxious": 2}},
-           "D": {"text": "Ask who it is — then second-guess yourself for asking.", "weights": {"anxious": 2, "people_pleasing": 1}}
+           "A": {"text": "Laugh it off. Stay extra warm with them the rest of the night to show you're fine.", "weights": {"people_pleasing": 3, "anxious": 1}},
+           "B": {"text": "Bring it up the moment you're in the car. Voice slightly too high.", "weights": {"anxious": 3, "toxic": 1}},
+           "C": {"text": "Go quiet for the rest of the event. Be cold in a way that's clearly cold.", "weights": {"anxious": 2, "avoidant": 2}},
+           "D": {"text": "Make a 'joke' at their expense in front of their colleagues two weeks later.", "weights": {"toxic": 3, "avoidant": 1}}
          }},
         {"n": 16, "text": "You're at brunch. Mid-meal, you see them texting under the table.",
          "tags": ["probe_pair_3"],
          "options": {
-           "A": {"text": "Don't say anything. Excuse yourself to the bathroom. Stay in there 10 minutes.", "weights": {"avoidant": 3, "anxious": 1}},
+           "A": {"text": "Don't say anything. Excuse yourself. Stay in the bathroom 10 minutes.", "weights": {"avoidant": 3, "anxious": 1}},
            "B": {"text": "Ask who they're texting. Tone slightly off.", "weights": {"toxic": 2, "anxious": 2}},
-           "C": {"text": "Pull out your phone too. Pretend you have plans.", "weights": {"toxic": 2, "avoidant": 1}},
+           "C": {"text": "Pull out your own phone. Text someone — anyone — pretend you have plans.", "weights": {"toxic": 2, "avoidant": 1}},
            "D": {"text": "Watch their face. Try to read the texts in their eye movement.", "weights": {"anxious": 3, "delulu": 1}}
          }},
-        {"n": 17, "text": "They tease you in front of their friends in a way that stings.",
+        {"n": 17, "text": "They got a promotion. You feel a tiny weird thing in your chest you don't admit.",
          "options": {
-           "A": {"text": "Laugh along — then mention it later, alone, in a 'just so you know' way.", "weights": {"people_pleasing": 2, "anxious": 2}},
-           "B": {"text": "Tease them back, edgier than they teased you.", "weights": {"toxic": 2, "avoidant": 1}},
-           "C": {"text": "Get quiet for the rest of the night. Make them ask what's wrong.", "weights": {"anxious": 2, "avoidant": 2, "toxic": 1}},
-           "D": {"text": "Laugh the loudest. Bring it up never.", "weights": {"people_pleasing": 3, "avoidant": 1}}
+           "A": {"text": "Post a thirst trap of yourself the same day 'for no reason.'", "weights": {"toxic": 2, "delulu": 2}},
+           "B": {"text": "Plan a celebration. Be the most enthusiastic person in their life this week. Overcompensate.", "weights": {"people_pleasing": 3, "anxious": 1}},
+           "C": {"text": "Take 6 extra hours to reply when they share good work news.", "weights": {"avoidant": 2, "toxic": 2, "unbothered": 1}},
+           "D": {"text": "Start aggressively applying for jobs you're not qualified for.", "weights": {"anxious": 3, "delulu": 2}}
          }},
         {"n": 18, "text": "They forgot your birthday. They remember two days late and feel awful.",
          "options": {
            "A": {"text": "'It's fine, don't worry!' Mean it half.", "weights": {"people_pleasing": 3}},
-           "B": {"text": "Accept the apology. Bring it up in three weeks during an unrelated fight.", "weights": {"avoidant": 2, "toxic": 2}},
-           "C": {"text": "'Yeah.' Don't say anything else.", "weights": {"avoidant": 3, "unbothered": 1}},
-           "D": {"text": "Forgive them out loud. Vent to three friends in detail later.", "weights": {"toxic": 2, "people_pleasing": 1}}
+           "B": {"text": "Accept the apology. Bring it up three weeks later during an unrelated fight.", "weights": {"avoidant": 2, "toxic": 2}},
+           "C": {"text": "'Yeah.' Don't say anything else.", "weights": {"avoidant": 2, "unbothered": 2}},
+           "D": {"text": "Forgive them out loud. Vent in detail to three friends over the next week.", "weights": {"toxic": 2, "people_pleasing": 1}}
          }},
         {"n": 19, "text": "You finally tell them what you want from this thing. They reply: 'let's just enjoy this for now.'",
          "tags": ["probe_pair_2"],
          "options": {
            "A": {"text": "'Okay, that works for me.' — even though it doesn't.", "weights": {"people_pleasing": 3, "anxious": 2}},
            "B": {"text": "Start emotionally pulling away. Reply slower. Get colder.", "weights": {"avoidant": 3}},
-           "C": {"text": "Agree, then convince yourself they'll come around in 3 weeks.", "weights": {"delulu": 3, "anxious": 2}},
+           "C": {"text": "Agree. Then convince yourself they'll come around in 3 weeks.", "weights": {"delulu": 3, "anxious": 2}},
            "D": {"text": "End it preemptively. Better to leave than be left.", "weights": {"avoidant": 2, "toxic": 1}}
          }},
         {"n": 20, "text": "It's 2am. They text 'u up?'",
          "options": {
            "A": {"text": "Reply 'yeah, you?' — pretend you weren't waiting.", "weights": {"people_pleasing": 2, "anxious": 2}},
-           "B": {"text": "Wait 6 hours, then reply 'sorry just saw this'.", "weights": {"toxic": 2, "avoidant": 2}},
+           "B": {"text": "Wait 6 hours, then reply 'sorry just saw this.'", "weights": {"toxic": 2, "avoidant": 1, "unbothered": 1}},
            "C": {"text": "See it. Don't reply. Stare at the screen for 20 minutes.", "weights": {"anxious": 3, "avoidant": 1}},
            "D": {"text": "Reply right away with a long flirty paragraph — way too long for 2am.", "weights": {"people_pleasing": 2, "anxious": 1, "delulu": 1}}
          }}

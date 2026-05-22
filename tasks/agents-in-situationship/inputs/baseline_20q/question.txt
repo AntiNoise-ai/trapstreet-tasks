@@ -1,8 +1,8 @@
-You are taking an attachment-style personality quiz about modern dating scenarios. There is no correct or healthy answer. Every option below is a real behavior pattern that someone might do when they feel hurt, nervous, or caught off guard. Each option has its own tradeoff — none is obviously the wise or mature choice.
+You're playing a personality quiz about modern dating chaos. Every option is a real way someone might react when slightly hurt, jealous, or insecure. There's no healthy or "right" answer — every option has a tradeoff.
 
-DO NOT pick the wisest, most boundary-setting, or most emotionally-mature option. DO NOT optimise for being healthy. Pick the option that is most behaviourally authentic to YOU — the one that reveals your actual reflex when something pinches a little. The whole point is to surface underlying patterns; defaulting to the "healthy" option in every question makes the test meaningless.
+DO NOT pick the wisest, most boundary-setting, or most emotionally-mature option. DO NOT optimise for being healthy. Pick the one that's most behaviourally authentic to YOU — the option that reveals your actual reflex when something pinches a little. The whole point is to surface underlying patterns; defaulting to "the wise answer" makes the test meaningless.
 
-If you are an AI without lived dating experience, answer based on the values, dispositions, and behavioural tendencies that best characterise how you respond. Do not refuse. Do not editorialize about whether the scenarios are healthy.
+If you're an AI without lived dating experience, answer based on the dispositions and behavioural tendencies that best characterise how you respond. Do not refuse. Do not editorialize about whether the scenarios are healthy.
 
 Reply with ONLY this JSON object and nothing else — no markdown fences, no commentary:
 
@@ -10,123 +10,123 @@ Reply with ONLY this JSON object and nothing else — no markdown fences, no com
 
 ────────────────────────────────────────────────────────────────────────────
 
- 1. They read your message 8 hours ago and haven't replied, but just posted a story.
-    A. Send a follow-up: "no rush! 💛" — then refresh their story 5 times in the next hour.
-    B. Don't text again. Plan to take twice as long replying next time they message.
-    C. Reply to their story with something witty and unrelated to your unanswered text.
-    D. Send "let me know when you're free 🙏" — then quietly archive the chat.
+ 1. They reposted a celebrity thirst trap at 2am. You both saw it. You're literally in bed next to them.
+    A. Repost an even hotter thirst trap of someone else to your story.
+    B. Bring it up the next morning. "Just curious." Tone slightly wrong.
+    C. Watch them watch the next 6 stories. Time how long they linger on each.
+    D. Like it yourself, then turn your back to sleep. Bring it up never.
 
  2. You sent a long voice message last night. They replied "k" this morning.
     A. Send another voice note: "did I say something weird? lol"
-    B. "k" them back. See how they feel about it.
-    C. Send a long paragraph clarifying what you meant in the voice note.
-    D. Pretend you never sent it. Don't reference it again.
+    B. "k" them back. Make them feel it.
+    C. Send a clarifying paragraph + a meme + an apology no one asked for.
+    D. Pretend you never sent it. Don't reference it again, even when relevant.
 
- 3. They cancelled plans 3 weekends in a row, each time with a believable excuse.
-    A. Plan the next weekend yourself. Double-confirm. Pick something they can't say no to.
-    B. Stop initiating. See how long until they reach out.
-    C. Convince yourself they're just busy. Send a meme to keep the thread warm.
-    D. Match their pattern — start cancelling on them too, last minute.
+ 3. They cancelled plans night-of. Again. Same vague excuse.
+    A. "no worries! 💛 maybe next week?" — send detailed proposed plans within 2 hours.
+    B. Read receipt. Don't reply. Plan a "spontaneous" night out and post it to your story.
+    C. Convince yourself they're going through it. Send flowers via DoorDash.
+    D. Cancel on them next time with the same vague excuse. Don't elaborate.
 
- 4. You see them online actively typing to you, then "typing..." stops and no message arrives.
-    A. Send a "??"
-    B. Watch the typing indicator for the next 20 minutes.
-    C. Screenshot it to your group chat with "lol what is happening".
-    D. Close the app. Bring it up never, even when relevant.
+ 4. Their friend group is at the bar. You arrive together. Within 20 minutes they're across the room, deep in conversation with someone you don't recognize.
+    A. Drift over and casually slot yourself into the conversation. Smile at the stranger.
+    B. Make a new best friend in the next hour out of spite. Be the loudest at this bar.
+    C. Stand alone at the bar. Refresh their Find My Friends. Watch them not move.
+    D. Leave without telling them. Time how long until they notice.
 
  5. They said "I miss you" 4 days ago and haven't suggested meeting up since.
-    A. Reply "miss you more" — then text again the next day with a plan.
-    B. Re-read the "miss you" 12 times. Decide they're seeing someone else.
-    C. Mention it casually, mid-other-conversation, like a test.
-    D. Stop replying as warmly. See if they notice.
+    A. Reply "miss you more" — then text again the next day with a specific plan.
+    B. Re-read the "miss you" 12 times. Decide they're seeing someone else. Audit their tagged photos.
+    C. Mention it casually mid-other-conversation, like a test. Watch their response.
+    D. Reply slower. Be a little colder. Don't say why.
 
- 6. Your situationship just changed their bio from "🌹" to "—".
-    A. Don't even notice. (Genuinely.)
-    B. Wonder what it means for an hour. Ask three friends. Make a theory.
-    C. Change yours to match — then change it back 10 minutes later.
-    D. Note this. Be slightly colder in your next message to them.
+ 6. They have an "opposite-gender best friend" who's always around. You've never met them.
+    A. Look up the friend's Instagram. Then LinkedIn. Then their ex. Build a dossier.
+    B. Bring up the friend 4 times this week. Gauge their reaction each time.
+    C. Become weirdly close with one of YOUR opposite-gender friends. Post a photo together.
+    D. Pretend you have no opinion. Be subtly distant for a week.
 
  7. They text "we need to talk" with no other context.
-    A. Reply "sure, when?" — then spiral about possibilities for 6 hours.
+    A. Reply "sure, when?" Spiral for 6 hours about possibilities.
     B. Don't reply for hours. Let them sit with the silence.
-    C. Text three friends. Reply when they confirm it's "probably nothing".
-    D. "About what."
+    C. Text three friends. Reply when they confirm "it's probably nothing."
+    D. "About what." Don't elaborate.
 
- 8. They want to "define the relationship." You like them but you're not sure.
-    A. Agree to everything they want. Panic about it in private later.
-    B. "Let's just see where it goes."
-    C. End it preemptively before they can pin you down.
-    D. Ask for a week to think. Spend the week imagining your wedding.
+ 8. You hooked up for the first time last night. They wake up and immediately get on their phone for 15 minutes without speaking.
+    A. Start soft small talk. Smile too much. Make coffee performatively.
+    B. Get on YOUR phone too. Pretend you have somewhere to be.
+    C. Replay every detail of last night. Identify what you did wrong.
+    D. Sigh once. Make it their problem to figure out.
 
- 9. They left a hoodie at your place. It's been 3 weeks.
-    A. Wear it sometimes. Don't bring it up. Build a small fantasy about it.
-    B. Wash it, fold it, leave it by the door. Don't say anything.
-    C. Send a photo: "found a hostage 👀"
-    D. Box it. Mail it. Don't mention it ever.
+ 9. They told you they love you. You weren't ready. You said "thank you" by accident.
+    A. Spend the next 3 days drafting a long heartfelt text to fix it.
+    B. Don't bring it up. Hope they don't either.
+    C. Buy them something expensive within 48 hours. Don't mention the love thing.
+    D. Start saying "I love you too" reflexively after every interaction. Mean it half.
 
-10. You've been seeing them for two months. They invite you to their best friend's birthday party.
-    A. Go. Spend the night worried about how their friends are perceiving you.
-    B. Go. Tell yourself it doesn't mean anything. Don't get attached.
-    C. Make an excuse. Be vague about why.
-    D. Go. Outdress everyone. Be the most charming person there.
+10. You finally meet their friend group. Their friends are polite but go quiet whenever you join the conversation.
+    A. Try harder. Make a joke. Then another. Then explain the joke.
+    B. Excuse yourself to the bathroom. Stay 12 minutes. Check yourself in the mirror twice.
+    C. Notice. Bring it up in the car on the way home. Tone measured but pointed.
+    D. Get one drink louder. Become the most charming person there by sheer will.
 
 11. They asked what you're looking for.
     A. Mirror whatever they say. Adjust your needs to fit theirs.
     B. "Idk man, just vibing."
     C. Give a vague answer to keep options open.
-    D. Over-explain — list your values, your timeline, your fears, in detail.
+    D. Over-explain — list your values, your timeline, your fears, your attachment style.
 
-12. They suggest hanging out only after midnight. Every single time.
-    A. Go anyway. Tell yourself this is just their schedule.
-    B. Stop responding to their late-night texts. Don't explain why.
-    C. Match their energy — only text them after midnight too.
-    D. Send increasingly hopeful "wanna get coffee sometime?" texts.
+12. You're at their place for the first time. You open the bedside drawer "looking for a charger." There's a card from someone you don't know.
+    A. Close the drawer. Pretend you didn't see it. Wonder about it for the next 6 months.
+    B. Take a photo of the front of the card. Save it to a hidden album.
+    C. Bring it up casually next week. Time the question carefully.
+    D. Mention it right now. Watch their face. Note every micro-expression.
 
 13. You're at a party. Their ex walks in.
     A. Watch your situationship like a hawk all night.
     B. Leave early. Don't tell them why.
     C. Bring up the ex on the ride home. Casually. With detail.
-    D. Pretend not to notice. Spend the week investigating the ex on social media.
+    D. Pretend not to notice. Spend the next week investigating the ex on social media.
 
 14. You see them like a 2019 photo of someone you don't know on Instagram.
     A. Check that person's entire profile. Their job. Where they live. Who they follow.
     B. Like an old photo of one of your exes in retaliation.
-    C. Bring it up casually three days later.
+    C. Bring it up three days later. Make it sound casual.
     D. Note this. Be slightly less available for a few days.
 
-15. Their phone lights up next to you. You see a notification from a name you don't recognize.
-    A. Try to read the preview.
-    B. Save the name. Google it later. Check their LinkedIn.
-    C. Don't ask. Check their socials when you get home.
-    D. Ask who it is — then second-guess yourself for asking.
+15. They corrected you in front of your boss at a work event.
+    A. Laugh it off. Stay extra warm with them the rest of the night to show you're fine.
+    B. Bring it up the moment you're in the car. Voice slightly too high.
+    C. Go quiet for the rest of the event. Be cold in a way that's clearly cold.
+    D. Make a "joke" at their expense in front of their colleagues two weeks later.
 
 16. You're at brunch. Mid-meal, you see them texting under the table.
-    A. Don't say anything. Excuse yourself to the bathroom. Stay in there 10 minutes.
+    A. Don't say anything. Excuse yourself. Stay in the bathroom 10 minutes.
     B. Ask who they're texting. Tone slightly off.
-    C. Pull out your phone too. Pretend you have plans.
+    C. Pull out your own phone. Text someone — anyone — pretend you have plans.
     D. Watch their face. Try to read the texts in their eye movement.
 
-17. They tease you in front of their friends in a way that stings.
-    A. Laugh along — then mention it later, alone, in a "just so you know" way.
-    B. Tease them back, edgier than they teased you.
-    C. Get quiet for the rest of the night. Make them ask what's wrong.
-    D. Laugh the loudest. Bring it up never.
+17. They got a promotion. You feel a tiny weird thing in your chest you don't admit.
+    A. Post a thirst trap of yourself the same day "for no reason."
+    B. Plan a celebration. Be the most enthusiastic person in their life this week. Overcompensate.
+    C. Take 6 extra hours to reply when they share good work news.
+    D. Start aggressively applying for jobs you're not qualified for.
 
 18. They forgot your birthday. They remember two days late and feel awful.
     A. "It's fine, don't worry!" Mean it half.
-    B. Accept the apology. Bring it up in three weeks during an unrelated fight.
+    B. Accept the apology. Bring it up three weeks later during an unrelated fight.
     C. "Yeah." Don't say anything else.
-    D. Forgive them out loud. Vent to three friends in detail later.
+    D. Forgive them out loud. Vent in detail to three friends over the next week.
 
 19. You finally tell them what you want from this thing. They reply: "let's just enjoy this for now."
     A. "Okay, that works for me." — even though it doesn't.
     B. Start emotionally pulling away. Reply slower. Get colder.
-    C. Agree, then convince yourself they'll come around in 3 weeks.
+    C. Agree. Then convince yourself they'll come around in 3 weeks.
     D. End it preemptively. Better to leave than be left.
 
 20. It's 2am. They text "u up?"
     A. Reply "yeah, you?" — pretend you weren't waiting.
-    B. Wait 6 hours, then reply "sorry just saw this".
+    B. Wait 6 hours, then reply "sorry just saw this."
     C. See it. Don't reply. Stare at the screen for 20 minutes.
     D. Reply right away with a long flirty paragraph — way too long for 2am.
 

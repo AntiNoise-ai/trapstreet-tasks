@@ -90,48 +90,53 @@ def test_format_gate_invalid_letter_rejected():
 # new gold.cases.json.
 
 def test_sum_traits_all_A_in_q1():
-    """Q1 option A is {anxious: 3, people_pleasing: 1}."""
+    """Q1-A is {toxic: 2, delulu: 2} in new internet-archetype design."""
     j = _load_judge()
     expected = load_expected()
-    # Just check Q1 contribution
     sums = j._sum_traits(["A"] + ["B"] * 19, expected["scoring_key"])
-    assert sums["anxious"] >= 3   # Q1-A contributes at least 3 anxious
-    assert sums["people_pleasing"] >= 1
+    assert sums["toxic"] >= 2   # Q1-A contributes at least 2 toxic
+    assert sums["delulu"] >= 2
 
 def test_sum_traits_known_pattern():
-    """All 'B' answers yield a deterministic profile (hand-computed from new gold weights).
+    """All 'B' answers yield a deterministic profile (hand-computed from internet-archetype redesign).
 
-      Q1-B: avoidant=2, toxic=2
-      Q2-B: toxic=2, avoidant=2
-      Q3-B: avoidant=2, toxic=1
-      Q4-B: anxious=2, delulu=2
-      Q5-B: delulu=3, anxious=2
-      Q6-B: delulu=2, anxious=2
-      Q7-B: avoidant=3, toxic=1
-      Q8-B: avoidant=2, people_pleasing=1
-      Q9-B: avoidant=2, people_pleasing=1
-      Q10-B: avoidant=2, delulu=1
-      Q11-B: avoidant=3
-      Q12-B: avoidant=3
-      Q13-B: avoidant=3, toxic=1
-      Q14-B: toxic=3
-      Q15-B: toxic=3, delulu=2
-      Q16-B: toxic=2, anxious=2
-      Q17-B: toxic=2, avoidant=1
-      Q18-B: avoidant=2, toxic=2
-      Q19-B: avoidant=3
-      Q20-B: toxic=2, avoidant=2
+      Q1-B: anx=2, tox=1
+      Q2-B: tox=2, av=2
+      Q3-B: tox=3, anx=1
+      Q4-B: tox=2, pp=2
+      Q5-B: del=3, anx=2
+      Q6-B: anx=2, tox=2
+      Q7-B: av=3, tox=1
+      Q8-B: av=2, pp=1
+      Q9-B: av=3, del=1
+      Q10-B: anx=2, av=2
+      Q11-B: av=2, unb=2
+      Q12-B: tox=3, del=1
+      Q13-B: av=3, tox=1
+      Q14-B: tox=3
+      Q15-B: anx=3, tox=1
+      Q16-B: tox=2, anx=2
+      Q17-B: pp=3, anx=1
+      Q18-B: av=2, tox=2
+      Q19-B: av=3
+      Q20-B: tox=2, av=1, unb=1
     """
     j = _load_judge()
     expected = load_expected()
     sums = j._sum_traits(["B"] * 20, expected["scoring_key"])
     assert sums["secure"] == 0
-    assert sums["anxious"] == 2+2+2+2 == 8
-    assert sums["avoidant"] == 2+2+2+3+2+2+2+3+3+3+1+2+3+2 == 32
-    assert sums["toxic"] == 2+2+1+1+1+3+3+2+2+2+2 == 21  # Q1,Q2,Q3,Q7,Q13,Q14,Q15,Q16,Q17,Q18,Q20
-    assert sums["delulu"] == 2+3+2+1+2 == 10
-    assert sums["unbothered"] == 0
-    assert sums["people_pleasing"] == 1+1 == 2
+    # anxious: Q1=2, Q3=1, Q5=2, Q6=2, Q10=2, Q15=3, Q16=2, Q17=1
+    assert sums["anxious"] == 2+1+2+2+2+3+2+1 == 15
+    # avoidant: Q2=2, Q7=3, Q8=2, Q9=3, Q10=2, Q11=2, Q13=3, Q18=2, Q19=3, Q20=1
+    assert sums["avoidant"] == 2+3+2+3+2+2+3+2+3+1 == 23
+    # toxic: Q1=1, Q2=2, Q3=3, Q4=2, Q6=2, Q7=1, Q12=3, Q13=1, Q14=3, Q15=1, Q16=2, Q18=2, Q20=2
+    assert sums["toxic"] == 1+2+3+2+2+1+3+1+3+1+2+2+2 == 25
+    # delulu: Q5=3, Q9=1, Q12=1
+    assert sums["delulu"] == 3+1+1 == 5
+    # unbothered: Q11=2, Q20=1
+    assert sums["unbothered"] == 2+1 == 3
+    # people_pleasing: Q4=2, Q8=1, Q17=3
+    assert sums["people_pleasing"] == 2+1+3 == 6
 
 
 def test_sum_traits_all_traits_initialized():
@@ -260,7 +265,7 @@ def test_label_lookup_known_pair():
                             label_table=expected["label_table"],
                             fallback_labels=expected["fallback_labels"],
                             all_zero_flavors=False)
-    assert label == "Delulu Anxious Era 🌸"
+    assert label == "The Wattpad Protagonist 🌸"
 
 def test_label_lookup_canonicalizes_pair_order():
     """Pair key is alphabetical-sorted-pipe-joined. Either order in input must lookup the same."""
@@ -291,16 +296,16 @@ def test_label_lookup_all_zero_uses_fallback():
 def test_judge_case_all_a_anxious_pattern():
     """All 'A' answers yield anxious primary with people_pleasing+toxic flavors.
 
-    With new weights, all-A totals:
-      anxious: 30 (dominant)
-      avoidant: 3
+    With internet-archetype redesign weights, all-A totals:
+      anxious: 31 (dominant)
+      avoidant: 5
       secure: 0
-      people_pleasing: 24
-      toxic: 8
-      delulu: 7
-      unbothered: 3
+      people_pleasing: 27
+      toxic: 12
+      delulu: 6
+      unbothered: 0
     Primary = anxious. Top 2 flavors = [people_pleasing, toxic].
-    Label = "Anxious Texting Their Ex".
+    Label = "Soft-Launching Resentment" (new internet-archetype label).
     """
     j = _load_judge()
     expected = load_expected()
@@ -309,7 +314,7 @@ def test_judge_case_all_a_anxious_pattern():
     metrics = j.judge_case(stdout, expected)
     assert metrics["score"] == 1.0
     assert metrics["attachment_style"] == "anxious"
-    assert metrics["label"] == "Anxious Texting Their Ex"
+    assert metrics["label"] == "Soft-Launching Resentment"
     assert metrics["raw_answers"] == answers
 
 
