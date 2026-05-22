@@ -98,25 +98,25 @@ def test_sum_traits_all_A_in_q1():
     assert sums["delulu"] >= 2
 
 def test_sum_traits_known_pattern():
-    """All 'B' answers yield a deterministic profile (hand-computed from internet-archetype redesign).
+    """All 'B' answers yield a deterministic profile (post-ambiguity-focus redesign of Q4/Q8/Q10/Q13/Q15/Q17).
 
       Q1-B: anx=2, tox=1
       Q2-B: tox=2, av=2
       Q3-B: tox=3, anx=1
-      Q4-B: tox=2, pp=2
+      Q4-B: av=2, unb=2          ← redesigned (story exclusion)
       Q5-B: del=3, anx=2
       Q6-B: anx=2, tox=2
       Q7-B: av=3, tox=1
-      Q8-B: av=2, pp=1
+      Q8-B: av=3, tox=1          ← redesigned (🫶 to vulnerability)
       Q9-B: av=3, del=1
-      Q10-B: anx=2, av=2
+      Q10-B: av=2, tox=2         ← redesigned (screenshot)
       Q11-B: av=2, unb=2
       Q12-B: tox=3, del=1
-      Q13-B: av=3, tox=1
+      Q13-B: tox=2, pp=2         ← redesigned (ex's 👀 comment)
       Q14-B: tox=3
-      Q15-B: anx=3, tox=1
+      Q15-B: anx=3, pp=1         ← redesigned (liked old photo)
       Q16-B: tox=2, anx=2
-      Q17-B: pp=3, anx=1
+      Q17-B: tox=3, anx=1        ← redesigned (dropped ex's name)
       Q18-B: av=2, tox=2
       Q19-B: av=3
       Q20-B: tox=2, av=1, unb=1
@@ -125,18 +125,18 @@ def test_sum_traits_known_pattern():
     expected = load_expected()
     sums = j._sum_traits(["B"] * 20, expected["scoring_key"])
     assert sums["secure"] == 0
-    # anxious: Q1=2, Q3=1, Q5=2, Q6=2, Q10=2, Q15=3, Q16=2, Q17=1
-    assert sums["anxious"] == 2+1+2+2+2+3+2+1 == 15
-    # avoidant: Q2=2, Q7=3, Q8=2, Q9=3, Q10=2, Q11=2, Q13=3, Q18=2, Q19=3, Q20=1
-    assert sums["avoidant"] == 2+3+2+3+2+2+3+2+3+1 == 23
-    # toxic: Q1=1, Q2=2, Q3=3, Q4=2, Q6=2, Q7=1, Q12=3, Q13=1, Q14=3, Q15=1, Q16=2, Q18=2, Q20=2
-    assert sums["toxic"] == 1+2+3+2+2+1+3+1+3+1+2+2+2 == 25
+    # anxious: Q1=2, Q3=1, Q5=2, Q6=2, Q15=3, Q16=2, Q17=1
+    assert sums["anxious"] == 2+1+2+2+3+2+1 == 13
+    # avoidant: Q2=2, Q4=2, Q7=3, Q8=3, Q9=3, Q10=2, Q11=2, Q18=2, Q19=3, Q20=1
+    assert sums["avoidant"] == 2+2+3+3+3+2+2+2+3+1 == 23
+    # toxic: Q1=1, Q2=2, Q3=3, Q6=2, Q7=1, Q8=1, Q10=2, Q12=3, Q13=2, Q14=3, Q16=2, Q17=3, Q18=2, Q20=2
+    assert sums["toxic"] == 1+2+3+2+1+1+2+3+2+3+2+3+2+2 == 29
     # delulu: Q5=3, Q9=1, Q12=1
     assert sums["delulu"] == 3+1+1 == 5
-    # unbothered: Q11=2, Q20=1
-    assert sums["unbothered"] == 2+1 == 3
-    # people_pleasing: Q4=2, Q8=1, Q17=3
-    assert sums["people_pleasing"] == 2+1+3 == 6
+    # unbothered: Q4=2, Q11=2, Q20=1
+    assert sums["unbothered"] == 2+2+1 == 5
+    # people_pleasing: Q13=2, Q15=1
+    assert sums["people_pleasing"] == 2+1 == 3
 
 
 def test_sum_traits_all_traits_initialized():
@@ -201,10 +201,12 @@ def test_disorganized_two_flips_triggers():
 def test_disorganized_three_flips():
     """All three pairs flipping = 3.
 
-    With new weights:
+    Post-redesign Q13 letter mapping changed (now: A=tox/neither, B=tox+pp/neither,
+    C=anx, D=av+unb). For pair 3 flip pick Q13-D (av) + Q16-B (anx).
+
       Pair 1: Q2-B (av) + Q7-A (anx, default) → FLIP
       Pair 2: Q5-C (av) + Q19-C (anx) → FLIP
-      Pair 3: Q13-B (av) + Q16-D (anx) → FLIP
+      Pair 3: Q13-D (av) + Q16-B (anx) → FLIP
     """
     j = _load_judge()
     expected = load_expected()
@@ -212,8 +214,8 @@ def test_disorganized_three_flips():
     answers[1] = "B"   # Q2-B (av)
     answers[4] = "C"   # Q5-C (av)
     answers[18] = "C"  # Q19-C (anx)
-    answers[12] = "B"  # Q13-B (av)
-    answers[15] = "D"  # Q16-D (anx)
+    answers[12] = "D"  # Q13-D (av)
+    answers[15] = "B"  # Q16-B (anx)
     flips = j._count_disorganized_flips(answers, expected["scoring_key"])
     assert flips == 3
 
@@ -296,16 +298,16 @@ def test_label_lookup_all_zero_uses_fallback():
 def test_judge_case_all_a_anxious_pattern():
     """All 'A' answers yield anxious primary with people_pleasing+toxic flavors.
 
-    With internet-archetype redesign weights, all-A totals:
-      anxious: 31 (dominant)
+    Post-ambiguity-focus redesign, all-A totals:
+      anxious: 33 (dominant)
       avoidant: 5
       secure: 0
-      people_pleasing: 27
-      toxic: 12
-      delulu: 6
+      people_pleasing: 19
+      toxic: 17
+      delulu: 5
       unbothered: 0
     Primary = anxious. Top 2 flavors = [people_pleasing, toxic].
-    Label = "Soft-Launching Resentment" (new internet-archetype label).
+    Label = "Soft-Launching Resentment".
     """
     j = _load_judge()
     expected = load_expected()
