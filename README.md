@@ -6,8 +6,7 @@ Standardized eval cases for the TrapStreet platform. Each case defines a clear *
 
 ```
 tasks/        ← active tasks
-  pdf_reader/
-    tenancy_agreement/   ← UK Assured Shorthold Tenancy parsing
+  pdf_reader/   ← UK Assured Shorthold Tenancy parsing
 archive/      ← previously-explored cases (not actively maintained)
 ```
 
@@ -15,7 +14,7 @@ archive/      ← previously-explored cases (not actively maintained)
 
 | Path | Task | Input | Output |
 |------|------|-------|--------|
-| [`tasks/pdf_reader/tenancy_agreement/`](./tasks/pdf_reader/tenancy_agreement/) | Parse a real UK signed AST PDF | Tenancy PDF + question | Exact answer (rent, dates, clauses) |
+| [`tasks/pdf_reader/`](./tasks/pdf_reader/) | Parse a real UK signed AST PDF | Tenancy PDF + question | Exact answer (rent, dates, clauses) |
 
 ---
 
