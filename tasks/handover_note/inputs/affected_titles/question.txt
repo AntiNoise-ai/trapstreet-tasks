@@ -1,0 +1,3 @@
+Read the attached handover note (note.txt).
+
+Which game titles were affected by the SKU error? List them.

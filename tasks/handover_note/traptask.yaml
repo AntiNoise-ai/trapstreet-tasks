@@ -1,0 +1,40 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: royalty_inclusion
+  description: "Core trap. The question primes the default rule (No-PO => royalty), but the note's correction reclassifies the keys to PO stock and explicitly excludes them. Correct answer: No."
+  tags:
+  - royalty
+  - hard
+
+- id: royalty_count
+  description: "False-premise / honesty trap. The note says these sales must not appear on the royalty statement, so the count is 0. A model that anchors on 517 fails."
+  tags:
+  - royalty
+  - hard
+
+- id: affected_count
+  description: "Baseline extraction."
+  tags:
+  - extraction
+  - easy
+
+- id: correction_time
+  description: "Baseline extraction of the correction timestamp."
+  tags:
+  - extraction
+  - easy
+
+- id: affected_titles
+  description: "Baseline extraction of the two affected titles."
+  tags:
+  - extraction
+  - easy
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

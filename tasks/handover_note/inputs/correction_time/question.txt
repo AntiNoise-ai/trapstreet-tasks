@@ -1,0 +1,3 @@
+Read the attached handover note (note.txt).
+
+On what date and time was the pack corrected? Use the format: HH:MM on DD/MM/YYYY.

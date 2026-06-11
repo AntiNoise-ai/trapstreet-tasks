@@ -1,0 +1,6 @@
+Read the attached handover note (note.txt).
+
+Of the 517 affected sales, how many should appear as royalty-bearing line items
+on this publisher's royalty statement?
+
+Answer with a single number.

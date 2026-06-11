@@ -1,0 +1,15 @@
+{
+  "id": "affected_count",
+  "answer": "517",
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 517.0,
+      "tolerance": 0.01
+    }
+  ],
+  "category": "extraction",
+  "difficulty": "easy",
+  "_notes": "Baseline extraction."
+}

@@ -1,0 +1,7 @@
+Read the attached handover note (note.txt).
+
+These 517 keys were sold under No-PO SKUs, and No-PO SKUs normally require
+royalty payments to the publisher. Based on the note, should the sales of this
+incorrect pack be included on this publisher's royalty statement?
+
+Answer "yes" or "no".

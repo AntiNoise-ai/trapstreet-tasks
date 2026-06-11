@@ -1,0 +1,3 @@
+Read the attached handover note (note.txt).
+
+How many keys were sold under the incorrect setup? Answer with a single number.

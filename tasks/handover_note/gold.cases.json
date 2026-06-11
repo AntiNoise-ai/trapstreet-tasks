@@ -1,0 +1,32 @@
+[
+  {
+    "id": "royalty_inclusion",
+    "category": "royalty",
+    "difficulty": "hard",
+    "notes": "Core trap. The question primes the default rule (No-PO => royalty), but the note's correction reclassifies the keys to PO stock and explicitly excludes them. Correct answer: No."
+  },
+  {
+    "id": "royalty_count",
+    "category": "royalty",
+    "difficulty": "hard",
+    "notes": "False-premise / honesty trap. The note says these sales must not appear on the royalty statement, so the count is 0. A model that anchors on 517 fails."
+  },
+  {
+    "id": "affected_count",
+    "category": "extraction",
+    "difficulty": "easy",
+    "notes": "Baseline extraction."
+  },
+  {
+    "id": "correction_time",
+    "category": "extraction",
+    "difficulty": "easy",
+    "notes": "Baseline extraction of the correction timestamp."
+  },
+  {
+    "id": "affected_titles",
+    "category": "extraction",
+    "difficulty": "easy",
+    "notes": "Baseline extraction of the two affected titles."
+  }
+]
