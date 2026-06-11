@@ -2,16 +2,17 @@ You are a scheduling assistant.
 
 Schedule a 60-minute meeting with the following attendees and their LOCAL availability windows.
 
-Today is 2026-03-25 (Wednesday). The meeting is on Thursday 2026-03-26.
+Today is 2026-09-15 (Tuesday). The meeting is on Wednesday 2026-09-16.
 
 Attendees:
-- Alice  San Francisco  (America/Los_Angeles)  — available 07:00–09:00 local
-- Bob    London         (Europe/London)  — available 14:00–16:00 local
-- Priya  Mumbai         (Asia/Kolkata)  — available 19:30–21:30 local
+- Alice  San Francisco  — available 06:00–08:00 local
+- Bob    Berlin         — available 15:00–17:00 local
+- Yuki   Tokyo          — available 22:00–23:59 local
 
 Rules:
 - Pick any slot that fits inside ALL attendees' local availability windows.
 - Account for daylight-saving time on the actual meeting date.
+- Determine each city's UTC offset (and whether DST applies) yourself.
 
 Return ONLY a JSON object (no commentary, no markdown fences). Schema:
 
@@ -19,9 +20,9 @@ Return ONLY a JSON object (no commentary, no markdown fences). Schema:
   "start_utc": "<ISO 8601 timestamp in UTC, e.g. 2026-03-26T14:00:00Z, or null>",
   "duration_min": 60,
   "attendees": [
-    {"name": "Alice", "tz": "America/Los_Angeles", "local_start": "YYYY-MM-DD HH:MM"},
-    {"name": "Bob", "tz": "Europe/London", "local_start": "YYYY-MM-DD HH:MM"},
-    {"name": "Priya", "tz": "Asia/Kolkata", "local_start": "YYYY-MM-DD HH:MM"}
+    {"name": "Alice", "tz": "<IANA zone you determined>", "local_start": "YYYY-MM-DD HH:MM"},
+    {"name": "Bob", "tz": "<IANA zone you determined>", "local_start": "YYYY-MM-DD HH:MM"},
+    {"name": "Yuki", "tz": "<IANA zone you determined>", "local_start": "YYYY-MM-DD HH:MM"}
   ]
 }
 

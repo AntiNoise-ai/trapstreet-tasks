@@ -1,0 +1,4 @@
+The attached spreadsheet (data.xlsx) is a general-ledger extract. It uses
+accounting format: amounts shown in parentheses are NEGATIVE.
+
+What is the NET total of the 'Amount' column? Answer with a single number and nothing else.

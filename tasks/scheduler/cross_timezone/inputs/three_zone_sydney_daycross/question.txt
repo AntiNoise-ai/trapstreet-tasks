@@ -2,12 +2,12 @@ You are a scheduling assistant.
 
 Schedule a 60-minute meeting with the following attendees and their LOCAL availability windows.
 
-Today is 2026-03-25 (Wednesday). The meeting is on Thursday 2026-03-26.
+Today is 2026-06-09 (Tuesday). The meeting is on Wednesday 2026-06-10.
 
 Attendees:
-- Alice  San Francisco  (America/Los_Angeles)  — available 07:00–09:00 local
-- Bob    London         (Europe/London)  — available 14:00–16:00 local
-- Priya  Mumbai         (Asia/Kolkata)  — available 19:30–21:30 local
+- Alice  San Francisco  (America/Los_Angeles)  — available 16:00–18:00 local
+- Bob    London         (Europe/London)  — available 00:00–02:00 local  [their local date: 2026-06-11]
+- Sam    Sydney         (Australia/Sydney)  — available 09:00–11:00 local  [their local date: 2026-06-11]
 
 Rules:
 - Pick any slot that fits inside ALL attendees' local availability windows.
@@ -21,7 +21,7 @@ Return ONLY a JSON object (no commentary, no markdown fences). Schema:
   "attendees": [
     {"name": "Alice", "tz": "America/Los_Angeles", "local_start": "YYYY-MM-DD HH:MM"},
     {"name": "Bob", "tz": "Europe/London", "local_start": "YYYY-MM-DD HH:MM"},
-    {"name": "Priya", "tz": "Asia/Kolkata", "local_start": "YYYY-MM-DD HH:MM"}
+    {"name": "Sam", "tz": "Australia/Sydney", "local_start": "YYYY-MM-DD HH:MM"}
   ]
 }
 

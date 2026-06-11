@@ -1,0 +1,35 @@
+{
+  "id": "october_dst_reverse_gap",
+  "category": "dst_boundary",
+  "difficulty": "hard",
+  "duration_min": 60,
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-10-28T07:00:00",
+      "available_local_max": "2026-10-28T09:00:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "Europe/London",
+      "available_local_min": "2026-10-28T15:00:00",
+      "available_local_max": "2026-10-28T17:00:00"
+    },
+    {
+      "name": "Priya",
+      "tz": "Asia/Kolkata",
+      "available_local_min": "2026-10-28T20:30:00",
+      "available_local_max": "2026-10-28T22:30:00"
+    }
+  ],
+  "_notes": "Reverse of the March gap. UK ended BST on 2026-10-25 (now GMT UTC+0); US ends DST on 2026-11-01, so SF is still on PDT (UTC-7). One-week window where London is GMT but SF is still on summer time.",
+  "expected_start_utc_min": "2026-10-28T15:00:00Z",
+  "expected_start_utc_max": "2026-10-28T15:00:00Z",
+  "_canonical_answer": {
+    "start_utc": "2026-10-28T15:00:00Z",
+    "alice_local": "2026-10-28 08:00",
+    "bob_local": "2026-10-28 15:00",
+    "priya_local": "2026-10-28 20:30"
+  }
+}

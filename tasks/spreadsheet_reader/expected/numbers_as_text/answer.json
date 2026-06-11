@@ -1,0 +1,16 @@
+{
+  "id": "numbers_as_text",
+  "answer": "19484.74",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 19484.74,
+      "tolerance": 0.01
+    }
+  ],
+  "category": "types",
+  "difficulty": "medium",
+  "_decoy_naive_answer": 0.0,
+  "_notes": "Amounts are TEXT cells with comma separators. SUM() returns 0 / float() raises; correct total = 19484.74."
+}

@@ -1,0 +1,76 @@
+{
+  "id": "apply_surcharge",
+  "category": "edit",
+  "difficulty": "hard",
+  "match_mode": "ordered",
+  "numeric_keys": [
+    "new_price"
+  ],
+  "gold": [
+    {
+      "item": "Desk",
+      "new_price": "21.00"
+    },
+    {
+      "item": "Chair",
+      "new_price": "42.00"
+    },
+    {
+      "item": "Lamp",
+      "new_price": "63.00"
+    },
+    {
+      "item": "Monitor",
+      "new_price": "84.00"
+    },
+    {
+      "item": "Cable",
+      "new_price": "105.00"
+    },
+    {
+      "item": "Stand",
+      "new_price": "126.00"
+    },
+    {
+      "item": "Keyboard",
+      "new_price": "147.00"
+    },
+    {
+      "item": "Mouse",
+      "new_price": "168.00"
+    },
+    {
+      "item": "Webcam",
+      "new_price": "189.00"
+    },
+    {
+      "item": "Dock",
+      "new_price": "210.00"
+    },
+    {
+      "item": "Riser",
+      "new_price": "231.00"
+    },
+    {
+      "item": "Pad",
+      "new_price": "252.00"
+    },
+    {
+      "item": "Hub",
+      "new_price": "273.00"
+    },
+    {
+      "item": "Arm",
+      "new_price": "294.00"
+    },
+    {
+      "item": "Tray",
+      "new_price": "315.00"
+    },
+    {
+      "item": "Filter",
+      "new_price": "336.00"
+    }
+  ],
+  "_notes": "16 items, uniform +5% edit. Tests multi-edit consistency: every row must be edited correctly with none skipped or left unedited."
+}

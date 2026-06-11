@@ -1,0 +1,46 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: units_in_header
+  description: "Header says '$ thousands'. Naive sum = 551.75; correct = x1000 = 551750."
+  tags:
+  - units
+  - easy
+
+- id: numbers_as_text
+  description: "Amounts are TEXT cells with comma separators. SUM() returns 0 / float() raises; correct total = 19484.74."
+  tags:
+  - types
+  - medium
+
+- id: parentheses_negatives
+  description: "Parentheses = negative. Treating them as positive gives 9750; correct net = 5750."
+  tags:
+  - signs
+  - medium
+
+- id: total_row_double_count
+  description: "A TOTAL row lives in the Amount column; a naive df['Amount'].sum() double-counts to 3850. Correct line-item sum = 1925."
+  tags:
+  - total_row
+  - hard
+
+- id: wrong_sheet
+  description: "Real data is on the 'FY2026_Actuals' sheet (sum 7500). pd.read_excel() defaults to the first sheet ('Summary', sum 6000) — the decoy."
+  tags:
+  - multi_sheet
+  - hard
+
+- id: dedup_messy_customers
+  description: "7 exact-distinct strings but only 3 real customers (Acme/Beta/Gamma) once case and whitespace are normalized. A naive nunique() = 7."
+  tags:
+  - dedup
+  - medium
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

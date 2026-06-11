@@ -1,0 +1,11 @@
+config.txt is a configuration file with one "key=value" pair per line.
+
+Convert it to a single JSON object mapping each key to its value.
+
+Preserve EVERY line and value exactly as a string:
+- split each line on the FIRST "=" only (values may themselves contain "=")
+- keep values verbatim as strings — do not convert "false" to a boolean, do not
+  drop leading zeros, do not omit empty values
+- include every key; do not truncate the list
+
+Output ONLY the JSON object.

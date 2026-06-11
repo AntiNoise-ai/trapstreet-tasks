@@ -1,0 +1,49 @@
+{
+  "id": "narrow_overlap_five_zone",
+  "category": "multi_zone_expert",
+  "difficulty": "expert",
+  "duration_min": 60,
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-07-09T07:00:00",
+      "available_local_max": "2026-07-09T08:30:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "Europe/Berlin",
+      "available_local_min": "2026-07-09T16:00:00",
+      "available_local_max": "2026-07-09T17:30:00"
+    },
+    {
+      "name": "Priya",
+      "tz": "Asia/Kolkata",
+      "available_local_min": "2026-07-09T19:30:00",
+      "available_local_max": "2026-07-09T21:00:00"
+    },
+    {
+      "name": "Mei",
+      "tz": "Asia/Singapore",
+      "available_local_min": "2026-07-09T22:00:00",
+      "available_local_max": "2026-07-09T23:30:00"
+    },
+    {
+      "name": "Sam",
+      "tz": "Australia/Sydney",
+      "available_local_min": "2026-07-10T00:00:00",
+      "available_local_max": "2026-07-10T01:30:00"
+    }
+  ],
+  "_notes": "Five zones, narrow overlap. July: SF PDT (UTC-7), Berlin CEST (UTC+2), IST UTC+5:30, Singapore UTC+8 (no DST), Sydney AEST UTC+10 (winter, no DST). Tight single 30-min-ish overlap.",
+  "expected_start_utc_min": "2026-07-09T14:00:00Z",
+  "expected_start_utc_max": "2026-07-09T14:30:00Z",
+  "_canonical_answer": {
+    "start_utc": "2026-07-09T14:00:00Z",
+    "alice_local": "2026-07-09 07:00",
+    "bob_local": "2026-07-09 16:00",
+    "priya_local": "2026-07-09 19:30",
+    "mei_local": "2026-07-09 22:00",
+    "sam_local": "2026-07-10 00:00"
+  }
+}

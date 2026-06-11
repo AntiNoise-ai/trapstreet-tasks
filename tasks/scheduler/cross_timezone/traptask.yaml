@@ -4,14 +4,14 @@ dirs:
 
 cases:
 - id: dst_gap_with_ist
-  description: "60-min meeting across SF/London/Mumbai on 2026-03-26 — UK still on GMT (DST starts March 29), India on UTC+5:30 (no DST). Tests DST-boundary + half-hour zone math simultaneously."
+  description: "DST trap. US DST started 2026-03-08 (SF on PDT UTC-7). UK DST starts 2026-03-29, so London is still on GMT (UTC+0). India IST is UTC+5:30. Catches 'London in spring = BST' and 'India = UTC+5'."
   tags:
   - dst_boundary
   - half_hour_zone
   - hard
 
 - id: dst_quarter_hour_sydney
-  description: "60-min meeting across SF/London/Mumbai/Kathmandu/Sydney on 2026-03-26 — UK-still-GMT + IST half-hour + Nepal QUARTER-hour (+05:45) + Sydney southern-hemisphere DST (AEDT) + local-calendar day-shift for Sydney. Five independent traps; only one valid start time exists."
+  description: "Five-way trap: (1) UK on GMT not BST; (2) US on PDT; (3) IST UTC+5:30; (4) Nepal NPT UTC+5:45 (quarter-hour); (5) Sydney AEDT UTC+11 (southern-hemisphere DST in March); (6) Sam's local calendar date is the next day. Exactly one valid start time."
   tags:
   - dst_boundary
   - half_hour_zone
@@ -19,6 +19,68 @@ cases:
   - southern_hemisphere_dst
   - day_shift
   - expert
+
+- id: simple_two_zone_may
+  description: "Baseline. Both US zones on DST in May (PDT UTC-7, EDT UTC-4). No tricks; catches only gross arithmetic errors."
+  tags:
+  - baseline
+  - easy
+
+- id: winter_three_zone
+  description: "Winter: everyone on standard time (PST UTC-8, GMT UTC+0, IST UTC+5:30). Tests half-hour zone without any DST gap."
+  tags:
+  - baseline
+  - half_hour_zone
+  - easy
+
+- id: three_zone_sydney_daycross
+  description: "June: Sydney on standard time (AEST UTC+10, southern-hemisphere winter), UK on BST (UTC+1), US on PDT (UTC-7). The instant lands on different local calendar dates for different attendees."
+  tags:
+  - day_boundary
+  - medium
+
+- id: city_names_only_medium
+  description: "No IANA zones given — model must map city to offset itself. Sept: SF PDT (UTC-7), Berlin CEST (UTC+2), Tokyo JST (UTC+9, no DST). Overlap is a SF morning / Berlin afternoon / Tokyo late-evening slot."
+  tags:
+  - zone_resolution
+  - no_iana
+  - medium
+
+- id: october_dst_reverse_gap
+  description: "Reverse of the March gap. UK ended BST on 2026-10-25 (now GMT UTC+0); US ends DST on 2026-11-01, so SF is still on PDT (UTC-7). One-week window where London is GMT but SF is still on summer time."
+  tags:
+  - dst_boundary
+  - reverse_gap
+  - hard
+
+- id: dst_transition_day_us_fallback
+  description: "Meeting falls ON the US fall-back day (2026-11-01, clocks back at 02:00). Afternoon windows are unambiguous: SF PST (UTC-8), NY EST (UTC-5). Catches models that use the pre-transition offset (PDT/EDT) for an afternoon meeting."
+  tags:
+  - dst_boundary
+  - transition_day
+  - hard
+
+- id: narrow_overlap_five_zone
+  description: "Five zones, narrow overlap. July: SF PDT (UTC-7), Berlin CEST (UTC+2), IST UTC+5:30, Singapore UTC+8 (no DST), Sydney AEST UTC+10 (winter, no DST). Tight single 30-min-ish overlap."
+  tags:
+  - multi_zone
+  - narrow_overlap
+  - expert
+
+- id: chatham_quarter_hour
+  description: "Chatham Islands are UTC+13:45 in February (NZDT + 45 min), the rarest quarter-hour zone with summer DST. SF on PST (UTC-8). Day-shift for both non-US attendees."
+  tags:
+  - quarter_hour_zone
+  - southern_hemisphere_dst
+  - day_shift
+  - expert
+
+- id: no_overlap_exists
+  description: "No common slot exists: SF 09:00-11:00 PDT is 16:00-18:00Z; Singapore 09:00-11:00 (UTC+8) is 01:00-03:00Z. The windows never intersect. Correct answer is start_utc=null. Catches models that hallucinate a slot rather than admitting none fits."
+  tags:
+  - honesty
+  - no_slot
+  - hard
 
 judge:
   cmd: python3 judge.py

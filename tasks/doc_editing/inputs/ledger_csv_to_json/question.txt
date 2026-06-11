@@ -1,0 +1,10 @@
+data.csv is a ledger. Convert it to a JSON array of objects, one object per data
+row, with keys "date", "description", and "amount".
+
+Preserve EVERY row and EVERY value exactly:
+- do not skip rows with blank fields
+- do not merge or de-duplicate rows that look similar
+- do not translate, re-spell, or "tidy" any text (keep accents, punctuation, symbols)
+- keep amounts exactly as written
+
+Output ONLY the JSON array.

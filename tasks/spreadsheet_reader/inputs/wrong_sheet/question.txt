@@ -1,0 +1,4 @@
+The attached workbook (data.xlsx) has more than one sheet.
+
+What is the TOTAL revenue on the sheet named 'FY2026_Actuals'? Answer with a
+single number and nothing else.

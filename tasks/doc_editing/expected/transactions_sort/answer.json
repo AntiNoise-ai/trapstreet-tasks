@@ -1,0 +1,102 @@
+{
+  "id": "transactions_sort",
+  "category": "sort",
+  "difficulty": "medium",
+  "match_mode": "ordered",
+  "numeric_keys": [
+    "amount"
+  ],
+  "gold": [
+    {
+      "id": "T-14",
+      "date": "2026-03-01",
+      "amount": "500.00"
+    },
+    {
+      "id": "T-02",
+      "date": "2026-03-02",
+      "amount": "88.00"
+    },
+    {
+      "id": "T-09",
+      "date": "2026-03-03",
+      "amount": "19.99"
+    },
+    {
+      "id": "T-04",
+      "date": "2026-03-05",
+      "amount": "12.50"
+    },
+    {
+      "id": "T-17",
+      "date": "2026-03-06",
+      "amount": "-12.50"
+    },
+    {
+      "id": "T-06",
+      "date": "2026-03-08",
+      "amount": "0.00"
+    },
+    {
+      "id": "T-12",
+      "date": "2026-03-09",
+      "amount": "63.40"
+    },
+    {
+      "id": "T-01",
+      "date": "2026-03-11",
+      "amount": "12.50"
+    },
+    {
+      "id": "T-11",
+      "date": "2026-03-14",
+      "amount": "240.00"
+    },
+    {
+      "id": "T-05",
+      "date": "2026-03-15",
+      "amount": "240.00"
+    },
+    {
+      "id": "T-15",
+      "date": "2026-03-17",
+      "amount": "0.00"
+    },
+    {
+      "id": "T-03",
+      "date": "2026-03-19",
+      "amount": "5.00"
+    },
+    {
+      "id": "T-18",
+      "date": "2026-03-20",
+      "amount": "99.00"
+    },
+    {
+      "id": "T-07",
+      "date": "2026-03-22",
+      "amount": "12.50"
+    },
+    {
+      "id": "T-16",
+      "date": "2026-03-24",
+      "amount": "44.44"
+    },
+    {
+      "id": "T-10",
+      "date": "2026-03-26",
+      "amount": "7.00"
+    },
+    {
+      "id": "T-08",
+      "date": "2026-03-28",
+      "amount": "-30.00"
+    },
+    {
+      "id": "T-13",
+      "date": "2026-03-30",
+      "amount": "1.00"
+    }
+  ],
+  "_notes": "18 rows; repeated amount 12.50, one is 0.00, one negative. Tests sort while preserving every record (drop/dedup bait)."
+}

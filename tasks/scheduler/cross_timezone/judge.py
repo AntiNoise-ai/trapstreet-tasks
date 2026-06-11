@@ -89,6 +89,29 @@ def judge_case(agent_stdout: str, expected: dict) -> dict[str, Any]:
     ans = parsed
     ok("json_parse")
 
+    # 1b. Honesty cases: gold says no slot fits everyone. The only correct
+    # answer is start_utc == null (a refusal). Any proposed time = hallucination.
+    if expected.get("no_valid_slot"):
+        if "start_utc" not in ans:
+            fail("no_slot_refusal", "expected start_utc: null, but field missing entirely")
+        elif ans.get("start_utc") is None:
+            ok("no_slot_refusal", "correctly returned start_utc: null")
+        else:
+            fail(
+                "no_slot_refusal",
+                f"no slot fits all windows, but model proposed start_utc={ans.get('start_utc')!r}",
+            )
+        final = 0.0 if any(not c["pass"] for c in checks) else 1.0
+        return {
+            "score": final,
+            "matcher_results": checks,
+            "agent_start_utc": ans.get("start_utc"),
+            "gold_canonical_utc": None,
+            "id": expected.get("id"),
+            "category": expected.get("category"),
+            "difficulty": expected.get("difficulty"),
+        }
+
     # 2. start_utc field present + parseable + has tzinfo
     start_utc_str = ans.get("start_utc")
     if not start_utc_str:

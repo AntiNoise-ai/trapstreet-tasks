@@ -1,0 +1,16 @@
+{
+  "id": "wrong_sheet",
+  "answer": "7500",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 7500.0,
+      "tolerance": 0.01
+    }
+  ],
+  "category": "multi_sheet",
+  "difficulty": "hard",
+  "_decoy_naive_answer": 6000,
+  "_notes": "Real data is on the 'FY2026_Actuals' sheet (sum 7500). pd.read_excel() defaults to the first sheet ('Summary', sum 6000) \u2014 the decoy."
+}

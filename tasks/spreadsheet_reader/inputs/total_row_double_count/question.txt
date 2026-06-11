@@ -1,0 +1,5 @@
+The attached spreadsheet (data.xlsx) lists invoice line items in the 'Amount'
+column and ends with a 'TOTAL' row.
+
+What is the sum of the LINE ITEMS only (exclude the TOTAL row)? Answer with a
+single number and nothing else.

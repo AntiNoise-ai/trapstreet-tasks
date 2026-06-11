@@ -1,0 +1,3 @@
+The attached spreadsheet (data.xlsx) has an 'Amount' column.
+
+What is the total of the 'Amount' column? Answer with a single number and nothing else.

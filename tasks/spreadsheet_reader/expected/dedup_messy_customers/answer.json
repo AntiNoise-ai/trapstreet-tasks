@@ -1,0 +1,16 @@
+{
+  "id": "dedup_messy_customers",
+  "answer": "3",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 3.0,
+      "tolerance": 0.01
+    }
+  ],
+  "category": "dedup",
+  "difficulty": "medium",
+  "_decoy_naive_answer": 7,
+  "_notes": "7 exact-distinct strings but only 3 real customers (Acme/Beta/Gamma) once case and whitespace are normalized. A naive nunique() = 7."
+}

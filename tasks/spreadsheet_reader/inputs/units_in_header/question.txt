@@ -1,0 +1,5 @@
+The attached spreadsheet (data.xlsx) reports quarterly revenue by region.
+Read the column header carefully.
+
+What is the TOTAL revenue across all regions, expressed in US dollars (not thousands)?
+Answer with a single number and nothing else.

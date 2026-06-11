@@ -1,0 +1,28 @@
+{
+  "id": "simple_two_zone_may",
+  "category": "baseline",
+  "difficulty": "easy",
+  "duration_min": 60,
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-05-14T08:00:00",
+      "available_local_max": "2026-05-14T11:00:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "America/New_York",
+      "available_local_min": "2026-05-14T11:00:00",
+      "available_local_max": "2026-05-14T15:00:00"
+    }
+  ],
+  "_notes": "Baseline. Both US zones on DST in May (PDT UTC-7, EDT UTC-4). No tricks; catches only gross arithmetic errors.",
+  "expected_start_utc_min": "2026-05-14T15:00:00Z",
+  "expected_start_utc_max": "2026-05-14T17:00:00Z",
+  "_canonical_answer": {
+    "start_utc": "2026-05-14T15:00:00Z",
+    "alice_local": "2026-05-14 08:00",
+    "bob_local": "2026-05-14 11:00"
+  }
+}

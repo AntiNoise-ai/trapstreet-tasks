@@ -1,0 +1,35 @@
+{
+  "id": "city_names_only_medium",
+  "category": "zone_resolution",
+  "difficulty": "medium",
+  "duration_min": 60,
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-09-16T06:00:00",
+      "available_local_max": "2026-09-16T08:00:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "Europe/Berlin",
+      "available_local_min": "2026-09-16T15:00:00",
+      "available_local_max": "2026-09-16T17:00:00"
+    },
+    {
+      "name": "Yuki",
+      "tz": "Asia/Tokyo",
+      "available_local_min": "2026-09-16T22:00:00",
+      "available_local_max": "2026-09-16T23:59:00"
+    }
+  ],
+  "_notes": "No IANA zones given \u2014 model must map city to offset itself. Sept: SF PDT (UTC-7), Berlin CEST (UTC+2), Tokyo JST (UTC+9, no DST). Overlap is a SF morning / Berlin afternoon / Tokyo late-evening slot.",
+  "expected_start_utc_min": "2026-09-16T13:00:00Z",
+  "expected_start_utc_max": "2026-09-16T13:59:00Z",
+  "_canonical_answer": {
+    "start_utc": "2026-09-16T13:00:00Z",
+    "alice_local": "2026-09-16 06:00",
+    "bob_local": "2026-09-16 15:00",
+    "yuki_local": "2026-09-16 22:00"
+  }
+}

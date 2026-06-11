@@ -1,0 +1,34 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: ledger_csv_to_json
+  description: "23 rows incl. comma-in-field, unicode, em dash, empty description, and a near-duplicate pair. Baits dedup/drop/tidy across a long doc."
+  tags:
+  - reformat
+  - medium
+
+- id: transactions_sort
+  description: "18 rows; repeated amount 12.50, one is 0.00, one negative. Tests sort while preserving every record (drop/dedup bait)."
+  tags:
+  - sort
+  - medium
+
+- id: apply_surcharge
+  description: "16 items, uniform +5% edit. Tests multi-edit consistency: every row must be edited correctly with none skipped or left unedited."
+  tags:
+  - edit
+  - hard
+
+- id: config_long_retention
+  description: "52 keys incl. a value containing '=' and ':', a string 'false', leading-zero '007', and an empty value. Long list baits truncation; traps bait type-coercion and bad splitting."
+  tags:
+  - retention
+  - hard
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

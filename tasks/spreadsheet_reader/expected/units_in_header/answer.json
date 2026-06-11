@@ -1,0 +1,16 @@
+{
+  "id": "units_in_header",
+  "answer": "551750",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 551750.0,
+      "tolerance": 0.01
+    }
+  ],
+  "category": "units",
+  "difficulty": "easy",
+  "_decoy_naive_answer": 551.75,
+  "_notes": "Header says '$ thousands'. Naive sum = 551.75; correct = x1000 = 551750."
+}

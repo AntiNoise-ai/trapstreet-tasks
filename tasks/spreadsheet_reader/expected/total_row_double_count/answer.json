@@ -1,0 +1,16 @@
+{
+  "id": "total_row_double_count",
+  "answer": "1925",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 1925.0,
+      "tolerance": 0.01
+    }
+  ],
+  "category": "total_row",
+  "difficulty": "hard",
+  "_decoy_naive_answer": 3850,
+  "_notes": "A TOTAL row lives in the Amount column; a naive df['Amount'].sum() double-counts to 3850. Correct line-item sum = 1925."
+}

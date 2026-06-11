@@ -1,0 +1,7 @@
+data.txt lists products (pipe-separated), one per line, with a price.
+
+Add a 5% surcharge to EVERY product's price. Output a JSON array of objects with
+keys "item" and "new_price" (the price after the 5% surcharge, as a number with
+two decimals), one object per product, in the SAME order as the input.
+
+Apply the surcharge to every single product — do not skip any. Output ONLY the JSON array.

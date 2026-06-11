@@ -1,0 +1,17 @@
+item | price
+Desk | 20.00
+Chair | 40.00
+Lamp | 60.00
+Monitor | 80.00
+Cable | 100.00
+Stand | 120.00
+Keyboard | 140.00
+Mouse | 160.00
+Webcam | 180.00
+Dock | 200.00
+Riser | 220.00
+Pad | 240.00
+Hub | 260.00
+Arm | 280.00
+Tray | 300.00
+Filter | 320.00

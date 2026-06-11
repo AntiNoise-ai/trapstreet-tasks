@@ -1,0 +1,5 @@
+The attached spreadsheet (data.xlsx) lists orders with a 'Customer' column. Some
+customer names differ only in letter case or surrounding spaces.
+
+How many UNIQUE customers are there, treating names that differ only in case or
+surrounding whitespace as the SAME customer? Answer with a single number and nothing else.

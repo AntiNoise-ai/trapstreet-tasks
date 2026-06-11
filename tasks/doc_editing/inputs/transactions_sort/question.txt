@@ -1,0 +1,7 @@
+data.txt lists transactions (pipe-separated), one per line, in random order.
+
+Sort the transactions by "date" in ascending order and output them as a JSON
+array of objects with keys "id", "date", "amount" — one object per transaction.
+
+Keep ALL transactions. Do not drop, merge, or de-duplicate any row, even if two
+rows share the same amount or an amount is 0 or negative. Output ONLY the JSON array.

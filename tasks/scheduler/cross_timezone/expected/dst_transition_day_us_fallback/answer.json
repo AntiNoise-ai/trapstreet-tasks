@@ -1,0 +1,35 @@
+{
+  "id": "dst_transition_day_us_fallback",
+  "category": "dst_boundary",
+  "difficulty": "hard",
+  "duration_min": 60,
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-11-01T13:00:00",
+      "available_local_max": "2026-11-01T15:00:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "America/New_York",
+      "available_local_min": "2026-11-01T16:00:00",
+      "available_local_max": "2026-11-01T18:00:00"
+    },
+    {
+      "name": "Yuki",
+      "tz": "Asia/Tokyo",
+      "available_local_min": "2026-11-02T05:00:00",
+      "available_local_max": "2026-11-02T07:00:00"
+    }
+  ],
+  "_notes": "Meeting falls ON the US fall-back day (2026-11-01, clocks back at 02:00). Afternoon windows are unambiguous: SF PST (UTC-8), NY EST (UTC-5). Catches models that use the pre-transition offset (PDT/EDT) for an afternoon meeting.",
+  "expected_start_utc_min": "2026-11-01T21:00:00Z",
+  "expected_start_utc_max": "2026-11-01T21:00:00Z",
+  "_canonical_answer": {
+    "start_utc": "2026-11-01T21:00:00Z",
+    "alice_local": "2026-11-01 13:00",
+    "bob_local": "2026-11-01 16:00",
+    "yuki_local": "2026-11-02 06:00"
+  }
+}

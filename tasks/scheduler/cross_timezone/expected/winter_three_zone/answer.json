@@ -1,0 +1,35 @@
+{
+  "id": "winter_three_zone",
+  "category": "baseline",
+  "difficulty": "easy",
+  "duration_min": 60,
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-01-21T08:00:00",
+      "available_local_max": "2026-01-21T10:00:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "Europe/London",
+      "available_local_min": "2026-01-21T16:00:00",
+      "available_local_max": "2026-01-21T18:00:00"
+    },
+    {
+      "name": "Priya",
+      "tz": "Asia/Kolkata",
+      "available_local_min": "2026-01-21T21:30:00",
+      "available_local_max": "2026-01-21T23:30:00"
+    }
+  ],
+  "_notes": "Winter: everyone on standard time (PST UTC-8, GMT UTC+0, IST UTC+5:30). Tests half-hour zone without any DST gap.",
+  "expected_start_utc_min": "2026-01-21T16:00:00Z",
+  "expected_start_utc_max": "2026-01-21T17:00:00Z",
+  "_canonical_answer": {
+    "start_utc": "2026-01-21T16:00:00Z",
+    "alice_local": "2026-01-21 08:00",
+    "bob_local": "2026-01-21 16:00",
+    "priya_local": "2026-01-21 21:30"
+  }
+}

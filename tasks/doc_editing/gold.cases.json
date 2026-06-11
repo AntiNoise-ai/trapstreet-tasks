@@ -1,0 +1,34 @@
+[
+  {
+    "id": "ledger_csv_to_json",
+    "category": "reformat",
+    "difficulty": "medium",
+    "n_records": 23,
+    "match_mode": "multiset",
+    "notes": "23 rows incl. comma-in-field, unicode, em dash, empty description, and a near-duplicate pair. Baits dedup/drop/tidy across a long doc."
+  },
+  {
+    "id": "transactions_sort",
+    "category": "sort",
+    "difficulty": "medium",
+    "n_records": 18,
+    "match_mode": "ordered",
+    "notes": "18 rows; repeated amount 12.50, one is 0.00, one negative. Tests sort while preserving every record (drop/dedup bait)."
+  },
+  {
+    "id": "apply_surcharge",
+    "category": "edit",
+    "difficulty": "hard",
+    "n_records": 16,
+    "match_mode": "ordered",
+    "notes": "16 items, uniform +5% edit. Tests multi-edit consistency: every row must be edited correctly with none skipped or left unedited."
+  },
+  {
+    "id": "config_long_retention",
+    "category": "retention",
+    "difficulty": "hard",
+    "n_records": 52,
+    "match_mode": "dict",
+    "notes": "52 keys incl. a value containing '=' and ':', a string 'false', leading-zero '007', and an empty value. Long list baits truncation; traps bait type-coercion and bad splitting."
+  }
+]

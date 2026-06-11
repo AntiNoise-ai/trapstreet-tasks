@@ -1,0 +1,35 @@
+{
+  "id": "three_zone_sydney_daycross",
+  "category": "day_boundary",
+  "difficulty": "medium",
+  "duration_min": 60,
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-06-10T16:00:00",
+      "available_local_max": "2026-06-10T18:00:00"
+    },
+    {
+      "name": "Bob",
+      "tz": "Europe/London",
+      "available_local_min": "2026-06-11T00:00:00",
+      "available_local_max": "2026-06-11T02:00:00"
+    },
+    {
+      "name": "Sam",
+      "tz": "Australia/Sydney",
+      "available_local_min": "2026-06-11T09:00:00",
+      "available_local_max": "2026-06-11T11:00:00"
+    }
+  ],
+  "_notes": "June: Sydney on standard time (AEST UTC+10, southern-hemisphere winter), UK on BST (UTC+1), US on PDT (UTC-7). The instant lands on different local calendar dates for different attendees.",
+  "expected_start_utc_min": "2026-06-10T23:00:00Z",
+  "expected_start_utc_max": "2026-06-11T00:00:00Z",
+  "_canonical_answer": {
+    "start_utc": "2026-06-10T23:00:00Z",
+    "alice_local": "2026-06-10 16:00",
+    "bob_local": "2026-06-11 00:00",
+    "sam_local": "2026-06-11 09:00"
+  }
+}

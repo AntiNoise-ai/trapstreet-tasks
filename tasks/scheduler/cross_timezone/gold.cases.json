@@ -4,31 +4,176 @@
     "category": "dst_boundary",
     "difficulty": "hard",
     "today": "2026-03-25",
+    "meeting_date": "2026-03-26",
     "duration_min": 60,
-    "attendees": [
-      {"name": "Alice", "tz": "America/Los_Angeles", "local_available": ["07:00", "09:00"]},
-      {"name": "Bob",   "tz": "Europe/London",       "local_available": ["14:00", "16:00"]},
-      {"name": "Priya", "tz": "Asia/Kolkata",        "local_available": ["19:30", "21:30"]}
-    ],
-    "canonical_start_utc": "2026-03-26T14:00:00Z",
-    "accepted_start_utc_range": ["2026-03-26T14:00:00Z", "2026-03-26T15:00:00Z"],
-    "notes": "DST trap. US DST started 2026-03-08, UK DST starts 2026-03-29. India IST (UTC+5:30)."
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-03-26T14:00:00Z",
+      "alice_local": "2026-03-26 07:00",
+      "bob_local": "2026-03-26 14:00",
+      "priya_local": "2026-03-26 19:30"
+    },
+    "notes": "DST trap. US DST started 2026-03-08 (SF on PDT UTC-7). UK DST starts 2026-03-29, so London is still on GMT (UTC+0). India IST is UTC+5:30. Catches 'London in spring = BST' and 'India = UTC+5'."
   },
   {
     "id": "dst_quarter_hour_sydney",
     "category": "multi_zone_expert",
     "difficulty": "expert",
     "today": "2026-03-25",
+    "meeting_date": "2026-03-26",
     "duration_min": 60,
-    "attendees": [
-      {"name": "Alice", "tz": "America/Los_Angeles", "local_available": ["06:00", "08:00"]},
-      {"name": "Bob",   "tz": "Europe/London",       "local_available": ["14:00", "15:30"]},
-      {"name": "Priya", "tz": "Asia/Kolkata",        "local_available": ["19:00", "21:00"]},
-      {"name": "Niraj", "tz": "Asia/Kathmandu",      "local_available": ["19:30", "21:30"]},
-      {"name": "Sam",   "tz": "Australia/Sydney",    "local_available": ["00:30", "02:30"], "local_date": "2026-03-27"}
-    ],
-    "canonical_start_utc": "2026-03-26T14:00:00Z",
-    "accepted_start_utc_range": ["2026-03-26T14:00:00Z", "2026-03-26T14:00:00Z"],
-    "notes": "Five-way trap: (1) UK on GMT, not BST; (2) US on PDT; (3) IST UTC+5:30; (4) Nepal NPT UTC+5:45 (quarter-hour); (5) Sydney AEDT UTC+11 (southern-hemisphere DST in March); (6) Sam's local calendar date is March 27 (day shift). Exactly one valid start time."
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-03-26T14:00:00Z",
+      "alice_local": "2026-03-26 07:00",
+      "bob_local": "2026-03-26 14:00",
+      "priya_local": "2026-03-26 19:30",
+      "niraj_local": "2026-03-26 19:45",
+      "sam_local": "2026-03-27 01:00"
+    },
+    "notes": "Five-way trap: (1) UK on GMT not BST; (2) US on PDT; (3) IST UTC+5:30; (4) Nepal NPT UTC+5:45 (quarter-hour); (5) Sydney AEDT UTC+11 (southern-hemisphere DST in March); (6) Sam's local calendar date is the next day. Exactly one valid start time."
+  },
+  {
+    "id": "simple_two_zone_may",
+    "category": "baseline",
+    "difficulty": "easy",
+    "today": "2026-05-13",
+    "meeting_date": "2026-05-14",
+    "duration_min": 60,
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-05-14T15:00:00Z",
+      "alice_local": "2026-05-14 08:00",
+      "bob_local": "2026-05-14 11:00"
+    },
+    "notes": "Baseline. Both US zones on DST in May (PDT UTC-7, EDT UTC-4). No tricks; catches only gross arithmetic errors."
+  },
+  {
+    "id": "winter_three_zone",
+    "category": "baseline",
+    "difficulty": "easy",
+    "today": "2026-01-20",
+    "meeting_date": "2026-01-21",
+    "duration_min": 60,
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-01-21T16:00:00Z",
+      "alice_local": "2026-01-21 08:00",
+      "bob_local": "2026-01-21 16:00",
+      "priya_local": "2026-01-21 21:30"
+    },
+    "notes": "Winter: everyone on standard time (PST UTC-8, GMT UTC+0, IST UTC+5:30). Tests half-hour zone without any DST gap."
+  },
+  {
+    "id": "three_zone_sydney_daycross",
+    "category": "day_boundary",
+    "difficulty": "medium",
+    "today": "2026-06-09",
+    "meeting_date": "2026-06-10",
+    "duration_min": 60,
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-06-10T23:00:00Z",
+      "alice_local": "2026-06-10 16:00",
+      "bob_local": "2026-06-11 00:00",
+      "sam_local": "2026-06-11 09:00"
+    },
+    "notes": "June: Sydney on standard time (AEST UTC+10, southern-hemisphere winter), UK on BST (UTC+1), US on PDT (UTC-7). The instant lands on different local calendar dates for different attendees."
+  },
+  {
+    "id": "city_names_only_medium",
+    "category": "zone_resolution",
+    "difficulty": "medium",
+    "today": "2026-09-15",
+    "meeting_date": "2026-09-16",
+    "duration_min": 60,
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-09-16T13:00:00Z",
+      "alice_local": "2026-09-16 06:00",
+      "bob_local": "2026-09-16 15:00",
+      "yuki_local": "2026-09-16 22:00"
+    },
+    "notes": "No IANA zones given \u2014 model must map city to offset itself. Sept: SF PDT (UTC-7), Berlin CEST (UTC+2), Tokyo JST (UTC+9, no DST). Overlap is a SF morning / Berlin afternoon / Tokyo late-evening slot."
+  },
+  {
+    "id": "october_dst_reverse_gap",
+    "category": "dst_boundary",
+    "difficulty": "hard",
+    "today": "2026-10-27",
+    "meeting_date": "2026-10-28",
+    "duration_min": 60,
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-10-28T15:00:00Z",
+      "alice_local": "2026-10-28 08:00",
+      "bob_local": "2026-10-28 15:00",
+      "priya_local": "2026-10-28 20:30"
+    },
+    "notes": "Reverse of the March gap. UK ended BST on 2026-10-25 (now GMT UTC+0); US ends DST on 2026-11-01, so SF is still on PDT (UTC-7). One-week window where London is GMT but SF is still on summer time."
+  },
+  {
+    "id": "dst_transition_day_us_fallback",
+    "category": "dst_boundary",
+    "difficulty": "hard",
+    "today": "2026-10-31",
+    "meeting_date": "2026-11-01",
+    "duration_min": 60,
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-11-01T21:00:00Z",
+      "alice_local": "2026-11-01 13:00",
+      "bob_local": "2026-11-01 16:00",
+      "yuki_local": "2026-11-02 06:00"
+    },
+    "notes": "Meeting falls ON the US fall-back day (2026-11-01, clocks back at 02:00). Afternoon windows are unambiguous: SF PST (UTC-8), NY EST (UTC-5). Catches models that use the pre-transition offset (PDT/EDT) for an afternoon meeting."
+  },
+  {
+    "id": "narrow_overlap_five_zone",
+    "category": "multi_zone_expert",
+    "difficulty": "expert",
+    "today": "2026-07-08",
+    "meeting_date": "2026-07-09",
+    "duration_min": 60,
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-07-09T14:00:00Z",
+      "alice_local": "2026-07-09 07:00",
+      "bob_local": "2026-07-09 16:00",
+      "priya_local": "2026-07-09 19:30",
+      "mei_local": "2026-07-09 22:00",
+      "sam_local": "2026-07-10 00:00"
+    },
+    "notes": "Five zones, narrow overlap. July: SF PDT (UTC-7), Berlin CEST (UTC+2), IST UTC+5:30, Singapore UTC+8 (no DST), Sydney AEST UTC+10 (winter, no DST). Tight single 30-min-ish overlap."
+  },
+  {
+    "id": "chatham_quarter_hour",
+    "category": "multi_zone_expert",
+    "difficulty": "expert",
+    "today": "2026-02-17",
+    "meeting_date": "2026-02-18",
+    "duration_min": 60,
+    "no_valid_slot": false,
+    "canonical": {
+      "start_utc": "2026-02-18T20:00:00Z",
+      "alice_local": "2026-02-18 12:00",
+      "priya_local": "2026-02-19 01:30",
+      "wiremu_local": "2026-02-19 09:45"
+    },
+    "notes": "Chatham Islands are UTC+13:45 in February (NZDT + 45 min), the rarest quarter-hour zone with summer DST. SF on PST (UTC-8). Day-shift for both non-US attendees."
+  },
+  {
+    "id": "no_overlap_exists",
+    "category": "honesty",
+    "difficulty": "hard",
+    "today": "2026-06-09",
+    "meeting_date": "2026-06-10",
+    "duration_min": 60,
+    "no_valid_slot": true,
+    "canonical": {
+      "start_utc": null,
+      "reason": "No common slot exists: SF 09:00-11:00 PDT is 16:00-18:00Z; Singapore 09:00-11:00 (UTC+8) is 01:00-03:00Z. The windows never intersect. Correct answer is start_utc=null. Catches models that hallucinate a slot rather than admitting none fits."
+    },
+    "notes": "No common slot exists: SF 09:00-11:00 PDT is 16:00-18:00Z; Singapore 09:00-11:00 (UTC+8) is 01:00-03:00Z. The windows never intersect. Correct answer is start_utc=null. Catches models that hallucinate a slot rather than admitting none fits."
   }
 ]

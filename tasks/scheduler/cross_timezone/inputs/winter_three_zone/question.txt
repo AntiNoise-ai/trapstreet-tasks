@@ -2,12 +2,12 @@ You are a scheduling assistant.
 
 Schedule a 60-minute meeting with the following attendees and their LOCAL availability windows.
 
-Today is 2026-03-25 (Wednesday). The meeting is on Thursday 2026-03-26.
+Today is 2026-01-20 (Tuesday). The meeting is on Wednesday 2026-01-21.
 
 Attendees:
-- Alice  San Francisco  (America/Los_Angeles)  — available 07:00–09:00 local
-- Bob    London         (Europe/London)  — available 14:00–16:00 local
-- Priya  Mumbai         (Asia/Kolkata)  — available 19:30–21:30 local
+- Alice  San Francisco  (America/Los_Angeles)  — available 08:00–10:00 local
+- Bob    London         (Europe/London)  — available 16:00–18:00 local
+- Priya  Mumbai         (Asia/Kolkata)  — available 21:30–23:30 local
 
 Rules:
 - Pick any slot that fits inside ALL attendees' local availability windows.

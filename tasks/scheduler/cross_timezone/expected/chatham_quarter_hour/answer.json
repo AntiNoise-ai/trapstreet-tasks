@@ -1,0 +1,35 @@
+{
+  "id": "chatham_quarter_hour",
+  "category": "multi_zone_expert",
+  "difficulty": "expert",
+  "duration_min": 60,
+  "attendees": [
+    {
+      "name": "Alice",
+      "tz": "America/Los_Angeles",
+      "available_local_min": "2026-02-18T12:00:00",
+      "available_local_max": "2026-02-18T14:00:00"
+    },
+    {
+      "name": "Priya",
+      "tz": "Asia/Kolkata",
+      "available_local_min": "2026-02-19T01:30:00",
+      "available_local_max": "2026-02-19T03:30:00"
+    },
+    {
+      "name": "Wiremu",
+      "tz": "Pacific/Chatham",
+      "available_local_min": "2026-02-19T09:45:00",
+      "available_local_max": "2026-02-19T11:45:00"
+    }
+  ],
+  "_notes": "Chatham Islands are UTC+13:45 in February (NZDT + 45 min), the rarest quarter-hour zone with summer DST. SF on PST (UTC-8). Day-shift for both non-US attendees.",
+  "expected_start_utc_min": "2026-02-18T20:00:00Z",
+  "expected_start_utc_max": "2026-02-18T21:00:00Z",
+  "_canonical_answer": {
+    "start_utc": "2026-02-18T20:00:00Z",
+    "alice_local": "2026-02-18 12:00",
+    "priya_local": "2026-02-19 01:30",
+    "wiremu_local": "2026-02-19 09:45"
+  }
+}
