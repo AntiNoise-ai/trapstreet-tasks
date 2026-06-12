@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_013_logical_fallacies",
+  "answer": "D",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "d"
+    }
+  ],
+  "category": "logical_fallacies",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

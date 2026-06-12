@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_004_conceptual_physics",
+  "answer": "A",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "a"
+    }
+  ],
+  "category": "conceptual_physics",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

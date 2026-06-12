@@ -1,0 +1,15 @@
+{
+  "id": "gsm8k_023",
+  "answer": "7",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 7.0,
+      "tolerance": 0.001
+    }
+  ],
+  "category": "math_word_problem",
+  "difficulty": "medium",
+  "_source": "GSM8K (openai/grade-school-math, MIT)"
+}

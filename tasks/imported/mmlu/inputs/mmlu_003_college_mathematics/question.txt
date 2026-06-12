@@ -1,0 +1,8 @@
+It takes Kate k days to write a GRE math practice test. It takes John j days to write a GRE math practice test. If Kate and John work on a practice test in alternating 2-day shifts, it takes them 10 days when Kate starts and 10.5 days when John starts. How long would it take the two to complete a practice test if Kate and John worked simultaneously?
+
+A) 9/2 days
+B) 5 days
+C) 41/8 days
+D) 36/7 days
+
+Respond with ONLY the letter (A, B, C, or D) of the correct answer.

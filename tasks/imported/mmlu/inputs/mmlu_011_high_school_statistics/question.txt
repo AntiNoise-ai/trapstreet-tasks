@@ -1,0 +1,8 @@
+For a class project, a student wants to see if boys and girls at their large high school differ in the number of contacts they have stored in their phone. The student conducts a survey of 50 randomly sampled boys and 40 randomly selected girls, and asks them to report the number of contacts. Which of the following is true about this situation?
+
+A) Because the population standard deviations are not known and conditions are met, the student shoulduse a two-sample t-test.
+B) Because the sample sizes are different, the student should notuse a two-sample t-test.
+C) Because the sample sizes are both greater than 30, the student should notuse a two-sample t-test.
+D) Because the shape of the population distribution is not known, the student should notuse a two-sample t-test.
+
+Respond with ONLY the letter (A, B, C, or D) of the correct answer.

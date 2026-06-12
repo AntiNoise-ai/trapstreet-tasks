@@ -1,0 +1,3 @@
+James decides to run 3 sprints 3 times a week.  He runs 60 meters each sprint.  How many total meters does he run a week?
+
+Solve the problem and respond with ONLY the final numeric answer (digits only — no working, no units, no currency symbol).

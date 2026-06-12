@@ -1,0 +1,8 @@
+Exon skipping is associated with:
+
+A) nonsense mutations.
+B) regulatory mutations.
+C) RNA processing mutations.
+D) silent mutations.
+
+Respond with ONLY the letter (A, B, C, or D) of the correct answer.

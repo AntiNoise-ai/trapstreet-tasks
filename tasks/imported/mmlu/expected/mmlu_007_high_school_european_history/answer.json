@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_007_high_school_european_history",
+  "answer": "A",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "a"
+    }
+  ],
+  "category": "high_school_european_history",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

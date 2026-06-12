@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_003_college_mathematics",
+  "answer": "D",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "d"
+    }
+  ],
+  "category": "college_mathematics",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

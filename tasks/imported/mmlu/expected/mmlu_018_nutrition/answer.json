@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_018_nutrition",
+  "answer": "B",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "b"
+    }
+  ],
+  "category": "nutrition",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_010_high_school_psychology",
+  "answer": "B",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "b"
+    }
+  ],
+  "category": "high_school_psychology",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

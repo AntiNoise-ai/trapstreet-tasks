@@ -1,0 +1,37 @@
+# Attribution — GSM8K
+
+This task vendors a subset of **GSM8K** (Grade School Math 8K).
+
+- **Source:** https://github.com/openai/grade-school-math
+- **Paper:** Cobbe et al., "Training Verifiers to Solve Math Word Problems" (2021)
+- **License:** MIT License, Copyright (c) 2021 OpenAI
+- **What we use:** the first 25 problems of the `test` split, fetched at build
+  time by `build_cases.py`. Question text and gold final answers are reproduced
+  unmodified; we only add an output-format instruction and wrap each item in the
+  trapstreet case layout.
+
+MIT License notice (reproduced as required):
+
+```
+MIT License
+
+Copyright (c) 2021 OpenAI
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```

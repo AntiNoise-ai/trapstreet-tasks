@@ -1,0 +1,160 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: gsm8k_001
+  description: "Janet’s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes mu..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_002
+  description: "A robe takes 2 bolts of blue fiber and half that much white fiber.  How many bolts in tota..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_003
+  description: "Josh decides to try flipping a house.  He buys a house for $80,000 and then puts in $50,00..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_004
+  description: "James decides to run 3 sprints 3 times a week.  He runs 60 meters each sprint.  How many t..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_005
+  description: "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, containing s..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_006
+  description: "Kylar went to the store to buy glasses for his new apartment. One glass costs $5, but ever..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_007
+  description: "Toulouse has twice as many sheep as Charleston. Charleston has 4 times as many sheep as Se..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_008
+  description: "Carla is downloading a 200 GB file. Normally she can download 2 GB/minute, but 40% of the ..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_009
+  description: "John drives for 3 hours at a speed of 60 mph and then turns around because he realizes he ..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_010
+  description: "Eliza's rate per hour for the first 40 hours she works each week is $10. She also receives..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_011
+  description: "A new program had 60 downloads in the first month. The number of downloads in the second m..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_012
+  description: "Toula went to the bakery and bought various types of pastries. She bought 3 dozen donuts w..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_013
+  description: "Carlos is planting a lemon tree. The tree will cost $90 to plant. Each year it will grow 7..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_014
+  description: "Melanie is a door-to-door saleswoman. She sold a third of her vacuum cleaners at the green..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_015
+  description: "In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining ..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_016
+  description: "A merchant wants to make a choice of purchase between 2 purchase plans: jewelry worth $5,0..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_017
+  description: "Two trains leave San Rafael at the same time. They begin traveling westward, both travelin..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_018
+  description: "Jill gets paid $20 per hour to teach and $30 to be a cheerleading coach. If she works 50 w..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_019
+  description: "Claire makes a 3 egg omelet every morning for breakfast.  How many dozens of eggs will she..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_020
+  description: "Marissa is hiking a 12-mile trail. She took 1 hour to walk the first 4 miles, then another..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_021
+  description: "I have 10 liters of orange drink that are two-thirds water and I wish to add it to 15 lite..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_022
+  description: "Raymond and Samantha are cousins. Raymond was born 6 years before Samantha. Raymond had a ..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_023
+  description: "Billy sells DVDs. He has 8 customers on Tuesday. His first 3 customers buy one DVD each.  ..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_024
+  description: "A candle melts by 2 centimeters every hour that it burns. How many centimeters shorter wil..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+- id: gsm8k_025
+  description: "Kyle bought last year's best-selling book for $19.50. This is with a 25% discount from the..."
+  tags:
+  - math_word_problem
+  - gsm8k
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

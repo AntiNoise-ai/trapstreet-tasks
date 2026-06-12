@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_006_high_school_biology",
+  "answer": "D",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "d"
+    }
+  ],
+  "category": "high_school_biology",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

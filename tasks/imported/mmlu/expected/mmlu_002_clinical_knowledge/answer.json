@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_002_clinical_knowledge",
+  "answer": "D",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "d"
+    }
+  ],
+  "category": "clinical_knowledge",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

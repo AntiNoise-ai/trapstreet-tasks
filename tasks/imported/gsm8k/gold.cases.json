@@ -1,0 +1,127 @@
+[
+  {
+    "id": "gsm8k_001",
+    "answer": "18",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_002",
+    "answer": "3",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_003",
+    "answer": "70000",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_004",
+    "answer": "540",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_005",
+    "answer": "20",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_006",
+    "answer": "64",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_007",
+    "answer": "260",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_008",
+    "answer": "160",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_009",
+    "answer": "45",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_010",
+    "answer": "460",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_011",
+    "answer": "366",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_012",
+    "answer": "694",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_013",
+    "answer": "13",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_014",
+    "answer": "18",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_015",
+    "answer": "60",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_016",
+    "answer": "125",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_017",
+    "answer": "230",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_018",
+    "answer": "57500",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_019",
+    "answer": "7",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_020",
+    "answer": "6",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_021",
+    "answer": "15",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_022",
+    "answer": "14",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_023",
+    "answer": "7",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_024",
+    "answer": "8",
+    "category": "math_word_problem"
+  },
+  {
+    "id": "gsm8k_025",
+    "answer": "26",
+    "category": "math_word_problem"
+  }
+]

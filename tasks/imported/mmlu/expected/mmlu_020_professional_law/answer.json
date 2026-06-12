@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_020_professional_law",
+  "answer": "C",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "c"
+    }
+  ],
+  "category": "professional_law",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

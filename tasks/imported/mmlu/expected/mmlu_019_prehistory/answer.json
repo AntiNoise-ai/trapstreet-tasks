@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_019_prehistory",
+  "answer": "C",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "c"
+    }
+  ],
+  "category": "prehistory",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_005_elementary_mathematics",
+  "answer": "A",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "a"
+    }
+  ],
+  "category": "elementary_mathematics",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}

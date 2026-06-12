@@ -1,0 +1,14 @@
+{
+  "id": "mmlu_023_professional_medicine",
+  "answer": "D",
+  "type": "multiple_choice",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "d"
+    }
+  ],
+  "category": "professional_medicine",
+  "difficulty": "medium",
+  "_source": "MMLU (cais/mmlu, MIT)"
+}
