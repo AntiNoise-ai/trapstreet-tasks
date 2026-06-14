@@ -1,0 +1,15 @@
+{
+  "id": "count_on_statement",
+  "answer": "0",
+  "type": "inference",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 0.0,
+      "tolerance": 0.01
+    }
+  ],
+  "category": "scope",
+  "difficulty": "hard",
+  "_notes": "None \u2014 the whole bundle is a PO (paid) pack. Trap: answering 517 (the count the note foregrounds) or some non-zero number."
+}

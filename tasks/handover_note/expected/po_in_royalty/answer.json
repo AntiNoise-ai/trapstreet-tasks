@@ -1,0 +1,17 @@
+{
+  "id": "po_in_royalty",
+  "answer": "no",
+  "type": "inference",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "no"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "rule",
+  "difficulty": "hard",
+  "_notes": "PO = already-paid stock => no royalty => not on the report. Derivable: the fix for the royalty problem was to swap TO PO, so PO is the no-royalty state. Trap: 'PO is the correct/normal pack, so it bills royalty' (-> 'yes')."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "correct_also_off",
+  "answer": "yes",
+  "type": "inference",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "yes"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "inference",
+  "difficulty": "hard",
+  "_notes": "Yes \u2014 the correct pack is PO (pre-paid) => no royalty => also kept off the statement. The whole bundle is no-royalty; the error was only that the wrong SKU type was used. Trap: 'the correct pack is normal, so it bills royalty -> no, it should appear'."
+}

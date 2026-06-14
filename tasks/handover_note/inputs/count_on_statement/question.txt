@@ -1,0 +1,1 @@
+Read the attached handover note (note.txt). How many keys sold from this bundle should appear on this publisher's royalty statement? Answer with a single number.

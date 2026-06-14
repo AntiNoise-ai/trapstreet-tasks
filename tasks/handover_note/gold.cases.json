@@ -1,32 +1,51 @@
 [
   {
-    "id": "royalty_inclusion",
-    "category": "royalty",
+    "id": "all_off_statement",
+    "category": "scope",
     "difficulty": "hard",
-    "notes": "Core trap. The question primes the default rule (No-PO => royalty), but the note's correction reclassifies the keys to PO stock and explicitly excludes them. Correct answer: No."
+    "answer": "yes",
+    "notes": "The correct pack is a PO (paid) pack => no royalty on any of it; the 517 error sales were reclassified to PO too. So ALL of the bundle stays off the statement. Trap: thinking only the explicitly-mentioned 517 are off and normal sales owe royalty (-> 'no')."
   },
   {
-    "id": "royalty_count",
-    "category": "royalty",
+    "id": "after_fix_royalty",
+    "category": "timing",
     "difficulty": "hard",
-    "notes": "False-premise / honesty trap. The note says these sales must not appear on the royalty statement, so the count is 0. A model that anchors on 517 fails."
+    "answer": "no",
+    "notes": "After the fix the bundle uses the correct PO (paid) pack => no royalty. Trap: assuming 'now it's fixed, so royalty resumes normally' (-> 'yes')."
   },
   {
-    "id": "affected_count",
-    "category": "extraction",
-    "difficulty": "easy",
-    "notes": "Baseline extraction."
+    "id": "the_517_owe",
+    "category": "inference",
+    "difficulty": "medium",
+    "answer": "no",
+    "notes": "They were reclassified to PO and the note says they must not appear on the royalty statement => no royalty owed. Trap: 'they were sold as No-PO, which owes royalty' (-> 'yes')."
   },
   {
-    "id": "correction_time",
-    "category": "extraction",
-    "difficulty": "easy",
-    "notes": "Baseline extraction of the correction timestamp."
+    "id": "count_on_statement",
+    "category": "scope",
+    "difficulty": "hard",
+    "answer": "0",
+    "notes": "None \u2014 the whole bundle is a PO (paid) pack. Trap: answering 517 (the count the note foregrounds) or some non-zero number."
   },
   {
-    "id": "affected_titles",
-    "category": "extraction",
-    "difficulty": "easy",
-    "notes": "Baseline extraction of the two affected titles."
+    "id": "po_in_royalty",
+    "category": "rule",
+    "difficulty": "hard",
+    "answer": "no",
+    "notes": "PO = already-paid stock => no royalty => not on the report. Derivable: the fix for the royalty problem was to swap TO PO, so PO is the no-royalty state. Trap: 'PO is the correct/normal pack, so it bills royalty' (-> 'yes')."
+  },
+  {
+    "id": "nonpo_in_royalty",
+    "category": "rule",
+    "difficulty": "hard",
+    "answer": "yes",
+    "notes": "No-PO = not pre-paid => royalty owed => on the report. Derivable: the note bothers to say the (No-PO) error sales 'must not appear', which is only needed if No-PO normally WOULD appear. Trap: the note excludes THESE No-PO sales, so a model generalizes 'No-PO => not on report' (-> 'no'); the 517 are an exception (reclassified to PO)."
+  },
+  {
+    "id": "correct_also_off",
+    "category": "inference",
+    "difficulty": "hard",
+    "answer": "yes",
+    "notes": "Yes \u2014 the correct pack is PO (pre-paid) => no royalty => also kept off the statement. The whole bundle is no-royalty; the error was only that the wrong SKU type was used. Trap: 'the correct pack is normal, so it bills royalty -> no, it should appear'."
   }
 ]

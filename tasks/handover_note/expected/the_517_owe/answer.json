@@ -1,0 +1,17 @@
+{
+  "id": "the_517_owe",
+  "answer": "no",
+  "type": "inference",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "no"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "inference",
+  "difficulty": "medium",
+  "_notes": "They were reclassified to PO and the note says they must not appear on the royalty statement => no royalty owed. Trap: 'they were sold as No-PO, which owes royalty' (-> 'yes')."
+}

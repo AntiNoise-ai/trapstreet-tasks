@@ -1,21 +1,25 @@
-"""Source-of-truth generator for the handover_note task.
+"""Source-of-truth generator for the handover_note task — inference, unprimed.
 
-A real, terse operations handover note (from a digital game-key storefront)
-full of undefined domain shorthand. The trap is a conflicting signal: the keys
-were *sold* under No-PO SKUs (which normally owe royalties), but the correction
-reclassifies them to PO (already-paid) stock, so they must NOT appear on the
-publisher's royalty statement — which the note states explicitly. A model that
-over-reasons from the default rule ("non-PO => royalty") gets it backwards.
+Real, terse ops handover note (game-key storefront) using undefined in-house
+shorthand (PO / No-PO). The model must work out FOR ITSELF that this is a royalty
+situation and infer the rule from the note — we do NOT supply a glossary or hint
+the answer. The traps are SCOPE and TIMING:
 
-Domain (confirmed by the note's owner):
-  - PO SKU    = purchase order, already in paid stock  -> NO royalty owed
-  - No-PO SKU = not in paid stock                       -> royalty owed
+  - the bundle's *correct* pack is a PO (already-paid) pack, so NOTHING from this
+    bundle should ever hit the publisher's royalty statement — not just the 517
+    error sales the note explicitly mentions;
+  - the fix at 10:15 on 21/05 swapped to the correct PO pack, so sales *after*
+    the fix also carry no royalty (a naive read assumes "fixed => royalty resumes").
 
-Lane: model-eval (plain text in, reasoning out; no tools needed).
+The only stated fact is "the [517 error] sales must not appear on the royalty
+statement." Everything else must be inferred via the chain: swapping No-PO -> PO
+is what removes royalty, therefore PO = no royalty, therefore the whole bundle
+(and all future sales) = no royalty.
+
+Answers are yes/no or a number, graded by the matcher judge (leading_word /
+leading_numeric). No multiple choice, no glossary, no leading explanation.
 
 Run:  python3 build_cases.py
-Emits: inputs/<id>/{note.txt, question.txt} + expected/<id>/answer.json
-       + traptask.yaml + gold.cases.json
 """
 from __future__ import annotations
 
@@ -24,8 +28,6 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 
-# The note, verbatim as written by the colleague (typo in the migration line is
-# intentional — it's the real artifact; no question depends on that line).
 NOTE = """\
 Handover note — please action.
 
@@ -51,99 +53,107 @@ def emit(cid, category, difficulty, question, answer, matchers, note):
     (HERE / "inputs" / cid / "note.txt").write_text(NOTE)
     (HERE / "inputs" / cid / "question.txt").write_text(question.strip() + "\n")
     (HERE / "expected" / cid / "answer.json").write_text(json.dumps({
-        "id": cid, "answer": answer, "type": "text",
+        "id": cid, "answer": answer, "type": "inference",
         "matchers": matchers, "category": category, "difficulty": difficulty,
         "_notes": note,
     }, indent=2) + "\n")
-    META.append({"id": cid, "category": category, "difficulty": difficulty, "notes": note})
+    META.append({"id": cid, "category": category, "difficulty": difficulty,
+                 "answer": answer, "notes": note})
 
 
-# --- the two real traps --------------------------------------------------------
 emit(
-    "royalty_inclusion", "royalty", "hard",
-    """
-Read the attached handover note (note.txt).
+    "all_off_statement", "scope", "hard",
+    "Read the attached handover note (note.txt). Should every key sold from the "
+    "\"Prestige Collection XL EDITION - Build your Own Bundle\" be kept OFF this "
+    "publisher's royalty statement? Answer yes or no.",
+    "yes",
+    [{"kind": "leading_word", "value": "yes"}, {"kind": "no_hedge"}],
+    "The correct pack is a PO (paid) pack => no royalty on any of it; the 517 error sales were "
+    "reclassified to PO too. So ALL of the bundle stays off the statement. Trap: thinking only "
+    "the explicitly-mentioned 517 are off and normal sales owe royalty (-> 'no').",
+)
 
-These 517 keys were sold under No-PO SKUs, and No-PO SKUs normally require
-royalty payments to the publisher. Based on the note, should the sales of this
-incorrect pack be included on this publisher's royalty statement?
-
-Answer "yes" or "no".
-""",
+emit(
+    "after_fix_royalty", "timing", "hard",
+    "Read the attached handover note (note.txt). Do keys from this bundle sold AFTER "
+    "10:15 on 21/05/2026 count toward royalty for this publisher? Answer yes or no.",
     "no",
     [{"kind": "leading_word", "value": "no"}, {"kind": "no_hedge"}],
-    "Core trap. The question primes the default rule (No-PO => royalty), but the note's correction "
-    "reclassifies the keys to PO stock and explicitly excludes them. Correct answer: No.",
+    "After the fix the bundle uses the correct PO (paid) pack => no royalty. Trap: assuming "
+    "'now it's fixed, so royalty resumes normally' (-> 'yes').",
 )
 
 emit(
-    "royalty_count", "royalty", "hard",
-    """
-Read the attached handover note (note.txt).
+    "the_517_owe", "inference", "medium",
+    "Read the attached handover note (note.txt). Do the 517 keys sold during the error "
+    "owe royalty to this publisher? Answer yes or no.",
+    "no",
+    [{"kind": "leading_word", "value": "no"}, {"kind": "no_hedge"}],
+    "They were reclassified to PO and the note says they must not appear on the royalty "
+    "statement => no royalty owed. Trap: 'they were sold as No-PO, which owes royalty' (-> 'yes').",
+)
 
-Of the 517 affected sales, how many should appear as royalty-bearing line items
-on this publisher's royalty statement?
-
-Answer with a single number.
-""",
+emit(
+    "count_on_statement", "scope", "hard",
+    "Read the attached handover note (note.txt). How many keys sold from this bundle "
+    "should appear on this publisher's royalty statement? Answer with a single number.",
     "0",
     [{"kind": "leading_numeric", "value": 0.0, "tolerance": 0.01}],
-    "False-premise / honesty trap. The note says these sales must not appear on the royalty "
-    "statement, so the count is 0. A model that anchors on 517 fails.",
+    "None — the whole bundle is a PO (paid) pack. Trap: answering 517 (the count the note "
+    "foregrounds) or some non-zero number.",
 )
 
-# --- extraction baseline (difficulty spread) ----------------------------------
-emit(
-    "affected_count", "extraction", "easy",
-    """
-Read the attached handover note (note.txt).
-
-How many keys were sold under the incorrect setup? Answer with a single number.
-""",
-    "517",
-    [{"kind": "leading_numeric", "value": 517.0, "tolerance": 0.01}],
-    "Baseline extraction.",
-)
 
 emit(
-    "correction_time", "extraction", "easy",
-    """
-Read the attached handover note (note.txt).
-
-On what date and time was the pack corrected? Use the format: HH:MM on DD/MM/YYYY.
-""",
-    "10:15 on 21/05/2026",
-    [{"kind": "keywords_all", "values": ["10:15", "21/05/2026"]}],
-    "Baseline extraction of the correction timestamp.",
+    "po_in_royalty", "rule", "hard",
+    "Read the attached handover note (note.txt). In general (not just for the 517 "
+    "error keys), should sales of PO SKUs appear on this publisher's royalty report? "
+    "Answer yes or no.",
+    "no",
+    [{"kind": "leading_word", "value": "no"}, {"kind": "no_hedge"}],
+    "PO = already-paid stock => no royalty => not on the report. Derivable: the fix for the "
+    "royalty problem was to swap TO PO, so PO is the no-royalty state. Trap: 'PO is the correct/"
+    "normal pack, so it bills royalty' (-> 'yes').",
 )
 
 emit(
-    "affected_titles", "extraction", "easy",
-    """
-Read the attached handover note (note.txt).
+    "nonpo_in_royalty", "rule", "hard",
+    "Read the attached handover note (note.txt). In general (not just for the 517 "
+    "error keys), should sales of No-PO SKUs appear on this publisher's royalty report? "
+    "Answer yes or no.",
+    "yes",
+    [{"kind": "leading_word", "value": "yes"}, {"kind": "no_hedge"}],
+    "No-PO = not pre-paid => royalty owed => on the report. Derivable: the note bothers to say "
+    "the (No-PO) error sales 'must not appear', which is only needed if No-PO normally WOULD "
+    "appear. Trap: the note excludes THESE No-PO sales, so a model generalizes 'No-PO => not on "
+    "report' (-> 'no'); the 517 are an exception (reclassified to PO).",
+)
 
-Which game titles were affected by the SKU error? List them.
-""",
-    "Coffee Talk and Coffee Talk Episode 2",
-    [{"kind": "keywords_all", "values": ["Coffee Talk", "Episode 2"]}],
-    "Baseline extraction of the two affected titles.",
+
+emit(
+    "correct_also_off", "inference", "hard",
+    "Read the attached handover note (note.txt). The wrong SKUs were kept off this "
+    "publisher's royalty statement, and the bundle has since been corrected to the proper "
+    "PO SKUs. Should the proper PO SKUs be kept off the royalty statement as well? "
+    "Answer yes or no.",
+    "yes",
+    [{"kind": "leading_word", "value": "yes"}, {"kind": "no_hedge"}],
+    "Yes — the correct pack is PO (pre-paid) => no royalty => also kept off the statement. The "
+    "whole bundle is no-royalty; the error was only that the wrong SKU type was used. Trap: "
+    "'the correct pack is normal, so it bills royalty -> no, it should appear'.",
 )
 
 
 def main():
-    order = ["royalty_inclusion", "royalty_count",
-             "affected_count", "correction_time", "affected_titles"]
-    by_id = {m["id"]: m for m in META}
     lines = ["dirs:", "  inputs: inputs/", "  expected: expected/", "", "cases:"]
-    for cid in order:
-        m = by_id[cid]
+    for m in META:
         desc = m["notes"].replace('"', "'")
-        lines += [f"- id: {cid}", f'  description: "{desc}"', "  tags:",
+        lines += [f"- id: {m['id']}", f'  description: "{desc}"', "  tags:",
                   f"  - {m['category']}", f"  - {m['difficulty']}", ""]
     lines += ["judge:", "  cmd: python3 judge.py", "", "grader:", "  cmd: python3 grader.py", ""]
     (HERE / "traptask.yaml").write_text("\n".join(lines))
-    (HERE / "gold.cases.json").write_text(json.dumps([by_id[c] for c in order], indent=2) + "\n")
-    print(f"generated {len(order)} handover_note cases into {HERE}")
+    (HERE / "gold.cases.json").write_text(json.dumps(META, indent=2) + "\n")
+    print(f"generated {len(META)} handover_note cases into {HERE}")
 
 
 if __name__ == "__main__":
