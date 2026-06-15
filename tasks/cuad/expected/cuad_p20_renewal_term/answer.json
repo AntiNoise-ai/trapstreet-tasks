@@ -1,0 +1,23 @@
+{
+  "id": "cuad_p20_renewal_term",
+  "type": "span_extraction",
+  "category": "Renewal Term",
+  "gold_present": true,
+  "gold_spans": [
+    "Agreement, which notice must be given not less than fifteen (15) days before the end of the respective initial or renewal term.",
+    "This Agreement shall automatically be renewed for one (1) or more one (1) month periods unless either the Customer or i-on gives notice to the other party of its intention not to renew the"
+  ],
+  "matchers": [
+    {
+      "kind": "span_f1",
+      "gold_spans": [
+        "Agreement, which notice must be given not less than fifteen (15) days before the end of the respective initial or renewal term.",
+        "This Agreement shall automatically be renewed for one (1) or more one (1) month periods unless either the Customer or i-on gives notice to the other party of its intention not to renew the"
+      ],
+      "threshold": 0.5
+    }
+  ],
+  "difficulty": "hard",
+  "_contract": "CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT",
+  "_source": "CUAD (theatticusproject/cuad, CC BY 4.0)"
+}

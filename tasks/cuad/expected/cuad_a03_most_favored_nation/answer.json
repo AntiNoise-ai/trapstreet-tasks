@@ -1,0 +1,15 @@
+{
+  "id": "cuad_a03_most_favored_nation",
+  "type": "span_extraction",
+  "category": "Most Favored Nation",
+  "gold_present": false,
+  "gold_spans": [],
+  "matchers": [
+    {
+      "kind": "no_clause"
+    }
+  ],
+  "difficulty": "medium",
+  "_contract": "LohaCompanyltd_20191209_F-1_EX-10.16_11917878_EX-10.16_Supply Agreement",
+  "_source": "CUAD (theatticusproject/cuad, CC BY 4.0)"
+}

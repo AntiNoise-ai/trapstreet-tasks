@@ -1,0 +1,21 @@
+{
+  "id": "cuad_p19_expiration_date",
+  "type": "span_extraction",
+  "category": "Expiration Date",
+  "gold_present": true,
+  "gold_spans": [
+    "The Contract is valid for 5 years, beginning from and ended on ."
+  ],
+  "matchers": [
+    {
+      "kind": "span_f1",
+      "gold_spans": [
+        "The Contract is valid for 5 years, beginning from and ended on ."
+      ],
+      "threshold": 0.5
+    }
+  ],
+  "difficulty": "hard",
+  "_contract": "LohaCompanyltd_20191209_F-1_EX-10.16_11917878_EX-10.16_Supply Agreement",
+  "_source": "CUAD (theatticusproject/cuad, CC BY 4.0)"
+}

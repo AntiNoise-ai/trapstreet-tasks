@@ -1,0 +1,27 @@
+{
+  "id": "cuad_p01_anti_assignment",
+  "type": "span_extraction",
+  "category": "Anti-Assignment",
+  "gold_present": true,
+  "gold_spans": [
+    "Any attempted assignment not in accordance with this Section 13.2 shall be void.",
+    "Except as provided in this Section 13.2, this Agreement may not be assigned or otherwise transferred, nor may any rights or obligations hereunder be assigned or transferred, by either Party, without the written consent of the other Party (such consent not to be unreasonably withheld); provided that a merger, sale of stock or comparable transaction shall not constitute an assignment.",
+    "Except to Affiliates of Valeant, Valeant shall not subcontract the Valeant Activities with any Third Party (including any contract sales force).",
+    "In the event either Party desires to make such an assignment or other transfer of this Agreement or any rights or obligations hereunder, such Party shall deliver a written notice to the other Party requesting the other Party's written consent in accordance with this Section 13.2, and the other Party shall provide such Party written notice of its determination whether to provide such written consent within [***] following its receipt of such written notice from such Party."
+  ],
+  "matchers": [
+    {
+      "kind": "span_f1",
+      "gold_spans": [
+        "Any attempted assignment not in accordance with this Section 13.2 shall be void.",
+        "Except as provided in this Section 13.2, this Agreement may not be assigned or otherwise transferred, nor may any rights or obligations hereunder be assigned or transferred, by either Party, without the written consent of the other Party (such consent not to be unreasonably withheld); provided that a merger, sale of stock or comparable transaction shall not constitute an assignment.",
+        "Except to Affiliates of Valeant, Valeant shall not subcontract the Valeant Activities with any Third Party (including any contract sales force).",
+        "In the event either Party desires to make such an assignment or other transfer of this Agreement or any rights or obligations hereunder, such Party shall deliver a written notice to the other Party requesting the other Party's written consent in accordance with this Section 13.2, and the other Party shall provide such Party written notice of its determination whether to provide such written consent within [***] following its receipt of such written notice from such Party."
+      ],
+      "threshold": 0.5
+    }
+  ],
+  "difficulty": "hard",
+  "_contract": "DovaPharmaceuticalsInc_20181108_10-Q_EX-10.2_11414857_EX-10.2_Promotion Agreement",
+  "_source": "CUAD (theatticusproject/cuad, CC BY 4.0)"
+}

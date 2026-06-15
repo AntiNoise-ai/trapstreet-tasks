@@ -1,0 +1,261 @@
+[
+  {
+    "id": "cuad_p01_anti_assignment",
+    "category": "Anti-Assignment",
+    "gold_present": true,
+    "gold_spans": [
+      "Any attempted assignment not in accordance with this Section 13.2 shall be void.",
+      "Except as provided in this Section 13.2, this Agreement may not be assigned or otherwise transferred, nor may any rights or obligations hereunder be assigned or transferred, by either Party, without the written consent of the other Party (such consent not to be unreasonably withheld); provided that a merger, sale of stock or comparable transaction shall not constitute an assignment.",
+      "Except to Affiliates of Valeant, Valeant shall not subcontract the Valeant Activities with any Third Party (including any contract sales force).",
+      "In the event either Party desires to make such an assignment or other transfer of this Agreement or any rights or obligations hereunder, such Party shall deliver a written notice to the other Party requesting the other Party's written consent in accordance with this Section 13.2, and the other Party shall provide such Party written notice of its determination whether to provide such written consent within [***] following its receipt of such written notice from such Party."
+    ]
+  },
+  {
+    "id": "cuad_p02_change_of_control",
+    "category": "Change Of Control",
+    "gold_present": true,
+    "gold_spans": [
+      "Notwithstanding the foregoing, (a) either Party may, without the other Party's consent, assign this Agreement and its rights and obligations hereunder in whole or in part to an Affiliate; and (b) Dova may assign this Agreement to a successor in interest in connection with the sale or other transfer of all or substantially all of Dova's assets or rights relating to the Product; provided that such assignee shall remain subject to all of the terms and conditions hereof in all respects and shall assume all obligations of Dova hereunder whether accruing before or after such assignment."
+    ]
+  },
+  {
+    "id": "cuad_p03_most_favored_nation",
+    "category": "Most Favored Nation",
+    "gold_present": true,
+    "gold_spans": [
+      "Airspan warrants that during the term of this Agreement, the prices at      which Airspan sells to Distributor products supplied under this Agreement      shall be no less favorable to the Distributor than those prices at which      Airspan sells, at substantially the same time in the United States, similar      products and pursuant to similar terms and conditions as those by which      Airspan sells Products to the Distributor under this Agreement."
+    ]
+  },
+  {
+    "id": "cuad_p04_cap_on_liability",
+    "category": "Cap On Liability",
+    "gold_present": true,
+    "gold_spans": [
+      "i-on will not be liable under any circumstances for any lost profits or other consequential damages, even if i-on has been advised as to the possibility of such damages. i-on's liability for damages to the Customer for any cause whatsoever, regardless of the form of action, and whether in contract or in tort, including negligence, shall be limited to one (1) month's fees and the remaining portion of any prepaid fees."
+    ]
+  },
+  {
+    "id": "cuad_p05_uncapped_liability",
+    "category": "Uncapped Liability",
+    "gold_present": true,
+    "gold_spans": [
+      "THE FOREGOING SENTENCE SHALL NOT LIMIT (1) THE OBLIGATIONS OF EITHER PARTY TO INDEMNIFY THE OTHER PARTY FROM AND AGAINST THIRD PARTY CLAIMS UNDER SECTION 11.1 OR 11.2, AS APPLICABLE, OR (2) DAMAGES AVAILABLE FOR A PARTY'S BREACH OF THE CONFIDENTIALITY AND NON-USE OBLIGATIONS IN ARTICLE 9."
+    ]
+  },
+  {
+    "id": "cuad_p06_non_compete",
+    "category": "Non-Compete",
+    "gold_present": true,
+    "gold_spans": [
+      "[***], neither Valeant nor its Affiliates shall, directly or indirectly, [***] in the Territory other than the Product; provided that if the Agreement is terminated by Dova pursuant to [***], then any Tail Period shall be immediately terminated if either Valeant or any of its Affiliates, directly or indirectly, [***] in the Territory other than the Product during such Tail Period."
+    ]
+  },
+  {
+    "id": "cuad_p07_exclusivity",
+    "category": "Exclusivity",
+    "gold_present": true,
+    "gold_spans": [
+      "During the Term, subject to the terms and conditions of this Agreement, Dova hereby grants to Valeant the right, on a co-exclusive basis (solely with Dova and its Affiliates), to Detail and promote the Product in the Specialty in the Territory in the Field, and to conduct the Valeant Activities and the activities of the institutional account management team (pursuant to and subject to the terms of Section 4.1.5) for the Product in the Territory in the Field in accordance with the terms and conditions of this Agreement."
+    ]
+  },
+  {
+    "id": "cuad_p08_termination_for_convenience",
+    "category": "Termination For Convenience",
+    "gold_present": true,
+    "gold_spans": [
+      "Either party may terminate this Agreement without cause at any time effective upon thirty (30) days' written notice."
+    ]
+  },
+  {
+    "id": "cuad_p09_rofr_rofo_rofn",
+    "category": "Rofr/Rofo/Rofn",
+    "gold_present": true,
+    "gold_spans": [
+      "Excite will                   negotiate exclusively with Sponsor for the next [****] in good                   faith effort to negotiate and execute a written sponsorship                   renewal agreement.",
+      "Excite will not propose, solicit or negotiate offers from                   entities other than Sponsor for any retail music store                   sponsorships of the Excite Site, if at all, until [****] prior                   to the expiration of the term of this Agreement.",
+      "If, [****] prior to the expiration of the                   term of the Agreement, the parties have not entered into a                   written sponsorship renewal agreement. Excite may enter into                   negotiations with any third party with respect to retail music                   store sponsorships of the Excite Site.",
+      "Although                   Excite will not be required to disclose any information in                   violation of any nondisclosure agreement between Excite and                   any third party, the notice will include information                   sufficient to permit Sponsor to evaluate the requirements for                   meeting the competing offer for retail music store sponsorship                   of the Excite Site and to formulate a meaningful response.",
+      "In the event that Excite intends to enter into an                   agreement with a third party with respect to retail music                   store sponsorships of the Excite Site before the expiration of                   the term of the Agreement, Excite will deliver to Sponsor a                   written notice describing the relevant opportunity.",
+      "Sponsor will have [****] after receipt of such written notice                   to provide notice to Excite that it is prepared to enter into                   an agreement with Excite on the same terms and conditions as                   Excite proposes to accept from such third party.",
+      "If Sponsor rejects said offer or fails to notify Excite of                   its acceptance within the [****] period, Excite shall have                   the right thereafter to enter into the agreement with such                   third party, provided the terms and conditions of the                   agreement (if entered into within the subsequent ninety (90)                   days) are not less favorable to Excite than previously offered                   by Sponsor.",
+      "Excite will offer Sponsor the right of first refusal to                  negotiate with Excite for renewal of this sponsorship.",
+      "Commencing not later than [****] prior to the expiration                   of the term of the Agreement, Excite will negotiate with                   Sponsor in good faith with respect to the terms and conditions                   under which this Agreement would be renewed.",
+      "Notwithstanding the foregoing, Excite may make available                  opportunities on the Excite Site to purchase Music Products                  from parties other than Sponsor if such Music Products are not                  available from Sponsor so long as, prior to entering into                  arrangements to make available opportunities to purchase Music                  Products from parties other than Sponsor, Excite notifies                  Sponsor of its interest in the Music Products and gives Sponsor                  thirty (30) days to make the desired Music Products available                  through the Sponsor Site."
+    ]
+  },
+  {
+    "id": "cuad_p10_revenue_profit_sharing",
+    "category": "Revenue/Profit Sharing",
+    "gold_present": true,
+    "gold_spans": [
+      "If the aggregate actual number of Details for the Product made by the Sales Representatives for a Calendar Quarter is less than the Quarterly Minimum Details for such Calendar Quarter, then in calculating the promotion fee due under Section 6.1.1, the Applicable Percentage for such Calendar Quarter shall be reduced to a new percentage equal to [***].",
+      "Commencing with the Calendar Quarter commencing on October 1, 2018, as consideration for the Valeant Activities performed by Valeant, Dova shall pay Valeant a promotion fee based on annual Net Sales during the Term, calculated as follows:\n\n(a) For any portion of Net Sales up to and equal [***] in a Calendar Year, an amount equal to [***] of such portion of Net Sales;\n\n(b) For any portion of Net Sales in excess of [***] and up to and equal [***] in a Calendar Year, an amount equal to [***] of such portion of Net Sales; and\n\n(c) For any portion of Net Sales in excess of [***] in a Calendar Year, [***] of such portion of Net Sales.",
+      "If the Quarterly Average Sales Force Size is less than [***] Sales Representatives for an applicable Calendar Quarter, then in calculating the promotion fee due under Section 6.1.1, the Applicable Percentage for such Calendar Quarter shall be reduced to a new percentage equal to [***]."
+    ]
+  },
+  {
+    "id": "cuad_p11_minimum_commitment",
+    "category": "Minimum Commitment",
+    "gold_present": true,
+    "gold_spans": [
+      "Without limiting the generality of the foregoing, [***]) and continuing throughout the remainder of the Term, Valeant shall maintain at least one hundred (100) Sales Representatives with responsibility to Detail the Product in the Specialty in the Territory.",
+      "If the Quarterly Average Sales Force Size is less than [***] Sales Representatives for an applicable Calendar Quarter, then in calculating the promotion fee due under Section 6.1.1, the Applicable Percentage for such Calendar Quarter shall be reduced to a new percentage equal to [***].",
+      "A Party shall have the right to terminate this Agreement before the end of the Term as follows:",
+      "12.2.3 by Dova if the aggregate actual number of Details for the Product made by the Sales Representatives for a Calendar Quarter is less than the Quarterly Minimum Details for [***] consecutive Calendar Quarters, upon [***] written notice to Valeant, such notice to be delivered no less than [***] following the end of the last consecutive Calendar Quarter in which the actual Details are less than the Quarterly Minimum Details;",
+      "If the aggregate actual number of Details for the Product made by the Sales Representatives for a Calendar Quarter is less than the Quarterly Minimum Details for such Calendar Quarter, then in calculating the promotion fee due under Section 6.1.1, the Applicable Percentage for such Calendar Quarter shall be reduced to a new percentage equal to [***]."
+    ]
+  },
+  {
+    "id": "cuad_p12_audit_rights",
+    "category": "Audit Rights",
+    "gold_present": true,
+    "gold_spans": [
+      "Dova shall bear the out-of-pocket costs and expenses incurred by the Parties in connection with any such inspection or audit, unless the audit shows an undisputed over- payment for that audited period in excess of [***] of the amounts properly determined, in which case, Valeant shall reimburse Dova for its audit fees and reasonable out-of-pocket expenses in connection with said audit, which reimbursement shall be due and payable within [***] of receiving appropriate invoices and other support for such audit-related costs.",
+      "Valeant shall have the right, at its own expense, during normal business hours and upon reasonable prior notice, through certified public accounting firm or other auditor selected by Valeant and reasonably acceptable to Dova and upon execution of a confidentiality agreement reasonably satisfactory to Dova in form and substance, to inspect and audit the applicable records and books maintained by Dova for purposes of verifying Dova's payment obligations within this Agreement, including the applicable records and books of account maintained by Dova, or any Affiliate, as applicable, with respect to Net Sales in order to confirm the accuracy and completeness of such records and books of account and all payments hereunder; provided, however, that (i) such examination shall not take place more often than once per every twelve (12) months during the Term and once during the one (1) year period following the end of the Term, and (ii) such examination shall not cover a period of time that has previously been audited; provided that Valeant shall have the right to conduct additional \"for cause\" audits to the extent necessary to address significant problems relating to Dova's payment obligations hereunder.",
+      "Where necessary, on reasonable request, Dova's audit rights shall include interviewing Sales Representatives and other employees of Valeant.",
+      "Dova shall have the right, at its own expense, during normal business hours and upon reasonable prior notice, through a certified public accounting firm or other auditor selected by Dova and reasonably acceptable to Valeant and upon execution of a confidentiality agreement reasonably satisfactory to Valeant in form and substance, to inspect and audit the applicable records and books maintained by Valeant relating to the Valeant Activities for purposes of verifying Valeant's compliance with the terms of this Agreement, provided that (i) such examination shall not take place more often than once per every twelve (12) months during the Term and once during the one (1) year period following the end of the Term, and (ii) such examination shall not cover a period of time that has previously been audited; provided that Dova shall have the right to conduct additional \"for cause\" audits to the extent necessary to address significant compliance problems relating to Valeant's obligations hereunder or in response to any inquiry, inspection, investigation or other requirements of a Government Authority in the Territory relating to the Valeant Activities.",
+      "Valeant shall bear the out-of-pocket costs and expenses incurred by the Parties in connection with any such inspection or audit, unless the audit shows an undisputed under-reporting or underpayment for that audited period in excess of [***] of the amounts properly determined, in which case, Dova shall reimburse Valeant for its audit fees and reasonable out-of-pocket expenses in connection with said audit, which reimbursement shall be due and payable within [***] of receiving appropriate invoices and other support for such audit-related costs."
+    ]
+  },
+  {
+    "id": "cuad_p13_ip_ownership_assignment",
+    "category": "Ip Ownership Assignment",
+    "gold_present": true,
+    "gold_spans": [
+      "The ownership, and all goodwill from the use, of any Dova Trademarks and Copyrights shall at all times vest in and inure to the benefit of Dova, and Valeant shall assign, and hereby does assign, any rights it may have in the foregoing to Dova.",
+      "Valeant agrees to assign, and hereby does assign, to Dova (and shall cause its Affiliates and its and their respective employees and other representatives to assign to Dova) any and all right, title and interest that Valeant (or any such Affiliates, employees or other representatives) may have in or to any Invention.",
+      "As between the Parties, Dova shall own all right, title and interest in and to any Product Materials (and all content contained therein) and any Product Labeling (and all content contained therein), including applicable copyrights and trademarks (other than any name, trademark, trade name or logo of Valeant or its Affiliates that may appear on such Product materials or Product Labeling), and to the extent Valeant (or any of its Affiliates) obtains or otherwise has a claim to any of the foregoing, Valeant hereby assigns (and shall cause any applicable Affiliate to assign) all of its right, title and interest in and to such Product Materials (and content) and Product Labeling (and content) (other than any name, trademark, trade name or logo of Valeant or its Affiliates that may appear on such Product materials or Product Labeling) to Dova and Valeant agrees to (and shall cause its applicable Affiliate to) execute all documents and take all actions as are reasonably requested by Dova to vest title to such Product Materials (and content) and Product Labeling (and content) in Dova (or its designated Affiliate)."
+    ]
+  },
+  {
+    "id": "cuad_p14_joint_ip_ownership",
+    "category": "Joint Ip Ownership",
+    "gold_present": true,
+    "gold_spans": [
+      "Joint Improvements  shall be owned jointly by the Parties, and PPI's interest therein shall be licensed to EKR hereunder."
+    ]
+  },
+  {
+    "id": "cuad_p15_license_grant",
+    "category": "License Grant",
+    "gold_present": true,
+    "gold_spans": [
+      "Valeant shall have the non-exclusive right to use the Dova Trademarks and Copyrights solely on Product Materials in order to perform the Valeant Activities and solely in accordance with the terms and conditions of this Agreement.",
+      "During the Term, subject to the terms and conditions of this Agreement, Dova hereby grants to Valeant the right, on a co-exclusive basis (solely with Dova and its Affiliates), to Detail and promote the Product in the Specialty in the Territory in the Field, and to conduct the Valeant Activities and the activities of the institutional account management team (pursuant to and subject to the terms of Section 4.1.5) for the Product in the Territory in the Field in accordance with the terms and conditions of this Agreement.",
+      "[***], Valeant hereby grants to Dova a fully paid-up, royalty free, non-transferable, non- exclusive license (with a limited right to sub-license to its Affiliates) to any Valeant Property that appears on, embodied on or contained in the Product materials or Product Labeling solely for use in connection with Dova's promotion or other commercialization of the Product in the Territory."
+    ]
+  },
+  {
+    "id": "cuad_p16_liquidated_damages",
+    "category": "Liquidated Damages",
+    "gold_present": true,
+    "gold_spans": [
+      "Solely in the event that Dova has terminated this Agreement pursuant to Section 12.3.1 and notwithstanding anything else herein, in consideration of the promotion services performed by Valeant during the Term, with respect to the Tail Period, Dova shall make payments to Valeant in an amount equal to [***] of the amounts that would have been payable by Dova to Valeant with respect to such Tail Period pursuant to Section 6.1 had the Agreement not been so terminated."
+    ]
+  },
+  {
+    "id": "cuad_p17_effective_date",
+    "category": "Effective Date",
+    "gold_present": true,
+    "gold_spans": [
+      "The term of this Agreement for the Hosted Site shall commence upon April 1, 1999 and shall continue for a period of six (6) months, unless earlier terminated in accordance with provisions hereof."
+    ]
+  },
+  {
+    "id": "cuad_p18_agreement_date",
+    "category": "Agreement Date",
+    "gold_present": true,
+    "gold_spans": [
+      "6th day of April, 1999"
+    ]
+  },
+  {
+    "id": "cuad_p19_expiration_date",
+    "category": "Expiration Date",
+    "gold_present": true,
+    "gold_spans": [
+      "The Contract is valid for 5 years, beginning from and ended on ."
+    ]
+  },
+  {
+    "id": "cuad_p20_renewal_term",
+    "category": "Renewal Term",
+    "gold_present": true,
+    "gold_spans": [
+      "Agreement, which notice must be given not less than fifteen (15) days before the end of the respective initial or renewal term.",
+      "This Agreement shall automatically be renewed for one (1) or more one (1) month periods unless either the Customer or i-on gives notice to the other party of its intention not to renew the"
+    ]
+  },
+  {
+    "id": "cuad_a01_anti_assignment",
+    "category": "Anti-Assignment",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a02_change_of_control",
+    "category": "Change Of Control",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a03_most_favored_nation",
+    "category": "Most Favored Nation",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a04_cap_on_liability",
+    "category": "Cap On Liability",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a05_uncapped_liability",
+    "category": "Uncapped Liability",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a06_non_compete",
+    "category": "Non-Compete",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a07_exclusivity",
+    "category": "Exclusivity",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a08_termination_for_convenience",
+    "category": "Termination For Convenience",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a09_rofr_rofo_rofn",
+    "category": "Rofr/Rofo/Rofn",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a10_revenue_profit_sharing",
+    "category": "Revenue/Profit Sharing",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a11_minimum_commitment",
+    "category": "Minimum Commitment",
+    "gold_present": false,
+    "gold_spans": []
+  },
+  {
+    "id": "cuad_a12_audit_rights",
+    "category": "Audit Rights",
+    "gold_present": false,
+    "gold_spans": []
+  }
+]

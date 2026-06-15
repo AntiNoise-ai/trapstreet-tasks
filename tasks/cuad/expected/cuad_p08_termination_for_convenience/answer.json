@@ -1,0 +1,21 @@
+{
+  "id": "cuad_p08_termination_for_convenience",
+  "type": "span_extraction",
+  "category": "Termination For Convenience",
+  "gold_present": true,
+  "gold_spans": [
+    "Either party may terminate this Agreement without cause at any time effective upon thirty (30) days' written notice."
+  ],
+  "matchers": [
+    {
+      "kind": "span_f1",
+      "gold_spans": [
+        "Either party may terminate this Agreement without cause at any time effective upon thirty (30) days' written notice."
+      ],
+      "threshold": 0.5
+    }
+  ],
+  "difficulty": "hard",
+  "_contract": "CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT",
+  "_source": "CUAD (theatticusproject/cuad, CC BY 4.0)"
+}

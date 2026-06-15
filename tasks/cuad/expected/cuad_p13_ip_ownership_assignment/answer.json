@@ -1,0 +1,25 @@
+{
+  "id": "cuad_p13_ip_ownership_assignment",
+  "type": "span_extraction",
+  "category": "Ip Ownership Assignment",
+  "gold_present": true,
+  "gold_spans": [
+    "The ownership, and all goodwill from the use, of any Dova Trademarks and Copyrights shall at all times vest in and inure to the benefit of Dova, and Valeant shall assign, and hereby does assign, any rights it may have in the foregoing to Dova.",
+    "Valeant agrees to assign, and hereby does assign, to Dova (and shall cause its Affiliates and its and their respective employees and other representatives to assign to Dova) any and all right, title and interest that Valeant (or any such Affiliates, employees or other representatives) may have in or to any Invention.",
+    "As between the Parties, Dova shall own all right, title and interest in and to any Product Materials (and all content contained therein) and any Product Labeling (and all content contained therein), including applicable copyrights and trademarks (other than any name, trademark, trade name or logo of Valeant or its Affiliates that may appear on such Product materials or Product Labeling), and to the extent Valeant (or any of its Affiliates) obtains or otherwise has a claim to any of the foregoing, Valeant hereby assigns (and shall cause any applicable Affiliate to assign) all of its right, title and interest in and to such Product Materials (and content) and Product Labeling (and content) (other than any name, trademark, trade name or logo of Valeant or its Affiliates that may appear on such Product materials or Product Labeling) to Dova and Valeant agrees to (and shall cause its applicable Affiliate to) execute all documents and take all actions as are reasonably requested by Dova to vest title to such Product Materials (and content) and Product Labeling (and content) in Dova (or its designated Affiliate)."
+  ],
+  "matchers": [
+    {
+      "kind": "span_f1",
+      "gold_spans": [
+        "The ownership, and all goodwill from the use, of any Dova Trademarks and Copyrights shall at all times vest in and inure to the benefit of Dova, and Valeant shall assign, and hereby does assign, any rights it may have in the foregoing to Dova.",
+        "Valeant agrees to assign, and hereby does assign, to Dova (and shall cause its Affiliates and its and their respective employees and other representatives to assign to Dova) any and all right, title and interest that Valeant (or any such Affiliates, employees or other representatives) may have in or to any Invention.",
+        "As between the Parties, Dova shall own all right, title and interest in and to any Product Materials (and all content contained therein) and any Product Labeling (and all content contained therein), including applicable copyrights and trademarks (other than any name, trademark, trade name or logo of Valeant or its Affiliates that may appear on such Product materials or Product Labeling), and to the extent Valeant (or any of its Affiliates) obtains or otherwise has a claim to any of the foregoing, Valeant hereby assigns (and shall cause any applicable Affiliate to assign) all of its right, title and interest in and to such Product Materials (and content) and Product Labeling (and content) (other than any name, trademark, trade name or logo of Valeant or its Affiliates that may appear on such Product materials or Product Labeling) to Dova and Valeant agrees to (and shall cause its applicable Affiliate to) execute all documents and take all actions as are reasonably requested by Dova to vest title to such Product Materials (and content) and Product Labeling (and content) in Dova (or its designated Affiliate)."
+      ],
+      "threshold": 0.5
+    }
+  ],
+  "difficulty": "hard",
+  "_contract": "DovaPharmaceuticalsInc_20181108_10-Q_EX-10.2_11414857_EX-10.2_Promotion Agreement",
+  "_source": "CUAD (theatticusproject/cuad, CC BY 4.0)"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "cuad_p14_joint_ip_ownership",
+  "type": "span_extraction",
+  "category": "Joint Ip Ownership",
+  "gold_present": true,
+  "gold_spans": [
+    "Joint Improvements  shall be owned jointly by the Parties, and PPI's interest therein shall be licensed to EKR hereunder."
+  ],
+  "matchers": [
+    {
+      "kind": "span_f1",
+      "gold_spans": [
+        "Joint Improvements  shall be owned jointly by the Parties, and PPI's interest therein shall be licensed to EKR hereunder."
+      ],
+      "threshold": 0.5
+    }
+  ],
+  "difficulty": "hard",
+  "_contract": "PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT ",
+  "_source": "CUAD (theatticusproject/cuad, CC BY 4.0)"
+}

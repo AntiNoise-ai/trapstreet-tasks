@@ -1,0 +1,21 @@
+{
+  "id": "cuad_p03_most_favored_nation",
+  "type": "span_extraction",
+  "category": "Most Favored Nation",
+  "gold_present": true,
+  "gold_spans": [
+    "Airspan warrants that during the term of this Agreement, the prices at      which Airspan sells to Distributor products supplied under this Agreement      shall be no less favorable to the Distributor than those prices at which      Airspan sells, at substantially the same time in the United States, similar      products and pursuant to similar terms and conditions as those by which      Airspan sells Products to the Distributor under this Agreement."
+  ],
+  "matchers": [
+    {
+      "kind": "span_f1",
+      "gold_spans": [
+        "Airspan warrants that during the term of this Agreement, the prices at      which Airspan sells to Distributor products supplied under this Agreement      shall be no less favorable to the Distributor than those prices at which      Airspan sells, at substantially the same time in the United States, similar      products and pursuant to similar terms and conditions as those by which      Airspan sells Products to the Distributor under this Agreement."
+      ],
+      "threshold": 0.5
+    }
+  ],
+  "difficulty": "hard",
+  "_contract": "AIRSPANNETWORKSINC_04_11_2000-EX-10.5-Distributor Agreement",
+  "_source": "CUAD (theatticusproject/cuad, CC BY 4.0)"
+}
