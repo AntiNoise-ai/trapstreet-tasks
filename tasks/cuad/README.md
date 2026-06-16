@@ -153,13 +153,3 @@ Test the judge:
 ```bash
 python3 -m pytest test_judge.py -q
 ```
-
----
-
-## Why this task matters
-
-It maps almost 1:1 onto the flagship feature of legal-AI tools (e.g.
-[mikeoss.com](https://mikeoss.com)): upload a contract → a tabular review with one
-column per clause type → each cell an extracted span cited to the source. The
-**absent** cases directly stress-test the common marketing claim of "every cell
-cited, no hallucinated answers, no dead links."
