@@ -1,1 +1,0 @@
-Read the attached handover note (note.txt). The wrong SKUs were kept off this publisher's royalty statement, and the bundle has since been corrected to the proper PO SKUs. Should the proper PO SKUs be kept off the royalty statement as well? Answer yes or no.
