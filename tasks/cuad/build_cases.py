@@ -102,12 +102,17 @@ def ordered_categories(buckets: dict) -> list[str]:
     return seen + rest
 
 
+# One file per case: the FULL contract + the question + the format instruction,
+# all fed to the model together (matches the INPUTS["question.txt"] convention used
+# by the other tasks, so the model always receives the whole contract).
 QUESTION_TEMPLATE = (
-    "QUESTION: {question}\n\n"
-    "The full contract is provided alongside this question in `contract.txt`.\n\n"
+    "===== CONTRACT =====\n"
+    "{context}\n\n"
+    "===== QUESTION =====\n"
+    "{question}\n\n"
     "Instructions:\n"
-    "- If the contract contains such a clause, quote the EXACT text of the "
-    "relevant span(s), verbatim from the contract.\n"
+    "- If the contract above contains such a clause, quote the EXACT text of the "
+    "relevant span(s), verbatim.\n"
     "- If the contract contains NO such clause, respond with exactly: NO CLAUSE FOUND\n"
     "- Do not explain your reasoning. Output only the quoted span(s) or "
     '"NO CLAUSE FOUND".\n'
@@ -120,9 +125,13 @@ def write_case(kind: str, idx: int, cat: str, title: str, ctx: str, qa: dict) ->
     (HERE / "inputs" / cid).mkdir(parents=True, exist_ok=True)
     (HERE / "expected" / cid).mkdir(parents=True, exist_ok=True)
 
-    (HERE / "inputs" / cid / "contract.txt").write_text(ctx)
+    # remove the split-out contract.txt from earlier layouts, if present
+    stale = HERE / "inputs" / cid / "contract.txt"
+    if stale.exists():
+        stale.unlink()
+
     (HERE / "inputs" / cid / "question.txt").write_text(
-        QUESTION_TEMPLATE.format(question=qa["question"])
+        QUESTION_TEMPLATE.format(context=ctx, question=qa["question"])
     )
 
     gold_spans = [a["text"] for a in qa["answers"]]

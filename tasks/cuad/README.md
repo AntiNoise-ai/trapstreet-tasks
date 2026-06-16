@@ -24,11 +24,11 @@ that has it) and absent (in one that doesn't), so a model can't pattern-match
   Nation, Cap on Liability, …).
 - **Lane:** document-grounded extraction. Contracts run 10–80k chars — also a
   long-context test in disguise.
-- **Inputs (two files per case):**
-  - `INPUTS["contract.txt"]` — the full contract text on its own.
-  - `INPUTS["question.txt"]` — the clause question + format instruction.
-
-  Output the exact span(s) **or** `NO CLAUSE FOUND`. Nothing else.
+- **Input:** `INPUTS["question.txt"]` — one file per case holding the **full
+  contract** + the clause question + the format instruction (clearly delimited by
+  `===== CONTRACT =====` / `===== QUESTION =====`). The model gets the whole
+  contract and the question together; output the exact span(s) **or**
+  `NO CLAUSE FOUND`. Nothing else.
 
 ## Grading
 
