@@ -103,13 +103,12 @@ def ordered_categories(buckets: dict) -> list[str]:
 
 
 QUESTION_TEMPLATE = (
-    "{context}\n\n"
-    "================================================================\n"
     "QUESTION: {question}\n\n"
+    "The full contract is provided alongside this question in `contract.txt`.\n\n"
     "Instructions:\n"
-    "- If this contract contains such a clause, quote the EXACT text of the "
-    "relevant span(s), verbatim from the contract above.\n"
-    "- If this contract contains NO such clause, respond with exactly: NO CLAUSE FOUND\n"
+    "- If the contract contains such a clause, quote the EXACT text of the "
+    "relevant span(s), verbatim from the contract.\n"
+    "- If the contract contains NO such clause, respond with exactly: NO CLAUSE FOUND\n"
     "- Do not explain your reasoning. Output only the quoted span(s) or "
     '"NO CLAUSE FOUND".\n'
 )
@@ -121,8 +120,9 @@ def write_case(kind: str, idx: int, cat: str, title: str, ctx: str, qa: dict) ->
     (HERE / "inputs" / cid).mkdir(parents=True, exist_ok=True)
     (HERE / "expected" / cid).mkdir(parents=True, exist_ok=True)
 
+    (HERE / "inputs" / cid / "contract.txt").write_text(ctx)
     (HERE / "inputs" / cid / "question.txt").write_text(
-        QUESTION_TEMPLATE.format(context=ctx, question=qa["question"])
+        QUESTION_TEMPLATE.format(question=qa["question"])
     )
 
     gold_spans = [a["text"] for a in qa["answers"]]
