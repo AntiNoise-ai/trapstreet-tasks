@@ -1,0 +1,109 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: c2_supports
+  description: "Does the blood evidence supports this suspect statement? \u2014 C2"
+  tags:
+  - supports
+  - C2
+- id: c2_contradicts_distance
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 C2"
+  tags:
+  - contradicts
+  - C2
+- id: c2_contradicts_count
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 C2"
+  tags:
+  - contradicts
+  - C2
+- id: c2_fails_temporal
+  description: "Does the blood evidence fails to support this suspect statement? \u2014 C2"
+  tags:
+  - fails_to_support
+  - C2
+- id: c4_supports
+  description: "Does the blood evidence supports this suspect statement? \u2014 C4"
+  tags:
+  - supports
+  - C4
+- id: c4_contradicts_force
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 C4"
+  tags:
+  - contradicts
+  - C4
+- id: c4_contradicts_distance
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 C4"
+  tags:
+  - contradicts
+  - C4
+- id: c4_fails_drinking
+  description: "Does the blood evidence fails to support this suspect statement? \u2014 C4"
+  tags:
+  - fails_to_support
+  - C4
+- id: hp15_supports
+  description: "Does the blood evidence supports this suspect statement? \u2014 HP_15"
+  tags:
+  - supports
+  - HP_15
+- id: hp15_contradicts_close
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 HP_15"
+  tags:
+  - contradicts
+  - HP_15
+- id: hp15_contradicts_repetition
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 HP_15"
+  tags:
+  - contradicts
+  - HP_15
+- id: hp15_fails_relationship
+  description: "Does the blood evidence fails to support this suspect statement? \u2014 HP_15"
+  tags:
+  - fails_to_support
+  - HP_15
+- id: hp50_supports
+  description: "Does the blood evidence supports this suspect statement? \u2014 HP_50"
+  tags:
+  - supports
+  - HP_50
+- id: hp50_contradicts_passive
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 HP_50"
+  tags:
+  - contradicts
+  - HP_50
+- id: hp50_contradicts_nodirection
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 HP_50"
+  tags:
+  - contradicts
+  - HP_50
+- id: hp50_fails_aftermath
+  description: "Does the blood evidence fails to support this suspect statement? \u2014 HP_50"
+  tags:
+  - fails_to_support
+  - HP_50
+- id: hp58_supports
+  description: "Does the blood evidence supports this suspect statement? \u2014 HP_58"
+  tags:
+  - supports
+  - HP_58
+- id: hp58_contradicts_wood
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 HP_58"
+  tags:
+  - contradicts
+  - HP_58
+- id: hp58_contradicts_distribution
+  description: "Does the blood evidence contradicts this suspect statement? \u2014 HP_58"
+  tags:
+  - contradicts
+  - HP_58
+- id: hp58_fails_lighting
+  description: "Does the blood evidence fails to support this suspect statement? \u2014 HP_58"
+  tags:
+  - fails_to_support
+  - HP_58
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py

@@ -1,0 +1,19 @@
+{
+  "id": "hp15_fails_relationship",
+  "answer": "fails_to_support",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "fails"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "fails_to_support",
+  "difficulty": "hard",
+  "source_scan": "HP_15",
+  "statement": "I had known the person for several years.",
+  "rationale": "Personal history is not encoded in physical evidence."
+}

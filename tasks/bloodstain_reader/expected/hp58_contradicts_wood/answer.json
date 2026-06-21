@@ -1,0 +1,19 @@
+{
+  "id": "hp58_contradicts_wood",
+  "answer": "contradicts",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "contradicts"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "contradicts",
+  "difficulty": "medium",
+  "source_scan": "HP_58",
+  "statement": "The blood landed on a dark hardwood floor with visible wood grain.",
+  "rationale": "Background is light cream/brown, not dark wood with grain."
+}

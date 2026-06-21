@@ -1,0 +1,19 @@
+{
+  "id": "c2_contradicts_count",
+  "answer": "contradicts",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "contradicts"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "contradicts",
+  "difficulty": "medium",
+  "source_scan": "C2",
+  "statement": "I struck them multiple times at different places \u2014 at least 4 or 5 separate blows.",
+  "rationale": "Only one concentrated cluster visible; multiple impacts would form multiple distinct clusters."
+}

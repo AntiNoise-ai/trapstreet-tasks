@@ -1,0 +1,19 @@
+{
+  "id": "hp58_fails_lighting",
+  "answer": "fails_to_support",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "fails"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "fails_to_support",
+  "difficulty": "hard",
+  "source_scan": "HP_58",
+  "statement": "The room was dimly lit at the time of the incident.",
+  "rationale": "Ambient lighting is not encoded in the spatter pattern."
+}

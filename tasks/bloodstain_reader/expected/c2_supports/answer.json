@@ -1,0 +1,19 @@
+{
+  "id": "c2_supports",
+  "answer": "supports",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "supports"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "supports",
+  "difficulty": "medium",
+  "source_scan": "C2",
+  "statement": "I hit them once with my fist while we were standing close together.",
+  "rationale": "Single dense low cluster matches one impact event at close range."
+}

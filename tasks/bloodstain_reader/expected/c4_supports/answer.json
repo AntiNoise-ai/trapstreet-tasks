@@ -1,0 +1,19 @@
+{
+  "id": "c4_supports",
+  "answer": "supports",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "supports"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "supports",
+  "difficulty": "medium",
+  "source_scan": "C4",
+  "statement": "I struck them hard with a heavy object \u2014 they were right in front of me, well within arm's reach.",
+  "rationale": "Extensive upward spread = high-velocity impact; concentrated origin = close range."
+}

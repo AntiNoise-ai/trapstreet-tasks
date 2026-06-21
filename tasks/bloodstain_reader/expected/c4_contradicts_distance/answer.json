@@ -1,0 +1,19 @@
+{
+  "id": "c4_contradicts_distance",
+  "answer": "contradicts",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "contradicts"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "contradicts",
+  "difficulty": "medium",
+  "source_scan": "C4",
+  "statement": "I was on the other side of the room \u2014 about 5 meters away \u2014 when this happened.",
+  "rationale": "The pattern is centrally concentrated with clear origin; 5m would produce far more scattered drops."
+}

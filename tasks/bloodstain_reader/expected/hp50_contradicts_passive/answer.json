@@ -1,0 +1,19 @@
+{
+  "id": "hp50_contradicts_passive",
+  "answer": "contradicts",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "contradicts"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "contradicts",
+  "difficulty": "medium",
+  "source_scan": "HP_50",
+  "statement": "The blood didn't come from any impact \u2014 it just pooled on the floor by itself.",
+  "rationale": "Directional droplets with motion tails indicate an impact event, not passive pooling."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "hp50_contradicts_nodirection",
+  "answer": "contradicts",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "contradicts"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "contradicts",
+  "difficulty": "medium",
+  "source_scan": "HP_50",
+  "statement": "The blood landed without any directional motion \u2014 no streaks or trails of any kind.",
+  "rationale": "Multiple visible droplets show clear directional streaks/tails, contradicting \"no direction\"."
+}

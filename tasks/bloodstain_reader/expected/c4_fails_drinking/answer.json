@@ -1,0 +1,19 @@
+{
+  "id": "c4_fails_drinking",
+  "answer": "fails_to_support",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "fails"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "fails_to_support",
+  "difficulty": "hard",
+  "source_scan": "C4",
+  "statement": "I had been drinking earlier that evening.",
+  "rationale": "Intoxication status is not encoded in spatter physics."
+}

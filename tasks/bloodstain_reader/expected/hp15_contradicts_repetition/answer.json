@@ -1,0 +1,19 @@
+{
+  "id": "hp15_contradicts_repetition",
+  "answer": "contradicts",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "contradicts"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "contradicts",
+  "difficulty": "medium",
+  "source_scan": "HP_15",
+  "statement": "I beat them repeatedly with full force \u2014 at least 20 separate strikes.",
+  "rationale": "Repeated forceful strikes should produce dense overlapping clusters, not the sparse pattern shown."
+}

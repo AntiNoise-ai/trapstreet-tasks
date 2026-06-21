@@ -1,0 +1,19 @@
+{
+  "id": "hp58_supports",
+  "answer": "supports",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "supports"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "supports",
+  "difficulty": "medium",
+  "source_scan": "HP_58",
+  "statement": "The blood landed on a sheet of light-brown paper or paper-like material.",
+  "rationale": "Visible background is a cream/light-brown paper surface."
+}

@@ -1,0 +1,7 @@
+The image shows physical evidence: a bloodstain pattern recorded in a controlled forensic experiment. The text below is a hypothetical suspect statement about how the blood got there.
+
+Based ONLY on what is visible in the blood evidence (not on assumptions about people or context), does the blood evidence SUPPORT, CONTRADICT, or FAIL TO SUPPORT this statement?
+
+Statement: "I hit them once with my fist while we were standing close together."
+
+Answer with exactly one word: "supports", "contradicts", or "fails". Do not hedge.

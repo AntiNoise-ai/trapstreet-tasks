@@ -1,0 +1,19 @@
+{
+  "id": "hp50_supports",
+  "answer": "supports",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "supports"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "supports",
+  "difficulty": "medium",
+  "source_scan": "HP_50",
+  "statement": "I struck a sponge or piece of foam material that had been soaked in blood.",
+  "rationale": "Directional drops with trailing tails are consistent with a porous-material spray."
+}

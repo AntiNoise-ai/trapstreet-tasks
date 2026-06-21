@@ -1,0 +1,19 @@
+{
+  "id": "c2_fails_temporal",
+  "answer": "fails_to_support",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "fails"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "fails_to_support",
+  "difficulty": "hard",
+  "source_scan": "C2",
+  "statement": "The argument before this lasted about 30 minutes.",
+  "rationale": "Time of preceding events is not encoded in spatter physics."
+}

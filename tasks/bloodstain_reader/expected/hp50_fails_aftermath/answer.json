@@ -1,0 +1,19 @@
+{
+  "id": "hp50_fails_aftermath",
+  "answer": "fails_to_support",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "fails"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "fails_to_support",
+  "difficulty": "hard",
+  "source_scan": "HP_50",
+  "statement": "Immediately after this happened, I called for emergency services.",
+  "rationale": "Actions taken after the incident are not encoded in the spatter pattern."
+}

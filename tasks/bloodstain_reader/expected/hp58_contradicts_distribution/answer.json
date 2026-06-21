@@ -1,0 +1,19 @@
+{
+  "id": "hp58_contradicts_distribution",
+  "answer": "contradicts",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "contradicts"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "contradicts",
+  "difficulty": "medium",
+  "source_scan": "HP_58",
+  "statement": "The spatter is spread out as a wide horizontal band along the bottom of the surface.",
+  "rationale": "Spatter forms a vertical cluster in the upper-middle, not a horizontal band at bottom."
+}

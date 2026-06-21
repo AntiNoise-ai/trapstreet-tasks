@@ -1,0 +1,19 @@
+{
+  "id": "hp15_supports",
+  "answer": "supports",
+  "type": "three_way_verdict",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "supports"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "supports",
+  "difficulty": "medium",
+  "source_scan": "HP_15",
+  "statement": "I was at least 2 meters away from them \u2014 I never got close.",
+  "rationale": "Sparse pattern with very few droplets matches a long source-to-target distance."
+}
