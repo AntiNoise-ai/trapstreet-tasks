@@ -1,0 +1,18 @@
+{
+  "id": "subtotal_amount_05",
+  "answer": "25000",
+  "type": "numeric_extraction",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 25000,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "subtotal_amount",
+  "difficulty": "medium",
+  "source_receipt": "receipt_19"
+}

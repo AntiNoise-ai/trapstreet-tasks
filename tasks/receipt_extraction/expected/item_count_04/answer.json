@@ -1,0 +1,18 @@
+{
+  "id": "item_count_04",
+  "answer": "6",
+  "type": "numeric_extraction",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 6,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "item_count",
+  "difficulty": "medium",
+  "source_receipt": "receipt_02"
+}

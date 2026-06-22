@@ -1,0 +1,109 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: total_amount_01
+  description: "Extract total_amount from this receipt photo"
+  tags:
+  - total_amount
+  - easy
+- id: total_amount_02
+  description: "Extract total_amount from this receipt photo"
+  tags:
+  - total_amount
+  - easy
+- id: total_amount_03
+  description: "Extract total_amount from this receipt photo"
+  tags:
+  - total_amount
+  - easy
+- id: total_amount_04
+  description: "Extract total_amount from this receipt photo"
+  tags:
+  - total_amount
+  - easy
+- id: total_amount_05
+  description: "Extract total_amount from this receipt photo"
+  tags:
+  - total_amount
+  - easy
+- id: item_count_01
+  description: "Extract item_count from this receipt photo"
+  tags:
+  - item_count
+  - medium
+- id: item_count_02
+  description: "Extract item_count from this receipt photo"
+  tags:
+  - item_count
+  - medium
+- id: item_count_03
+  description: "Extract item_count from this receipt photo"
+  tags:
+  - item_count
+  - medium
+- id: item_count_04
+  description: "Extract item_count from this receipt photo"
+  tags:
+  - item_count
+  - medium
+- id: item_count_05
+  description: "Extract item_count from this receipt photo"
+  tags:
+  - item_count
+  - medium
+- id: subtotal_amount_01
+  description: "Extract subtotal_amount from this receipt photo"
+  tags:
+  - subtotal_amount
+  - medium
+- id: subtotal_amount_02
+  description: "Extract subtotal_amount from this receipt photo"
+  tags:
+  - subtotal_amount
+  - medium
+- id: subtotal_amount_03
+  description: "Extract subtotal_amount from this receipt photo"
+  tags:
+  - subtotal_amount
+  - medium
+- id: subtotal_amount_04
+  description: "Extract subtotal_amount from this receipt photo"
+  tags:
+  - subtotal_amount
+  - medium
+- id: subtotal_amount_05
+  description: "Extract subtotal_amount from this receipt photo"
+  tags:
+  - subtotal_amount
+  - medium
+- id: tax_amount_01
+  description: "Extract tax_amount from this receipt photo"
+  tags:
+  - tax_amount
+  - hard
+- id: tax_amount_02
+  description: "Extract tax_amount from this receipt photo"
+  tags:
+  - tax_amount
+  - hard
+- id: tax_amount_03
+  description: "Extract tax_amount from this receipt photo"
+  tags:
+  - tax_amount
+  - hard
+- id: tax_amount_04
+  description: "Extract tax_amount from this receipt photo"
+  tags:
+  - tax_amount
+  - hard
+- id: tax_amount_05
+  description: "Extract tax_amount from this receipt photo"
+  tags:
+  - tax_amount
+  - hard
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py

@@ -1,0 +1,1 @@
+How many distinct menu items (separate line entries) are listed on this receipt? Answer with just the integer count.

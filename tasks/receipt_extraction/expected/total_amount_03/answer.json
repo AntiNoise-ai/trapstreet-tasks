@@ -1,0 +1,18 @@
+{
+  "id": "total_amount_03",
+  "answer": "30000",
+  "type": "numeric_extraction",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 30000,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "total_amount",
+  "difficulty": "easy",
+  "source_receipt": "receipt_17"
+}

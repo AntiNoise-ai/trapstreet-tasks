@@ -1,0 +1,18 @@
+{
+  "id": "total_amount_02",
+  "answer": "1591600",
+  "type": "numeric_extraction",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 1591600,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "total_amount",
+  "difficulty": "easy",
+  "source_receipt": "receipt_01"
+}

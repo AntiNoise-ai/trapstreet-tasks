@@ -1,0 +1,1 @@
+What is the SUBTOTAL (before tax / service charge / discount) shown on this receipt? Answer with just the integer value in Rupiah (no currency symbol, no thousand separators, no decimal point).

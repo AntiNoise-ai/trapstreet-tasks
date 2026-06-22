@@ -1,0 +1,18 @@
+{
+  "id": "total_amount_04",
+  "answer": "261333",
+  "type": "numeric_extraction",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 261333,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "total_amount",
+  "difficulty": "easy",
+  "source_receipt": "receipt_06"
+}

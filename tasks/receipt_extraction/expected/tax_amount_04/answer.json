@@ -1,0 +1,18 @@
+{
+  "id": "tax_amount_04",
+  "answer": "144695",
+  "type": "numeric_extraction",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 144695,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "tax_amount",
+  "difficulty": "hard",
+  "source_receipt": "receipt_01"
+}
