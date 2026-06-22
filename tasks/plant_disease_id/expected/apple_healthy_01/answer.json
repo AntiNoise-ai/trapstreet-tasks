@@ -1,0 +1,18 @@
+{
+  "id": "apple_healthy_01",
+  "answer": "healthy",
+  "type": "plant_condition",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "healthy"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "healthy",
+  "difficulty": "easy",
+  "source_class": "Apple___healthy",
+  "source_crop": "apple"
+}

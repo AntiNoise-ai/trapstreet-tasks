@@ -1,0 +1,19 @@
+{
+  "id": "zebra_01",
+  "answer": "zebra",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "zebra"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "zebra",
+  "difficulty": "easy",
+  "source_dataset_label": "zebra",
+  "source_capture_event": "ASG000f1a4",
+  "source_url_path": "S4/O07/O07_R1/S4_O07_R1_IMAG0514.JPG"
+}

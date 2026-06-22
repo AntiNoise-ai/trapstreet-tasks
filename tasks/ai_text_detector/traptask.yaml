@@ -1,0 +1,109 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: human_abstracts_01
+  description: "Is this text human-written or AI-generated? (abstracts)"
+  tags:
+  - human
+  - human
+- id: human_abstracts_02
+  description: "Is this text human-written or AI-generated? (abstracts)"
+  tags:
+  - human
+  - human
+- id: human_books_01
+  description: "Is this text human-written or AI-generated? (books)"
+  tags:
+  - human
+  - human
+- id: human_books_02
+  description: "Is this text human-written or AI-generated? (books)"
+  tags:
+  - human
+  - human
+- id: human_news_01
+  description: "Is this text human-written or AI-generated? (news)"
+  tags:
+  - human
+  - human
+- id: human_news_02
+  description: "Is this text human-written or AI-generated? (news)"
+  tags:
+  - human
+  - human
+- id: human_recipes_01
+  description: "Is this text human-written or AI-generated? (recipes)"
+  tags:
+  - human
+  - human
+- id: human_recipes_02
+  description: "Is this text human-written or AI-generated? (recipes)"
+  tags:
+  - human
+  - human
+- id: human_reddit_01
+  description: "Is this text human-written or AI-generated? (reddit)"
+  tags:
+  - human
+  - human
+- id: human_reddit_02
+  description: "Is this text human-written or AI-generated? (reddit)"
+  tags:
+  - human
+  - human
+- id: ai_chatgpt_news_01
+  description: "Is this text human-written or AI-generated? (news)"
+  tags:
+  - ai
+  - chatgpt
+- id: ai_chatgpt_recipes_01
+  description: "Is this text human-written or AI-generated? (recipes)"
+  tags:
+  - ai
+  - chatgpt
+- id: ai_gpt4_books_01
+  description: "Is this text human-written or AI-generated? (books)"
+  tags:
+  - ai
+  - gpt4
+- id: ai_gpt4_reddit_01
+  description: "Is this text human-written or AI-generated? (reddit)"
+  tags:
+  - ai
+  - gpt4
+- id: ai_llama_chat_abstracts_01
+  description: "Is this text human-written or AI-generated? (abstracts)"
+  tags:
+  - ai
+  - llama_chat
+- id: ai_llama_chat_reviews_01
+  description: "Is this text human-written or AI-generated? (reviews)"
+  tags:
+  - ai
+  - llama_chat
+- id: ai_mistral_chat_wiki_01
+  description: "Is this text human-written or AI-generated? (wiki)"
+  tags:
+  - ai
+  - mistral_chat
+- id: ai_mistral_chat_news_01
+  description: "Is this text human-written or AI-generated? (news)"
+  tags:
+  - ai
+  - mistral_chat
+- id: ai_cohere_chat_recipes_01
+  description: "Is this text human-written or AI-generated? (recipes)"
+  tags:
+  - ai
+  - cohere_chat
+- id: ai_cohere_chat_books_01
+  description: "Is this text human-written or AI-generated? (books)"
+  tags:
+  - ai
+  - cohere_chat
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py

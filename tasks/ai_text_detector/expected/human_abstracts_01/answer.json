@@ -1,0 +1,22 @@
+{
+  "id": "human_abstracts_01",
+  "answer": "human",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "human"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "human",
+  "difficulty": "easy",
+  "source_model": "human",
+  "source_domain": "abstracts",
+  "source_id": "856d8972-9e3d-4544-babc-0fe16f21e04d",
+  "source_title_preview": "Semi-supervised Contrastive Learning for Label-efficient Medical Image Segmentat",
+  "source_decoding": null,
+  "source_repetition_penalty": null
+}

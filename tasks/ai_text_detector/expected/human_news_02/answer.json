@@ -1,0 +1,22 @@
+{
+  "id": "human_news_02",
+  "answer": "human",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "human"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "human",
+  "difficulty": "easy",
+  "source_model": "human",
+  "source_domain": "news",
+  "source_id": "6de6fa3e-69e0-4c6e-a621-985cf54d9f0d",
+  "source_title_preview": "Big guns ease through in San Jose",
+  "source_decoding": null,
+  "source_repetition_penalty": null
+}

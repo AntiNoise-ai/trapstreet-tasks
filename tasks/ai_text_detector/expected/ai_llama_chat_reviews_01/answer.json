@@ -1,0 +1,22 @@
+{
+  "id": "ai_llama_chat_reviews_01",
+  "answer": "AI",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "ai"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "llama-chat",
+  "difficulty": "medium",
+  "source_model": "llama-chat",
+  "source_domain": "reviews",
+  "source_id": "7d13e0eb-bf0f-4967-8030-247c99679dc7",
+  "source_title_preview": "O Brother, Where Art Thou?",
+  "source_decoding": "greedy",
+  "source_repetition_penalty": "no"
+}

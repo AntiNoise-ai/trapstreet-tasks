@@ -1,0 +1,19 @@
+The success of deep learning methods in medical image segmentation tasks
+heavily depends on a large amount of labeled data to supervise the training. On
+the other hand, the annotation of biomedical images requires domain knowledge
+and can be laborious. Recently, contrastive learning has demonstrated great
+potential in learning latent representation of images even without any label.
+Existing works have explored its application to biomedical image segmentation
+where only a small portion of data is labeled, through a pre-training phase
+based on self-supervised contrastive learning without using any labels followed
+by a supervised fine-tuning phase on the labeled portion of data only. In this
+paper, we establish that by including the limited label in formation in the
+pre-training phase, it is possible to boost the performance of contrastive
+learning. We propose a supervised local contrastive loss that leverages limited
+pixel-wise annotation to force pixels with the same label to gather around in
+the embedding space. Such loss needs pixel-wise computation which can be
+expensive for large images, and we further propose two strategies, downsampling
+and block division, to address the issue. We evaluate our methods on two public
+biomedical image datasets of different modalities. With different amounts of
+labeled data, our methods consistently outperform the state-of-the-art
+contrast-based methods and other semi-supervised learning techniques.

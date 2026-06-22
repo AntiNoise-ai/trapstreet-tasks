@@ -1,0 +1,19 @@
+{
+  "id": "lion_02",
+  "answer": "lion",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "lion"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "lion",
+  "difficulty": "medium",
+  "source_dataset_label": "lionfemale",
+  "source_capture_event": "ASG000e8zf",
+  "source_url_path": "S4/J12/J12_R1/S4_J12_R1_IMAG0297.JPG"
+}

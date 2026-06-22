@@ -1,0 +1,22 @@
+{
+  "id": "human_reddit_01",
+  "answer": "human",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "human"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "human",
+  "difficulty": "easy",
+  "source_model": "human",
+  "source_domain": "reddit",
+  "source_id": "f8661018-401a-43e7-9637-0a7c0c65b922",
+  "source_title_preview": "Struggling with motivation and \u201cnumbness\u201d",
+  "source_decoding": null,
+  "source_repetition_penalty": null
+}

@@ -1,0 +1,22 @@
+{
+  "id": "human_recipes_01",
+  "answer": "human",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "human"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "human",
+  "difficulty": "easy",
+  "source_model": "human",
+  "source_domain": "recipes",
+  "source_id": "430abdc0-a41f-454b-a51a-ed84c0b31fff",
+  "source_title_preview": "Prawn Cocktail A La Delia Smith",
+  "source_decoding": null,
+  "source_repetition_penalty": null
+}

@@ -1,0 +1,19 @@
+{
+  "id": "hyena_01",
+  "answer": "hyena",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "hyena"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "hyena",
+  "difficulty": "medium",
+  "source_dataset_label": "hyenaspotted",
+  "source_capture_event": "ASG000bv69",
+  "source_url_path": "S4/H09/H09_R2/S4_H09_R2_IMAG0382.JPG"
+}

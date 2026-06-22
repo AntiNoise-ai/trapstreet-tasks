@@ -1,0 +1,22 @@
+{
+  "id": "ai_gpt4_reddit_01",
+  "answer": "AI",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "ai"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "gpt4",
+  "difficulty": "hard",
+  "source_model": "gpt4",
+  "source_domain": "reddit",
+  "source_id": "3cabbb8e-2a0c-410f-8fb8-15305ff49230",
+  "source_title_preview": "350hrs in and I still have no idea what I\u2019m doing...",
+  "source_decoding": "greedy",
+  "source_repetition_penalty": "no"
+}

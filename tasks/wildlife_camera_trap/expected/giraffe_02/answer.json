@@ -1,0 +1,19 @@
+{
+  "id": "giraffe_02",
+  "answer": "giraffe",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "giraffe"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "giraffe",
+  "difficulty": "easy",
+  "source_dataset_label": "giraffe",
+  "source_capture_event": "ASG000bf1k",
+  "source_url_path": "S4/K07/K07_R2/S4_K07_R2_IMAG2488.JPG"
+}

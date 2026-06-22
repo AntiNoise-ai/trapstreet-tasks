@@ -1,0 +1,19 @@
+{
+  "id": "wildebeest_01",
+  "answer": "wildebeest",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "wildebeest"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "wildebeest",
+  "difficulty": "easy",
+  "source_dataset_label": "wildebeest",
+  "source_capture_event": "ASG000ckq2",
+  "source_url_path": "S4/U09/U09_R2/S4_U09_R2_IMAG0691.JPG"
+}

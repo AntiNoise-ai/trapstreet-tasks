@@ -1,0 +1,19 @@
+{
+  "id": "elephant_01",
+  "answer": "elephant",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "elephant"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "elephant",
+  "difficulty": "easy",
+  "source_dataset_label": "elephant",
+  "source_capture_event": "ASG000bjyt",
+  "source_url_path": "S4/Q08/Q08_R2/S4_Q08_R2_IMAG1052.JPG"
+}

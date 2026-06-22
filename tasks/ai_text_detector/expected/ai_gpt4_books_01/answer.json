@@ -1,0 +1,22 @@
+{
+  "id": "ai_gpt4_books_01",
+  "answer": "AI",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "ai"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "gpt4",
+  "difficulty": "hard",
+  "source_model": "gpt4",
+  "source_domain": "books",
+  "source_id": "d949b696-54df-4ae0-87ec-a809241865d0",
+  "source_title_preview": "The Island",
+  "source_decoding": "greedy",
+  "source_repetition_penalty": "no"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "buffalo_01",
+  "answer": "buffalo",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "buffalo"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "buffalo",
+  "difficulty": "easy",
+  "source_dataset_label": "buffalo",
+  "source_capture_event": "ASG000biq2",
+  "source_url_path": "S4/L06/L06_R2/S4_L06_R2_IMAG0096.JPG"
+}

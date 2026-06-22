@@ -1,0 +1,24 @@
+{
+  "id": "apple_cedar_apple_rust_01",
+  "answer": "cedar apple rust",
+  "type": "plant_condition",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "cedar"
+    },
+    {
+      "kind": "keywords_all",
+      "values": [
+        "apple"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cedar_apple_rust",
+  "difficulty": "easy",
+  "source_class": "Apple___Cedar_apple_rust",
+  "source_crop": "apple"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "ai_llama_chat_abstracts_01",
+  "answer": "AI",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "ai"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "llama-chat",
+  "difficulty": "medium",
+  "source_model": "llama-chat",
+  "source_domain": "abstracts",
+  "source_id": "e5e058ce-be2b-459d-af36-32532aaba5ff",
+  "source_title_preview": "FUTURE-AI: Guiding Principles and Consensus Recommendations for Trustworthy Arti",
+  "source_decoding": "sampling",
+  "source_repetition_penalty": "yes"
+}

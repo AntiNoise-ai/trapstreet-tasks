@@ -1,0 +1,22 @@
+{
+  "id": "ai_mistral_chat_news_01",
+  "answer": "AI",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "ai"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "mistral-chat",
+  "difficulty": "hard",
+  "source_model": "mistral-chat",
+  "source_domain": "news",
+  "source_id": "088f015c-f1f5-47a1-843c-a597f7dfd1bc",
+  "source_title_preview": "Mirza makes Indian tennis history",
+  "source_decoding": "greedy",
+  "source_repetition_penalty": "no"
+}

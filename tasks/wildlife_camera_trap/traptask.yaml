@@ -1,0 +1,109 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: zebra_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - zebra
+  - easy
+- id: zebra_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - zebra
+  - easy
+- id: wildebeest_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - wildebeest
+  - easy
+- id: wildebeest_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - wildebeest
+  - easy
+- id: buffalo_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - buffalo
+  - easy
+- id: buffalo_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - buffalo
+  - easy
+- id: elephant_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - elephant
+  - easy
+- id: elephant_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - elephant
+  - easy
+- id: giraffe_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - giraffe
+  - easy
+- id: giraffe_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - giraffe
+  - easy
+- id: warthog_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - warthog
+  - medium
+- id: warthog_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - warthog
+  - medium
+- id: lion_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - lion
+  - medium
+- id: lion_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - lion
+  - medium
+- id: leopard_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - leopard
+  - hard
+- id: leopard_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - leopard
+  - hard
+- id: cheetah_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - cheetah
+  - hard
+- id: cheetah_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - cheetah
+  - hard
+- id: hyena_01
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - hyena
+  - medium
+- id: hyena_02
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - hyena
+  - medium
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py

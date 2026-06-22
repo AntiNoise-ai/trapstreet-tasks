@@ -1,0 +1,22 @@
+{
+  "id": "human_reddit_02",
+  "answer": "human",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "human"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "human",
+  "difficulty": "easy",
+  "source_model": "human",
+  "source_domain": "reddit",
+  "source_id": "0349bd21-d339-4862-9aad-dabe40e04c08",
+  "source_title_preview": "Have had anything to eat in three days.",
+  "source_decoding": null,
+  "source_repetition_penalty": null
+}

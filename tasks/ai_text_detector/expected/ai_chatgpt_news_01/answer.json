@@ -1,0 +1,22 @@
+{
+  "id": "ai_chatgpt_news_01",
+  "answer": "AI",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "ai"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "chatgpt",
+  "difficulty": "medium",
+  "source_model": "chatgpt",
+  "source_domain": "news",
+  "source_id": "d96f89e2-bafb-42bd-b4d3-1a1b421bdc06",
+  "source_title_preview": "Mido makes third apology",
+  "source_decoding": "greedy",
+  "source_repetition_penalty": "no"
+}

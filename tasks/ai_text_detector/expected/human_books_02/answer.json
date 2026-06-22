@@ -1,0 +1,22 @@
+{
+  "id": "human_books_02",
+  "answer": "human",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "human"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "human",
+  "difficulty": "easy",
+  "source_model": "human",
+  "source_domain": "books",
+  "source_id": "ffbdfe2d-b67d-4031-96ed-3684f32e7476",
+  "source_title_preview": "Angle of Repose",
+  "source_decoding": null,
+  "source_repetition_penalty": null
+}

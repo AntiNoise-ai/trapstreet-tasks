@@ -1,0 +1,19 @@
+{
+  "id": "warthog_01",
+  "answer": "warthog",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "warthog"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "warthog",
+  "difficulty": "medium",
+  "source_dataset_label": "warthog",
+  "source_capture_event": "ASG000dim1",
+  "source_url_path": "S4/D04/D04_R2/S4_D04_R2_IMAG0211.JPG"
+}

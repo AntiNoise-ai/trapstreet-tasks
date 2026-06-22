@@ -1,0 +1,5 @@
+This image shows a plant leaf from a controlled-background dataset. What is the condition of the leaf?
+
+Choose from: black rot, cedar apple rust, common rust, early blight, healthy, late blight
+
+Answer with the exact phrase from the list. Do not hedge or explain.

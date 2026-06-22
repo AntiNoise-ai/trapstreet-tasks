@@ -1,0 +1,19 @@
+{
+  "id": "leopard_02",
+  "answer": "leopard",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "leopard"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "leopard",
+  "difficulty": "hard",
+  "source_dataset_label": "leopard",
+  "source_capture_event": "ASG000e8r6",
+  "source_url_path": "S4/B05/B05_R1/S4_B05_R1_IMAG0151.JPG"
+}

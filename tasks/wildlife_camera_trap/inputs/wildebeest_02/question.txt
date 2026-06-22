@@ -1,0 +1,5 @@
+This image is from a wildlife camera trap in Serengeti National Park. What is the main animal species visible in the photograph?
+
+Choose from: buffalo, cheetah, elephant, giraffe, hyena, leopard, lion, warthog, wildebeest, zebra
+
+Answer with exactly one word — the species name from the list. Do not hedge or explain.

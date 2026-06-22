@@ -1,0 +1,22 @@
+{
+  "id": "human_news_01",
+  "answer": "human",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "human"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "human",
+  "difficulty": "easy",
+  "source_model": "human",
+  "source_domain": "news",
+  "source_id": "088f015c-f1f5-47a1-843c-a597f7dfd1bc",
+  "source_title_preview": "Mirza makes Indian tennis history",
+  "source_decoding": null,
+  "source_repetition_penalty": null
+}

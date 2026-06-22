@@ -1,0 +1,22 @@
+{
+  "id": "ai_mistral_chat_wiki_01",
+  "answer": "AI",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "ai"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "mistral-chat",
+  "difficulty": "hard",
+  "source_model": "mistral-chat",
+  "source_domain": "wiki",
+  "source_id": "2d501425-a56e-4a8d-8aba-73fa6e43339c",
+  "source_title_preview": "Marybeth Yuen Maul",
+  "source_decoding": "greedy",
+  "source_repetition_penalty": "no"
+}

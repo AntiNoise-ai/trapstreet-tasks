@@ -1,0 +1,19 @@
+{
+  "id": "cheetah_01",
+  "answer": "cheetah",
+  "type": "species_classification",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "cheetah"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cheetah",
+  "difficulty": "hard",
+  "source_dataset_label": "cheetah",
+  "source_capture_event": "ASG000cxls",
+  "source_url_path": "S4/L08/L08_R2/S4_L08_R2_IMAG2410.JPG"
+}

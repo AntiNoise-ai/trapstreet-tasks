@@ -1,0 +1,22 @@
+{
+  "id": "ai_cohere_chat_recipes_01",
+  "answer": "AI",
+  "type": "binary_origin",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "ai"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cohere-chat",
+  "difficulty": "medium",
+  "source_model": "cohere-chat",
+  "source_domain": "recipes",
+  "source_id": "430abdc0-a41f-454b-a51a-ed84c0b31fff",
+  "source_title_preview": "Prawn Cocktail A La Delia Smith",
+  "source_decoding": "sampling",
+  "source_repetition_penalty": "no"
+}
