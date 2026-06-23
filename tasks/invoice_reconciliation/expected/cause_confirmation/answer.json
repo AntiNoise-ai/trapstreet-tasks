@@ -1,0 +1,18 @@
+{
+  "id": "cause_confirmation",
+  "answer": "33",
+  "type": "leading_numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 33.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "diagnostic",
+  "difficulty": "hard",
+  "question": "To confirm: how many transactions in the invoice (Excel) file have NO corresponding entry in the internal records (CSV) file? Answer with a single integer."
+}

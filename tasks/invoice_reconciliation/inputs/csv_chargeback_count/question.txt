@@ -1,0 +1,20 @@
+You have two files describing transactions for the same business activity:
+
+1. **customer_invoice.xlsx** — sales report sent by a customer. Excel, sheet "transactions",
+   ~6,174 rows × 18 columns. Key columns: external_ref (join key), direction (Sale/Return),
+   state (Completed/Cancelled), delivery_state, item_name, billing_ccy (always USD in this dataset),
+   cost_per_unit, cost_in_billing_ccy, revenue_gross, tax_amount, buyer_country.
+
+2. **internal_transactions.csv** — our internal records. ~6,124 rows × 5 columns:
+   txn_ref (join key), recorded_at, internal_state (COMPLETE/REFUNDED/CHARGEBACK),
+   discount_label, internal_revenue (denominated in GBP — NOT the same currency as Excel).
+
+JOIN KEY: customer_invoice.external_ref ↔ internal_transactions.txn_ref
+
+⚠️  Currency split: Excel is USD, CSV is GBP. Do not mix without conversion. Questions are scoped
+to a single file or a single currency so no FX conversion is required.
+
+QUESTION: How many rows in the internal records (CSV) have internal_state = "CHARGEBACK"?
+
+Answer with ONLY the number or value asked for — no explanations, no currency symbols, no commas.
+Do not hedge.

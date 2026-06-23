@@ -1,0 +1,18 @@
+{
+  "id": "csv_chargeback_count",
+  "answer": "2",
+  "type": "leading_numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 2.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "returns",
+  "difficulty": "hard",
+  "question": "How many rows in the internal records (CSV) have internal_state = \"CHARGEBACK\"?"
+}

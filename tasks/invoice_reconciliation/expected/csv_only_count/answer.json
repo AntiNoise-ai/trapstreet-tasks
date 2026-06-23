@@ -1,0 +1,18 @@
+{
+  "id": "csv_only_count",
+  "answer": "3",
+  "type": "leading_numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 3.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "join_diff",
+  "difficulty": "hard",
+  "question": "Count the transactions that appear in the internal records (CSV) file BUT NOT in the invoice (Excel) file. Match by external_ref \u2194 txn_ref."
+}

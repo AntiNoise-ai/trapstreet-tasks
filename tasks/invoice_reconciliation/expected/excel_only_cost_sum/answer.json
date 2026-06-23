@@ -1,0 +1,18 @@
+{
+  "id": "excel_only_cost_sum",
+  "answer": "-84.5",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": -84.5,
+      "tolerance": 1.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "join_diff_sum",
+  "difficulty": "hard",
+  "question": "Sum of cost_in_billing_ccy for rows that appear in the invoice (Excel) but NOT in the internal records (CSV). Answer as USD."
+}

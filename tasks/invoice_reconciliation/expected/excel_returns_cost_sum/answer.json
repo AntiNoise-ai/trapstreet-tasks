@@ -1,0 +1,18 @@
+{
+  "id": "excel_returns_cost_sum",
+  "answer": "-641.55",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": -641.55,
+      "tolerance": 1.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "returns",
+  "difficulty": "hard",
+  "question": "Sum of cost_in_billing_ccy for rows in the invoice (Excel) with direction = \"Return\". Answer as USD (will be negative)."
+}

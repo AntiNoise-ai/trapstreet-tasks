@@ -1,0 +1,17 @@
+{
+  "id": "primary_discrepancy_cause",
+  "answer": "A",
+  "type": "leading_word",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "a"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "diagnostic",
+  "difficulty": "hard",
+  "question": "The invoice (Excel) and internal records (CSV) totals don't reconcile cleanly. Setting aside currency conversion (Excel is USD, CSV is GBP, and these are NOT the same number even at a market FX rate), which of the following is the LARGEST STRUCTURAL source of disagreement between the two files?\n\nA) The invoice (Excel) contains transactions that are completely missing from internal records (CSV) \u2014 i.e. orders that were billed by the customer but never appeared on our side\nB) The internal records (CSV) contain transactions that are completely missing from the invoice (Excel) \u2014 i.e. orders our system tracked but the customer didn't bill us for\nC) Per-row monetary values differ between the two files for the same transaction reference\nD) Most cancelled / refunded transactions are dropped from the internal records (CSV) but kept in the invoice (Excel)\n\nAnswer with exactly one capital letter: A, B, C, or D."
+}

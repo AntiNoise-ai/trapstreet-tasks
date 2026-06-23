@@ -1,0 +1,65 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: excel_total_cost
+  description: "Compute the SUM of cost_in_billing_ccy across ALL rows in the invoice (Excel) file. Answer"
+  tags:
+  - aggregation
+- id: csv_total_revenue
+  description: "Compute the SUM of internal_revenue across ALL rows in the internal records (CSV) file. An"
+  tags:
+  - aggregation
+- id: excel_only_count
+  description: "Count the transactions that appear in the invoice (Excel) file BUT NOT in the internal rec"
+  tags:
+  - join_diff
+- id: csv_only_count
+  description: "Count the transactions that appear in the internal records (CSV) file BUT NOT in the invoi"
+  tags:
+  - join_diff
+- id: excel_only_returns
+  description: "Of the transactions that appear in the invoice (Excel) but NOT in the internal records (CS"
+  tags:
+  - join_diff_breakdown
+- id: excel_only_sales
+  description: "Of the transactions that appear in the invoice (Excel) but NOT in the internal records (CS"
+  tags:
+  - join_diff_breakdown
+- id: excel_only_cost_sum
+  description: "Sum of cost_in_billing_ccy for rows that appear in the invoice (Excel) but NOT in the inte"
+  tags:
+  - join_diff_sum
+- id: csv_only_revenue_sum
+  description: "Sum of internal_revenue for rows that appear in the internal records (CSV) but NOT in the "
+  tags:
+  - join_diff_sum
+- id: excel_returns_count
+  description: "How many rows in the invoice (Excel) have direction = \"Return\"?"
+  tags:
+  - returns
+- id: excel_returns_cost_sum
+  description: "Sum of cost_in_billing_ccy for rows in the invoice (Excel) with direction = \"Return\". Answ"
+  tags:
+  - returns
+- id: csv_refunded_count
+  description: "How many rows in the internal records (CSV) have internal_state = \"REFUNDED\"?"
+  tags:
+  - returns
+- id: csv_chargeback_count
+  description: "How many rows in the internal records (CSV) have internal_state = \"CHARGEBACK\"?"
+  tags:
+  - returns
+- id: primary_discrepancy_cause
+  description: "The invoice (Excel) and internal records (CSV) totals don't reconcile cleanly. Setting asi"
+  tags:
+  - diagnostic
+- id: cause_confirmation
+  description: "To confirm: how many transactions in the invoice (Excel) file have NO corresponding entry "
+  tags:
+  - diagnostic
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py

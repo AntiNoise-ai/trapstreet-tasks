@@ -1,0 +1,18 @@
+{
+  "id": "excel_only_returns",
+  "answer": "27",
+  "type": "leading_numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 27.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "join_diff_breakdown",
+  "difficulty": "hard",
+  "question": "Of the transactions that appear in the invoice (Excel) but NOT in the internal records (CSV), how many have direction = \"Return\"?"
+}

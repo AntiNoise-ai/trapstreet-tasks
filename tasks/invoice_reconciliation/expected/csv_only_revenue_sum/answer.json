@@ -1,0 +1,18 @@
+{
+  "id": "csv_only_revenue_sum",
+  "answer": "19.26",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": 19.26,
+      "tolerance": 1.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "join_diff_sum",
+  "difficulty": "hard",
+  "question": "Sum of internal_revenue for rows that appear in the internal records (CSV) but NOT in the invoice (Excel). Answer as GBP."
+}

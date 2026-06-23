@@ -1,0 +1,18 @@
+{
+  "id": "excel_total_cost",
+  "answer": "84413.41",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": 84413.41,
+      "tolerance": 1.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "aggregation",
+  "difficulty": "hard",
+  "question": "Compute the SUM of cost_in_billing_ccy across ALL rows in the invoice (Excel) file. Answer as a single number in USD."
+}

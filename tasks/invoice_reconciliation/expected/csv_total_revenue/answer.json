@@ -1,0 +1,18 @@
+{
+  "id": "csv_total_revenue",
+  "answer": "61120.05",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": 61120.05,
+      "tolerance": 1.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "aggregation",
+  "difficulty": "hard",
+  "question": "Compute the SUM of internal_revenue across ALL rows in the internal records (CSV) file. Answer as a single number in GBP."
+}
