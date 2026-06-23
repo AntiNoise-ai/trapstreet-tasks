@@ -1,0 +1,24 @@
+{
+  "id": "wc26_20260624_SCO_BRA",
+  "event_id": null,
+  "type": "match_prediction",
+  "home_team": "Scotland",
+  "away_team": "Brazil",
+  "home_code": "SCO",
+  "away_code": "BRA",
+  "commence_time": "2026-06-24T22:00:00Z",
+  "date": "2026-06-24",
+  "team_codes": [
+    "BRA",
+    "SCO"
+  ],
+  "odds": null,
+  "graded": false,
+  "result": null,
+  "matchers": [
+    {
+      "kind": "roi_logloss"
+    }
+  ],
+  "_source": "the-odds-api soccer_fifa_world_cup h2h (decimal)"
+}

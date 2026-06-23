@@ -1,0 +1,24 @@
+{
+  "id": "wc26_20260625_RSA_KOR",
+  "event_id": null,
+  "type": "match_prediction",
+  "home_team": "South Africa",
+  "away_team": "South Korea",
+  "home_code": "RSA",
+  "away_code": "KOR",
+  "commence_time": "2026-06-25T01:00:00Z",
+  "date": "2026-06-25",
+  "team_codes": [
+    "KOR",
+    "RSA"
+  ],
+  "odds": null,
+  "graded": false,
+  "result": null,
+  "matchers": [
+    {
+      "kind": "roi_logloss"
+    }
+  ],
+  "_source": "the-odds-api soccer_fifa_world_cup h2h (decimal)"
+}
