@@ -1,0 +1,24 @@
+{
+  "id": "wc26_20260623_PAN_CRO",
+  "event_id": null,
+  "type": "match_prediction",
+  "home_team": "Panama",
+  "away_team": "Croatia",
+  "home_code": "PAN",
+  "away_code": "CRO",
+  "commence_time": "2026-06-23T23:00:00Z",
+  "date": "2026-06-23",
+  "team_codes": [
+    "CRO",
+    "PAN"
+  ],
+  "odds": null,
+  "graded": false,
+  "result": null,
+  "matchers": [
+    {
+      "kind": "roi_logloss"
+    }
+  ],
+  "_source": "the-odds-api soccer_fifa_world_cup h2h (decimal)"
+}

@@ -1,0 +1,18 @@
+name: World Cup — Panama vs Croatia
+
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: wc26_20260623_PAN_CRO
+  description: "Panama vs Croatia (2026-06-23)"
+  tags:
+  - worldcup
+  - worldcup_2026
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py
