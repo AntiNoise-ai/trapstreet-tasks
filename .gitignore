@@ -17,3 +17,4 @@ __pycache__/
 # Ignored:  everything under the per-task archive/ folder + any *_Original.pdf
 tasks/pdf_reader/tenancy_agreement/archive/
 tasks/pdf_reader/tenancy_agreement/*_Original.pdf
+.pytest_cache/
