@@ -1,0 +1,19 @@
+{
+  "id": "length2000_delta",
+  "answer": "2679",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 2679.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_2000",
+  "difficulty": "easy",
+  "needle_planted": "The magic codeword for Delta is 2679.",
+  "haystack_chars": 2038
+}

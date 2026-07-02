@@ -1,0 +1,21 @@
+{
+  "id": "multi_op_03",
+  "answer": "['5', '33', '7']",
+  "type": "date_arithmetic",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "5",
+        "33",
+        "7"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "multi_op",
+  "difficulty": "hard",
+  "source_full_label": "{\"X\": 5, \"Y\": 33, \"Z\": 7}"
+}

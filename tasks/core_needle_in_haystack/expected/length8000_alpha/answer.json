@@ -1,0 +1,19 @@
+{
+  "id": "length8000_alpha",
+  "answer": "7912",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 7912.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_8000",
+  "difficulty": "easy",
+  "needle_planted": "The magic codeword for Alpha is 7912.",
+  "haystack_chars": 8038
+}

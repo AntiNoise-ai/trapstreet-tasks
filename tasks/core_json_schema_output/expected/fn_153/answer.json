@@ -1,0 +1,28 @@
+{
+  "id": "fn_153",
+  "answer": "{\"name\": \"calculate_compounded_interest\", \"arguments\": {\"principal\": 5000, \"rate\": 0.03, \"time\": 5, \"n\": 4}}",
+  "type": "json_function_call",
+  "matchers": [
+    {
+      "kind": "json_call",
+      "function_name": "calculate_compounded_interest",
+      "args_accepted": {
+        "principal": [
+          5000
+        ],
+        "rate": [
+          0.03
+        ],
+        "time": [
+          5
+        ],
+        "n": [
+          4
+        ]
+      }
+    }
+  ],
+  "category": "easy",
+  "difficulty": "easy",
+  "source_bfcl_id": "simple_python_153"
+}

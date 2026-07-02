@@ -1,0 +1,49 @@
+You are given a function specification and a user request. Your job is to produce the JSON function call that fulfils the request, conforming exactly to the schema.
+
+USER REQUEST:
+Calculate the distance between two GPS coordinates (33.4484 N, 112.0740 W) and (34.0522 N, 118.2437 W) in miles.
+
+FUNCTION SPEC (JSON):
+{
+  "name": "calculate_distance",
+  "description": "Calculate the distance between two GPS coordinates.",
+  "parameters": {
+    "type": "dict",
+    "properties": {
+      "coord1": {
+        "type": "tuple",
+        "description": "The first coordinate as (latitude, longitude).",
+        "items": {
+          "type": "float"
+        }
+      },
+      "coord2": {
+        "type": "tuple",
+        "description": "The second coordinate as (latitude, longitude).",
+        "items": {
+          "type": "float"
+        }
+      },
+      "unit": {
+        "type": "string",
+        "description": "The unit of distance. Options: 'miles', 'kilometers'."
+      }
+    },
+    "required": [
+      "coord1",
+      "coord2",
+      "unit"
+    ]
+  }
+}
+
+OUTPUT FORMAT — output a single JSON object on stdout, nothing else (no explanation, no markdown fences, no preamble):
+
+{"name": "<function_name>", "arguments": {"<arg_name>": <value>, ...}}
+
+Required:
+- Use the exact function name from the spec
+- Include all REQUIRED parameters from the spec
+- Match parameter types (integer / string / number / boolean / list)
+- For optional params, omit them OR set them to a sensible default
+- Output MUST be valid JSON, parseable by json.loads(), with no surrounding text.

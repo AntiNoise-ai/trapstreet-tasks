@@ -1,0 +1,1 @@
+I was exactly 362 days old on 2009-03-14. Compute my age in days on 2009-11-18. Return your answer as a JSON like: JSON = {"explanation": <your step by step solution>, "answer": <num_days>}. Do not include the units in the JSON value.

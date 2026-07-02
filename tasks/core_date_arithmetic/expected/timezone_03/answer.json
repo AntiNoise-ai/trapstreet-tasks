@@ -1,0 +1,19 @@
+{
+  "id": "timezone_03",
+  "answer": "23:13:48",
+  "type": "date_arithmetic",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "23:13:48"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "timezone",
+  "difficulty": "medium",
+  "source_full_label": "{'day': 'same_day', 'time': '23:13:48'}"
+}

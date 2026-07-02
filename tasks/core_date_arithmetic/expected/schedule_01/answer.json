@@ -1,0 +1,18 @@
+{
+  "id": "schedule_01",
+  "answer": "0",
+  "type": "date_arithmetic",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": 0.0,
+      "tolerance": 0.5
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "schedule",
+  "difficulty": "hard",
+  "source_full_label": "{'answer': 0}"
+}

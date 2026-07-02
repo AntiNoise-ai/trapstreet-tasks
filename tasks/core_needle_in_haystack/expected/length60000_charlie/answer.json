@@ -1,0 +1,19 @@
+{
+  "id": "length60000_charlie",
+  "answer": "5552",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 5552.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_60000",
+  "difficulty": "hard",
+  "needle_planted": "The magic codeword for Charlie is 5552.",
+  "haystack_chars": 60040
+}

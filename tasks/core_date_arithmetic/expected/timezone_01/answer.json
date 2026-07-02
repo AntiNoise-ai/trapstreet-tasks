@@ -1,0 +1,19 @@
+{
+  "id": "timezone_01",
+  "answer": "09:01:00",
+  "type": "date_arithmetic",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "09:01:00"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "timezone",
+  "difficulty": "medium",
+  "source_full_label": "{'day': 'same_day', 'time': '09:01:00'}"
+}

@@ -1,0 +1,47 @@
+You are given a function specification and a user request. Your job is to produce the JSON function call that fulfils the request, conforming exactly to the schema.
+
+USER REQUEST:
+Find the lawsuits filed against the company Google in California in the year 2020.
+
+FUNCTION SPEC (JSON):
+{
+  "name": "lawsuits_search",
+  "description": "Search for lawsuits against a specific company within a specific time and location.",
+  "parameters": {
+    "type": "dict",
+    "properties": {
+      "company_name": {
+        "type": "string",
+        "description": "The name of the company."
+      },
+      "location": {
+        "type": "string",
+        "description": "The location where the lawsuit was filed."
+      },
+      "year": {
+        "type": "integer",
+        "description": "The year when the lawsuit was filed."
+      },
+      "case_type": {
+        "type": "string",
+        "description": "The type of the case. Options include: 'civil', 'criminal', 'small_claims', etc. Default is 'all'."
+      }
+    },
+    "required": [
+      "company_name",
+      "location",
+      "year"
+    ]
+  }
+}
+
+OUTPUT FORMAT — output a single JSON object on stdout, nothing else (no explanation, no markdown fences, no preamble):
+
+{"name": "<function_name>", "arguments": {"<arg_name>": <value>, ...}}
+
+Required:
+- Use the exact function name from the spec
+- Include all REQUIRED parameters from the spec
+- Match parameter types (integer / string / number / boolean / list)
+- For optional params, omit them OR set them to a sensible default
+- Output MUST be valid JSON, parseable by json.loads(), with no surrounding text.

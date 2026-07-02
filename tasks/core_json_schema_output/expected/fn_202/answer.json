@@ -1,0 +1,26 @@
+{
+  "id": "fn_202",
+  "answer": "{\"name\": \"calculate_emission_savings\", \"arguments\": {\"energy_type\": \"renewable\", \"usage_duration\": 3, \"region\": \"California\"}}",
+  "type": "json_function_call",
+  "matchers": [
+    {
+      "kind": "json_call",
+      "function_name": "calculate_emission_savings",
+      "args_accepted": {
+        "energy_type": [
+          "renewable"
+        ],
+        "usage_duration": [
+          3
+        ],
+        "region": [
+          "California",
+          "CA"
+        ]
+      }
+    }
+  ],
+  "category": "medium",
+  "difficulty": "medium",
+  "source_bfcl_id": "simple_python_202"
+}

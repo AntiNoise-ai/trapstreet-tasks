@@ -1,0 +1,18 @@
+{
+  "id": "duration_03",
+  "answer": "384",
+  "type": "date_arithmetic",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": 384.0,
+      "tolerance": 0.5
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "duration",
+  "difficulty": "medium",
+  "source_full_label": "{'answer': '384'}"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "length8000_charlie",
+  "answer": "4582",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 4582.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_8000",
+  "difficulty": "easy",
+  "needle_planted": "The magic codeword for Charlie is 4582.",
+  "haystack_chars": 8040
+}

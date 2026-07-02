@@ -1,0 +1,51 @@
+You are given a function specification and a user request. Your job is to produce the JSON function call that fulfils the request, conforming exactly to the schema.
+
+USER REQUEST:
+Find a gluten-free cookie recipe that takes less than 30 minutes to prepare.
+
+FUNCTION SPEC (JSON):
+{
+  "name": "recipe_search",
+  "description": "Search for a cooking recipe based on specific dietary needs and time constraint.",
+  "parameters": {
+    "type": "dict",
+    "properties": {
+      "diet": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "Gluten Free",
+            "Dairy Free",
+            "Vegan",
+            "Vegetarian"
+          ]
+        },
+        "description": "Specific dietary need."
+      },
+      "time_limit": {
+        "type": "integer",
+        "description": "The maximum time to prepare the recipe in minutes. Default is 60 minutes."
+      },
+      "dish": {
+        "type": "string",
+        "description": "The name of the dish to search for. Default is not use if not specified."
+      }
+    },
+    "required": [
+      "dish",
+      "diet"
+    ]
+  }
+}
+
+OUTPUT FORMAT — output a single JSON object on stdout, nothing else (no explanation, no markdown fences, no preamble):
+
+{"name": "<function_name>", "arguments": {"<arg_name>": <value>, ...}}
+
+Required:
+- Use the exact function name from the spec
+- Include all REQUIRED parameters from the spec
+- Match parameter types (integer / string / number / boolean / list)
+- For optional params, omit them OR set them to a sensible default
+- Output MUST be valid JSON, parseable by json.loads(), with no surrounding text.

@@ -1,0 +1,26 @@
+{
+  "id": "fn_282",
+  "answer": "{\"name\": \"find_flute\", \"arguments\": {\"brand\": \"Yamaha\", \"specs\": [\"open hole\", \"C foot\", \"silver headjoint\"]}}",
+  "type": "json_function_call",
+  "matchers": [
+    {
+      "kind": "json_call",
+      "function_name": "find_flute",
+      "args_accepted": {
+        "brand": [
+          "Yamaha"
+        ],
+        "specs": [
+          [
+            "open hole",
+            "C foot",
+            "silver headjoint"
+          ]
+        ]
+      }
+    }
+  ],
+  "category": "easy",
+  "difficulty": "easy",
+  "source_bfcl_id": "simple_python_282"
+}

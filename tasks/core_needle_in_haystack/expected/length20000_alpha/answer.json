@@ -1,0 +1,19 @@
+{
+  "id": "length20000_alpha",
+  "answer": "4257",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 4257.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_20000",
+  "difficulty": "medium",
+  "needle_planted": "The magic codeword for Alpha is 4257.",
+  "haystack_chars": 20038
+}

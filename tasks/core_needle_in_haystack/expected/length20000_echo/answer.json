@@ -1,0 +1,19 @@
+{
+  "id": "length20000_echo",
+  "answer": "1106",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 1106.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_20000",
+  "difficulty": "medium",
+  "needle_planted": "The magic codeword for Echo is 1106.",
+  "haystack_chars": 20037
+}

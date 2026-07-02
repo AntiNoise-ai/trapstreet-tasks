@@ -1,0 +1,26 @@
+'s start by acknowledging one external factor that does affect
+the popularity of a programming language. To become popular, a
+programming language has to be the scripting language of a popular
+system. Fortran and Cobol were the scripting languages of early
+IBM mainframes. C was the scripting language of Unix, and so, later,
+was Perl. Tcl is the scripting language of Tk. Java and Javascript
+are intended to be the scripting languages of web browsers.Lisp is not a massively popular language because it is not the
+scripting language of a massively popular system. What popularity
+it retains dates back to the 1960s and 1970s, when it was the
+scripting language of MIT. A lot of the great programmers of the
+day were associated with MIT at some point. And in the early 1970s,
+before C, MIT's dialect of Lisp, called MacLisp, was one of the
+only programming languages a serious hacker would want to use.Today Lisp is the scripting language of two moderately popular
+systems, Emacs and Autocad, and forThe magic codeword for Delta is 2679.  that reason I suspect that most
+of the Lisp programming done today is done in Emacs Lisp or AutoLisp.Programming languages don't exist in isolation. To hack is a
+transitive verb — hackers are usually hacking something — and in
+practice languages are judged relative to whatever they're used to
+hack. So if you want to design a popular language, you either have
+to supply more than a language, or you have to design your language
+to replace the scripting language of some existing system.Common Lisp is unpopular partly because it's an orphan. It did
+originally come with a system to hack: the Lisp Machine. But Lisp
+Machines (along with parallel computers) were steamrollered by the
+increasing power of general purpose processors in the 1980s. Common
+Lisp might have remained popular if it had been a good scripting
+language for Unix. It is, alas, an atrociously bad one.One way to describe this situation is to say that a language isn't
+judged on its own merits. Another view is that a programming 

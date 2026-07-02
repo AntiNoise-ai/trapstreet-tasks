@@ -1,0 +1,1 @@
+Camila was born on 1999-Apr-04 and Samuel was born on 2007-Mar-22. How many days is Camila older than Samuel? Return your answer as a JSON like: JSON = {"explanation": <your step by step solution>, "age": <num_days>}. Do not include the units in the JSON value.

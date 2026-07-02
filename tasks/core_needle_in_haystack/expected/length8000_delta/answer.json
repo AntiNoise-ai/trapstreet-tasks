@@ -1,0 +1,19 @@
+{
+  "id": "length8000_delta",
+  "answer": "9279",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 9279.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_8000",
+  "difficulty": "easy",
+  "needle_planted": "The magic codeword for Delta is 9279.",
+  "haystack_chars": 8038
+}

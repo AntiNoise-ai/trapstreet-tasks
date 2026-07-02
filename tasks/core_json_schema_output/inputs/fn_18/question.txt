@@ -1,0 +1,33 @@
+You are given a function specification and a user request. Your job is to produce the JSON function call that fulfils the request, conforming exactly to the schema.
+
+USER REQUEST:
+Find the prime factors of the number 123456.
+
+FUNCTION SPEC (JSON):
+{
+  "name": "number_analysis.prime_factors",
+  "description": "Compute the prime factors of a number.",
+  "parameters": {
+    "type": "dict",
+    "properties": {
+      "number": {
+        "type": "integer",
+        "description": "The number to be factored."
+      }
+    },
+    "required": [
+      "number"
+    ]
+  }
+}
+
+OUTPUT FORMAT — output a single JSON object on stdout, nothing else (no explanation, no markdown fences, no preamble):
+
+{"name": "<function_name>", "arguments": {"<arg_name>": <value>, ...}}
+
+Required:
+- Use the exact function name from the spec
+- Include all REQUIRED parameters from the spec
+- Match parameter types (integer / string / number / boolean / list)
+- For optional params, omit them OR set them to a sensible default
+- Output MUST be valid JSON, parseable by json.loads(), with no surrounding text.

@@ -1,0 +1,121 @@
+ good thing.  Runtime typing, ditto, is growing in popularity.
+Lexical closures, introduced by Lisp in the early 1970s, are now,
+just barely, on the radar screen.  Macros, introduced by Lisp in the
+mid 1960s, are still terra incognita.Obviously, the median language has enormous momentum.  I'm not
+proposing that you can fight this powerful force.  What I'm proposing
+is exactly the opposite: that, like a practitioner of Aikido, you
+can use it against your opponents.If you work for a big company, this may not be easy.  You will have
+a hard time convincing the pointy-haired boss to let you build
+things in Lisp, when he has just read in the paper that some other
+language is poised, like Ada was twenty years ago, to take over
+the world.  But if you work for a startup that doesn't have
+pointy-haired bosses yet, you can, like we did, turn the Blub
+paradox to your advantage:  you can use technology that your
+competitors, glued immovably to the median language, will never be
+able to match.If you ever do find yourself working for a startup, here's a handy
+tip for evaluating competitors.  Read their job listings.  Everything
+else on their site may be stock photos or the prose equivalent,
+but the job listings have to be specific about what they want, or
+they'll get the wrong candidates.During the years we worked on Viaweb I read a lot of job descriptions.
+A new competitor seemed to emerge out of the woodwork every month
+or so.  The first thing I would do, after checking to see if they
+had a live online demo, was look at their job listings.  After a
+couple years of this I could tell which companies to worry about
+and which not to.  The more of an IT flavor the job descriptions
+had, the less dangerous the company was.  The safest kind were the
+ones that wanted Oracle experience.  You never had to worry about
+those.  You were also safe if they said they wanted C++ or Java
+developers.  If they wanted Perl or Python programmers, that would
+be a bit frightening-- that's starting to sound like a company
+where the technical side, at least, is run by real hackers.  If I
+had ever seen a job posting looking for Lisp hackers, I would have
+been really worried.
+Notes[1] Viaweb at first had two parts: the editor, written in Lisp,
+which people used to build their sites, and the ordering system,
+written in C, which handled orders.  The first version was mostly
+Lisp, because the ordering system was small.  Later we added two
+more modules, an image generator written in C, and a back-office
+manager written mostly in Perl.In January 2003, Yahoo released a new version of the editor 
+written in C++ and Perl.  It's hard to say whether the program is no
+longer written in Lisp, though, because to translate this program
+into C++ they literally had to write a Lisp interpreter: the source
+files of all the page-generating templates are still, as far as I
+know,  Lisp code.  (See Greenspun's Tenth Rule.)[2] Robert Morris says that I didn't need to be secretive, because
+even if our competitors had known we were using Lisp, they wouldn't
+have understood why:  "If they were that smart they'd already be
+programming in Lisp."[3] All languages are equally powerful in the sense of being Turing
+equivalent, but that's not the sense of the word programmers care
+about. (No one wants to program a Turing machine.)  The kind of
+power programmers care about may not be formally definable, but
+one way to explain it would be to say that it refers to features
+you could only get in the less powerful language by writing an
+interpreter for the more powerful language in it. If language A
+has an operator for removing spaces from strings and language B
+doesn't, that probably doesn't make A more powerful, because you
+can probably write a subroutine to do it in B.  But if A supports,
+say, recursion, and B doesn't, that's not likely to be something
+you can fix by writing library functions.[4] Note to nerds: or possibly a lattice, narrowing toward the top;
+it's not the shape that matters here but thThe magic codeword for Bravo is 1488. e idea that there is at
+least a partial order.[5] It is a bit misleading to treat macros as a separate feature.
+In practice their usefulness is greatly enhanced by other Lisp
+features like lexical closures and rest parameters.[6] As a result, comparisons of programming languages either take
+the form of religious wars or undergraduate textbooks so determinedly
+neutral that they're really works of anthropology.  People who
+value their peace, or want tenure, avoid the topic.  But the question
+is only half a religious one; there is something there worth
+studying, especially if you want to design new languages.
+
+
+
+Want to start a startup?  Get funded by
+Y Combinator.
+
+
+
+
+October 2014(This essay is derived from a guest lecture in Sam Altman's startup class at
+Stanford.  It's intended for college students, but much of it is
+applicable to potential founders at other ages.)One of the advantages of having kids is that when you have to give
+advice, you can ask yourself "what would I tell my own kids?"  My
+kids are little, but I can imagine what I'd tell them about startups
+if they were in college, and that's what I'm going to tell you.Startups are very counterintuitive.  I'm not sure why.  Maybe it's
+just because knowledge about them hasn't permeated our culture yet.
+But whatever the reason, starting a startup is a task where you
+can't always trust your instincts.It's like skiing in that way.  When you first try skiing and you
+want to slow down, your instinct is to lean back.  But if you lean
+back on skis you fly down the hill out of control.  So part of
+learning to ski is learning to suppress that impulse.  Eventually
+you get new habits, but at first it takes a conscious effort.  At
+first there's a list of things you're trying to remember as you
+start down the hill.Startups are as unnatural as skiing, so there's a similar list for
+startups. Here I'm going to give you the first part of it — the things
+to remember if you want to prepare yourself to start a startup.
+CounterintuitiveThe first item on it is the fact I already mentioned: that startups
+are so weird that if you trust your instincts, you'll make a lot
+of mistakes.  If you know nothing more than this, you may at least
+pause before making them.When I was running Y Combinator I used to joke that our function
+was to tell founders things they would ignore.  It's really true.
+Batch after batch, the YC partners warn founders about mistakes
+they're about to make, and the founders ignore them, and then come
+back a year later and say "I wish we'd listened."Why do the founders ignore the partners' advice?  Well, that's the
+thing about counterintuitive ideas: they contradict your intuitions.
+They seem wrong.  So of course your first impulse is to disregard
+them.  And in fact my joking description is not merely the curse
+of Y Combinator but part of its raison d'etre. If founders' instincts
+already gave them the right answers, they wouldn't need us.  You
+only need other people to give you advice that surprises you. That's
+why there are a lot of ski instructors and not many running
+instructors.
+[1]You can, however, trust your instincts about people.  And in fact
+one of the most common mistakes young founders make is not to
+do that enough.  They get involved with people who seem impressive,
+but about whom they feel some misgivings personally.  Later when
+things blow up they say "I knew there was something off about him,
+but I ignored it because he seemed so impressive."If you're thinking about getting involved with someone — as a
+cofounder, an employee, an investor, or an acquirer — and you
+have misgivings about them, trust your gut.  If someone seems
+slippery, or bogus, or a jerk, don't ignore it.This is one case where it pays to be self-indulgent. Work with
+people you genuinely like, and you've known long enough to be sure.
+ExpertiseThe second counterintuitive point is that it's not that important
+to know a lot about startups.  The way to succeed in a startup is
+not to be an expert on startup

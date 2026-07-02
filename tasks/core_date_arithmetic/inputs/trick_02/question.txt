@@ -1,0 +1,1 @@
+The day after yesterday is 2008-Aug-15. What is the date 1599 days from now in the yyyy-mm-dd format? Format your answer as a JSON. JSON = {"explanation": <your step by step solution>, "answer": "yyyy-mm-dd"}.

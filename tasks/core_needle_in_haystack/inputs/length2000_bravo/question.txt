@@ -1,0 +1,3 @@
+A "magic codeword" — a 4-digit number — for "Bravo" is hidden somewhere in document.txt. Find it.
+
+Answer with ONLY the 4-digit number, no explanation, no prefix, no quotes.

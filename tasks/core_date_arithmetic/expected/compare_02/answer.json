@@ -1,0 +1,19 @@
+{
+  "id": "compare_02",
+  "answer": "[\"['commuting', 'reading', 'meditating', 'socializing', 'sleeping']\"]",
+  "type": "date_arithmetic",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "['commuting', 'reading', 'meditating', 'socializing', 'sleeping']"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "compare",
+  "difficulty": "medium",
+  "source_full_label": "{'ordered_list': ['commuting', 'reading', 'meditating', 'socializing', 'sleeping']}"
+}

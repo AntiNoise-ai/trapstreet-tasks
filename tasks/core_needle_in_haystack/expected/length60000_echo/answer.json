@@ -1,0 +1,19 @@
+{
+  "id": "length60000_echo",
+  "answer": "6514",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 6514.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_60000",
+  "difficulty": "hard",
+  "needle_planted": "The magic codeword for Echo is 6514.",
+  "haystack_chars": 60037
+}

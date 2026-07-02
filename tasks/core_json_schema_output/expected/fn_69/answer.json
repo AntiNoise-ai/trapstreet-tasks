@@ -1,0 +1,25 @@
+{
+  "id": "fn_69",
+  "answer": "{\"name\": \"ecology.get_turtle_population\", \"arguments\": {\"location\": \"Mississippi river\", \"year\": 2020, \"species\": true}}",
+  "type": "json_function_call",
+  "matchers": [
+    {
+      "kind": "json_call",
+      "function_name": "ecology.get_turtle_population",
+      "args_accepted": {
+        "location": [
+          "Mississippi river"
+        ],
+        "year": [
+          2020
+        ],
+        "species": [
+          true
+        ]
+      }
+    }
+  ],
+  "category": "easy",
+  "difficulty": "easy",
+  "source_bfcl_id": "simple_python_69"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "fn_128",
+  "answer": "{\"name\": \"finance.calculate_quarterly_dividend_per_share\", \"arguments\": {\"total_payout\": 50000000, \"outstanding_shares\": 100000000}}",
+  "type": "json_function_call",
+  "matchers": [
+    {
+      "kind": "json_call",
+      "function_name": "finance.calculate_quarterly_dividend_per_share",
+      "args_accepted": {
+        "total_payout": [
+          50000000
+        ],
+        "outstanding_shares": [
+          100000000
+        ]
+      }
+    }
+  ],
+  "category": "easy",
+  "difficulty": "easy",
+  "source_bfcl_id": "simple_python_128"
+}

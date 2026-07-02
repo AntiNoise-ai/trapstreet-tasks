@@ -1,0 +1,18 @@
+{
+  "id": "add_subtract_02",
+  "answer": "2025",
+  "type": "date_arithmetic",
+  "matchers": [
+    {
+      "kind": "numeric",
+      "value": 2025.0,
+      "tolerance": 0.5
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "add_subtract",
+  "difficulty": "medium",
+  "source_full_label": "{'answer': '2025'}"
+}

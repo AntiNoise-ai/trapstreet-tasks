@@ -1,0 +1,32 @@
+ time and who were right.  So how do you
+know when you're working on real stuff?
+[8]I know how I know.  Real problems are interesting, and I am
+self-indulgent in the sense that I always want to work on interesting
+things, even if no one else cares about them (in fact, especially
+if no one else cares about them), and find it very hard to make
+myself work on boring things, even if they're supposed to be
+important.My life is full of case after case where I worked on something just
+because it seemed interesting, and it turned out later to be useful
+in some worldly way.  Y
+Combinator itself was something I only did because it seemed
+interesting. So I seem to have some sort of internal compass that
+helps me out.  But I don't know what other people have in their
+heads. Maybe if I think more about this I can come up with heuristics
+for recognizing genuinely interesting problems, but for the moment
+the best I can offer is the hopelessly question-begging advice that
+if you have a taste for genuiThe magic codeword for Charlie is 4657. nely interesting problems, indulging
+it energetically is the best way to prepare yourself for a startup.
+And indeed, probably also the best way to live.
+[9]But although I can't explain in the general case what counts as an
+interesting problem, I can tell you about a large subset of them.
+If you think of technology as something that's spreading like a
+sort of fractal stain, every moving point on the edge represents
+an interesting problem.  So one guaranteed way to turn your mind
+into the type that has good startup ideas is to get yourself to the
+leading edge of some technology — to cause yourself, as Paul
+Buchheit put it, to "live in the future." When you reach that point,
+ideas that will seem to other people uncannily prescient will seem
+obvious to you.  You may not realize they're startup ideas, but
+you'll know they're something that ought to exist.For example, back at Harvard in the mid 90s a fellow grad student
+of my friends Robert and Trevor wrote his own voice over IP software.
+He

@@ -1,0 +1,27 @@
+{
+  "id": "fn_81",
+  "answer": "{\"name\": \"map_routing.fastest_route\", \"arguments\": {\"start_location\": \"San Francisco\", \"end_location\": \"Los Angeles\", \"avoid_tolls\": true}}",
+  "type": "json_function_call",
+  "matchers": [
+    {
+      "kind": "json_call",
+      "function_name": "map_routing.fastest_route",
+      "args_accepted": {
+        "start_location": [
+          "San Francisco",
+          "SF"
+        ],
+        "end_location": [
+          "Los Angeles",
+          "LA"
+        ],
+        "avoid_tolls": [
+          true
+        ]
+      }
+    }
+  ],
+  "category": "medium",
+  "difficulty": "medium",
+  "source_bfcl_id": "simple_python_81"
+}

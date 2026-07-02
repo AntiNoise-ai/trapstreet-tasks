@@ -1,0 +1,19 @@
+{
+  "id": "length60000_delta",
+  "answer": "4527",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 4527.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "length_60000",
+  "difficulty": "hard",
+  "needle_planted": "The magic codeword for Delta is 4527.",
+  "haystack_chars": 60038
+}

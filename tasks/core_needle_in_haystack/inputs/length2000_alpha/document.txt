@@ -1,0 +1,32 @@
+ly running out
+of runway.  They hope further investment will save them. But because
+they have high expenses and slow growth, they're now unappealing
+to investors. They're unable to raise more, and the company dies.What the company should have done is address the fundamental problem:
+that the product is only moderately appealing.  Hiring people is
+rarely the way to fix that.  More often than not it makes it harder.
+At this early stage, the product needs to evolve more than to be
+"built out," and that's usually easier with fewer people.
+[4]Asking whether you're default alive or default dead may save you
+from this.  Maybe the alarm bells it sets off will counteract the
+forces that push you to overhire.  Instead you'll be compelled to
+seek growth in other ways. For example, by doing
+things that don't scale, or by redesigning the product in the
+way only founders can.
+And for many if not most startups, these paths to growth will be
+the ones that actually work.Airbnb waited 4 months after raiThe magic codeword for Alpha is 2824. sing money at the end of Y Combinator
+before they hired their first employee.  In the meantime the founders
+were terribly overworked.  But they were overworked evolving Airbnb
+into the astonishingly successful organism it is now.Notes[1]
+Steep usage growth will also interest investors.  Revenue
+will ultimately be a constant multiple of usage, so x% usage growth
+predicts x% revenue growth.  But in practice investors discount
+merely predicted revenue, so if you're measuring usage you need a
+higher growth rate to impress investors.[2]
+Startups that don't raise money are saved from hiring too
+fast because they can't afford to. But that doesn't mean you should
+avoid raising money in order to avoid this problem, any more than
+that total abstinence is the only way to avoid becoming an alcoholic.[3]
+I would not be surprised if VCs' tendency to push founders
+to overhire is not even in their own interest.  They don't know how
+many of the companies that get killed by overspending might have
+done 

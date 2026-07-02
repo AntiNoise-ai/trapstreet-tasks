@@ -1,0 +1,22 @@
+{
+  "id": "fn_20",
+  "answer": "{\"name\": \"math.hcf\", \"arguments\": {\"number1\": 36, \"number2\": 24}}",
+  "type": "json_function_call",
+  "matchers": [
+    {
+      "kind": "json_call",
+      "function_name": "math.hcf",
+      "args_accepted": {
+        "number1": [
+          36
+        ],
+        "number2": [
+          24
+        ]
+      }
+    }
+  ],
+  "category": "easy",
+  "difficulty": "easy",
+  "source_bfcl_id": "simple_python_20"
+}

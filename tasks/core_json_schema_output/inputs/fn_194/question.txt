@@ -1,0 +1,38 @@
+You are given a function specification and a user request. Your job is to produce the JSON function call that fulfils the request, conforming exactly to the schema.
+
+USER REQUEST:
+What are the top three plants suitable for a hill slope in terms of erosion prevention?
+
+FUNCTION SPEC (JSON):
+{
+  "name": "get_plants_for_slope",
+  "description": "Retrieve the list of plants suitable for slope based on erosion control ability.",
+  "parameters": {
+    "type": "dict",
+    "properties": {
+      "slope_type": {
+        "type": "string",
+        "description": "The type of slope like steep, moderate etc."
+      },
+      "num_results": {
+        "type": "integer",
+        "description": "The number of top results needed. Default is 5."
+      }
+    },
+    "required": [
+      "slope_type",
+      "num_results"
+    ]
+  }
+}
+
+OUTPUT FORMAT — output a single JSON object on stdout, nothing else (no explanation, no markdown fences, no preamble):
+
+{"name": "<function_name>", "arguments": {"<arg_name>": <value>, ...}}
+
+Required:
+- Use the exact function name from the spec
+- Include all REQUIRED parameters from the spec
+- Match parameter types (integer / string / number / boolean / list)
+- For optional params, omit them OR set them to a sensible default
+- Output MUST be valid JSON, parseable by json.loads(), with no surrounding text.

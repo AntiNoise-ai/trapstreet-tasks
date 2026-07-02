@@ -1,0 +1,53 @@
+You are given a function specification and a user request. Your job is to produce the JSON function call that fulfils the request, conforming exactly to the schema.
+
+USER REQUEST:
+Calculate the slope gradient in degree between two points on a landscape with coordinates (40.7128, -74.0060) and (34.0522, -118.2437).
+
+FUNCTION SPEC (JSON):
+{
+  "name": "calculate_slope_gradient",
+  "description": "Calculate the slope gradient between two geographical coordinates.",
+  "parameters": {
+    "type": "dict",
+    "properties": {
+      "point1": {
+        "type": "array",
+        "items": {
+          "type": "float"
+        },
+        "description": "The geographic coordinates for the first point [Latitude, Longitude]."
+      },
+      "point2": {
+        "type": "array",
+        "items": {
+          "type": "float"
+        },
+        "description": "The geographic coordinates for the second point [Latitude, Longitude]."
+      },
+      "unit": {
+        "type": "string",
+        "enum": [
+          "degree",
+          "percent",
+          "ratio"
+        ],
+        "description": "The unit for the slope gradient. Default is 'degree'."
+      }
+    },
+    "required": [
+      "point1",
+      "point2"
+    ]
+  }
+}
+
+OUTPUT FORMAT — output a single JSON object on stdout, nothing else (no explanation, no markdown fences, no preamble):
+
+{"name": "<function_name>", "arguments": {"<arg_name>": <value>, ...}}
+
+Required:
+- Use the exact function name from the spec
+- Include all REQUIRED parameters from the spec
+- Match parameter types (integer / string / number / boolean / list)
+- For optional params, omit them OR set them to a sensible default
+- Output MUST be valid JSON, parseable by json.loads(), with no surrounding text.

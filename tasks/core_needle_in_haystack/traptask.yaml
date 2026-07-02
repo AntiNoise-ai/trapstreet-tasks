@@ -1,0 +1,89 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: length2000_alpha
+  description: "Find magic codeword in 2000-char haystack"
+  tags:
+  - length_2000
+- id: length2000_bravo
+  description: "Find magic codeword in 2000-char haystack"
+  tags:
+  - length_2000
+- id: length2000_charlie
+  description: "Find magic codeword in 2000-char haystack"
+  tags:
+  - length_2000
+- id: length2000_delta
+  description: "Find magic codeword in 2000-char haystack"
+  tags:
+  - length_2000
+- id: length2000_echo
+  description: "Find magic codeword in 2000-char haystack"
+  tags:
+  - length_2000
+- id: length8000_alpha
+  description: "Find magic codeword in 8000-char haystack"
+  tags:
+  - length_8000
+- id: length8000_bravo
+  description: "Find magic codeword in 8000-char haystack"
+  tags:
+  - length_8000
+- id: length8000_charlie
+  description: "Find magic codeword in 8000-char haystack"
+  tags:
+  - length_8000
+- id: length8000_delta
+  description: "Find magic codeword in 8000-char haystack"
+  tags:
+  - length_8000
+- id: length8000_echo
+  description: "Find magic codeword in 8000-char haystack"
+  tags:
+  - length_8000
+- id: length20000_alpha
+  description: "Find magic codeword in 20000-char haystack"
+  tags:
+  - length_20000
+- id: length20000_bravo
+  description: "Find magic codeword in 20000-char haystack"
+  tags:
+  - length_20000
+- id: length20000_charlie
+  description: "Find magic codeword in 20000-char haystack"
+  tags:
+  - length_20000
+- id: length20000_delta
+  description: "Find magic codeword in 20000-char haystack"
+  tags:
+  - length_20000
+- id: length20000_echo
+  description: "Find magic codeword in 20000-char haystack"
+  tags:
+  - length_20000
+- id: length60000_alpha
+  description: "Find magic codeword in 60000-char haystack"
+  tags:
+  - length_60000
+- id: length60000_bravo
+  description: "Find magic codeword in 60000-char haystack"
+  tags:
+  - length_60000
+- id: length60000_charlie
+  description: "Find magic codeword in 60000-char haystack"
+  tags:
+  - length_60000
+- id: length60000_delta
+  description: "Find magic codeword in 60000-char haystack"
+  tags:
+  - length_60000
+- id: length60000_echo
+  description: "Find magic codeword in 60000-char haystack"
+  tags:
+  - length_60000
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py
