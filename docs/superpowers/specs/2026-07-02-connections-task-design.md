@@ -88,13 +88,22 @@ surfaced in metrics for qualitative comparison.
 1. **Parse** the model output (strip ``` fences, tolerate minor whitespace). If
    it is not valid JSON with a `groups` list → `score = 0.0`, set a
    `format_ok: false` flag in metrics.
-2. **Normalise** each group's `words` to a case-insensitive, trimmed set.
-3. **Score = (number of gold groups exactly reproduced) / 4.** A gold group
-   counts iff **some** model group's word-set equals that gold group's word-set
-   exactly (all 4, no extras, no misses). Set-equality means word order and
-   which model-group-slot it landed in do not matter.
-4. **Headline metric** `solved = (score == 1.0)` — did the model crack the whole
-   puzzle. Surfaced in metrics alongside `groups_correct` (0–4).
+2. **Truncate to the first 4 groups.** Only the first four groups the model
+   emits are scored. This is the anti-shotgun rule: a model cannot dump many
+   candidate groups to guarantee the 4 correct ones are present — extras past
+   the fourth are ignored, so surfacing a correct group requires actually
+   placing it in the first four slots (i.e. answering, not enumerating).
+3. **Normalise** each group's `words` to a case-insensitive, trimmed set.
+4. **Score = (number of gold groups exactly reproduced among the first 4) / 4.**
+   A gold group counts iff **some** of those model groups' word-set equals that
+   gold group's word-set exactly (all 4, no extras, no misses). Set-equality
+   means word order and which of the four slots it landed in do not matter.
+5. **`well_formed`** = the output is exactly 4 groups whose words form a valid
+   partition of the puzzle's 16 words (4 groups × 4 words, all 16 distinct and
+   equal to the gold word universe). Surfaced as metadata.
+6. **Headline metric** `solved = well_formed AND groups_correct == 4` — the model
+   cleanly cracked the whole puzzle. A shotgun submission (extra groups) can
+   still score partial credit but can never be `solved`.
 
 **Robustness:** if the model emits duplicate words, wrong counts, or 3/5-word
 groups, those simply fail to set-match any gold group and score 0 for that
@@ -102,7 +111,7 @@ group — no crashes, no special-casing.
 
 ### Metrics surfaced per case
 - `score` (0.0–1.0), `groups_correct` (0–4), `solved` (bool)
-- `format_ok` (bool)
+- `well_formed` (bool), `format_ok` (bool)
 - `category` (difficulty tier, for by-category breakdown)
 - model `themes` (list, ungraded metadata)
 
