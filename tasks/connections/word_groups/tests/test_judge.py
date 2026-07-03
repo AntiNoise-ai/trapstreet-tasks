@@ -83,3 +83,38 @@ def test_wrong_group_size_no_match():
         '{"theme": "c", "words": ["KING", "QUEEN", "JOKER"]}]}'
     r = judge.score_case(out, EXPECTED)
     assert r["groups_correct"] == 2  # suits + black match; games(5) and special(3) do not
+
+
+def test_extra_groups_score_but_not_solved():
+    # 4 correct groups first, then a junk 5th group -> first-4 all correct so
+    # groups_correct==4, but not a clean partition -> well_formed False, solved False.
+    out = '{"groups": [' \
+        '{"theme": "g", "words": ["POKER", "BRIDGE", "WAR", "RUMMY"]},' \
+        '{"theme": "s", "words": ["HEARTS", "SPADES", "CLUBS", "DIAMONDS"]},' \
+        '{"theme": "b", "words": ["JACK", "BERRY", "SMITH", "OUT"]},' \
+        '{"theme": "c", "words": ["KING", "QUEEN", "ACE", "JOKER"]},' \
+        '{"theme": "extra", "words": ["POKER", "HEARTS", "JACK", "KING"]}]}'
+    r = judge.score_case(out, EXPECTED)
+    assert r["groups_correct"] == 4
+    assert r["well_formed"] is False
+    assert r["solved"] is False
+
+
+def test_shotgun_beyond_four_is_ignored():
+    # First 4 groups are wrong (scrambled); the 2 correct groups sit at positions
+    # 5-6 and must be ignored by the first-4 truncation -> groups_correct 0.
+    out = '{"groups": [' \
+        '{"theme": "1", "words": ["POKER", "HEARTS", "JACK", "KING"]},' \
+        '{"theme": "2", "words": ["BRIDGE", "SPADES", "BERRY", "QUEEN"]},' \
+        '{"theme": "3", "words": ["WAR", "CLUBS", "SMITH", "ACE"]},' \
+        '{"theme": "4", "words": ["RUMMY", "DIAMONDS", "OUT", "JOKER"]},' \
+        '{"theme": "5", "words": ["POKER", "BRIDGE", "WAR", "RUMMY"]},' \
+        '{"theme": "6", "words": ["HEARTS", "SPADES", "CLUBS", "DIAMONDS"]}]}'
+    r = judge.score_case(out, EXPECTED)
+    assert r["groups_correct"] == 0
+    assert r["solved"] is False
+
+
+def test_perfect_is_well_formed():
+    r = judge.score_case(PERFECT, EXPECTED)
+    assert r["well_formed"] is True and r["solved"] is True

@@ -36,10 +36,16 @@ The `theme` label is collected but **not graded**.
 
 ## Scoring
 
-- **Per case** (`judge.py`): `score = (gold groups exactly reproduced) / 4`, by
-  set-equality of the four words (case/whitespace-insensitive; group order and
-  theme labels don't matter). `solved = all 4 correct`. Non-JSON or missing
-  `groups` → `score 0.0`, `format_ok: false`.
+- **Per case** (`judge.py`): only the **first 4 groups** emitted are scored
+  (anti-shotgun — extra or duplicate groups past the fourth are ignored, so a
+  model can't pad its output with guesses). `score = (gold groups exactly
+  reproduced among the first 4) / 4`, by set-equality of the four words
+  (case/whitespace-insensitive; group order and theme labels don't matter).
+  `solved` requires `well_formed` (exactly 4 groups of 4 words forming a valid
+  partition of the 16-word universe) **and** all 4 groups correct. Surfaced
+  metrics: `score`, `groups_correct`, `well_formed`, `solved`, `format_ok`,
+  `themes` (ungraded). Non-JSON or missing `groups` → `score 0.0`,
+  `format_ok: false`, `well_formed: false`.
 - **Per run** (`grader.py`): mean score across cases; `n_passed` counts fully
   solved puzzles; `by_category` breaks score down by difficulty tier. Run passes
   at mean ≥ `0.75`.

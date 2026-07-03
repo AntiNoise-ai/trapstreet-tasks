@@ -1,9 +1,12 @@
 """Per-case judge for the connections/word_groups task.
 
 The model receives 16 words and must partition them into 4 groups of 4.
-score = (gold groups exactly reproduced) / 4, by set-equality of the words
-(case/whitespace-insensitive; group order and theme labels do not matter).
-solved = all 4 groups correct. Theme labels are surfaced but NOT graded.
+Only the first 4 groups emitted are scored (anti-shotgun); extras are ignored.
+score = (gold groups exactly reproduced among the first 4) / 4, by set-equality
+of the words (case/whitespace-insensitive; group order and theme labels do not
+matter). solved = well_formed AND all 4 groups correct, where well_formed means
+exactly 4 groups of 4 words forming a valid partition of the 16-word universe.
+Theme labels are surfaced but NOT graded.
 
 I/O contract matches personality/mbti_profile/judge.py: reads TRAPTASK_PAYLOAD.
 """
@@ -37,29 +40,55 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
         obj = json.loads(s)
     except (json.JSONDecodeError, TypeError):
         return {"score": 0.0, "groups_correct": 0, "solved": False,
+                "well_formed": False,
                 "format_ok": False, "reason": "output is not valid JSON"}
 
     if not isinstance(obj, dict) or not isinstance(obj.get("groups"), list):
         return {"score": 0.0, "groups_correct": 0, "solved": False,
+                "well_formed": False,
                 "format_ok": False, "reason": "missing 'groups' list"}
 
     gold_sets = [frozenset(_norm(w) for w in g["words"]) for g in expected["groups"]]
     n_gold = len(gold_sets)
+    gold_universe = set().union(*gold_sets)
 
-    model_sets = set()
-    themes = []
-    for g in obj["groups"]:
-        if isinstance(g, dict):
-            themes.append(g.get("theme"))
-            if isinstance(g.get("words"), list):
-                model_sets.add(frozenset(_norm(w) for w in g["words"]))
+    # Themes are collected from ALL groups (ungraded).
+    themes = [g.get("theme") for g in obj["groups"] if isinstance(g, dict)]
 
-    correct = sum(1 for gs in gold_sets if gs in model_sets)
-    score = correct / n_gold if n_gold else 0.0
+    # Score only the first n_gold groups (anti-shotgun): extras are ignored.
+    scored_groups = obj["groups"][:n_gold]
+    model_sets = []
+    for g in scored_groups:
+        if isinstance(g, dict) and isinstance(g.get("words"), list):
+            model_sets.append(frozenset(_norm(w) for w in g["words"]))
+
+    # groups_correct: matches among the first n_gold groups. A gold set is
+    # counted at most once even if the model repeats it within the first four.
+    matched = set()
+    for gs in gold_sets:
+        for i, ms in enumerate(model_sets):
+            if i not in matched and ms == gs:
+                matched.add(i)
+                break
+    groups_correct = len(matched)
+
+    # well_formed: exactly n_gold groups, each exactly 4 words, together a
+    # valid partition of the 16-word universe.
+    all_words = [w for ms in model_sets for w in ms]
+    well_formed = (
+        len(obj["groups"]) == n_gold
+        and len(model_sets) == n_gold
+        and all(len(ms) == 4 for ms in model_sets)
+        and len(all_words) == len(gold_universe)
+        and set(all_words) == gold_universe
+    )
+
+    score = groups_correct / n_gold if n_gold else 0.0
     return {
         "score": round(score, 3),
-        "groups_correct": correct,
-        "solved": correct == n_gold,
+        "groups_correct": groups_correct,
+        "solved": well_formed and groups_correct == n_gold,
+        "well_formed": well_formed,
         "format_ok": True,
         "themes": themes,
     }

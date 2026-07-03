@@ -1,5 +1,5 @@
 # tests/test_build.py
-import json, subprocess, sys, pathlib
+import json, sys, pathlib
 import pytest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
