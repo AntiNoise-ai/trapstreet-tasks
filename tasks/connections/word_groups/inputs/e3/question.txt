@@ -1,0 +1,7 @@
+You are playing Connections. Below are 16 words. Group them into EXACTLY 4 groups of EXACTLY 4 words each, where the words in each group share a hidden connection. Every word belongs to exactly one group. Some words look like they fit more than one group — only one grouping is correct.
+
+Words:
+SKY, TIMES, COBALT, CALIBRI, TASK, NAVY, QUEEN, ROYAL, ARIAL, COMIC, WORK, BISHOP, KING, BRUTE, ROOK, AIR
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"groups": [{"theme": "<short label>", "words": ["w", "w", "w", "w"]}, {"theme": "...", "words": ["...", "...", "...", "..."]}, {"theme": "...", "words": ["...", "...", "...", "..."]}, {"theme": "...", "words": ["...", "...", "...", "..."]}]}

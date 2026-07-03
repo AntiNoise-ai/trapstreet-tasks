@@ -1,0 +1,53 @@
+{
+  "id": "h3",
+  "category": "hard",
+  "difficulty": "hard",
+  "groups": [
+    {
+      "theme": "Parts of the eye",
+      "tier": "yellow",
+      "words": [
+        "IRIS",
+        "PUPIL",
+        "LENS",
+        "CORNEA"
+      ]
+    },
+    {
+      "theme": "Greek myth figures",
+      "tier": "green",
+      "words": [
+        "ATLAS",
+        "ECHO",
+        "MIDAS",
+        "HERMES"
+      ]
+    },
+    {
+      "theme": "Flowers",
+      "tier": "blue",
+      "words": [
+        "DAHLIA",
+        "ASTER",
+        "PEONY",
+        "ZINNIA"
+      ]
+    },
+    {
+      "theme": "Classical columns",
+      "tier": "purple",
+      "words": [
+        "DORIC",
+        "IONIC",
+        "CORINTHIAN",
+        "TUSCAN"
+      ]
+    }
+  ],
+  "traps": [
+    "IRIS",
+    "PUPIL",
+    "HERMES",
+    "IONIC"
+  ]
+}

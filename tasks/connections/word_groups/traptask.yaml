@@ -1,0 +1,41 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: e1
+  description: "Connections puzzle (easy): citrus / colors / US coins / board games. Trap: LIME, ORANGE lure toward colors."
+  tags: [connections, word_grouping, reasoning, easy]
+- id: e2
+  description: "Connections puzzle (easy): pizza toppings / ___ ring / planets / Greek letters. Trap: ONION."
+  tags: [connections, word_grouping, reasoning, easy]
+- id: e3
+  description: "Connections puzzle (easy): shades of blue / ___ force / chess pieces / typefaces. Trap: NAVY, ROYAL, TIMES."
+  tags: [connections, word_grouping, reasoning, easy]
+- id: m1
+  description: "Connections puzzle (medium): dances / Mexican dishes / swimming strokes / dog commands. Trap: SALSA, SHAKE, ROLL."
+  tags: [connections, word_grouping, reasoning, medium]
+- id: m2
+  description: "Connections puzzle (medium): DC heroes / birds / shades of red / apple varieties. Trap: ROBIN, CARDINAL, FLASH."
+  tags: [connections, word_grouping, reasoning, medium]
+- id: m3
+  description: "Connections puzzle (medium): coffee drinks / shades of brown / horse coat colors / ___ line. Trap: CHESTNUT, MOCHA, PUNCH."
+  tags: [connections, word_grouping, reasoning, medium]
+- id: m4
+  description: "Connections puzzle (medium): metals / ___ Age / herbs / board games. Trap: IRON, BRONZE."
+  tags: [connections, word_grouping, reasoning, medium]
+- id: h1
+  description: "Connections puzzle (hard): card games / card suits / BLACK ___ / special cards. Trap: HEARTS, SPADES, JACK, DIAMONDS."
+  tags: [connections, word_grouping, reasoning, hard]
+- id: h2
+  description: "Connections puzzle (hard): ___ board / ___ house / ___ cake / ___ work. Compound-word interference."
+  tags: [connections, word_grouping, reasoning, hard]
+- id: h3
+  description: "Connections puzzle (hard): parts of the eye / Greek myth / flowers / classical columns. Trap: IRIS, PUPIL, HERMES, IONIC."
+  tags: [connections, word_grouping, reasoning, hard]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

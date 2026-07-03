@@ -1,0 +1,105 @@
+{
+  "_doc": "Original NYT-Connections-style puzzles. The model receives 16 shuffled words and must partition them into 4 groups of 4. Graded objectively: score = (gold groups exactly reproduced) / 4. 100% original content (no NYT scraping) to avoid leakage and copyright. Every word has exactly ONE correct group; 'traps' are words whose surface reading lures toward a different group. inputs/ and expected/ are GENERATED from this file by build_cases.py — edit here, never there.",
+  "cases": [
+    {
+      "id": "e1", "category": "easy",
+      "groups": [
+        {"theme": "Citrus fruits",  "tier": "yellow", "words": ["LEMON", "LIME", "ORANGE", "GRAPEFRUIT"]},
+        {"theme": "Colors",         "tier": "green",  "words": ["SCARLET", "TEAL", "INDIGO", "AMBER"]},
+        {"theme": "US coins",       "tier": "blue",   "words": ["PENNY", "NICKEL", "DIME", "QUARTER"]},
+        {"theme": "Board games",    "tier": "purple", "words": ["SORRY", "LIFE", "CLUE", "RISK"]}
+      ],
+      "traps": ["LIME", "ORANGE"]
+    },
+    {
+      "id": "e2", "category": "easy",
+      "groups": [
+        {"theme": "Pizza toppings", "tier": "yellow", "words": ["PEPPERONI", "MUSHROOM", "OLIVE", "ONION"]},
+        {"theme": "___ ring",       "tier": "green",  "words": ["BOXING", "KEY", "BULL", "WEDDING"]},
+        {"theme": "Planets",        "tier": "blue",   "words": ["MARS", "NEPTUNE", "JUPITER", "VENUS"]},
+        {"theme": "Greek letters",  "tier": "purple", "words": ["DELTA", "OMEGA", "SIGMA", "THETA"]}
+      ],
+      "traps": ["ONION"]
+    },
+    {
+      "id": "e3", "category": "easy",
+      "groups": [
+        {"theme": "Shades of blue",  "tier": "yellow", "words": ["NAVY", "ROYAL", "SKY", "COBALT"]},
+        {"theme": "___ force",       "tier": "green",  "words": ["AIR", "TASK", "WORK", "BRUTE"]},
+        {"theme": "Chess pieces",    "tier": "blue",   "words": ["KING", "QUEEN", "BISHOP", "ROOK"]},
+        {"theme": "Typefaces",       "tier": "purple", "words": ["ARIAL", "TIMES", "CALIBRI", "COMIC"]}
+      ],
+      "traps": ["NAVY", "ROYAL", "TIMES"]
+    },
+    {
+      "id": "m1", "category": "medium",
+      "groups": [
+        {"theme": "Dances",          "tier": "yellow", "words": ["TANGO", "SALSA", "TWIST", "WALTZ"]},
+        {"theme": "Mexican dishes",  "tier": "green",  "words": ["TACO", "NACHO", "QUESO", "FAJITA"]},
+        {"theme": "Swimming strokes","tier": "blue",   "words": ["FREESTYLE", "BUTTERFLY", "BACKSTROKE", "CRAWL"]},
+        {"theme": "Dog commands",    "tier": "purple", "words": ["SIT", "STAY", "ROLL", "SHAKE"]}
+      ],
+      "traps": ["SALSA", "SHAKE", "ROLL"]
+    },
+    {
+      "id": "m2", "category": "medium",
+      "groups": [
+        {"theme": "DC heroes",       "tier": "yellow", "words": ["BATMAN", "FLASH", "ARROW", "ATOM"]},
+        {"theme": "Birds",           "tier": "green",  "words": ["ROBIN", "CARDINAL", "JAY", "WREN"]},
+        {"theme": "Shades of red",   "tier": "blue",   "words": ["CRIMSON", "SCARLET", "MAROON", "BURGUNDY"]},
+        {"theme": "Apple varieties", "tier": "purple", "words": ["GALA", "FUJI", "EMPIRE", "PINK"]}
+      ],
+      "traps": ["ROBIN", "CARDINAL", "FLASH"]
+    },
+    {
+      "id": "m3", "category": "medium",
+      "groups": [
+        {"theme": "Coffee drinks",     "tier": "yellow", "words": ["LATTE", "MOCHA", "CORTADO", "MACCHIATO"]},
+        {"theme": "Shades of brown",   "tier": "green",  "words": ["TAN", "BEIGE", "SEPIA", "CHESTNUT"]},
+        {"theme": "Horse coat colors", "tier": "blue",   "words": ["BAY", "ROAN", "PALOMINO", "PINTO"]},
+        {"theme": "___ line",          "tier": "purple", "words": ["PUNCH", "DEAD", "BASE", "HAIR"]}
+      ],
+      "traps": ["CHESTNUT", "MOCHA", "PUNCH"]
+    },
+    {
+      "id": "m4", "category": "medium",
+      "groups": [
+        {"theme": "Metals",       "tier": "yellow", "words": ["GOLD", "IRON", "LEAD", "TIN"]},
+        {"theme": "___ Age",      "tier": "green",  "words": ["STONE", "ICE", "BRONZE", "SPACE"]},
+        {"theme": "Herbs",        "tier": "blue",   "words": ["SAGE", "THYME", "MINT", "BASIL"]},
+        {"theme": "Board games",  "tier": "purple", "words": ["TROUBLE", "TABOO", "TWISTER", "OPERATION"]}
+      ],
+      "traps": ["IRON", "BRONZE"]
+    },
+    {
+      "id": "h1", "category": "hard",
+      "groups": [
+        {"theme": "Card games",     "tier": "yellow", "words": ["POKER", "BRIDGE", "WAR", "RUMMY"]},
+        {"theme": "Card suits",     "tier": "green",  "words": ["HEARTS", "SPADES", "CLUBS", "DIAMONDS"]},
+        {"theme": "BLACK ___",      "tier": "blue",   "words": ["JACK", "BERRY", "SMITH", "OUT"]},
+        {"theme": "Special cards",  "tier": "purple", "words": ["KING", "QUEEN", "ACE", "JOKER"]}
+      ],
+      "traps": ["HEARTS", "SPADES", "JACK", "DIAMONDS"]
+    },
+    {
+      "id": "h2", "category": "hard",
+      "groups": [
+        {"theme": "___ board", "tier": "yellow", "words": ["KEY", "CARD", "SURF", "DASH"]},
+        {"theme": "___ house", "tier": "green",  "words": ["WARE", "BIRD", "TREE", "DOLL"]},
+        {"theme": "___ cake",  "tier": "blue",   "words": ["FRUIT", "PAN", "CARROT", "BEEF"]},
+        {"theme": "___ work",  "tier": "purple", "words": ["NET", "HOME", "FRAME", "TEAM"]}
+      ],
+      "traps": ["KEY", "CARD", "HOME", "FRAME"]
+    },
+    {
+      "id": "h3", "category": "hard",
+      "groups": [
+        {"theme": "Parts of the eye",     "tier": "yellow", "words": ["IRIS", "PUPIL", "LENS", "CORNEA"]},
+        {"theme": "Greek myth figures",   "tier": "green",  "words": ["ATLAS", "ECHO", "MIDAS", "HERMES"]},
+        {"theme": "Flowers",              "tier": "blue",   "words": ["DAHLIA", "ASTER", "PEONY", "ZINNIA"]},
+        {"theme": "Classical columns",    "tier": "purple", "words": ["DORIC", "IONIC", "CORINTHIAN", "TUSCAN"]}
+      ],
+      "traps": ["IRIS", "PUPIL", "HERMES", "IONIC"]
+    }
+  ]
+}

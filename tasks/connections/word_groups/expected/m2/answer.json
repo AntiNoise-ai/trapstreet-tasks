@@ -1,0 +1,52 @@
+{
+  "id": "m2",
+  "category": "medium",
+  "difficulty": "medium",
+  "groups": [
+    {
+      "theme": "DC heroes",
+      "tier": "yellow",
+      "words": [
+        "BATMAN",
+        "FLASH",
+        "ARROW",
+        "ATOM"
+      ]
+    },
+    {
+      "theme": "Birds",
+      "tier": "green",
+      "words": [
+        "ROBIN",
+        "CARDINAL",
+        "JAY",
+        "WREN"
+      ]
+    },
+    {
+      "theme": "Shades of red",
+      "tier": "blue",
+      "words": [
+        "CRIMSON",
+        "SCARLET",
+        "MAROON",
+        "BURGUNDY"
+      ]
+    },
+    {
+      "theme": "Apple varieties",
+      "tier": "purple",
+      "words": [
+        "GALA",
+        "FUJI",
+        "EMPIRE",
+        "PINK"
+      ]
+    }
+  ],
+  "traps": [
+    "ROBIN",
+    "CARDINAL",
+    "FLASH"
+  ]
+}

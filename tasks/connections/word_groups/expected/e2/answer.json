@@ -1,0 +1,50 @@
+{
+  "id": "e2",
+  "category": "easy",
+  "difficulty": "easy",
+  "groups": [
+    {
+      "theme": "Pizza toppings",
+      "tier": "yellow",
+      "words": [
+        "PEPPERONI",
+        "MUSHROOM",
+        "OLIVE",
+        "ONION"
+      ]
+    },
+    {
+      "theme": "___ ring",
+      "tier": "green",
+      "words": [
+        "BOXING",
+        "KEY",
+        "BULL",
+        "WEDDING"
+      ]
+    },
+    {
+      "theme": "Planets",
+      "tier": "blue",
+      "words": [
+        "MARS",
+        "NEPTUNE",
+        "JUPITER",
+        "VENUS"
+      ]
+    },
+    {
+      "theme": "Greek letters",
+      "tier": "purple",
+      "words": [
+        "DELTA",
+        "OMEGA",
+        "SIGMA",
+        "THETA"
+      ]
+    }
+  ],
+  "traps": [
+    "ONION"
+  ]
+}

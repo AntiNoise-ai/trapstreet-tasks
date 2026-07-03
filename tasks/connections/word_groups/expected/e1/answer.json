@@ -1,0 +1,51 @@
+{
+  "id": "e1",
+  "category": "easy",
+  "difficulty": "easy",
+  "groups": [
+    {
+      "theme": "Citrus fruits",
+      "tier": "yellow",
+      "words": [
+        "LEMON",
+        "LIME",
+        "ORANGE",
+        "GRAPEFRUIT"
+      ]
+    },
+    {
+      "theme": "Colors",
+      "tier": "green",
+      "words": [
+        "SCARLET",
+        "TEAL",
+        "INDIGO",
+        "AMBER"
+      ]
+    },
+    {
+      "theme": "US coins",
+      "tier": "blue",
+      "words": [
+        "PENNY",
+        "NICKEL",
+        "DIME",
+        "QUARTER"
+      ]
+    },
+    {
+      "theme": "Board games",
+      "tier": "purple",
+      "words": [
+        "SORRY",
+        "LIFE",
+        "CLUE",
+        "RISK"
+      ]
+    }
+  ],
+  "traps": [
+    "LIME",
+    "ORANGE"
+  ]
+}

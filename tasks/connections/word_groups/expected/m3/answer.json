@@ -1,0 +1,52 @@
+{
+  "id": "m3",
+  "category": "medium",
+  "difficulty": "medium",
+  "groups": [
+    {
+      "theme": "Coffee drinks",
+      "tier": "yellow",
+      "words": [
+        "LATTE",
+        "MOCHA",
+        "CORTADO",
+        "MACCHIATO"
+      ]
+    },
+    {
+      "theme": "Shades of brown",
+      "tier": "green",
+      "words": [
+        "TAN",
+        "BEIGE",
+        "SEPIA",
+        "CHESTNUT"
+      ]
+    },
+    {
+      "theme": "Horse coat colors",
+      "tier": "blue",
+      "words": [
+        "BAY",
+        "ROAN",
+        "PALOMINO",
+        "PINTO"
+      ]
+    },
+    {
+      "theme": "___ line",
+      "tier": "purple",
+      "words": [
+        "PUNCH",
+        "DEAD",
+        "BASE",
+        "HAIR"
+      ]
+    }
+  ],
+  "traps": [
+    "CHESTNUT",
+    "MOCHA",
+    "PUNCH"
+  ]
+}

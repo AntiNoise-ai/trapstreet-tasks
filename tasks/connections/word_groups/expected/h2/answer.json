@@ -1,0 +1,53 @@
+{
+  "id": "h2",
+  "category": "hard",
+  "difficulty": "hard",
+  "groups": [
+    {
+      "theme": "___ board",
+      "tier": "yellow",
+      "words": [
+        "KEY",
+        "CARD",
+        "SURF",
+        "DASH"
+      ]
+    },
+    {
+      "theme": "___ house",
+      "tier": "green",
+      "words": [
+        "WARE",
+        "BIRD",
+        "TREE",
+        "DOLL"
+      ]
+    },
+    {
+      "theme": "___ cake",
+      "tier": "blue",
+      "words": [
+        "FRUIT",
+        "PAN",
+        "CARROT",
+        "BEEF"
+      ]
+    },
+    {
+      "theme": "___ work",
+      "tier": "purple",
+      "words": [
+        "NET",
+        "HOME",
+        "FRAME",
+        "TEAM"
+      ]
+    }
+  ],
+  "traps": [
+    "KEY",
+    "CARD",
+    "HOME",
+    "FRAME"
+  ]
+}

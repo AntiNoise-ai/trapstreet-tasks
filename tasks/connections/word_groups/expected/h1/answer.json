@@ -1,0 +1,53 @@
+{
+  "id": "h1",
+  "category": "hard",
+  "difficulty": "hard",
+  "groups": [
+    {
+      "theme": "Card games",
+      "tier": "yellow",
+      "words": [
+        "POKER",
+        "BRIDGE",
+        "WAR",
+        "RUMMY"
+      ]
+    },
+    {
+      "theme": "Card suits",
+      "tier": "green",
+      "words": [
+        "HEARTS",
+        "SPADES",
+        "CLUBS",
+        "DIAMONDS"
+      ]
+    },
+    {
+      "theme": "BLACK ___",
+      "tier": "blue",
+      "words": [
+        "JACK",
+        "BERRY",
+        "SMITH",
+        "OUT"
+      ]
+    },
+    {
+      "theme": "Special cards",
+      "tier": "purple",
+      "words": [
+        "KING",
+        "QUEEN",
+        "ACE",
+        "JOKER"
+      ]
+    }
+  ],
+  "traps": [
+    "HEARTS",
+    "SPADES",
+    "JACK",
+    "DIAMONDS"
+  ]
+}
