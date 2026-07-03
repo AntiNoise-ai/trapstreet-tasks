@@ -1,0 +1,52 @@
+{
+  "id": "e3",
+  "category": "easy",
+  "difficulty": "easy",
+  "groups": [
+    {
+      "theme": "Shades of blue",
+      "tier": "yellow",
+      "words": [
+        "NAVY",
+        "ROYAL",
+        "SKY",
+        "COBALT"
+      ]
+    },
+    {
+      "theme": "___ force",
+      "tier": "green",
+      "words": [
+        "AIR",
+        "TASK",
+        "WORK",
+        "BRUTE"
+      ]
+    },
+    {
+      "theme": "Chess pieces",
+      "tier": "blue",
+      "words": [
+        "KING",
+        "QUEEN",
+        "BISHOP",
+        "ROOK"
+      ]
+    },
+    {
+      "theme": "Typefaces",
+      "tier": "purple",
+      "words": [
+        "ARIAL",
+        "TIMES",
+        "CALIBRI",
+        "COMIC"
+      ]
+    }
+  ],
+  "traps": [
+    "NAVY",
+    "ROYAL",
+    "TIMES"
+  ]
+}

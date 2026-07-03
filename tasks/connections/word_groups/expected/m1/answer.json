@@ -1,0 +1,52 @@
+{
+  "id": "m1",
+  "category": "medium",
+  "difficulty": "medium",
+  "groups": [
+    {
+      "theme": "Dances",
+      "tier": "yellow",
+      "words": [
+        "TANGO",
+        "SALSA",
+        "TWIST",
+        "WALTZ"
+      ]
+    },
+    {
+      "theme": "Mexican dishes",
+      "tier": "green",
+      "words": [
+        "TACO",
+        "NACHO",
+        "QUESO",
+        "FAJITA"
+      ]
+    },
+    {
+      "theme": "Swimming strokes",
+      "tier": "blue",
+      "words": [
+        "FREESTYLE",
+        "BUTTERFLY",
+        "BACKSTROKE",
+        "CRAWL"
+      ]
+    },
+    {
+      "theme": "Dog commands",
+      "tier": "purple",
+      "words": [
+        "SIT",
+        "STAY",
+        "ROLL",
+        "SHAKE"
+      ]
+    }
+  ],
+  "traps": [
+    "SALSA",
+    "SHAKE",
+    "ROLL"
+  ]
+}

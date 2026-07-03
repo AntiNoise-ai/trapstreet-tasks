@@ -1,0 +1,51 @@
+{
+  "id": "m4",
+  "category": "medium",
+  "difficulty": "medium",
+  "groups": [
+    {
+      "theme": "Metals",
+      "tier": "yellow",
+      "words": [
+        "GOLD",
+        "IRON",
+        "LEAD",
+        "TIN"
+      ]
+    },
+    {
+      "theme": "___ Age",
+      "tier": "green",
+      "words": [
+        "STONE",
+        "ICE",
+        "BRONZE",
+        "SPACE"
+      ]
+    },
+    {
+      "theme": "Herbs",
+      "tier": "blue",
+      "words": [
+        "SAGE",
+        "THYME",
+        "MINT",
+        "BASIL"
+      ]
+    },
+    {
+      "theme": "Board games",
+      "tier": "purple",
+      "words": [
+        "TROUBLE",
+        "TABOO",
+        "TWISTER",
+        "OPERATION"
+      ]
+    }
+  ],
+  "traps": [
+    "IRON",
+    "BRONZE"
+  ]
+}
