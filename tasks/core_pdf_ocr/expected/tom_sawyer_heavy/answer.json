@@ -1,0 +1,25 @@
+{
+  "id": "tom_sawyer_heavy",
+  "answer": "\u201cBut you ain\u2019t too warm now, though.\u201d And it flattered her to reflect that she had discovered that the shirt was dry without anybody knowing that that was what she had in her mind.",
+  "type": "pdf_ocr_transcription",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "though",
+        "flattered",
+        "reflect",
+        "discovered",
+        "shirt"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "heavy",
+  "difficulty": "heavy",
+  "source_book": "tom_sawyer",
+  "full_passage": "\u201cBut you ain\u2019t too warm now, though.\u201d And it flattered her to reflect that she had discovered that the shirt was dry without anybody knowing that that was what she had in her mind. But in spite of her, Tom knew where the wind lay, now. So he forestalled what might be the next move:",
+  "expected_first_sentence": "\u201cBut you ain\u2019t too warm now, though.\u201d And it flattered her to reflect that she had discovered that the shirt was dry without anybody knowing that that was what she had in her mind."
+}

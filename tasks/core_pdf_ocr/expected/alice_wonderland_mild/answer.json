@@ -1,0 +1,25 @@
+{
+  "id": "alice_wonderland_mild",
+  "answer": "Alice thought the whole thing very absurd, but they all looked so grave that she did not dare to laugh; and, as she could not think of anything to say, she simply bowed, and took the thimble, looking as solemn as she could.",
+  "type": "pdf_ocr_transcription",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "Alice",
+        "thought",
+        "whole",
+        "thing",
+        "absurd"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "mild",
+  "difficulty": "mild",
+  "source_book": "alice_wonderland",
+  "full_passage": "Alice thought the whole thing very absurd, but they all looked so grave that she did not dare to laugh; and, as she could not think of anything to say, she simply bowed, and took the thimble, looking as solemn as she could.",
+  "expected_first_sentence": "Alice thought the whole thing very absurd, but they all looked so grave that she did not dare to laugh; and, as she could not think of anything to say, she simply bowed, and took the thimble, looking as solemn as she could."
+}

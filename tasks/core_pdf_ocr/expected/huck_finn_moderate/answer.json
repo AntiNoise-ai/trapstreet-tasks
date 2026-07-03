@@ -1,0 +1,25 @@
+{
+  "id": "huck_finn_moderate",
+  "answer": "After supper she got out her book and learned me about Moses and the Bulrushers, and I was in a sweat to find out all about him; but by-and-by she let it out that Moses had been dead a considerable long time; so then I didn\u2019t care no more about him, because I don\u2019t take no stock in dead people.",
+  "type": "pdf_ocr_transcription",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "After",
+        "supper",
+        "learned",
+        "Moses",
+        "Bulrushers"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "moderate",
+  "difficulty": "moderate",
+  "source_book": "huck_finn",
+  "full_passage": "After supper she got out her book and learned me about Moses and the Bulrushers, and I was in a sweat to find out all about him; but by-and-by she let it out that Moses had been dead a considerable long time; so then I didn\u2019t care no more about him, because I don\u2019t take no stock in dead people.",
+  "expected_first_sentence": "After supper she got out her book and learned me about Moses and the Bulrushers, and I was in a sweat to find out all about him; but by-and-by she let it out that Moses had been dead a considerable long time; so then I didn\u2019t care no more about him, because I don\u2019t take no stock in dead people."
+}

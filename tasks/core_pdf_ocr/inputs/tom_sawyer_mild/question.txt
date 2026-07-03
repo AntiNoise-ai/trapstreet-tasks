@@ -1,0 +1,3 @@
+document.pdf contains a single scanned page of text from a public-domain book. Read the page carefully (it may be noisy or rotated) and TRANSCRIBE THE FIRST SENTENCE verbatim.
+
+Answer with just the sentence — no explanation, no quotes, no prefix.
