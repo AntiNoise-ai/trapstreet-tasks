@@ -1,0 +1,23 @@
+{
+  "id": "simpleqa_25",
+  "answer": "Season 2, Episode 9: Party Pete",
+  "type": "calibrated_factual_qa",
+  "matchers": [
+    {
+      "kind": "calibrated_correctness",
+      "gold_keywords": [
+        "Season",
+        "Episode",
+        "Party"
+      ],
+      "gold_full": "Season 2, Episode 9: Party Pete"
+    },
+    {
+      "kind": "no_over_claim"
+    }
+  ],
+  "category": "TV shows",
+  "difficulty": "hard",
+  "source_topic": "TV shows",
+  "answer_type": "Other"
+}

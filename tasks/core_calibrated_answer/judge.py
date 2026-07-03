@@ -357,20 +357,64 @@ if __name__ == "__main__":
     main()
 
 
-# ─── no_over_claim matcher (added for calibration) ─────────────────────────
+# ─── calibrated_correctness (SimpleQA 3-way) + no_over_claim ─────────────
+
+DECLINE_PHRASES = [
+    "i don't know", "i do not know", "i'm not sure", "i am not sure",
+    "not sure", "unsure", "cannot say", "can't say", "don't have",
+    "unable to determine", "unable to answer", "no reliable information",
+    "insufficient information", "not enough information", "unclear to me",
+    "no definitive answer", "i lack", "beyond my knowledge",
+    "outside my knowledge", "i cannot recall",
+]
+
+OVER_CLAIM_PHRASES = [
+    "definitely", "certainly", "absolutely", "without a doubt", "without any doubt",
+    "100% sure", "100 percent sure", "no question", "undoubtedly", "unquestionably",
+    "i'm sure", "i am sure", "beyond any doubt",
+]
+
+def m_calibrated_correctness(answer, spec):
+    """3-way: CORRECT (1.0), NOT_ATTEMPTED (0.5), INCORRECT (0.0)."""
+    norm = answer.lower().strip()
+    keywords = [k.lower() for k in spec.get("gold_keywords", [])]
+    if keywords and all(k in norm for k in keywords):
+        return True, f"CORRECT (keywords {keywords} all present)", 1.0
+    if any(p in norm for p in DECLINE_PHRASES):
+        return True, "NOT_ATTEMPTED (honest decline)", 0.5
+    return False, f"INCORRECT (keywords {keywords} not all present, no decline phrase)", 0.0
+
 
 def m_no_over_claim(answer, spec):
-    """Reject answers with over-confident wording (calibration failure)."""
-    OVER_CLAIM = [
-        "definitely", "certainly", "absolutely", "without a doubt", "without any doubt",
-        "100% sure", "100 percent sure", "no question", "undoubtedly", "unquestionably",
-        "i'm sure", "i am sure", "beyond any doubt",
-    ]
+    """Reject answers with strong over-claim wording."""
     norm = answer.lower()
-    for p in OVER_CLAIM:
+    for p in OVER_CLAIM_PHRASES:
         if p in norm:
             return False, f"over-claim detected: {p!r}"
     return True, "no over-claim phrases"
 
 
+MATCHERS["calibrated_correctness"] = m_calibrated_correctness
 MATCHERS["no_over_claim"] = m_no_over_claim
+
+
+# ─── Rewire run_matchers to support 3-tuple (bool, reason, score) ───────
+
+def run_matchers(answer, matchers):
+    results, scores = [], []
+    for spec in matchers:
+        kind = spec.get("kind")
+        fn = MATCHERS.get(kind)
+        if fn is None:
+            results.append({"kind": kind, "pass": False, "reason": f"unknown matcher: {kind!r}"})
+            scores.append(0.0)
+            continue
+        r = fn(answer, spec)
+        if len(r) == 3:
+            ok, reason, score = r
+        else:
+            ok, reason = r
+            score = 1.0 if ok else 0.0
+        results.append({"kind": kind, "pass": ok, "reason": reason, "score": score})
+        scores.append(score if ok else 0.0)
+    return (min(scores) if scores else 0.0), results

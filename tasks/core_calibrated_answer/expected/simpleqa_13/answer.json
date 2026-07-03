@@ -1,0 +1,22 @@
+{
+  "id": "simpleqa_13",
+  "answer": "Matt and Marcus",
+  "type": "calibrated_factual_qa",
+  "matchers": [
+    {
+      "kind": "calibrated_correctness",
+      "gold_keywords": [
+        "Matt",
+        "Marcus"
+      ],
+      "gold_full": "Matt and Marcus"
+    },
+    {
+      "kind": "no_over_claim"
+    }
+  ],
+  "category": "Other",
+  "difficulty": "hard",
+  "source_topic": "Other",
+  "answer_type": "Person"
+}

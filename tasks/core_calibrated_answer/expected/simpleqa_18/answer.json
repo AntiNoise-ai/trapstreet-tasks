@@ -1,0 +1,23 @@
+{
+  "id": "simpleqa_18",
+  "answer": "24 August 1942 ",
+  "type": "calibrated_factual_qa",
+  "matchers": [
+    {
+      "kind": "calibrated_correctness",
+      "gold_keywords": [
+        "24",
+        "August",
+        "1942"
+      ],
+      "gold_full": "24 August 1942 "
+    },
+    {
+      "kind": "no_over_claim"
+    }
+  ],
+  "category": "Politics",
+  "difficulty": "hard",
+  "source_topic": "Politics",
+  "answer_type": "Date"
+}

@@ -9,6 +9,9 @@
     },
     {
       "kind": "no_hedge"
+    },
+    {
+      "kind": "no_over_claim"
     }
   ],
   "category": "fails_to_support",

@@ -1,0 +1,22 @@
+{
+  "id": "simpleqa_10",
+  "answer": "Mothers Child",
+  "type": "calibrated_factual_qa",
+  "matchers": [
+    {
+      "kind": "calibrated_correctness",
+      "gold_keywords": [
+        "Mothers",
+        "Child"
+      ],
+      "gold_full": "Mothers Child"
+    },
+    {
+      "kind": "no_over_claim"
+    }
+  ],
+  "category": "Music",
+  "difficulty": "hard",
+  "source_topic": "Music",
+  "answer_type": "Other"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "simpleqa_29",
+  "answer": "Patch 5.2.0",
+  "type": "calibrated_factual_qa",
+  "matchers": [
+    {
+      "kind": "calibrated_correctness",
+      "gold_keywords": [
+        "Patch"
+      ],
+      "gold_full": "Patch 5.2.0"
+    },
+    {
+      "kind": "no_over_claim"
+    }
+  ],
+  "category": "Video games",
+  "difficulty": "hard",
+  "source_topic": "Video games",
+  "answer_type": "Date"
+}

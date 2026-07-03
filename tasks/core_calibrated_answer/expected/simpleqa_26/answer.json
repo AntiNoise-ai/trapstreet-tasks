@@ -1,0 +1,22 @@
+{
+  "id": "simpleqa_26",
+  "answer": "John Wadsworth.",
+  "type": "calibrated_factual_qa",
+  "matchers": [
+    {
+      "kind": "calibrated_correctness",
+      "gold_keywords": [
+        "John",
+        "Wadsworth"
+      ],
+      "gold_full": "John Wadsworth."
+    },
+    {
+      "kind": "no_over_claim"
+    }
+  ],
+  "category": "TV shows",
+  "difficulty": "hard",
+  "source_topic": "TV shows",
+  "answer_type": "Person"
+}

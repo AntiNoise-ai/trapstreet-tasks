@@ -1,0 +1,129 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: simpleqa_01
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Art
+- id: simpleqa_02
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Art
+- id: simpleqa_03
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Art
+- id: simpleqa_04
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Geography
+- id: simpleqa_05
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Geography
+- id: simpleqa_06
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Geography
+- id: simpleqa_07
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - History
+- id: simpleqa_08
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - History
+- id: simpleqa_09
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - History
+- id: simpleqa_10
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Music
+- id: simpleqa_11
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Music
+- id: simpleqa_12
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Music
+- id: simpleqa_13
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Other
+- id: simpleqa_14
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Other
+- id: simpleqa_15
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Other
+- id: simpleqa_16
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Politics
+- id: simpleqa_17
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Politics
+- id: simpleqa_18
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Politics
+- id: simpleqa_19
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Science_and_technology
+- id: simpleqa_20
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Science_and_technology
+- id: simpleqa_21
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Science_and_technology
+- id: simpleqa_22
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Sports
+- id: simpleqa_23
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Sports
+- id: simpleqa_24
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Sports
+- id: simpleqa_25
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - TV_shows
+- id: simpleqa_26
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - TV_shows
+- id: simpleqa_27
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - TV_shows
+- id: simpleqa_28
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Video_games
+- id: simpleqa_29
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Video_games
+- id: simpleqa_30
+  description: "Answer if you know, decline if you don't"
+  tags:
+  - Video_games
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py

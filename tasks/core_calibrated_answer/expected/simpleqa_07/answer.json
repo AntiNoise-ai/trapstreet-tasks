@@ -1,0 +1,22 @@
+{
+  "id": "simpleqa_07",
+  "answer": "3 October 1247",
+  "type": "calibrated_factual_qa",
+  "matchers": [
+    {
+      "kind": "calibrated_correctness",
+      "gold_keywords": [
+        "October",
+        "1247"
+      ],
+      "gold_full": "3 October 1247"
+    },
+    {
+      "kind": "no_over_claim"
+    }
+  ],
+  "category": "History",
+  "difficulty": "hard",
+  "source_topic": "History",
+  "answer_type": "Date"
+}

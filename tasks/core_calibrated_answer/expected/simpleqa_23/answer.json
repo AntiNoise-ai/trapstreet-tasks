@@ -1,0 +1,21 @@
+{
+  "id": "simpleqa_23",
+  "answer": "Two",
+  "type": "calibrated_factual_qa",
+  "matchers": [
+    {
+      "kind": "calibrated_correctness",
+      "gold_keywords": [
+        "Two"
+      ],
+      "gold_full": "Two"
+    },
+    {
+      "kind": "no_over_claim"
+    }
+  ],
+  "category": "Sports",
+  "difficulty": "hard",
+  "source_topic": "Sports",
+  "answer_type": "Number"
+}
