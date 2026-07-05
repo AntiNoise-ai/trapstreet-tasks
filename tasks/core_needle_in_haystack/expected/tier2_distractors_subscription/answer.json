@@ -1,0 +1,26 @@
+{
+  "id": "tier2_distractors_subscription",
+  "answer": "1439",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 1439.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "tier": "retrieval_topic_distractors",
+  "needle_key": "Scale",
+  "distractor_codewords": {
+    "Starter": 6940,
+    "Growth": 4040,
+    "Enterprise": 7172,
+    "Custom": 6902
+  },
+  "chunks_total": 18,
+  "chunks_with_codewords": 5,
+  "document_chars": 19708
+}

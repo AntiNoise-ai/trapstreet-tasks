@@ -1,0 +1,26 @@
+{
+  "id": "tier2_distractors_error_class",
+  "answer": "8743",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 8743.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "tier": "retrieval_topic_distractors",
+  "needle_key": "Timeout",
+  "distractor_codewords": {
+    "Auth": 9942,
+    "Quota": 6976,
+    "Validation": 2706,
+    "Internal": 7336
+  },
+  "chunks_total": 18,
+  "chunks_with_codewords": 5,
+  "document_chars": 20434
+}

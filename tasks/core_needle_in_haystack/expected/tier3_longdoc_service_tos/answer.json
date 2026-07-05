@@ -1,0 +1,25 @@
+{
+  "id": "tier3_longdoc_service_tos",
+  "answer": "6339",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 6339.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "tier": "retrieval_long_doc_precision",
+  "doc_type": "service_tos",
+  "needle_key": "Insolvency",
+  "distractor_codewords": {
+    "MaterialBreach": 9286,
+    "Convenience": 2091,
+    "RegulatoryViolation": 7622,
+    "SecurityBreach": 2913
+  },
+  "document_chars": 134569
+}

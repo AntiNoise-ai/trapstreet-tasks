@@ -1,0 +1,25 @@
+{
+  "id": "tier3_longdoc_api_reference",
+  "answer": "9666",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 9666.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "tier": "retrieval_long_doc_precision",
+  "doc_type": "api_reference",
+  "needle_key": "Analytics",
+  "distractor_codewords": {
+    "Read": 4960,
+    "Write": 7413,
+    "Admin": 7914,
+    "Streaming": 6560
+  },
+  "document_chars": 95191
+}

@@ -1,0 +1,465 @@
+---
+### Chunk 1
+
+## Alert configuration guidance
+
+New alerts require a peer review. The review checks: alert name follows
+convention, description explains what to do, threshold is reasoned (not
+arbitrary), and the alert links to a runbook. Alerts without runbooks are
+rejected — an alert without an action is noise.
+
+Alert fatigue is measured by the acknowledge rate. Alerts with <30% ack rate
+are candidates for tuning or removal. Weekly alert review meetings triage
+recent alerts and decide on threshold adjustments.
+
+Suppression during known events (planned maintenance, load tests) is
+supported through the alert manager. Suppressions must have an owner, an
+end time, and a reason. Auto-suppression on holidays is not supported —
+holidays don't stop production issues.
+
+Alert severity ladders: sev0 (page immediately, wake up), sev1 (page during
+business hours), sev2 (Slack notification), sev3 (dashboard visibility).
+Severity is determined by user impact, not by cause.
+
+---
+### Chunk 2
+
+## Retry strategy summary
+
+Not all errors should be retried. Auth and Validation errors are non-retryable
+because they indicate a client-side problem that will not resolve on retry.
+Retrying wastes rate-limit budget and clogs metrics dashboards.
+
+Quota, Timeout, and Internal errors are retryable with exponential backoff.
+The recommended backoff schedule is 1s, 2s, 4s, 8s, 16s, then give up and
+surface the error to the caller. Jitter (adding a random component to the
+delay) is recommended to prevent thundering-herd on service recovery.
+
+Client libraries handle retries automatically for supported errors. Custom
+HTTP clients must implement the strategy themselves. See the retry-helper
+package in the SDK for a drop-in implementation.
+
+Idempotency: retries only safe if the operation is idempotent. GET, HEAD,
+PUT, and DELETE are naturally idempotent by RFC 7231. POST is not — clients
+should use the Idempotency-Key header to make POST retryable. The server
+deduplicates on the key for 24 hours.
+
+---
+### Chunk 3
+
+## Error class: Quota
+
+Quota errors (HTTP 429) indicate a rate limit or usage cap has been exceeded.
+This can be per-second rate (burst limit), per-day quota (billing quota), or
+concurrency limit (simultaneous open requests).
+
+The response includes several headers to help clients recover gracefully:
+`X-RateLimit-Reset` with epoch second when limit resets, `Retry-After` with
+seconds to wait, and `X-RateLimit-Type` indicating which limit was hit
+(rate/quota/concurrency).
+
+The Quota error class code is 6976. This code is essential for cost
+monitoring — customers should alert on unexpected quota errors as they may
+indicate a runaway job or leak. Quota exceedance also triggers an email
+notification to the billing contact at defined thresholds (80%, 100%, 120%).
+
+Clients should respect the Retry-After header and implement exponential
+backoff for repeated quota errors. Ignoring Retry-After results in
+escalating penalties: temporary IP blocks, tenant-wide throttling, and
+in extreme cases account suspension pending review.
+
+Enterprise customers can request temporary quota increases through the
+customer success channel. Emergency quota bumps (for incident response,
+customer-facing outages, etc.) can be granted within 30 minutes via the
+on-call ops team.
+
+---
+### Chunk 4
+
+## Cache coherence and invalidation
+
+Regional caches invalidate on write via the change-data-capture stream. Each
+region maintains a local LRU cache of 200,000 hot keys with a 15-minute TTL.
+When a write occurs, the origin region publishes an invalidation message which
+propagates to peer regions within 300ms P99.
+
+Cross-region reads that hit a stale entry return the stale value with a
+`X-Stale-Age` header for observability. Clients with strict consistency
+requirements can force a bypass with the `X-Cache-Bypass: true` header, but
+this incurs a full origin round-trip and should be used sparingly.
+
+Cache warming after regional failover is triggered automatically. The warmup
+job replays the top-N keys from the recent access log to prevent thundering-herd
+on origin databases. The N value is tuned per region based on historical
+traffic patterns and defaults to 50,000 keys.
+
+Emergency cache flushes go through the ops-critical Slack channel. A flush
+requires signoff from a Staff+ engineer and is coordinated with the on-call
+DBA because the resulting origin load spike can affect adjacent services.
+
+---
+### Chunk 5
+
+## Error class: Internal
+
+Internal errors (HTTP 500) indicate an unexpected server-side failure. These
+are always logged with a correlation ID and stack trace for post-incident
+analysis. Internal errors should be rare — >0.1% error rate for a minute
+triggers a page to the on-call engineer.
+
+Internal errors are catchall for unexpected code paths, unhandled exceptions,
+resource exhaustion, and infrastructure failures. The response body is
+intentionally sparse — just the correlation ID and a generic message. Detailed
+information stays server-side to avoid leaking implementation details.
+
+The Internal error class code is 7336. Repeated internal errors
+within a 60-second window trigger a page to the on-call engineer. The alert
+includes the correlation IDs so the on-call can immediately query logs and
+traces to diagnose.
+
+Internal errors CAN be retried but only with exponential backoff. Retries
+often succeed if the underlying cause was transient (a race condition, a
+brief resource contention). Persistent internal errors indicate a bug or
+regression and should surface to users.
+
+Internal errors are the primary source of engineering learning. Every
+internal error above a threshold triggers a review in the weekly service
+review meeting. Trends across services are aggregated in the reliability
+dashboard.
+
+---
+### Chunk 6
+
+## Storage tiering
+
+Hot data lives on NVMe SSDs in the primary region with cross-AZ replication.
+Warm data (30-90 days) migrates to standard SSD via a scheduled lifecycle rule.
+Cold data (>90 days) goes to object storage with Glacier-tier compression.
+
+Restoration from cold storage takes up to 4 hours; consumers should plan around
+this SLA. The Restore API returns a job ID that can be polled for status. For
+time-sensitive restorations, the Expedited Restore option is available at 3x
+the standard cost and completes within 15 minutes.
+
+Encryption at rest uses AES-256 with per-tenant KMS keys. Key rotation happens
+annually with a 90-day overlap where both keys are valid. Tenants can request
+manual key rotation at any time; this triggers a background re-encryption job
+that typically completes within 24 hours for typical data volumes.
+
+Cross-region replication is asynchronous with an RPO of 60 seconds. For
+customers requiring stricter RPO, the Sync Replication add-on is available
+at 2x the base cost and provides RPO of 1 second at the cost of write latency.
+
+---
+### Chunk 7
+
+## Schema migration playbook
+
+Schema migrations are online-first: create the new column nullable, dual-write
+from application code, backfill, then switch reads, then drop the old column.
+Each phase is a separate deploy with at least 24 hours between phases.
+
+Migrations that require table locks are scheduled for the maintenance window
+(Sundays 04:00 UTC). Any migration on a table >100 GB requires a written plan
+reviewed by the DBA team and the Staff+ engineer on the owning team.
+
+Backfills are chunked to avoid holding long-running transactions. Chunk size
+is tuned per table based on the row size and index structure. The migration
+tool tracks progress in a checkpoint table so backfills can resume after
+interruption. Failed chunks are retried up to 3 times before flagging for
+manual review.
+
+Rollback plans are mandatory. For additive changes (new columns), rollback
+is a NOOP. For destructive changes (dropped columns, altered types), rollback
+requires restoring from the pre-migration snapshot. Rollback windows are
+documented per migration.
+
+---
+### Chunk 8
+
+## Error class: Validation
+
+Validation errors (HTTP 400/422) indicate the request payload failed schema
+validation or business-logic checks. The response body contains a structured
+error object with `field`, `code`, and `message` for each invalid field.
+
+Field-level errors help clients build clean form UIs. The field path uses
+JSON Pointer syntax, e.g. `/user/address/postal_code`, so clients can map
+errors to specific form inputs. Multiple errors are returned in a single
+response — the API validates the entire payload before responding, not
+short-circuit on the first error.
+
+The Validation error class code is 2706. Alerting on this code
+is not typically useful — most Validation errors are legitimate user input
+issues. However, sudden spikes may indicate a client-side bug (bad schema
+mapping) or a schema change on the server without proper client updates.
+
+Validation errors should never be retried without changing the payload.
+Retrying will produce the same error and waste resources. The error object
+is designed to be sufficient for the client to fix the payload and retry.
+
+Some validation is best-effort. Deep semantic checks may pass at validation
+but fail during processing (uniqueness constraints, referential integrity).
+Those return different error classes (typically Business or Internal) — see
+the relevant sections for handling.
+
+---
+### Chunk 9
+
+## Error class: Auth
+
+Auth errors (HTTP 401/403) indicate the caller's credentials are missing,
+malformed, or insufficient for the requested resource. Common causes include:
+expired access token, revoked API key, IP address not in the allowlist,
+missing scope for the requested resource, or client identity mismatch on mTLS.
+
+The response body always includes a machine-readable `error.code` field for
+categorization and a `error.message` field with a human-readable description.
+For Auth errors, the message typically indicates which credential dimension
+failed without revealing whether the credential exists.
+
+The Auth error class code is 9942. Log analysis pipelines can filter on
+this code to build authentication health dashboards. Sudden spikes in Auth
+errors often correlate with credential rotations, token expirations, or
+active attack attempts.
+
+Auth errors should NOT be retried without changing the request. Common
+misuse: clients retry blind, exhausting rate limits without resolving the
+underlying credential issue. Correct handling: catch the Auth error, notify
+the user or ops team, refresh credentials, then retry once.
+
+Rate limit interaction: repeated Auth failures from the same client IP
+escalate faster than other errors. After 5 Auth failures in a minute, the
+IP is rate-limited more aggressively until 15 minutes of clean traffic
+resets the counter.
+
+---
+### Chunk 10
+
+## Notification channels
+
+Emails go through SendGrid with DKIM/DMARC verification. SMS uses Twilio with
+regional carrier fallback. Push notifications use FCM for Android and APNS for
+iOS.
+
+Slack integrations use the bot token stored in the ops vault. Webhook retries
+follow exponential backoff: 5s, 30s, 5m, 30m, 3h, then dead-letter. All outbound
+notifications are rate-limited per-tenant to prevent abuse. Rate limits are
+higher for transactional messages than promotional messages.
+
+Bounce and complaint handling is automated. Bounced emails are marked in the
+suppression list after 3 consecutive soft bounces or 1 hard bounce. Complaint
+recipients (marked spam) are immediately added to the suppression list. The
+list is checked before every send.
+
+Templates are version-controlled in a separate repo with review required for
+customer-facing changes. Preview mode renders templates with sample data for
+QA. A/B testing is supported at the template level with automatic winner
+selection after statistical significance is reached.
+
+---
+### Chunk 11
+
+## Observability stack
+
+Traces are sampled at 1% for successful requests and 100% for errors and slow
+requests (>1s). Logs are structured JSON, indexed in Elasticsearch with a 30-day
+retention. Metrics are Prometheus-compatible, scraped every 15 seconds.
+
+Alerts route through PagerDuty for critical severity and Slack for warnings.
+Custom dashboards are built in Grafana; the standard SLO board is at
+grafana.internal/slos. On-call rotation is managed through PagerDuty schedules
+with a 1-week rotation, backup on-call, and coverage for major holidays.
+
+Distributed tracing uses OpenTelemetry with automatic instrumentation for
+supported frameworks. Trace context propagates across service boundaries via
+standard W3C tracecontext headers. Tail-based sampling is applied at the
+collector to focus on interesting traces (errors, high latency, specific
+customers).
+
+Log-based alerts (LBAs) are for text-pattern-driven pages, e.g. `panic:` in a
+service log or specific error codes. Metric-based alerts (MBAs) are for
+quantitative thresholds. New alert configuration goes through a peer review
+process to prevent alert fatigue.
+
+---
+### Chunk 12
+
+## Deployment strategy
+
+Blue-green deployments are the default for the API tier. Canary rollouts (5% →
+25% → 100%) are used for the frontier ML services because their traffic patterns
+are more sensitive to model regressions.
+
+Rollbacks are triggered automatically if error rate exceeds 2% for a 5-minute
+window. Manual rollback is done via `deploy revert <sha>` which also fires a
+Slack alert to the on-call channel. The revert command is idempotent — running
+it multiple times has the same effect as running it once.
+
+Deployment ordering follows the dependency graph in the service catalog. Upstream
+services deploy first with backward-compatible changes, then downstream services
+consume the new API. Breaking changes require a two-phase deploy: introduce the
+new API alongside the old (dual-write / dual-read), then remove the old.
+
+The deploy dashboard shows real-time metrics for the last 3 deploys per service.
+Each deploy is tagged with the git SHA, deployer, and change ticket. Search
+and filter capabilities let ops quickly correlate incidents with recent deploys.
+
+---
+### Chunk 13
+
+## Client library behavior
+
+Official client libraries automatically implement the retry strategy above.
+The retry policy is configurable via the client constructor. Custom clients
+implementing HTTP directly are expected to follow the same policy.
+
+Failing to implement backoff on Quota errors is the #1 cause of repeated
+rate-limit escalations to the ops team. Clients that ignore Retry-After
+often get IP-blocked, which causes hard-to-diagnose failure modes for their
+whole cluster.
+
+Client libraries also handle correlation ID injection, structured error
+parsing, and automatic tracing integration. Library versions are supported
+for 24 months from release. After that, security patches only.
+
+Async clients (asyncio, RxJava, etc.) have slightly different retry semantics:
+the retry timeline is measured in "virtual time" if a scheduler is involved.
+Documentation in each library describes the specific behavior. Report any
+divergence as a bug.
+
+---
+### Chunk 14
+
+## Error response schema
+
+All error responses share a common schema:
+```json
+{
+  "error": {
+    "code": "AUTH_INVALID_TOKEN",
+    "message": "The provided access token is not valid.",
+    "correlation_id": "550e8400-e29b-41d4-a716-446655440000",
+    "class": "auth",
+    "retryable": false,
+    "docs_url": "https://docs.example.com/errors/AUTH_INVALID_TOKEN"
+  }
+}
+```
+
+The `code` is machine-readable and stable across minor versions. The `class`
+groups codes into the major categories (auth, quota, timeout, validation,
+internal). The `retryable` boolean is authoritative — clients should trust
+it over hardcoded assumptions.
+
+Not all endpoints return the full schema. Health checks return only the
+`code` field. Batch endpoints return an array of error objects, one per
+failed record. GraphQL endpoints wrap the standard schema in the GraphQL
+error extensions field.
+
+Client libraries expose the error schema through typed exception classes.
+Common patterns: catch on class (all auth errors) or catch on code (specific
+token issue). Both are supported.
+
+---
+### Chunk 15
+
+## Correlation IDs and tracing
+
+Every request is assigned a correlation ID at the edge, propagated through
+all downstream services via the `X-Request-Id` header. Errors surface the
+correlation ID in the response body under `error.correlation_id`. Clients
+should log this ID.
+
+When filing a support ticket, include the correlation ID to enable end-to-end
+trace lookup in the observability stack. Support engineers can query traces
+in seconds with a correlation ID vs. minutes-to-hours of grepping logs
+without one.
+
+The correlation ID is a UUIDv4 by default but can be pre-assigned by the
+client via the `X-Request-Id` header on the incoming request. Clients that
+have their own request tracing should pass the ID through to avoid two IDs
+tracking the same operation.
+
+Trace retention is 30 days. Beyond 30 days, only the summary metrics remain.
+Enterprise customers can request longer trace retention (up to 1 year) as
+part of their support agreement.
+
+---
+### Chunk 16
+
+## Batch processing model
+
+The batch pipeline reads from Kafka with committed offsets tracked in Zookeeper.
+Each batch is a 5-minute window with at-least-once semantics. Idempotency is
+enforced downstream via the record UUID.
+
+Late-arriving records (up to 15 minutes late) are accepted; anything later is
+written to a dead-letter topic for manual review. The pipeline SLA is 99.5%
+on-time delivery. Late records are still processed but marked so downstream
+consumers can decide whether to accept them.
+
+Backpressure is handled via consumer lag monitoring. If lag exceeds 5 minutes,
+the pipeline auto-scales out. If lag exceeds 30 minutes, an alert pages the
+on-call. Auto-scaling is bounded by the max-instances config to prevent
+runaway costs.
+
+Batch failures are categorized into transient (retryable) and permanent
+(unretryable). Transient failures retry with exponential backoff up to 5
+times. Permanent failures (schema violations, corrupt records) go directly
+to the DLQ. The DLQ is monitored and manually triaged weekly.
+
+---
+### Chunk 17
+
+## Feature flag conventions
+
+Flags are managed through the FeatureFlags service. Each flag has a mandatory
+description, owner, and expected removal date. Flags older than 6 months
+trigger a weekly reminder to the owner. Flags older than 12 months without
+a documented reason are automatically nominated for cleanup.
+
+Kill switches are separate from feature flags and route through the ops-critical
+Slack channel. Kill switches disable a feature entirely; feature flags gradually
+roll out a feature. Naming convention: kill switches are prefixed with `kill_`
+while feature flags are prefixed with `ff_`.
+
+Rollout percentages are set in increments of 5% and can be reverted instantly
+via the admin dashboard. Gradual rollout is preferred over binary on/off for
+customer-facing features. Percentage rollouts are consistent per tenant via
+hash bucketing — customers see the same behavior on retry.
+
+Flag evaluation is measured for latency (P99 target: 1ms) and error rate.
+Flag service downtime falls back to the default value declared at flag
+creation. This "fail-static" behavior prevents flag outages from cascading.
+
+---
+### Chunk 18
+
+## Error class: Timeout
+
+Timeout errors (HTTP 504) indicate the upstream operation did not complete
+within the SLA window. This is usually a transient condition caused by
+downstream service degradation, network partitions, or unusually large
+workload spikes.
+
+The exact SLA window depends on the endpoint. Read endpoints have a 5-second
+timeout; write endpoints have a 15-second timeout; batch endpoints have a
+60-second timeout. These are the maximum wait times before the gateway
+returns a 504 to the client.
+
+The Timeout error class code is 8743. Timeouts SHOULD be retried
+with exponential backoff, up to a maximum of 5 retries. The retry
+recommendation is 1s, 2s, 4s, 8s, 16s for successive attempts. After 5
+failed retries, surface the error to the caller and stop retrying.
+
+Timeouts are always logged with the correlation ID and downstream service
+identified. Ops dashboards show top-N services generating timeouts, useful
+for identifying degraded upstream dependencies during incident triage.
+
+Some timeout errors are actually the client giving up rather than the server
+timing out. To differentiate, check the `X-Server-Duration` header — if
+present and less than the SLA, the client hung up early. Adjust client
+timeout settings if this happens frequently.
+
+---

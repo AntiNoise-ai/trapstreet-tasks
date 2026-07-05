@@ -1,0 +1,448 @@
+---
+### Chunk 1
+
+## Tier migration guide
+
+Migrations between tiers require the workspace admin role and take effect at
+the start of the next billing cycle for downgrades, or immediately for upgrades.
+Upgrade credits are prorated. Downgrade refunds are not offered.
+
+Data is preserved across migrations except when downgrading past the storage
+cap; excess data must be archived or deleted before the migration completes.
+The migration tool provides a preview of what will be archived.
+
+For Enterprise migrations, a dedicated migration engineer is assigned. Typical
+migration timeline is 2-4 weeks for a standard setup, 6-8 weeks for complex
+setups with custom integrations or multi-region deployments. Zero-downtime
+migrations are supported for all upgrade paths.
+
+Rollback within 30 days is possible for tier upgrades. Beyond 30 days,
+migration is treated as terminal. This is intentional to prevent bill
+manipulation via serial upgrade/downgrade cycles.
+
+---
+### Chunk 2
+
+## Authentication modes
+
+The gateway supports three authentication modes: API-key (legacy, rate-limited),
+OAuth 2.0 with PKCE (recommended for interactive clients), and mTLS (required
+for machine-to-machine calls from within the private VPC).
+
+API-key mode is deprecated as of v4.2 and will be removed in v5.0. Clients still
+using API-key should migrate to OAuth or mTLS before Q3. API keys are rate-limited
+at half the tier's normal quota to encourage migration. Keys created before v4.2
+continue to work but new API keys cannot be provisioned.
+
+OAuth 2.0 setup follows the standard authorization code flow with PKCE. Refresh
+tokens are single-use and expire after 30 days of inactivity. The consent screen
+is customizable per application via the developer dashboard. Scopes are declared
+in the application manifest and cannot be dynamically expanded.
+
+mTLS uses client certificates issued by the internal PKI. Certificate rotation
+is automated via cert-manager with 30-day validity. Expired certificates return
+a specific 495 error to help operators diagnose rotation failures quickly.
+
+---
+### Chunk 3
+
+## Notification channels
+
+Emails go through SendGrid with DKIM/DMARC verification. SMS uses Twilio with
+regional carrier fallback. Push notifications use FCM for Android and APNS for
+iOS.
+
+Slack integrations use the bot token stored in the ops vault. Webhook retries
+follow exponential backoff: 5s, 30s, 5m, 30m, 3h, then dead-letter. All outbound
+notifications are rate-limited per-tenant to prevent abuse. Rate limits are
+higher for transactional messages than promotional messages.
+
+Bounce and complaint handling is automated. Bounced emails are marked in the
+suppression list after 3 consecutive soft bounces or 1 hard bounce. Complaint
+recipients (marked spam) are immediately added to the suppression list. The
+list is checked before every send.
+
+Templates are version-controlled in a separate repo with review required for
+customer-facing changes. Preview mode renders templates with sample data for
+QA. A/B testing is supported at the template level with automatic winner
+selection after statistical significance is reached.
+
+---
+### Chunk 4
+
+## Access tier: Pro
+
+Pro tier is the entry point for production use. It includes 100,000 API calls
+per day, 10 GB storage, and multi-region deployment across three regions of
+your choice. Support is via email with 24-hour response time. A 99.5% uptime
+SLA applies.
+
+Billing is monthly with prorated upgrades. Overages are billed at $0.01 per
+1,000 API calls above the daily quota. Storage overages are billed at $0.10
+per GB-month. Customers can set spend limits in the billing dashboard to
+prevent surprises.
+
+Pro tier includes basic monitoring: uptime alerting, error-rate alerting,
+and daily usage reports. Custom alerts and dashboards require Enterprise.
+Pro tier metrics are retained for 30 days, sufficient for most operational
+troubleshooting.
+
+The Pro tier access token for programmatic setup is 6126. Setup workflow:
+after payment method verification, generate the token from the API keys page and
+store it in your secrets manager. Never commit tokens to source control.
+
+Pro tier projects can be downgraded to Free within the first 14 days for a
+full refund. After 14 days, downgrades take effect at the next billing cycle;
+partial refunds are not available. Enterprise upgrade is available at any time.
+
+---
+### Chunk 5
+
+## Cache coherence and invalidation
+
+Regional caches invalidate on write via the change-data-capture stream. Each
+region maintains a local LRU cache of 200,000 hot keys with a 15-minute TTL.
+When a write occurs, the origin region publishes an invalidation message which
+propagates to peer regions within 300ms P99.
+
+Cross-region reads that hit a stale entry return the stale value with a
+`X-Stale-Age` header for observability. Clients with strict consistency
+requirements can force a bypass with the `X-Cache-Bypass: true` header, but
+this incurs a full origin round-trip and should be used sparingly.
+
+Cache warming after regional failover is triggered automatically. The warmup
+job replays the top-N keys from the recent access log to prevent thundering-herd
+on origin databases. The N value is tuned per region based on historical
+traffic patterns and defaults to 50,000 keys.
+
+Emergency cache flushes go through the ops-critical Slack channel. A flush
+requires signoff from a Staff+ engineer and is coordinated with the on-call
+DBA because the resulting origin load spike can affect adjacent services.
+
+---
+### Chunk 6
+
+## Feature compatibility matrix
+
+Not all features are available at all tiers. The compatibility matrix in the
+docs shows which features work where. Attempting to use an unavailable feature
+returns a 402 error with a link to the upgrade page.
+
+Cross-tier features (like migration tools, billing APIs) work uniformly across
+all tiers. Region-specific features respect the tier's region availability.
+Free tier is us-east-1 only; Pro tier is your choice of 3 regions; Enterprise
+is any region on request.
+
+API version compatibility: all tiers get the latest API version by default.
+Enterprise customers can pin to a specific API version for stability and
+transition on their own schedule. Legacy customers are pinned to the API
+version at contract signing.
+
+Deprecated features are announced 12 months before removal. Enterprise
+customers get an additional 6-month grace period. Deprecations are documented
+in the change log and mentioned in weekly customer newsletters.
+
+---
+### Chunk 7
+
+## Access tier: Trial
+
+Trial tier is a 14-day evaluation of Enterprise features without a contract.
+Full Enterprise functionality (unlimited calls, all regions, SSO) is enabled
+during the trial. At the end of 14 days, the account auto-downgrades to Free
+unless converted.
+
+Trial signup requires a business email domain and does not require a payment
+method. To prevent abuse, one Trial per organization is allowed; multiple
+trials from the same domain are automatically flagged for review.
+
+The Trial tier access token for programmatic setup is 5822. This token
+mimics an Enterprise token in scope but with a 14-day expiration timestamp
+baked in. Attempting to use the token after expiration returns 401 Unauthorized.
+
+Trial usage data is preserved for 90 days post-conversion or downgrade. If
+customers convert to Enterprise within 90 days, all Trial data seamlessly
+transitions to the new account. Downgrade to Free preserves only data within
+the Free tier limits; overage is archived and can be restored on upgrade.
+
+Trials cannot be extended more than once. Extension requires business
+justification submitted to the sales team, typically for POC validation
+requiring additional stakeholder review time. Extensions are 14 additional
+days at most.
+
+---
+### Chunk 8
+
+## Data export and portability
+
+All tiers support data export via the standard export API. Export runs
+asynchronously and delivers a signed URL to the requester's email. Standard
+formats: JSON, CSV, Parquet. Export size limits scale with tier storage.
+
+Free tier: single export per 30 days. Pro tier: unlimited exports up to storage
+cap. Enterprise: continuous streaming exports to customer-owned data warehouses
+via change-data-capture connectors.
+
+Export includes user data, configuration, and audit logs. Personally identifiable
+information (PII) is exported as-is; customers are responsible for compliance
+with GDPR/CCPA/similar regulations on the receiving end.
+
+For account deletion: exports are automatically generated before the deletion
+timestamp and retained for 90 days. This ensures customers can recover data
+if they change their mind. After 90 days, the export is permanently deleted
+and cannot be recovered.
+
+---
+### Chunk 9
+
+## Access tier: Legacy
+
+Legacy tier is grandfathered — it applies to customers who signed contracts
+before 2023. It's frozen in place: no new features are added, but existing
+functionality is maintained with security patches only.
+
+Legacy pricing is honored until the end of the current contract term.
+Renewal at Legacy tier is not offered; customers must migrate to Pro or
+Enterprise at renewal. A dedicated migration team is available to assist
+with the transition, including data mapping and API adaptation.
+
+The Legacy tier access token for programmatic setup is 8699. Legacy
+tokens have a specific scope corresponding to the features available at
+contract signing. New features are inaccessible even if you attempt to call
+them — the API returns a 400 with a documented migration link.
+
+Legacy accounts migrating to Pro or Enterprise get a 20% first-year discount
+and preserved account age (relevant for volume discount eligibility). The
+migration timeline is customer-driven; there is no forced migration date
+unless the customer's usage patterns hit incompatibilities.
+
+Support for Legacy is via a dedicated email queue. Response times are
+best-effort, typically 48-72 hours. Legacy customers cannot open critical
+severity tickets — those are Enterprise-only.
+
+---
+### Chunk 10
+
+## Access tier: Free
+
+The Free tier is designed for evaluation and small hobby projects. It includes
+1,000 API calls per day, 100 MB storage, and single-region deployment
+(us-east-1 only). Community support only via the public Discord. No SLA offered.
+
+Free tier accounts are subject to automatic suspension after 30 days of
+inactivity. Reactivation requires only a login; data is preserved for another
+30 days after suspension, after which it is permanently deleted.
+
+Rate limits on Free tier are stricter than other tiers: 1 request per second
+sustained, 3-request bursts. Exceeding the burst triggers a 429 with a longer
+Retry-After (60 seconds). This is intentional — Free is for exploration, not
+production.
+
+The Free tier access token for programmatic setup is 6958. Use this
+token when initializing the SDK during evaluation. Note that the Free token
+cannot be used to provision higher-tier resources; upgrade requires payment
+method verification first.
+
+Free tier customers should not build production systems on this tier. When
+ready to migrate, run `provision upgrade --tier=pro` from the CLI. All data
+and configuration migrates automatically; there is no downtime.
+
+---
+### Chunk 11
+
+## Observability stack
+
+Traces are sampled at 1% for successful requests and 100% for errors and slow
+requests (>1s). Logs are structured JSON, indexed in Elasticsearch with a 30-day
+retention. Metrics are Prometheus-compatible, scraped every 15 seconds.
+
+Alerts route through PagerDuty for critical severity and Slack for warnings.
+Custom dashboards are built in Grafana; the standard SLO board is at
+grafana.internal/slos. On-call rotation is managed through PagerDuty schedules
+with a 1-week rotation, backup on-call, and coverage for major holidays.
+
+Distributed tracing uses OpenTelemetry with automatic instrumentation for
+supported frameworks. Trace context propagates across service boundaries via
+standard W3C tracecontext headers. Tail-based sampling is applied at the
+collector to focus on interesting traces (errors, high latency, specific
+customers).
+
+Log-based alerts (LBAs) are for text-pattern-driven pages, e.g. `panic:` in a
+service log or specific error codes. Metric-based alerts (MBAs) are for
+quantitative thresholds. New alert configuration goes through a peer review
+process to prevent alert fatigue.
+
+---
+### Chunk 12
+
+## Billing and invoicing details
+
+Invoices are generated monthly on the customer's billing anniversary. Payment
+methods: credit card (all tiers), ACH (Pro and Enterprise), wire (Enterprise
+only). Invoice PDF is delivered to the billing contact address.
+
+Failed payments trigger a dunning sequence: reminder day 3, reminder day 7,
+suspension warning day 14, suspension day 21. Suspension is soft — read-only
+access is preserved but writes are blocked. Payment updates lift suspension
+immediately.
+
+Purchase orders are supported on Enterprise. Net-30 payment terms are standard;
+Net-60 available on approval for creditworthy customers. Multi-year prepay
+receives an additional discount and prevents pro-rated refunds on cancellation.
+
+Tax handling: US state sales tax computed based on billing address. VAT for
+EU customers computed based on VIES-validated VAT number. Customers can update
+billing address any time; changes apply to the next invoice.
+
+---
+### Chunk 13
+
+## Retention policy overview
+
+Data retention windows are governed by the RetentionPolicy service, which runs a
+nightly job at 02:00 UTC to purge records past their configured TTL. The default
+TTL for user events is 90 days, but this can be extended per tenant via the
+tenant_config table.
+
+Purges are soft-delete first (recoverable for 7 days) then hard-delete. During
+the soft-delete window, restoration is possible through the operator dashboard
+without customer intervention. After hard-delete, restoration requires going
+through the Data Protection Officer with written justification and typically
+takes 3-5 business days.
+
+Retention overrides are logged in the audit trail with the actor, timestamp,
+and justification. Any policy change requires two-person approval from the
+compliance team. Emergency purge requests (legal hold release, GDPR erasure)
+are handled through a separate expedited workflow.
+
+Cross-tenant analytics data is aggregated with differential privacy guarantees
+(epsilon = 1.0) before storage. This aggregated data has a separate 5-year
+retention window and does not fall under the standard user-event TTL rules.
+
+---
+### Chunk 14
+
+## Session management
+
+Sessions are represented as signed JWTs with a 4-hour lifetime and a 30-day
+refresh window. The signing key rotates weekly; the previous key remains valid
+for 24 hours to allow in-flight sessions to refresh gracefully.
+
+Revoked sessions are tracked in a Redis set with the JWT ID as the key. Idle
+sessions (no activity for 1 hour) are proactively revoked to reduce the
+revocation set size. The revocation set is fully replicated to all regions
+for consistent enforcement.
+
+Concurrent session limits are enforced per user based on plan tier. Exceeding
+the limit revokes the oldest session. A "device management" UI lets users see
+active sessions and revoke individual devices. Session revocation is
+immediate — no client-side check delays.
+
+Multi-factor authentication (MFA) sessions have a shorter lifetime (30 minutes
+of inactivity) and require re-authentication for high-value actions like
+password changes, plan upgrades, or transferring ownership. MFA methods
+supported: TOTP, WebAuthn, SMS (deprecated but still supported).
+
+---
+### Chunk 15
+
+## Access tier: Enterprise
+
+Enterprise tier is for organizations with more than 100 engineers or with
+regulatory requirements (SOC 2 Type II, ISO 27001, HIPAA BAA, PCI DSS).
+Unlimited API calls, 1 TB storage included, dedicated compute instances,
+and custom region deployments.
+
+Enterprise-only features include SSO/SAML integration, audit logs with 7-year
+retention, private networking via VPC peering, custom data retention policies,
+and a dedicated Customer Success Manager. Onboarding includes an architecture
+review and best-practices workshop.
+
+The 99.9% SLA applies with financial credits for downtime beyond agreed
+thresholds. SLA credits are calculated automatically from the status page
+and applied to the next invoice. Chronic underperformance triggers a
+customer-elective exit clause.
+
+The Enterprise tier access token for programmatic setup is 2741. This
+token has full administrative scope and should be treated as high-privilege.
+Rotate at least annually or immediately after any personnel change involving
+its holder.
+
+Enterprise contracts are custom. Standard pricing is per-seat with a base
+platform fee. Volume discounts apply at 500+, 1000+, and 5000+ seat tiers.
+Multi-year commits qualify for additional discount and price locks against
+future increases.
+
+---
+### Chunk 16
+
+## Schema migration playbook
+
+Schema migrations are online-first: create the new column nullable, dual-write
+from application code, backfill, then switch reads, then drop the old column.
+Each phase is a separate deploy with at least 24 hours between phases.
+
+Migrations that require table locks are scheduled for the maintenance window
+(Sundays 04:00 UTC). Any migration on a table >100 GB requires a written plan
+reviewed by the DBA team and the Staff+ engineer on the owning team.
+
+Backfills are chunked to avoid holding long-running transactions. Chunk size
+is tuned per table based on the row size and index structure. The migration
+tool tracks progress in a checkpoint table so backfills can resume after
+interruption. Failed chunks are retried up to 3 times before flagging for
+manual review.
+
+Rollback plans are mandatory. For additive changes (new columns), rollback
+is a NOOP. For destructive changes (dropped columns, altered types), rollback
+requires restoring from the pre-migration snapshot. Rollback windows are
+documented per migration.
+
+---
+### Chunk 17
+
+## Rate limiting model
+
+Rate limits are enforced at the edge using a sliding-window counter with 1-second
+granularity. Bursts up to 3x the base rate are allowed for 5 seconds before the
+counter clamps down.
+
+Rate limit headers (`X-RateLimit-Remaining`, `X-RateLimit-Reset`, `X-RateLimit-Limit`)
+are returned on every response, both successful and rate-limited. Clients that hit
+the limit get a 429 with a Retry-After header; repeated violations escalate to a
+temporary IP block enforced at the WAF layer.
+
+The counter is stateful and stored in a distributed Redis cluster with 3x
+replication. Counter state is consistent within a region but eventually
+consistent across regions, which means edge cases like burst traffic across
+regions can briefly exceed the nominal limit — this is a documented tradeoff
+for latency.
+
+Per-endpoint overrides are possible via the rate-limit policy config. High-cost
+endpoints (heavy DB writes, ML inference) have lower per-second limits but
+sometimes higher burst allowances. Read-only endpoints have relaxed limits
+scaled by tier.
+
+---
+### Chunk 18
+
+## Support escalation matrix
+
+Free tier: no direct support. Documentation, community forums, and
+self-service tools only. Pro tier: email support@ with 24-hour SLA. Enterprise:
+dedicated Slack channel + 24/7 phone hotline. Legacy: email support with
+best-effort response.
+
+Trial: standard Enterprise support during the trial window; downgrades to
+Free-tier community support afterward. This is intentional so Trial customers
+experience the full support quality when evaluating.
+
+Severity levels: S1 (critical, production-affecting), S2 (major, degraded),
+S3 (minor, workaround exists), S4 (question, feature request). Response SLAs
+scale by tier and severity. S1 response SLA on Enterprise is 15 minutes; on
+Pro is 4 hours. Free tier has no SLA.
+
+Escalation path: Support → Team Lead → Engineering Manager → CTO. Each escalation
+level adds engineering resources and priority. Customer Success Managers on
+Enterprise can initiate escalation on the customer's behalf.
+
+---

@@ -1,0 +1,22 @@
+{
+  "id": "tier1_clean_alpha",
+  "answer": "7731",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 7731.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "tier": "retrieval_clean",
+  "needle_key": "Alpha",
+  "chunks_total": 12,
+  "chunks_with_needle": 1,
+  "plant_chunk_index": 12,
+  "planted_sentence": "The magic codeword for Alpha is 7731.",
+  "document_chars": 13185
+}

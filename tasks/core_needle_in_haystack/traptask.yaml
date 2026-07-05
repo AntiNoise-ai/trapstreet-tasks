@@ -1,88 +1,67 @@
 dirs:
   inputs: inputs/
   expected: expected/
-
 cases:
-- id: length2000_alpha
-  description: "Find magic codeword in 2000-char haystack"
+- id: tier1_clean_alpha
+  description: 'Tier 1 (clean, ~10k tokens): 12 chunks, one needle for "Alpha"'
   tags:
-  - length_2000
-- id: length2000_bravo
-  description: "Find magic codeword in 2000-char haystack"
+  - tier1_clean
+- id: tier1_clean_bravo
+  description: 'Tier 1 (clean, ~10k tokens): 12 chunks, one needle for "Bravo"'
   tags:
-  - length_2000
-- id: length2000_charlie
-  description: "Find magic codeword in 2000-char haystack"
+  - tier1_clean
+- id: tier1_clean_charlie
+  description: 'Tier 1 (clean, ~10k tokens): 12 chunks, one needle for "Charlie"'
   tags:
-  - length_2000
-- id: length2000_delta
-  description: "Find magic codeword in 2000-char haystack"
+  - tier1_clean
+- id: tier1_clean_delta
+  description: 'Tier 1 (clean, ~10k tokens): 12 chunks, one needle for "Delta"'
   tags:
-  - length_2000
-- id: length2000_echo
-  description: "Find magic codeword in 2000-char haystack"
+  - tier1_clean
+- id: tier1_clean_echo
+  description: 'Tier 1 (clean, ~10k tokens): 12 chunks, one needle for "Echo"'
   tags:
-  - length_2000
-- id: length8000_alpha
-  description: "Find magic codeword in 8000-char haystack"
+  - tier1_clean
+- id: tier2_distractors_api_tier
+  description: 'Tier 2 (distractors, ~20k tokens): same-topic chunks, 5 codewords, question asks for "Enterprise"'
   tags:
-  - length_8000
-- id: length8000_bravo
-  description: "Find magic codeword in 8000-char haystack"
+  - tier2_topic_distractors
+- id: tier2_distractors_error_class
+  description: 'Tier 2 (distractors, ~20k tokens): same-topic chunks, 5 codewords, question asks for "Timeout"'
   tags:
-  - length_8000
-- id: length8000_charlie
-  description: "Find magic codeword in 8000-char haystack"
+  - tier2_topic_distractors
+- id: tier2_distractors_employee_level
+  description: 'Tier 2 (distractors, ~20k tokens): same-topic chunks, 5 codewords, question asks for "Staff"'
   tags:
-  - length_8000
-- id: length8000_delta
-  description: "Find magic codeword in 8000-char haystack"
+  - tier2_topic_distractors
+- id: tier2_distractors_db_index
+  description: 'Tier 2 (distractors, ~20k tokens): same-topic chunks, 5 codewords, question asks for "Bloom"'
   tags:
-  - length_8000
-- id: length8000_echo
-  description: "Find magic codeword in 8000-char haystack"
+  - tier2_topic_distractors
+- id: tier2_distractors_subscription
+  description: 'Tier 2 (distractors, ~20k tokens): same-topic chunks, 5 codewords, question asks for "Scale"'
   tags:
-  - length_8000
-- id: length20000_alpha
-  description: "Find magic codeword in 20000-char haystack"
+  - tier2_topic_distractors
+- id: tier3_longdoc_service_tos
+  description: 'Tier 3 (long doc, ~40k tokens): coherent service_tos, question asks for "Insolvency"'
   tags:
-  - length_20000
-- id: length20000_bravo
-  description: "Find magic codeword in 20000-char haystack"
+  - tier3_long_doc_precision
+- id: tier3_longdoc_employee_handbook
+  description: 'Tier 3 (long doc, ~40k tokens): coherent employee_handbook, question asks for "Sabbatical"'
   tags:
-  - length_20000
-- id: length20000_charlie
-  description: "Find magic codeword in 20000-char haystack"
+  - tier3_long_doc_precision
+- id: tier3_longdoc_api_reference
+  description: 'Tier 3 (long doc, ~40k tokens): coherent api_reference, question asks for "Analytics"'
   tags:
-  - length_20000
-- id: length20000_delta
-  description: "Find magic codeword in 20000-char haystack"
+  - tier3_long_doc_precision
+- id: tier3_longdoc_retention_policy
+  description: 'Tier 3 (long doc, ~40k tokens): coherent retention_policy, question asks for "Personal"'
   tags:
-  - length_20000
-- id: length20000_echo
-  description: "Find magic codeword in 20000-char haystack"
+  - tier3_long_doc_precision
+- id: tier3_longdoc_product_manual
+  description: 'Tier 3 (long doc, ~40k tokens): coherent product_manual, question asks for "Security"'
   tags:
-  - length_20000
-- id: length60000_alpha
-  description: "Find magic codeword in 60000-char haystack"
-  tags:
-  - length_60000
-- id: length60000_bravo
-  description: "Find magic codeword in 60000-char haystack"
-  tags:
-  - length_60000
-- id: length60000_charlie
-  description: "Find magic codeword in 60000-char haystack"
-  tags:
-  - length_60000
-- id: length60000_delta
-  description: "Find magic codeword in 60000-char haystack"
-  tags:
-  - length_60000
-- id: length60000_echo
-  description: "Find magic codeword in 60000-char haystack"
-  tags:
-  - length_60000
+  - tier3_long_doc_precision
 judge:
   cmd: python3 judge.py
 grader:

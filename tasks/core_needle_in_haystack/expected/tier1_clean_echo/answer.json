@@ -1,0 +1,22 @@
+{
+  "id": "tier1_clean_echo",
+  "answer": "9285",
+  "type": "needle_in_haystack",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 9285.0,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "tier": "retrieval_clean",
+  "needle_key": "Echo",
+  "chunks_total": 12,
+  "chunks_with_needle": 1,
+  "plant_chunk_index": 3,
+  "planted_sentence": "The magic codeword for Echo is 9285.",
+  "document_chars": 13224
+}
