@@ -1,14 +1,14 @@
 # core_json_schema_output — Output Strict JSON Matching a Schema
 
-Part of TrapStreet's **Foundation 11** — basic mechanics every AI agent needs.
+An open-source evaluation task for **structured output / function-call compliance**. Useful as a basic sanity check when building AI agents that rely on models producing valid, schema-conforming JSON — the foundation of any tool-use, function-calling, or structured-response pipeline.
 
-A trap-compatible task that tests whether a model can produce **valid JSON conforming to a given function-call schema**. 20 cases from the Berkeley Function Calling Leaderboard (BFCL).
+20 cases sampled from the Berkeley Function Calling Leaderboard (BFCL).
 
 ## What this task tests
 
 **Can the model output JSON that's both syntactically valid AND semantically correct against a schema?**
 
-This is the single most common failure mode in production agent stacks: model returns prose, or returns markdown-wrapped JSON, or returns JSON with the wrong field names, or with a value of the wrong type. Every LangChain / LangGraph / AutoGen / OpenAI Tools build needs this to work reliably.
+This is the single most common failure mode in agent stacks: model returns prose, or returns markdown-wrapped JSON, or returns JSON with the wrong field names, or with a value of the wrong type. Every LangChain / LangGraph / AutoGen / OpenAI Tools build needs this to work reliably.
 
 If a model fails this task, almost no agent framework built on top of it will work without a wrapper / retry loop / custom prompting.
 
@@ -64,7 +64,7 @@ Looks trivial — until you actually try it. Common failure modes:
 
 ## Cost
 
-20 small text-only cases. ~$0.02-0.10 per full run on most models. Cheapest task in TrapStreet.
+20 small text-only cases. ~$0.02-0.10 per full run on most models.
 
 ## Honest limitations
 

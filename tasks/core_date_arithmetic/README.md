@@ -1,8 +1,10 @@
 # core_date_arithmetic — Date / Time Reasoning
 
-Part of TrapStreet's **Foundation 11** — basic mechanics every AI agent needs.
+An open-source evaluation task for **temporal arithmetic** — the everyday "3 days from Tuesday" / "what year did X end" / "what time is it in Tokyo when it's 9am in NYC" computations that any scheduling, booking, calendar, or finance agent needs to get right.
 
-A trap-compatible task that tests whether a model can correctly do **date, time, and calendar arithmetic** — the everyday "3 days from Tuesday" / "what year did X end" / "what time is it in Tokyo when it's 9am in NYC" computations that any scheduling, booking, calendar, or finance agent will face.
+Useful as a basic sanity check when building AI agents that touch calendars, timezones, deadlines, or duration math.
+
+21 cases sampled from Google DeepMind's ToT (Test of Time) benchmark.
 
 ## What this task tests
 
@@ -31,7 +33,7 @@ The eval covers 7 distinct subtypes of temporal reasoning:
 
 ## Input
 
-Per case the agent receives:
+Per case:
 - `INPUTS["question.txt"]` — the natural-language question, INCLUDING the original ToT prompt that asks the model to format its answer as JSON.
 
 ## Expected output

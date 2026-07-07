@@ -1,8 +1,8 @@
 # core_needle_in_haystack — Retrieval Under Distractors
 
-Part of TrapStreet's **Foundation 11** — basic mechanics every AI agent needs.
+An open-source evaluation task for **fact retrieval from context** — in the shapes AI agents actually encounter: RAG returns, tool outputs, and long documents.
 
-Tests whether a model can retrieve a specific fact from context — in the shapes agents actually encounter: RAG returns, tool outputs, and long documents.
+Useful as a basic sanity check when building agents that rely on the underlying model to find specific facts in provided context (RAG pipelines, tool-output parsing, document-review workflows).
 
 ## What this task tests
 

@@ -1,14 +1,14 @@
 # core_pdf_ocr — Transcribe Text from a Scanned PDF
 
-Part of TrapStreet's **Foundation 11** — basic mechanics every AI agent needs.
+An open-source evaluation task for **PDF OCR / vision-based document reading**. Useful as a basic sanity check when building AI agents that ingest PDFs — invoice processors, legal-doc reviewers, receipt extractors, research assistants, accessibility tools.
 
-A trap-compatible task that tests whether a vision model can correctly **OCR text from a scanned-looking PDF**. 20 cases across 4 progressive difficulty tiers.
+20 cases across 4 progressive difficulty tiers.
 
 ## What this task tests
 
 **Given a single-page PDF that looks like a book scan, can the model accurately read it?**
 
-Every AI agent that ingests documents — invoice processors, legal-doc reviewers, receipt extractors, research assistants, accessibility tools — needs robust OCR. The question isn't "does OCR work in the lab", it's "does it stay accurate as scan quality degrades."
+Every AI agent that ingests documents needs robust OCR. The question isn't "does OCR work in the lab", it's "does it stay accurate as scan quality degrades."
 
 The 4 difficulty tiers expose exactly the OCR degradation curve a model has:
 
