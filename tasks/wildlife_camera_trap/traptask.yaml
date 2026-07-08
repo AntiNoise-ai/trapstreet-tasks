@@ -3,106 +3,86 @@ dirs:
   expected: expected/
 
 cases:
-- id: zebra_01
+- id: case_01
   description: "Identify the species in this camera trap photo"
   tags:
-  - zebra
-  - easy
-- id: zebra_02
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - zebra
-  - easy
-- id: wildebeest_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - wildebeest
-  - easy
-- id: wildebeest_02
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - wildebeest
-  - easy
-- id: buffalo_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - buffalo
-  - easy
-- id: buffalo_02
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - buffalo
-  - easy
-- id: elephant_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - elephant
-  - easy
-- id: elephant_02
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - elephant
-  - easy
-- id: giraffe_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - giraffe
-  - easy
-- id: giraffe_02
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - giraffe
-  - easy
-- id: warthog_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - warthog
-  - medium
-- id: warthog_02
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - warthog
-  - medium
-- id: lion_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - lion
-  - medium
-- id: lion_02
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - lion
-  - medium
-- id: leopard_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - leopard
   - hard
-- id: leopard_02
+- id: case_02
   description: "Identify the species in this camera trap photo"
   tags:
-  - leopard
-  - hard
-- id: cheetah_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - cheetah
-  - hard
-- id: cheetah_02
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - cheetah
-  - hard
-- id: hyena_01
-  description: "Identify the species in this camera trap photo"
-  tags:
-  - hyena
   - medium
-- id: hyena_02
+- id: case_03
   description: "Identify the species in this camera trap photo"
   tags:
-  - hyena
+  - hard
+- id: case_04
+  description: "Identify the species in this camera trap photo"
+  tags:
   - medium
+- id: case_05
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - medium
+- id: case_06
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - medium
+- id: case_07
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_08
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_09
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_10
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - hard
+- id: case_11
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - hard
+- id: case_12
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_13
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_14
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - medium
+- id: case_15
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_16
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_17
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - medium
+- id: case_18
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_19
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
+- id: case_20
+  description: "Identify the species in this camera trap photo"
+  tags:
+  - easy
 judge:
   cmd: python3 judge.py
 grader:
