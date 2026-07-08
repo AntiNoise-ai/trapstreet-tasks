@@ -1,10 +1,11 @@
-"""Per-case judge for the tenancy_agreement task — harsh by design.
+"""Per-case judge for the identify-the-animal task — harsh by design.
 
-Reads the agent's stdout (plain text OR JSON `{"answer": "..."}`) and applies
-matchers declared in expected/{case_id}/answer.json. A case scores 1.0 only if
-ALL matchers pass — partial credit is intentionally not offered. The whole
-point of this task is to expose agents that hedge, miss clauses, or skip parts
-of multi-part questions; lenient grading would defeat that.
+Reads the solution's stdout (plain text OR JSON `{"answer": "..."}`) via the
+trap-cli `TRAPTASK_MANIFEST` contract and applies matchers declared in
+expected/{case_id}/answer.json. A case scores 1.0 only if ALL matchers pass —
+partial credit is intentionally not offered. The whole point of this task is to
+expose agents that hedge or refuse instead of committing to one species label;
+lenient grading would defeat that.
 
 Matcher kinds supported:
   - numeric          {"kind":"numeric","value":1234.5,"tolerance":0.01}
@@ -43,8 +44,8 @@ Fallback (when no `matchers` provided):
   normalised agent output. Lenient but kept for cases that haven't been
   hardened yet (e.g. scenario_* cases without a curated gold).
 
-Outputs JSON on stdout — trap stores it as CaseResult.metrics. The grader
-reads `metrics.score` plus category/difficulty/reason for the report.
+Outputs JSON on stdout — trap stores it verbatim as the case's `metrics`. The
+grader reads `metrics.score` plus category/difficulty/reason for the report.
 """
 
 from __future__ import annotations
@@ -263,20 +264,12 @@ def fallback_substring(answer: str, expected: dict) -> tuple[float, str]:
 # --- Main ------------------------------------------------------------------
 
 def main() -> None:
-    payload = json.loads(os.environ["TRAPTASK_PAYLOAD"])
+    # trap-cli IO contract: TRAPTASK_MANIFEST carries directory + capture paths.
+    m = json.loads(os.environ["TRAPTASK_MANIFEST"])
 
-    stdout = Path(payload["outputs"]["case_stdout"]).read_text()
-    exit_code = json.loads(Path(payload["outputs"]["case_meta.json"]).read_text())["exit_code"]
-    expected = json.loads(Path(payload["expected"]["answer.json"]).read_text())
-
-    # Pick up usage.json if the solution captured it (Sonnet + caching runs)
-    usage_record: dict[str, Any] = {}
-    usage_path = payload["outputs"].get("usage.json")
-    if usage_path and Path(usage_path).exists():
-        try:
-            usage_record = json.loads(Path(usage_path).read_text())
-        except json.JSONDecodeError:
-            usage_record = {}
+    stdout = Path(m["run"]["stdout"]).read_text()
+    exit_code = json.loads(Path(m["run"]["meta"]).read_text())["exit_code"]
+    expected = json.loads((Path(m["expected_dir"]) / "answer.json").read_text())
 
     agent_answer = extract_agent_answer(stdout)
 
@@ -289,7 +282,6 @@ def main() -> None:
             "id": expected.get("id"),
             "category": expected.get("category"),
             "difficulty": expected.get("difficulty"),
-            **usage_record,
         }
         print(json.dumps(out))
         return
@@ -303,7 +295,6 @@ def main() -> None:
             "id": expected.get("id"),
             "category": expected.get("category"),
             "difficulty": expected.get("difficulty"),
-            **usage_record,
         }
         print(json.dumps(out))
         return
@@ -320,7 +311,6 @@ def main() -> None:
             "type": expected.get("type"),
             "category": expected.get("category"),
             "difficulty": expected.get("difficulty"),
-            **usage_record,
         }
     else:
         score, reason = fallback_substring(agent_answer, expected)
