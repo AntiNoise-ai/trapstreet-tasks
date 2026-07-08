@@ -32,16 +32,44 @@ genuinely plays the early game: connects, pathfinds to trees, **chops wood, craf
 planks/sticks/crafting-table** (all 2×2 crafts land). Committed + pushed
 (`github.com/Ruqii/minecraft-obtain-diamond`, commit "working early-game Mineflayer agent").
 
-**Blocked / next (resume here):**
-1. **3×3 table crafts (wooden pickaxe) produce nothing.** `diag.js` pinned it:
-   `recipesFor(wooden_pickaxe, …)` returns 0 unless a **placed table is within reach at
-   craft-time**; the bot ends up just out of range / leaves the table behind. Fix:
-   stand adjacent via `GoalGetToBlock` (not `GoalNear`), re-`findBlock` the table
-   immediately before crafting, confirm distance < 3, then `bot.craft(recipe,1,table)`.
-   Without the pickaxe, mining stone drops no cobblestone.
-2. **Recording (Phase 3) not started** — the arm64 `headless-gl` risk. Try
-   prismarine-viewer headless; fall back to prismarine-viewer web + puppeteer/ffmpeg.
-3. Then extend the tech tree (iron→furnace→diamond) and do a full recorded run + judge.
+**Blocked / next (resume here):** — superseded by the 2026-07-08 checkpoint below.
+
+## ✅ Progress checkpoint (2026-07-08) — craft bug fixed + recording works
+
+**Both flagged risks are resolved.**
+
+1. **Table-craft bug FIXED** (commit `40edc8e`). Two root causes, neither was the
+   old `GoalGetToBlock` theory: (a) **at spawn, `blockAt`/`findBlock` return null until
+   chunks load** — must wait for `bot.entity.onGround` + a non-air block below before
+   acting; (b) **`bot.craft` silently no-ops** (resolves without applying) when a table
+   was placed moments earlier and hasn't synced server-side. Fix: wait for chunks;
+   settle 1.2 s after placing a table; `craft()` verifies the item count rose and retries.
+   (`bot.craft` itself is fine for 2×2 and for aged tables; Node v24 is fine.)
+
+2. **Recording WORKS on arm64** (commit `095a24c`) — **no `headless-gl` needed.**
+   Pipeline = `prismarine-viewer` **web mode** (needs native `canvas`, installs from
+   **prebuilds**, no build) + headless **system Chrome** via `puppeteer-core` with
+   **SwiftShader** (`--use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader`)
+   → CDP `Page.startScreencast` → frames → `ffmpeg` → mp4. `solution/record.js` drives
+   the `play.js` agent while capturing. Verified: real 1280×720 h264 video of an actual
+   run (wood → planks → sticks → table → **wooden pickaxe** → mining cobblestone),
+   frames confirmed by eye (third-person forest, visible table + bot).
+
+3. **play.js refactored** into a module (`connect`/`waitReady`/`playGame`/`outcome`).
+   Table placement now scans a 5×5 area and places into replaceable plants (tall
+   grass/ferns) via `boundingBox` checks; `gotoNear` retries.
+
+**Next (resume here):**
+- **Reach the stone pickaxe reliably**, then extend the tech tree (iron → furnace →
+  smelt → iron pickaxe → diamond). Current tail issue: after mining, placing/returning
+  to a table while standing in a mined-out pit can fail (`could not place crafting
+  table` / `goto timeout`). Latest change prefers the original surface table with
+  retry; deeper mining still needs pit-aware placement (place against a wall face, or
+  climb out first).
+- Then a full recorded run to diamond, score with `task/judge.py`, publish the mp4 URL.
+
+**Run the recorder:** `cd solution && BUDGET_S=280 node record.js` → `recordings/run.mp4`
++ `recordings/outcome.json`. Needs the server up and system Chrome installed.
 
 **To restart the server next session:**
 `cd ~/Documents/Projects/minecraft-obtain-diamond/solution/server && /opt/homebrew/opt/openjdk@21/bin/java -Xms1G -Xmx2G -jar paper.jar --nogui > server.log 2>&1 &`
