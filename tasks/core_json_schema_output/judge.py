@@ -263,20 +263,12 @@ def fallback_substring(answer: str, expected: dict) -> tuple[float, str]:
 # --- Main ------------------------------------------------------------------
 
 def main() -> None:
-    payload = json.loads(os.environ["TRAPTASK_PAYLOAD"])
+    # trap-cli IO contract: TRAPTASK_MANIFEST carries directory + capture paths.
+    m = json.loads(os.environ["TRAPTASK_MANIFEST"])
 
-    stdout = Path(payload["outputs"]["case_stdout"]).read_text()
-    exit_code = json.loads(Path(payload["outputs"]["case_meta.json"]).read_text())["exit_code"]
-    expected = json.loads(Path(payload["expected"]["answer.json"]).read_text())
-
-    # Pick up usage.json if the solution captured it (Sonnet + caching runs)
-    usage_record: dict[str, Any] = {}
-    usage_path = payload["outputs"].get("usage.json")
-    if usage_path and Path(usage_path).exists():
-        try:
-            usage_record = json.loads(Path(usage_path).read_text())
-        except json.JSONDecodeError:
-            usage_record = {}
+    stdout = Path(m["run"]["stdout"]).read_text()
+    exit_code = json.loads(Path(m["run"]["meta"]).read_text())["exit_code"]
+    expected = json.loads((Path(m["expected_dir"]) / "answer.json").read_text())
 
     agent_answer = extract_agent_answer(stdout)
 
@@ -289,7 +281,6 @@ def main() -> None:
             "id": expected.get("id"),
             "category": expected.get("category"),
             "difficulty": expected.get("difficulty"),
-            **usage_record,
         }
         print(json.dumps(out))
         return
@@ -303,7 +294,6 @@ def main() -> None:
             "id": expected.get("id"),
             "category": expected.get("category"),
             "difficulty": expected.get("difficulty"),
-            **usage_record,
         }
         print(json.dumps(out))
         return
@@ -320,7 +310,6 @@ def main() -> None:
             "type": expected.get("type"),
             "category": expected.get("category"),
             "difficulty": expected.get("difficulty"),
-            **usage_record,
         }
     else:
         score, reason = fallback_substring(agent_answer, expected)
@@ -335,7 +324,6 @@ def main() -> None:
                 "type": expected.get("type"),
                 "category": expected.get("category"),
                 "difficulty": expected.get("difficulty"),
-                **usage_record,
             }
         else:
             out = {
@@ -347,14 +335,11 @@ def main() -> None:
                 "type": expected.get("type"),
                 "category": expected.get("category"),
                 "difficulty": expected.get("difficulty"),
-                **usage_record,
             }
 
     print(json.dumps(out))
 
 
-if __name__ == "__main__":
-    main()
 
 
 # ─── json_call matcher (added for core_json_schema_output) ──────────────────
@@ -427,3 +412,7 @@ def m_json_call(answer: str, spec: dict) -> tuple[bool, str]:
 
 
 MATCHERS["json_call"] = m_json_call
+
+
+if __name__ == "__main__":
+    main()

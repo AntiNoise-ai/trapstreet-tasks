@@ -16,7 +16,9 @@ PASS_THRESHOLD = 0.80
 
 
 def main() -> None:
-    cases = json.loads(os.environ["TRAPTASK_PAYLOAD"])
+    # trap-cli passes the list of per-case results directly (case_id, exit_code,
+    # duration, metrics, cost).
+    cases = json.loads(os.environ["TRAPTASK_MANIFEST"])
 
     scored = [c for c in cases if c.get("metrics") and c["metrics"].get("score") is not None]
     skipped = [c for c in cases if not c.get("metrics") or c["metrics"].get("score") is None]
@@ -53,10 +55,13 @@ def main() -> None:
     else:
         latency_ms_median = latency_ms_p95 = latency_ms_total = 0.0
 
-    # Cost — sum per-case usd_cost if the solution captured usage; otherwise
-    # leave it None and let the regrade/submit script stamp a known total.
-    case_costs = [c["metrics"].get("usd_cost") for c in scored if isinstance(c.get("metrics"), dict)]
-    cost_usd_total = round(sum(x for x in case_costs if x is not None), 4) if any(x is not None for x in case_costs) else None
+    # Cost — trap-cli's proxy records a per-case `cost` object {cost_usd, by_model, ...}.
+    case_costs = [
+        c["cost"]["cost_usd"]
+        for c in cases
+        if isinstance(c.get("cost"), dict) and c["cost"].get("cost_usd") is not None
+    ]
+    cost_usd_total = round(sum(case_costs), 4) if case_costs else None
 
     n_passed = sum(1 for c in scored if c["metrics"]["score"] == 1.0)
 
