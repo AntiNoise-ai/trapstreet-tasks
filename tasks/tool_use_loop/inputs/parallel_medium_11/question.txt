@@ -1,0 +1,54 @@
+You are an AI agent that plans multiple tool calls to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "restaurant.find_nearby",
+    "description": "Locate nearby restaurants based on specific dietary preferences. Note that the provided function is in Python 3 syntax.",
+    "parameters": {
+      "type": "dict",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The city and state, e.g. Los Angeles, CA"
+        },
+        "dietary_preference": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Vegan",
+              "Vegetarian",
+              "Gluten-free",
+              "Dairy-free",
+              "Nut-free"
+            ]
+          },
+          "description": "Dietary preference.",
+          "default": [
+            "Vegan"
+          ]
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Can you help me find restaurants in New York, NY that cater to my dietary preferences which include Vegan, Gluten-free and Dairy-free options, and then do the same for Los Angeles, CA and Chicago, IL?
+
+# Your task
+
+Output a JSON array of tool calls to execute. Each element must be:
+`{"name": "<function_name>", "arguments": {"<arg>": <value>, ...}}`
+
+You may need multiple tool calls to fully satisfy the request.
+
+Output ONLY the JSON array. No explanation, no markdown fences.

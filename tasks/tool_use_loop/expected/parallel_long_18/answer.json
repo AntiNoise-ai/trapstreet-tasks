@@ -1,0 +1,75 @@
+{
+  "id": "parallel_long_18",
+  "type": "tool_use_loop",
+  "matchers": [
+    {
+      "kind": "parallel_tool_calls",
+      "ground_truth": [
+        {
+          "math.factorial": {
+            "number": [
+              5
+            ]
+          }
+        },
+        {
+          "math.factorial": {
+            "number": [
+              3
+            ]
+          }
+        },
+        {
+          "math.factorial": {
+            "number": [
+              4
+            ]
+          }
+        },
+        {
+          "math.factorial": {
+            "number": [
+              2
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "long",
+  "num_calls": 4,
+  "ground_truth_calls": [
+    {
+      "math.factorial": {
+        "number": [
+          5
+        ]
+      }
+    },
+    {
+      "math.factorial": {
+        "number": [
+          3
+        ]
+      }
+    },
+    {
+      "math.factorial": {
+        "number": [
+          4
+        ]
+      }
+    },
+    {
+      "math.factorial": {
+        "number": [
+          2
+        ]
+      }
+    }
+  ],
+  "user_request": "What is the result if you calculate the factorial of 5, the factorial of 3, then  the factorial of 4 and finally the factorial of 2?"
+}

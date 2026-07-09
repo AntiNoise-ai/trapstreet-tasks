@@ -1,0 +1,71 @@
+{
+  "id": "parallel_short_05",
+  "type": "tool_use_loop",
+  "matchers": [
+    {
+      "kind": "parallel_tool_calls",
+      "ground_truth": [
+        {
+          "law_case.get_details": {
+            "case_number": [
+              "28473"
+            ],
+            "include_history": [
+              true
+            ],
+            "include_litigants": [
+              true
+            ]
+          }
+        },
+        {
+          "law_case.get_details": {
+            "case_number": [
+              "64725"
+            ],
+            "include_history": [
+              true
+            ],
+            "include_litigants": [
+              true
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "short",
+  "num_calls": 2,
+  "ground_truth_calls": [
+    {
+      "law_case.get_details": {
+        "case_number": [
+          "28473"
+        ],
+        "include_history": [
+          true
+        ],
+        "include_litigants": [
+          true
+        ]
+      }
+    },
+    {
+      "law_case.get_details": {
+        "case_number": [
+          "64725"
+        ],
+        "include_history": [
+          true
+        ],
+        "include_litigants": [
+          true
+        ]
+      }
+    }
+  ],
+  "user_request": "Can you find me case law details of Case No 28473 and 64725, their history and details of litigants?"
+}

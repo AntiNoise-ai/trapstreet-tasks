@@ -1,0 +1,108 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+cases:
+- id: parallel_short_01
+  description: 'short (2 parallel calls): Can you give me 95% confidence interval for a sample mean with standar...'
+  tags:
+  - short
+  - bfcl_parallel
+- id: parallel_short_02
+  description: 'short (2 parallel calls): Find all law cases where Charles Dickens is a party and it happened in...'
+  tags:
+  - short
+  - bfcl_parallel
+- id: parallel_short_03
+  description: 'short (2 parallel calls): Build a decision tree classifier model with gini criterion, maximum de...'
+  tags:
+  - short
+  - bfcl_parallel
+- id: parallel_short_04
+  description: 'short (2 parallel calls): Can you use the lawsuit_search function to retrieve all lawsuits invol...'
+  tags:
+  - short
+  - bfcl_parallel
+- id: parallel_short_05
+  description: 'short (2 parallel calls): Can you find me case law details of Case No 28473 and 64725, their his...'
+  tags:
+  - short
+  - bfcl_parallel
+- id: parallel_short_06
+  description: 'short (2 parallel calls): What is the coefficient of determination (R squared) of a regression m...'
+  tags:
+  - short
+  - bfcl_parallel
+- id: parallel_medium_07
+  description: 'medium (3 parallel calls): "Imagine you are a scientist studying the energy production of a certa...'
+  tags:
+  - medium
+  - bfcl_parallel
+- id: parallel_medium_08
+  description: 'medium (3 parallel calls): "Can you calculate the time it would take for light to travel from Ear...'
+  tags:
+  - medium
+  - bfcl_parallel
+- id: parallel_medium_09
+  description: 'medium (3 parallel calls): Calculate the Present Value of an investment paying $1000 per year, wi...'
+  tags:
+  - medium
+  - bfcl_parallel
+- id: parallel_medium_10
+  description: 'medium (3 parallel calls): "Can you help me book a ticket for a concert of Taylor Swift in New Yo...'
+  tags:
+  - medium
+  - bfcl_parallel
+- id: parallel_medium_11
+  description: 'medium (3 parallel calls): Can you help me find restaurants in New York, NY that cater to my diet...'
+  tags:
+  - medium
+  - bfcl_parallel
+- id: parallel_medium_12
+  description: 'medium (3 parallel calls): "Could you first calculate the derivative of the function ''3x^2 + 2x -...'
+  tags:
+  - medium
+  - bfcl_parallel
+- id: parallel_medium_13
+  description: 'medium (3 parallel calls): You are planning to build three triangular gardens in your backyard. T...'
+  tags:
+  - medium
+  - bfcl_parallel
+- id: parallel_medium_14
+  description: 'medium (3 parallel calls): "Can you help me with some math problems? First, I need to find the ro...'
+  tags:
+  - medium
+  - bfcl_parallel
+- id: parallel_long_15
+  description: 'long (4 parallel calls): "Can you tell me the name of the scientist who is credited for the dis...'
+  tags:
+  - long
+  - bfcl_parallel
+- id: parallel_long_16
+  description: 'long (4 parallel calls): "Can you tell me what the stock price prediction for Apple Inc. is for...'
+  tags:
+  - long
+  - bfcl_parallel
+- id: parallel_long_17
+  description: 'long (4 parallel calls): "Could you first fetch the top 10 popular artworks at the Metropolitan...'
+  tags:
+  - long
+  - bfcl_parallel
+- id: parallel_long_18
+  description: 'long (4 parallel calls): What is the result if you calculate the factorial of 5, the factorial ...'
+  tags:
+  - long
+  - bfcl_parallel
+- id: parallel_long_19
+  description: 'long (4 parallel calls): "Can you help me find a divorce lawyer in New York, NY and then a crim...'
+  tags:
+  - long
+  - bfcl_parallel
+- id: parallel_long_20
+  description: 'long (4 parallel calls): "Could you please help me order a custom sculpture of a horse made fro...'
+  tags:
+  - long
+  - bfcl_parallel
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py

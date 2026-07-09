@@ -1,0 +1,46 @@
+You are an AI agent that plans multiple tool calls to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "lawsuit_search",
+    "description": "Retrieve all lawsuits involving a particular entity from specified jurisdiction. Note that the provided function is in Python 3 syntax.",
+    "parameters": {
+      "type": "dict",
+      "properties": {
+        "entity": {
+          "type": "string",
+          "description": "The entity involved in lawsuits."
+        },
+        "county": {
+          "type": "string",
+          "description": "The jurisdiction for the lawsuit search."
+        },
+        "state": {
+          "type": "string",
+          "description": "The state for the lawsuit search. Default is California."
+        }
+      },
+      "required": [
+        "entity",
+        "county"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Can you use the lawsuit_search function to retrieve all lawsuits involving the entity "Google" from the county of "Santa Clara" and then do the same for the entity "Facebook" in the county of "San Mateo", both in the state of California?
+
+# Your task
+
+Output a JSON array of tool calls to execute. Each element must be:
+`{"name": "<function_name>", "arguments": {"<arg>": <value>, ...}}`
+
+You may need multiple tool calls to fully satisfy the request.
+
+Output ONLY the JSON array. No explanation, no markdown fences.

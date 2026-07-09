@@ -1,0 +1,47 @@
+You are an AI agent that plans multiple tool calls to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "calculate_present_value",
+    "description": "Calculate the present value of a future cash flows stream. Note that the provided function is in Python 3 syntax.",
+    "parameters": {
+      "type": "dict",
+      "properties": {
+        "payment_per_year": {
+          "type": "integer",
+          "description": "The payment received per year."
+        },
+        "interest_rate": {
+          "type": "float",
+          "description": "The interest rate applied per period."
+        },
+        "years": {
+          "type": "integer",
+          "description": "The total number of years."
+        }
+      },
+      "required": [
+        "payment_per_year",
+        "interest_rate",
+        "years"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Calculate the Present Value of an investment paying $1000 per year, with an interest rate of 5%, for 10, 20 and 30 years.
+
+# Your task
+
+Output a JSON array of tool calls to execute. Each element must be:
+`{"name": "<function_name>", "arguments": {"<arg>": <value>, ...}}`
+
+You may need multiple tool calls to fully satisfy the request.
+
+Output ONLY the JSON array. No explanation, no markdown fences.

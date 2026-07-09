@@ -1,0 +1,37 @@
+You are an AI agent that plans multiple tool calls to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "math.factorial",
+    "description": "Calculate the factorial of a given number. Note that the provided function is in Python 3 syntax.",
+    "parameters": {
+      "type": "dict",
+      "properties": {
+        "number": {
+          "type": "integer",
+          "description": "The number to compute factorial."
+        }
+      },
+      "required": [
+        "number"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What is the result if you calculate the factorial of 5, the factorial of 3, then  the factorial of 4 and finally the factorial of 2?
+
+# Your task
+
+Output a JSON array of tool calls to execute. Each element must be:
+`{"name": "<function_name>", "arguments": {"<arg>": <value>, ...}}`
+
+You may need multiple tool calls to fully satisfy the request.
+
+Output ONLY the JSON array. No explanation, no markdown fences.

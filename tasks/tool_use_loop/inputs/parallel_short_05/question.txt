@@ -1,0 +1,45 @@
+You are an AI agent that plans multiple tool calls to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "law_case.get_details",
+    "description": "Fetches detailed information on a specific case including its history and the litigants involved. Note that the provided function is in Python 3 syntax.",
+    "parameters": {
+      "type": "dict",
+      "properties": {
+        "case_number": {
+          "type": "string",
+          "description": "The unique number identifying the case."
+        },
+        "include_history": {
+          "type": "boolean",
+          "description": "Flag indicating if case history should be included. Default is false."
+        },
+        "include_litigants": {
+          "type": "boolean",
+          "description": "Flag indicating if litigant details should be included. Default is false."
+        }
+      },
+      "required": [
+        "case_number"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Can you find me case law details of Case No 28473 and 64725, their history and details of litigants?
+
+# Your task
+
+Output a JSON array of tool calls to execute. Each element must be:
+`{"name": "<function_name>", "arguments": {"<arg>": <value>, ...}}`
+
+You may need multiple tool calls to fully satisfy the request.
+
+Output ONLY the JSON array. No explanation, no markdown fences.

@@ -1,0 +1,63 @@
+You are an AI agent that plans multiple tool calls to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "lawyer.search",
+    "description": "Search for a lawyer based on area of expertise and location Note that the provided function is in Python 3 syntax.",
+    "parameters": {
+      "type": "dict",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The city and state, e.g. Los Angeles, CA"
+        },
+        "expertise": {
+          "type": "string",
+          "description": "Area of legal expertise. For example, 'Divorce', 'Criminal', 'Business'."
+        }
+      },
+      "required": [
+        "location",
+        "expertise"
+      ]
+    }
+  },
+  {
+    "name": "doctor.search",
+    "description": "Search for a doctor based on area of expertise and location Note that the provided function is in Python 3 syntax.",
+    "parameters": {
+      "type": "dict",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The city and state, e.g. Los Angeles, CA"
+        },
+        "specialization": {
+          "type": "string",
+          "description": "Medical specialization. For example, 'Cardiology', 'Orthopedics', 'Gynecology'."
+        }
+      },
+      "required": [
+        "location",
+        "specialization"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+"Can you help me find a divorce lawyer in New York, NY and then a criminal lawyer in Los Angeles, CA? After that, I need to find a cardiologist in Chicago, IL and an orthopedic doctor in Houston, TX."
+
+# Your task
+
+Output a JSON array of tool calls to execute. Each element must be:
+`{"name": "<function_name>", "arguments": {"<arg>": <value>, ...}}`
+
+You may need multiple tool calls to fully satisfy the request.
+
+Output ONLY the JSON array. No explanation, no markdown fences.

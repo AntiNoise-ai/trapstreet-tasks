@@ -1,0 +1,83 @@
+{
+  "id": "parallel_short_01",
+  "type": "tool_use_loop",
+  "matchers": [
+    {
+      "kind": "parallel_tool_calls",
+      "ground_truth": [
+        {
+          "confidence_interval.calculate": {
+            "sample_std_dev": [
+              10
+            ],
+            "sample_size": [
+              50
+            ],
+            "sample_mean": [
+              25
+            ],
+            "confidence_level": [
+              0.95
+            ]
+          }
+        },
+        {
+          "confidence_interval.calculate": {
+            "sample_std_dev": [
+              10
+            ],
+            "sample_size": [
+              150
+            ],
+            "sample_mean": [
+              25
+            ],
+            "confidence_level": [
+              0.95
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "short",
+  "num_calls": 2,
+  "ground_truth_calls": [
+    {
+      "confidence_interval.calculate": {
+        "sample_std_dev": [
+          10
+        ],
+        "sample_size": [
+          50
+        ],
+        "sample_mean": [
+          25
+        ],
+        "confidence_level": [
+          0.95
+        ]
+      }
+    },
+    {
+      "confidence_interval.calculate": {
+        "sample_std_dev": [
+          10
+        ],
+        "sample_size": [
+          150
+        ],
+        "sample_mean": [
+          25
+        ],
+        "confidence_level": [
+          0.95
+        ]
+      }
+    }
+  ],
+  "user_request": "Can you give me 95% confidence interval for a sample mean with standard deviation of 10, sample size of 50 and sample mean of 25? And can you do the same but for a sample size of 150 instead?"
+}

@@ -1,0 +1,109 @@
+{
+  "id": "parallel_long_15",
+  "type": "tool_use_loop",
+  "matchers": [
+    {
+      "kind": "parallel_tool_calls",
+      "ground_truth": [
+        {
+          "forest_growth_forecast": {
+            "location": [
+              "Amazon rainforest",
+              "Amazon"
+            ],
+            "years": [
+              10
+            ],
+            "include_human_impact": [
+              true
+            ]
+          }
+        },
+        {
+          "forest_growth_forecast": {
+            "location": [
+              "Amazon rainforest",
+              "Amazon"
+            ],
+            "years": [
+              10
+            ],
+            "include_human_impact": [
+              false,
+              ""
+            ]
+          }
+        },
+        {
+          "get_scientist_for_discovery": {
+            "discovery": [
+              "theory of relativity",
+              "relativity"
+            ]
+          }
+        },
+        {
+          "get_scientist_for_discovery": {
+            "discovery": [
+              "DNA double helix structure",
+              "double helix"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "long",
+  "num_calls": 4,
+  "ground_truth_calls": [
+    {
+      "forest_growth_forecast": {
+        "location": [
+          "Amazon rainforest",
+          "Amazon"
+        ],
+        "years": [
+          10
+        ],
+        "include_human_impact": [
+          true
+        ]
+      }
+    },
+    {
+      "forest_growth_forecast": {
+        "location": [
+          "Amazon rainforest",
+          "Amazon"
+        ],
+        "years": [
+          10
+        ],
+        "include_human_impact": [
+          false,
+          ""
+        ]
+      }
+    },
+    {
+      "get_scientist_for_discovery": {
+        "discovery": [
+          "theory of relativity",
+          "relativity"
+        ]
+      }
+    },
+    {
+      "get_scientist_for_discovery": {
+        "discovery": [
+          "DNA double helix structure",
+          "double helix"
+        ]
+      }
+    }
+  ],
+  "user_request": "\"Can you tell me the name of the scientist who is credited for the discovery of the theory of relativity? Also, I would like to know the predicted forest growth in Amazon rainforest over the next 10 years, considering the impact of human activities. After that, could you also provide the forecast for the same location but this time without considering human impact? Lastly, I'm curious about the scientist who discovered the DNA double helix structure.\""
+}
