@@ -1,0 +1,24 @@
+{
+  "id": "lme_temporal_reasoning_15",
+  "type": "multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "jetblue"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "temporal-reasoning",
+  "question_type": "temporal-reasoning",
+  "gold_answer": "JetBlue, Delta, United, American Airlines",
+  "gold_keywords": [
+    "jetblue"
+  ],
+  "num_sessions": 5,
+  "conversation_chars": 66727,
+  "source_qid": "gpt4_f420262c"
+}

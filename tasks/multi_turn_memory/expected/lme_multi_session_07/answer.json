@@ -1,0 +1,26 @@
+{
+  "id": "lme_multi_session_07",
+  "type": "multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "photography",
+        "cooking"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "multi-session",
+  "question_type": "multi-session",
+  "gold_answer": "photography and cooking",
+  "gold_keywords": [
+    "photography",
+    "cooking"
+  ],
+  "num_sessions": 2,
+  "conversation_chars": 30130,
+  "source_qid": "5025383b"
+}

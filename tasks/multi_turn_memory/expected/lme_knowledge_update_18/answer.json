@@ -1,0 +1,26 @@
+{
+  "id": "lme_knowledge_update_18",
+  "type": "multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "5",
+        "2"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "knowledge-update",
+  "question_type": "knowledge-update",
+  "gold_answer": "5-2",
+  "gold_keywords": [
+    "5",
+    "2"
+  ],
+  "num_sessions": 2,
+  "conversation_chars": 32803,
+  "source_qid": "c7dc5443"
+}

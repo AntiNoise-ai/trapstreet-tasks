@@ -1,0 +1,28 @@
+{
+  "id": "lme_temporal_reasoning_10",
+  "type": "multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "company",
+        "annual",
+        "charity"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "temporal-reasoning",
+  "question_type": "temporal-reasoning",
+  "gold_answer": "The company's annual charity soccer tournament.",
+  "gold_keywords": [
+    "company",
+    "annual",
+    "charity"
+  ],
+  "num_sessions": 3,
+  "conversation_chars": 44717,
+  "source_qid": "gpt4_e061b84g"
+}

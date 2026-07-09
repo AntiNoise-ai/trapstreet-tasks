@@ -1,0 +1,108 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+cases:
+- id: lme_multi_session_01
+  description: 'multi-session: How many plants did I acquire in the last month?...'
+  tags:
+  - multi-session
+  - longmemeval
+- id: lme_multi_session_02
+  description: 'multi-session: What is the total number of views on my most popular videos on YouTube and TikTo...'
+  tags:
+  - multi-session
+  - longmemeval
+- id: lme_multi_session_03
+  description: 'multi-session: How much older am I than the average age of employees in my department?...'
+  tags:
+  - multi-session
+  - longmemeval
+- id: lme_multi_session_04
+  description: 'multi-session: How many pages do I have left to read in ''The Nightingale''?...'
+  tags:
+  - multi-session
+  - longmemeval
+- id: lme_multi_session_05
+  description: 'multi-session: What time did I go to bed on the day before I had a doctor''s appointment?...'
+  tags:
+  - multi-session
+  - longmemeval
+- id: lme_multi_session_06
+  description: 'multi-session: How many years in total did I spend in formal education from high school to the ...'
+  tags:
+  - multi-session
+  - longmemeval
+- id: lme_multi_session_07
+  description: 'multi-session: What are the two hobbies that led me to join online communities?...'
+  tags:
+  - multi-session
+  - longmemeval
+- id: lme_multi_session_08
+  description: 'multi-session: How much money did I raise in total through all the charity events I participate...'
+  tags:
+  - multi-session
+  - longmemeval
+- id: lme_temporal_reasoning_09
+  description: 'temporal-reasoning: Which device did I got first, the Samsung Galaxy S22 or the Dell XPS 13?...'
+  tags:
+  - temporal-reasoning
+  - longmemeval
+- id: lme_temporal_reasoning_10
+  description: 'temporal-reasoning: I mentioned participating in a sports event two weeks ago. What was the event?...'
+  tags:
+  - temporal-reasoning
+  - longmemeval
+- id: lme_temporal_reasoning_11
+  description: 'temporal-reasoning: What time do I wake up on Tuesdays and Thursdays?...'
+  tags:
+  - temporal-reasoning
+  - longmemeval
+- id: lme_temporal_reasoning_12
+  description: 'temporal-reasoning: What was the the life event of one of my relatives that I participated in a week...'
+  tags:
+  - temporal-reasoning
+  - longmemeval
+- id: lme_temporal_reasoning_13
+  description: 'temporal-reasoning: Which trip did I take first, the one to Europe with family or the solo trip to T...'
+  tags:
+  - temporal-reasoning
+  - longmemeval
+- id: lme_temporal_reasoning_14
+  description: 'temporal-reasoning: How many days passed between the day I attended the gardening workshop and the d...'
+  tags:
+  - temporal-reasoning
+  - longmemeval
+- id: lme_temporal_reasoning_15
+  description: 'temporal-reasoning: What is the order of airlines I flew with from earliest to latest before today?...'
+  tags:
+  - temporal-reasoning
+  - longmemeval
+- id: lme_knowledge_update_16
+  description: 'knowledge-update: How much weight have I lost since I started going to the gym consistently?...'
+  tags:
+  - knowledge-update
+  - longmemeval
+- id: lme_knowledge_update_17
+  description: 'knowledge-update: How many episodes of the Science series have I completed on Crash Course?...'
+  tags:
+  - knowledge-update
+  - longmemeval
+- id: lme_knowledge_update_18
+  description: 'knowledge-update: What is my current record in the recreational volleyball league?...'
+  tags:
+  - knowledge-update
+  - longmemeval
+- id: lme_knowledge_update_19
+  description: 'knowledge-update: Do I have a spare screwdriver for opening up my laptop?...'
+  tags:
+  - knowledge-update
+  - longmemeval
+- id: lme_knowledge_update_20
+  description: 'knowledge-update: How often do I see my therapist, Dr. Smith?...'
+  tags:
+  - knowledge-update
+  - longmemeval
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py
