@@ -1,0 +1,128 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+cases:
+- id: humaneval_easy_01_HumanEval_23
+  description: "easy: HumanEval/23 \u2192 strlen"
+  tags:
+  - easy
+  - humaneval
+  - python
+- id: humaneval_easy_02_HumanEval_44
+  description: "easy: HumanEval/44 \u2192 change_base"
+  tags:
+  - easy
+  - humaneval
+  - python
+- id: humaneval_easy_03_HumanEval_86
+  description: "easy: HumanEval/86 \u2192 anti_shuffle"
+  tags:
+  - easy
+  - humaneval
+  - python
+- id: humaneval_easy_04_HumanEval_98
+  description: "easy: HumanEval/98 \u2192 count_upper"
+  tags:
+  - easy
+  - humaneval
+  - python
+- id: humaneval_easy_05_HumanEval_33
+  description: "easy: HumanEval/33 \u2192 sort_third"
+  tags:
+  - easy
+  - humaneval
+  - python
+- id: humaneval_easy_06_HumanEval_45
+  description: "easy: HumanEval/45 \u2192 triangle_area"
+  tags:
+  - easy
+  - humaneval
+  - python
+- id: humaneval_medium_07_HumanEval_11
+  description: "medium: HumanEval/11 \u2192 string_xor"
+  tags:
+  - medium
+  - humaneval
+  - python
+- id: humaneval_medium_08_HumanEval_87
+  description: "medium: HumanEval/87 \u2192 get_row"
+  tags:
+  - medium
+  - humaneval
+  - python
+- id: humaneval_medium_09_HumanEval_47
+  description: "medium: HumanEval/47 \u2192 median"
+  tags:
+  - medium
+  - humaneval
+  - python
+- id: humaneval_medium_10_HumanEval_102
+  description: "medium: HumanEval/102 \u2192 choose_num"
+  tags:
+  - medium
+  - humaneval
+  - python
+- id: humaneval_medium_11_HumanEval_136
+  description: "medium: HumanEval/136 \u2192 largest_smallest_integers"
+  tags:
+  - medium
+  - humaneval
+  - python
+- id: humaneval_medium_12_HumanEval_58
+  description: "medium: HumanEval/58 \u2192 common"
+  tags:
+  - medium
+  - humaneval
+  - python
+- id: humaneval_medium_13_HumanEval_125
+  description: "medium: HumanEval/125 \u2192 split_words"
+  tags:
+  - medium
+  - humaneval
+  - python
+- id: humaneval_medium_14_HumanEval_8
+  description: "medium: HumanEval/8 \u2192 sum_product"
+  tags:
+  - medium
+  - humaneval
+  - python
+- id: humaneval_hard_15_HumanEval_99
+  description: "hard: HumanEval/99 \u2192 closest_integer"
+  tags:
+  - hard
+  - humaneval
+  - python
+- id: humaneval_hard_16_HumanEval_148
+  description: "hard: HumanEval/148 \u2192 bf"
+  tags:
+  - hard
+  - humaneval
+  - python
+- id: humaneval_hard_17_HumanEval_39
+  description: "hard: HumanEval/39 \u2192 prime_fib"
+  tags:
+  - hard
+  - humaneval
+  - python
+- id: humaneval_hard_18_HumanEval_161
+  description: "hard: HumanEval/161 \u2192 solve"
+  tags:
+  - hard
+  - humaneval
+  - python
+- id: humaneval_hard_19_HumanEval_107
+  description: "hard: HumanEval/107 \u2192 even_odd_palindrome"
+  tags:
+  - hard
+  - humaneval
+  - python
+- id: humaneval_hard_20_HumanEval_95
+  description: "hard: HumanEval/95 \u2192 check_dict_case"
+  tags:
+  - hard
+  - humaneval
+  - python
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py

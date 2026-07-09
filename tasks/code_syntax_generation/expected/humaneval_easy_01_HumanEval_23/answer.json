@@ -1,0 +1,18 @@
+{
+  "id": "humaneval_easy_01_HumanEval_23",
+  "type": "code_syntax_generation",
+  "matchers": [
+    {
+      "kind": "python_unit_test",
+      "test_code": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == 0\n    assert candidate('x') == 1\n    assert candidate('asdasnakj') == 9\n",
+      "entry_point": "strlen",
+      "prompt_prefix": "\n\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "easy",
+  "task_id": "HumanEval/23",
+  "entry_point": "strlen"
+}

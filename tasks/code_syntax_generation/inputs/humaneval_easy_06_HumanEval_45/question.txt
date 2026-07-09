@@ -1,0 +1,9 @@
+Complete the following Python function. Return ONLY the complete function definition (including the signature), no explanation, no markdown fences.
+
+
+
+def triangle_area(a, h):
+    """Given length of a side and high return area for a triangle.
+    >>> triangle_area(5, 3)
+    7.5
+    """
