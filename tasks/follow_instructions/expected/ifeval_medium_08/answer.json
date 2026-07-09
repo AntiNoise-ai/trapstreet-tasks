@@ -1,0 +1,36 @@
+{
+  "id": "ifeval_medium_08",
+  "type": "follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "combination:repeat_prompt",
+          "kwargs": {
+            "prompt_to_repeat": "Write a funny haiku about moms, containing keywords \"mom\" and \"mother\" in your response."
+          }
+        },
+        {
+          "constraint_id": "keywords:existence",
+          "kwargs": {
+            "keywords": [
+              "mom",
+              "mother"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_constraints": 2,
+  "constraint_ids": [
+    "combination:repeat_prompt",
+    "keywords:existence"
+  ],
+  "source_key": 1139
+}

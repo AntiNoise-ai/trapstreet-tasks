@@ -1,0 +1,44 @@
+{
+  "id": "ifeval_hard_20",
+  "type": "follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "detectable_format:number_highlighted_sections",
+          "kwargs": {
+            "num_highlights": 6
+          }
+        },
+        {
+          "constraint_id": "keywords:frequency",
+          "kwargs": {
+            "relation": "less than",
+            "keyword": "sarah",
+            "frequency": 2
+          }
+        },
+        {
+          "constraint_id": "keywords:existence",
+          "kwargs": {
+            "keywords": [
+              "sarah"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "hard",
+  "num_constraints": 3,
+  "constraint_ids": [
+    "detectable_format:number_highlighted_sections",
+    "keywords:frequency",
+    "keywords:existence"
+  ],
+  "source_key": 1379
+}

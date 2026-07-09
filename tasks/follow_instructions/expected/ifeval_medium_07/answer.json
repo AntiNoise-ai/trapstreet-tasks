@@ -1,0 +1,31 @@
+{
+  "id": "ifeval_medium_07",
+  "type": "follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "detectable_format:number_bullet_lists",
+          "kwargs": {
+            "num_bullets": 3
+          }
+        },
+        {
+          "constraint_id": "change_case:english_lowercase",
+          "kwargs": {}
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_constraints": 2,
+  "constraint_ids": [
+    "detectable_format:number_bullet_lists",
+    "change_case:english_lowercase"
+  ],
+  "source_key": 2100
+}

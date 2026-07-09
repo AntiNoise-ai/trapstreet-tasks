@@ -1,0 +1,42 @@
+{
+  "id": "ifeval_hard_25",
+  "type": "follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "punctuation:no_comma",
+          "kwargs": {}
+        },
+        {
+          "constraint_id": "detectable_format:number_highlighted_sections",
+          "kwargs": {
+            "num_highlights": 3
+          }
+        },
+        {
+          "constraint_id": "keywords:existence",
+          "kwargs": {
+            "keywords": [
+              "brilliant",
+              "le",
+              "hou"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "hard",
+  "num_constraints": 3,
+  "constraint_ids": [
+    "punctuation:no_comma",
+    "detectable_format:number_highlighted_sections",
+    "keywords:existence"
+  ],
+  "source_key": 1348
+}

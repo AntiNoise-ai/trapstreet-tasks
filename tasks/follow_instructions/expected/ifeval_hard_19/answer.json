@@ -1,0 +1,41 @@
+{
+  "id": "ifeval_hard_19",
+  "type": "follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "punctuation:no_comma",
+          "kwargs": {}
+        },
+        {
+          "constraint_id": "keywords:letter_frequency",
+          "kwargs": {
+            "let_relation": "less than",
+            "letter": "c",
+            "let_frequency": 1
+          }
+        },
+        {
+          "constraint_id": "length_constraints:number_words",
+          "kwargs": {
+            "relation": "at least",
+            "num_words": 250
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "hard",
+  "num_constraints": 3,
+  "constraint_ids": [
+    "punctuation:no_comma",
+    "keywords:letter_frequency",
+    "length_constraints:number_words"
+  ],
+  "source_key": 1300
+}

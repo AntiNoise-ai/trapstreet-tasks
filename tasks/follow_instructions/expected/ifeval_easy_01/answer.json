@@ -1,0 +1,24 @@
+{
+  "id": "ifeval_easy_01",
+  "type": "follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "startend:quotation",
+          "kwargs": {}
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "easy",
+  "num_constraints": 1,
+  "constraint_ids": [
+    "startend:quotation"
+  ],
+  "source_key": 122
+}

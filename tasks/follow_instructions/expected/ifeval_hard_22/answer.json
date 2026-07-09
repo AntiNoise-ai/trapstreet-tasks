@@ -1,0 +1,34 @@
+{
+  "id": "ifeval_hard_22",
+  "type": "follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "combination:two_responses",
+          "kwargs": {}
+        },
+        {
+          "constraint_id": "detectable_format:title",
+          "kwargs": {}
+        },
+        {
+          "constraint_id": "punctuation:no_comma",
+          "kwargs": {}
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "hard",
+  "num_constraints": 3,
+  "constraint_ids": [
+    "combination:two_responses",
+    "detectable_format:title",
+    "punctuation:no_comma"
+  ],
+  "source_key": 2704
+}

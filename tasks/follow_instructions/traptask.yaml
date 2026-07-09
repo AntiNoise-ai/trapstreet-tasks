@@ -1,0 +1,133 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+cases:
+- id: ifeval_easy_01
+  description: 'easy: 1 constraint(s): startend:quotation'
+  tags:
+  - easy
+  - ifeval
+- id: ifeval_easy_02
+  description: 'easy: 1 constraint(s): punctuation:no_comma'
+  tags:
+  - easy
+  - ifeval
+- id: ifeval_easy_03
+  description: 'easy: 1 constraint(s): startend:end_checker'
+  tags:
+  - easy
+  - ifeval
+- id: ifeval_easy_04
+  description: 'easy: 1 constraint(s): detectable_format:title'
+  tags:
+  - easy
+  - ifeval
+- id: ifeval_easy_05
+  description: 'easy: 1 constraint(s): detectable_format:number_highlighted_sections'
+  tags:
+  - easy
+  - ifeval
+- id: ifeval_medium_06
+  description: 'medium: 2 constraint(s): combination:repeat_prompt, keywords:forbidden_words'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_07
+  description: 'medium: 2 constraint(s): detectable_format:number_bullet_lists, change_case:english_lowercase'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_08
+  description: 'medium: 2 constraint(s): combination:repeat_prompt, keywords:existence'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_09
+  description: 'medium: 2 constraint(s): length_constraints:number_sentences, length_constraints:number_words'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_10
+  description: 'medium: 2 constraint(s): change_case:english_lowercase, length_constraints:number_sentences'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_11
+  description: 'medium: 2 constraint(s): detectable_format:number_highlighted_sections, length_constraints:number_words'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_12
+  description: 'medium: 2 constraint(s): startend:quotation, keywords:forbidden_words'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_13
+  description: 'medium: 2 constraint(s): detectable_content:number_placeholders, change_case:english_lowercase'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_14
+  description: 'medium: 2 constraint(s): change_case:english_lowercase, startend:quotation'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_15
+  description: 'medium: 2 constraint(s): punctuation:no_comma, change_case:english_capital'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_16
+  description: 'medium: 2 constraint(s): combination:repeat_prompt, keywords:frequency'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_medium_17
+  description: 'medium: 2 constraint(s): detectable_format:number_highlighted_sections, length_constraints:number_words'
+  tags:
+  - medium
+  - ifeval
+- id: ifeval_hard_18
+  description: 'hard: 3 constraint(s): length_constraints:number_words, detectable_content:number_placeholders, detectable_format:number_bullet_lists'
+  tags:
+  - hard
+  - ifeval
+- id: ifeval_hard_19
+  description: 'hard: 3 constraint(s): punctuation:no_comma, keywords:letter_frequency, length_constraints:number_words'
+  tags:
+  - hard
+  - ifeval
+- id: ifeval_hard_20
+  description: 'hard: 3 constraint(s): detectable_format:number_highlighted_sections, keywords:frequency, keywords:existence'
+  tags:
+  - hard
+  - ifeval
+- id: ifeval_hard_21
+  description: 'hard: 3 constraint(s): combination:repeat_prompt, detectable_format:title, punctuation:no_comma'
+  tags:
+  - hard
+  - ifeval
+- id: ifeval_hard_22
+  description: 'hard: 3 constraint(s): combination:two_responses, detectable_format:title, punctuation:no_comma'
+  tags:
+  - hard
+  - ifeval
+- id: ifeval_hard_23
+  description: 'hard: 3 constraint(s): detectable_format:number_highlighted_sections, length_constraints:number_sentences, length_constraints:number_sentences'
+  tags:
+  - hard
+  - ifeval
+- id: ifeval_hard_24
+  description: 'hard: 3 constraint(s): length_constraints:number_words, keywords:forbidden_words, startend:end_checker'
+  tags:
+  - hard
+  - ifeval
+- id: ifeval_hard_25
+  description: 'hard: 3 constraint(s): punctuation:no_comma, detectable_format:number_highlighted_sections, keywords:existence'
+  tags:
+  - hard
+  - ifeval
+judge:
+  cmd: python3 judge.py
+grader:
+  cmd: python3 grader.py
