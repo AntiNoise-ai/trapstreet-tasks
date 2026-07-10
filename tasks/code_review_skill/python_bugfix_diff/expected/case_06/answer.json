@@ -1,0 +1,17 @@
+{
+  "id": "case_06",
+  "bug_category": "security_missing_auth",
+  "file_path": "src/ha_mcp/settings_ui.py",
+  "buggy_line": 3044,
+  "line_tolerance": 2,
+  "keywords": [
+    "missing authentication",
+    "no auth check",
+    "unauthenticated access",
+    "authorization bypass",
+    "publicly reachable"
+  ],
+  "bug_description": "In add-on mode, the entire settings/backup/policy API is mounted at the bare root path via `_mount(\"\")` with zero authentication check, while the secret-path mount is the only place a secret is required; any client reaching the port directly can invoke these state-changing endpoints unauthenticated.",
+  "source_commit_url": "https://github.com/homeassistant-ai/ha-mcp/commit/9f5b085ad4a7b38b067c9da0dc5b45462c4d796e",
+  "license": "MIT"
+}

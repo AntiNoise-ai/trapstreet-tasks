@@ -1,0 +1,23 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: src/croniter/croniter.py
+
+ 1267|     def _get_low_from_current_date_number(cls, field_index, step, from_timestamp):
+ 1268|         dt = datetime.datetime.fromtimestamp(from_timestamp, tz=UTC_DT)
+ 1269|         if field_index == MINUTE_FIELD:
+ 1270|             return dt.minute % step
+ 1271|         if field_index == HOUR_FIELD:
+ 1272|             return dt.hour % step
+ 1273|         if field_index == DAY_FIELD:
+ 1274|             return ((dt.day - 1) % step) + 1
+ 1275|         if field_index == MONTH_FIELD:
+ 1276|             return dt.month % step
+ 1277|         if field_index == DOW_FIELD:
+ 1278|             return (dt.weekday() + 1) % step
+ 1279| 
+ 1280|         raise ValueError("Can't get current date number for index larger than 4")
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

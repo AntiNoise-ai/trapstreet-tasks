@@ -1,0 +1,17 @@
+{
+  "id": "case_04",
+  "bug_category": "race_condition",
+  "file_path": "bumble/device.py",
+  "buggy_line": 916,
+  "line_tolerance": 2,
+  "keywords": [
+    "race condition",
+    "concurrent",
+    "state overwritten",
+    "async",
+    "lost update"
+  ],
+  "bug_description": "The `await self.device.send_async_command(...)` call yields control to the event loop; if the sync-established HCI event arrives and advances state to ESTABLISHED before this resumes, the unconditional `self.state = self.State.PENDING` clobbers the concurrent update.",
+  "source_commit_url": "https://github.com/google/bumble/commit/55d8171ad89a668a04aaab905efa320ac0e8b9b1",
+  "license": "Apache-2.0"
+}

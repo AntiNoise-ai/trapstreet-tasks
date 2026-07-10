@@ -1,0 +1,19 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: xrspatial/cost_distance.py
+
+ 1201| @supports_dataset
+ 1202| def cost_distance(
+ 1203|     raster: xr.DataArray,
+ 1204|     friction: xr.DataArray,
+ 1205|     x: str = "x",
+ 1206|     y: str = "y",
+ 1207|     target_values: list = [],
+ 1208|     max_cost: float = np.inf,
+ 1209|     connectivity: int = 8,
+ 1210| ) -> xr.DataArray:
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

@@ -1,0 +1,33 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: Lib/gftools/push/trafficjam.py
+
+  523|             for item in board_items:
+  524|                 if item["type"] != "PULL_REQUEST":
+  525|                     raise ValueError(
+  526|                         "Traffic Jam contains issues! All items must be pull requests. "
+  527|                         "Please remove the issues and rerun the tool, "
+  528|                         "https://github.com/orgs/google/projects/74/views/1"
+  529|                     )
+  530|             # sort items by pr number
+  531|             board_items.sort(key=lambda k: k["content"]["url"])
+  532| 
+  533|             # get files for prs which have more than 100 changed files
+  534|             for item in board_items:
+  535|                 changed_files = item["content"]["files"]["totalCount"]
+  536|                 if changed_files <= 100:
+  537|                     continue
+  538|                 pr_number = item["content"]["number"]
+  539|                 pr_url = item["content"]["url"]
+  540|                 log.warn(
+  541|                     f"{pr_url} has {changed_files} changed files. Attempting to fetch them."
+  542|                 )
+  543|                 files = g.pr_files(pr_number)
+  544|                 item["content"]["files"]["nodes"] = [
+  545|                     {"path": f["filename"]} for f in files
+  546|                 ]
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

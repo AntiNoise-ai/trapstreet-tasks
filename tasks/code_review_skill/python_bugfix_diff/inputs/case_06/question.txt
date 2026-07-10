@@ -1,0 +1,27 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: src/ha_mcp/settings_ui.py
+
+ 3033|     def _mount(prefix: str) -> None:
+ 3034|         for path, methods, handler_key in routes:
+ 3035|             mcp.custom_route(f"{prefix}{path}", methods=methods)(handlers[handler_key])
+ 3036| 
+ 3037|     if is_addon:
+ 3038|         # Root mount lets HA ingress proxy localhost:9583/ → settings UI.
+ 3039|         # Direct port 9583 LAN access also reaches these routes; in this
+ 3040|         # respect they share the existing add-on networking model where
+ 3041|         # port 9583 is exposed via host_network and the secret path is
+ 3042|         # the auth for direct access. Document this in DOCS.md.
+ 3043|         mcp.custom_route("/", methods=["GET"])(handlers["root_page"])
+ 3044|         _mount("")
+ 3045| 
+ 3046|     if secret_prefix:
+ 3047|         # Mount under the MCP secret path so Docker / standalone clients
+ 3048|         # need the same secret to reach the UI as they do for the MCP
+ 3049|         # endpoint.
+ 3050|         _mount(secret_prefix)
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

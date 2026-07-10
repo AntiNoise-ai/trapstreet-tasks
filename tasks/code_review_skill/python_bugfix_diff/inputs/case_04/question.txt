@@ -1,0 +1,32 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: bumble/device.py
+
+  894|     async def establish(self) -> None:
+  895|         if self.state != self.State.INIT:
+  896|             raise InvalidStateError('sync not in init state')
+  897| 
+  898|         options = hci.HCI_LE_Periodic_Advertising_Create_Sync_Command.Options(0)
+  899|         if self.filter_duplicates:
+  900|             options |= (
+  901|                 hci.HCI_LE_Periodic_Advertising_Create_Sync_Command.Options.DUPLICATE_FILTERING_INITIALLY_ENABLED
+  902|             )
+  903| 
+  904|         await self.device.send_async_command(
+  905|             hci.HCI_LE_Periodic_Advertising_Create_Sync_Command(
+  906|                 options=options,
+  907|                 advertising_sid=self.sid,
+  908|                 advertiser_address_type=self.advertiser_address.address_type,
+  909|                 advertiser_address=self.advertiser_address,
+  910|                 skip=self.skip,
+  911|                 sync_timeout=int(self.sync_timeout * 100),
+  912|                 sync_cte_type=0,
+  913|             )
+  914|         )
+  915| 
+  916|         self.state = self.State.PENDING
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

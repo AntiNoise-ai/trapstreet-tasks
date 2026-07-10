@@ -1,0 +1,22 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: src/pytest_socket/__init__.py
+
+  344|     def guarded_connect(inst: socket.socket, *args: Any) -> None:
+  345|         host = host_from_connect_args(args)
+  346|         if host in allowed_ip_hosts_and_hostnames or (
+  347|             _is_unix_socket(inst.family) and allow_unix_socket
+  348|         ):
+  349|             return _true_connect(inst, *args)
+  350| 
+  351|         if host and networks and is_ipaddress(host):
+  352|             ip = ipaddress.ip_address(host)
+  353|             if any(ip in net for net in networks):
+  354|                 return _true_connect(inst, *args)
+  355| 
+  356|         raise SocketConnectBlockedError(allowed_list, host)
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

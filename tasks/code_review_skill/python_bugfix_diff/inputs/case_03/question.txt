@@ -1,0 +1,33 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: specforge/data/parse.py
+
+  235|     def parse(
+  236|         self,
+  237|         conversation: "Conversation",
+  238|         max_length: int,
+  239|         preformatted: bool = False,
+  240|         train_only_last_turn: bool = False,
+  241|     ) -> List[torch.Tensor]:
+  242|         # conversation = process_harmony_conversations(conversation)
+  243|         if not preformatted:
+  244|             prompt_text = ""
+  245|             for j, message in enumerate(conversation):
+  246|                 if j == 0 and (
+  247|                     message["role"] != "system"
+  248|                     or message["role"] != "assistant_reasoning_effort"
+  249|                 ):
+  250|                     prompt_text = self.build_single_turn_prompt(
+  251|                         prompt_text,
+  252|                         "assistant_reasoning_effort",
+  253|                         self.default_reasoning_level,
+  254|                     )
+  255|                 prompt_text = self.build_single_turn_prompt(
+  256|                     prompt_text, message["role"], message["content"]
+  257|                 )
+  258|             conversation = prompt_text
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

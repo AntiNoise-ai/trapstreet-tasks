@@ -1,0 +1,17 @@
+{
+  "id": "case_03",
+  "bug_category": "logic_error",
+  "file_path": "specforge/data/parse.py",
+  "buggy_line": 247,
+  "line_tolerance": 2,
+  "keywords": [
+    "always true",
+    "wrong operator",
+    "or should be and",
+    "inverted condition",
+    "logic error"
+  ],
+  "bug_description": "The condition `message[\"role\"] != \"system\" or message[\"role\"] != \"assistant_reasoning_effort\"` uses `or` where `and` is needed; a single string can never equal both values simultaneously, so the condition is always True.",
+  "source_commit_url": "https://github.com/sgl-project/SpecForge/commit/361f5a11921264ae5c329bfa4968008ce4d2f231",
+  "license": "MIT"
+}

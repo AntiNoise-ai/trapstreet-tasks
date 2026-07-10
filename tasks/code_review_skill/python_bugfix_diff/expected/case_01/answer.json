@@ -1,0 +1,17 @@
+{
+  "id": "case_01",
+  "bug_category": "off_by_one",
+  "file_path": "src/croniter/croniter.py",
+  "buggy_line": 1276,
+  "line_tolerance": 2,
+  "keywords": [
+    "off-by-one",
+    "1-based",
+    "modulo",
+    "boundary condition",
+    "wrong range"
+  ],
+  "bug_description": "The month field is 1-based (1-12), but its low-bound is computed with `dt.month % step` instead of the 1-based formula `((dt.month - 1) % step) + 1` already used for the day field a few lines above. When step evenly divides the month, this yields 0, which is outside the valid 1-12 range.",
+  "source_commit_url": "https://github.com/pallets-eco/croniter/commit/3ddcd1385b53adabcce42bd14c6b8dfb83899fa6",
+  "license": "MIT"
+}

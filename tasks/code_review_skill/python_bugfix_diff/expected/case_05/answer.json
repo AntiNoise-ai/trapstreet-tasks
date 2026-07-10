@@ -1,0 +1,17 @@
+{
+  "id": "case_05",
+  "bug_category": "resource_leak",
+  "file_path": "src/pytest_socket/__init__.py",
+  "buggy_line": 356,
+  "line_tolerance": 2,
+  "keywords": [
+    "resource leak",
+    "file descriptor leak",
+    "socket not closed",
+    "unclosed",
+    "leaked fd"
+  ],
+  "bug_description": "When a connection is disallowed, the function raises SocketConnectBlockedError without first closing the already-created real socket `inst`, leaking its file descriptor.",
+  "source_commit_url": "https://github.com/miketheman/pytest-socket/commit/2aaaee1bc226ddb996dd5498f3f64e9387f91db5",
+  "license": "MIT"
+}

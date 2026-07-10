@@ -1,0 +1,38 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: xrspatial/geotiff/_vrt.py
+
+  347|             src_r0 = sr.y_off + int((clip_r0 - dst_r0) * scale_y)
+  348|             src_c0 = sr.x_off + int((clip_c0 - dst_c0) * scale_x)
+  349|             src_r1 = sr.y_off + int((clip_r1 - dst_r0) * scale_y)
+  350|             src_c1 = sr.x_off + int((clip_c1 - dst_c0) * scale_x)
+  351| 
+  352|             # Read from source file using windowed read
+  353|             try:
+  354|                 src_arr, _ = read_to_array(
+  355|                     src.filename,
+  356|                     window=(src_r0, src_c0, src_r1, src_c1),
+  357|                     band=src.band - 1,  # convert 1-based to 0-based
+  358|                 )
+  359|             except Exception as e:
+  360|                 # Under XRSPATIAL_GEOTIFF_STRICT=1, surface the read failure
+  361|                 # so partial mosaics are caught in CI. Default mode warns
+  362|                 # once per missing source then continues, preserving the
+  363|                 # historical behaviour. See issue #1662.
+  364|                 import warnings
+  365|                 from . import _geotiff_strict_mode, GeoTIFFFallbackWarning
+  366|                 if _geotiff_strict_mode():
+  367|                     raise
+  368|                 warnings.warn(
+  369|                     f"VRT source {src.filename!r} could not be read "
+  370|                     f"({type(e).__name__}: {e}); skipping. The output "
+  371|                     f"mosaic will have a hole at this tile.",
+  372|                     GeoTIFFFallbackWarning,
+  373|                     stacklevel=2,
+  374|                 )
+  375|                 continue  # skip missing/unreadable sources
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

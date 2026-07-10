@@ -1,0 +1,17 @@
+{
+  "id": "case_02",
+  "bug_category": "null_deref",
+  "file_path": "Lib/gftools/push/trafficjam.py",
+  "buggy_line": 535,
+  "line_tolerance": 2,
+  "keywords": [
+    "none",
+    "nonetype",
+    "missing null check",
+    "typeerror",
+    "not subscriptable"
+  ],
+  "bug_description": "The loop indexes item[\"content\"][\"files\"][\"totalCount\"] for every board item without checking whether the PR is closed-but-not-merged; for such PRs the API returns files: null, so subscripting it raises \"TypeError: 'NoneType' object is not subscriptable\".",
+  "source_commit_url": "https://github.com/googlefonts/gftools/commit/f28317cab96bda1d8e07f5b044f645e6e4c07cab",
+  "license": "Apache-2.0"
+}

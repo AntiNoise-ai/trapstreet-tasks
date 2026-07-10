@@ -1,0 +1,17 @@
+{
+  "id": "case_07",
+  "bug_category": "mutable_default_arg",
+  "file_path": "xrspatial/cost_distance.py",
+  "buggy_line": 1207,
+  "line_tolerance": 1,
+  "keywords": [
+    "mutable default argument",
+    "shared list",
+    "aliasing",
+    "default parameter",
+    "shared mutable state"
+  ],
+  "bug_description": "cost_distance declares `target_values: list = []`, a mutable default argument \u2014 the same list object is reused as the default across every call that omits target_values, the classic shared-mutable-default anti-pattern.",
+  "source_commit_url": "https://github.com/xarray-contrib/xarray-spatial/commit/5103dc15c84f19c1c373a7b453634c28fbd75f15",
+  "license": "MIT"
+}
