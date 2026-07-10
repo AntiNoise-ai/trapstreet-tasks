@@ -1,0 +1,24 @@
+{
+  "id": "ifeval_easy_04",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "detectable_format:title",
+          "kwargs": {}
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "easy",
+  "num_constraints": 1,
+  "constraint_ids": [
+    "detectable_format:title"
+  ],
+  "source_key": 1322
+}

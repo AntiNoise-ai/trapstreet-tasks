@@ -1,0 +1,18 @@
+{
+  "id": "humaneval_easy_03_HumanEval_86",
+  "type": "core_code_syntax_generation",
+  "matchers": [
+    {
+      "kind": "python_unit_test",
+      "test_code": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('Hi') == 'Hi'\n    assert candidate('hello') == 'ehllo'\n    assert candidate('number') == 'bemnru'\n    assert candidate('abcd') == 'abcd'\n    assert candidate('Hello World!!!') == 'Hello !!!Wdlor'\n    assert candidate('') == ''\n    assert candidate('Hi. My name is Mister Robot. How are you?') == '.Hi My aemn is Meirst .Rboot How aer ?ouy'\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+      "entry_point": "anti_shuffle",
+      "prompt_prefix": "\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "easy",
+  "task_id": "HumanEval/86",
+  "entry_point": "anti_shuffle"
+}

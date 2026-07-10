@@ -1,0 +1,36 @@
+{
+  "id": "ifeval_medium_06",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "combination:repeat_prompt",
+          "kwargs": {
+            "prompt_to_repeat": "Rewrite the following sentence in a more formal way: \"Them youngins be always on that damn phone\". Imagine you are the president of the United States. Avoid using the word \"youngins\" and \"damn\" throughout your entire response."
+          }
+        },
+        {
+          "constraint_id": "keywords:forbidden_words",
+          "kwargs": {
+            "forbidden_words": [
+              "youngins",
+              "damn"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_constraints": 2,
+  "constraint_ids": [
+    "combination:repeat_prompt",
+    "keywords:forbidden_words"
+  ],
+  "source_key": 374
+}

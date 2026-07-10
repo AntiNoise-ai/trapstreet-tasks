@@ -1,0 +1,35 @@
+{
+  "id": "ifeval_medium_16",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "combination:repeat_prompt",
+          "kwargs": {
+            "prompt_to_repeat": "Write a limerick about a customer who is always right. The word \"right\" should appear less than 2 times in the response."
+          }
+        },
+        {
+          "constraint_id": "keywords:frequency",
+          "kwargs": {
+            "relation": "less than",
+            "keyword": "right",
+            "frequency": 2
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_constraints": 2,
+  "constraint_ids": [
+    "combination:repeat_prompt",
+    "keywords:frequency"
+  ],
+  "source_key": 3369
+}

@@ -1,0 +1,28 @@
+{
+  "id": "lme_temporal_reasoning_09",
+  "type": "core_multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "samsung",
+        "galaxy",
+        "s22"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "temporal-reasoning",
+  "question_type": "temporal-reasoning",
+  "gold_answer": "Samsung Galaxy S22",
+  "gold_keywords": [
+    "samsung",
+    "galaxy",
+    "s22"
+  ],
+  "num_sessions": 2,
+  "conversation_chars": 26552,
+  "source_qid": "gpt4_2312f94c"
+}

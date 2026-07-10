@@ -1,0 +1,26 @@
+{
+  "id": "lme_temporal_reasoning_12",
+  "type": "core_multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "cousin",
+        "wedding"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "temporal-reasoning",
+  "question_type": "temporal-reasoning",
+  "gold_answer": "my cousin's wedding",
+  "gold_keywords": [
+    "cousin",
+    "wedding"
+  ],
+  "num_sessions": 2,
+  "conversation_chars": 30689,
+  "source_qid": "gpt4_4929293b"
+}

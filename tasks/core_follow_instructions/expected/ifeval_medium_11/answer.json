@@ -1,0 +1,34 @@
+{
+  "id": "ifeval_medium_11",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "detectable_format:number_highlighted_sections",
+          "kwargs": {
+            "num_highlights": 1
+          }
+        },
+        {
+          "constraint_id": "length_constraints:number_words",
+          "kwargs": {
+            "relation": "less than",
+            "num_words": 30
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_constraints": 2,
+  "constraint_ids": [
+    "detectable_format:number_highlighted_sections",
+    "length_constraints:number_words"
+  ],
+  "source_key": 340
+}

@@ -1,0 +1,18 @@
+{
+  "id": "humaneval_medium_07_HumanEval_11",
+  "type": "core_code_syntax_generation",
+  "matchers": [
+    {
+      "kind": "python_unit_test",
+      "test_code": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('111000', '101010') == '010010'\n    assert candidate('1', '1') == '0'\n    assert candidate('0101', '0000') == '0101'\n",
+      "entry_point": "string_xor",
+      "prompt_prefix": "from typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "task_id": "HumanEval/11",
+  "entry_point": "string_xor"
+}

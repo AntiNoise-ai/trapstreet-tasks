@@ -1,0 +1,67 @@
+{
+  "id": "parallel_short_02",
+  "type": "core_parallel_tool_calls",
+  "matchers": [
+    {
+      "kind": "core_parallel_tool_calls",
+      "ground_truth": [
+        {
+          "legal_case.find_parties": {
+            "party_name": [
+              "Charles Dickens"
+            ],
+            "city": [
+              "Boston",
+              "Boston, Massachusetts"
+            ]
+          }
+        },
+        {
+          "legal_case.find_parties": {
+            "party_name": [
+              "University of California",
+              "UC"
+            ],
+            "city": [
+              "Los Angeles",
+              "Los Angeles, California",
+              "LA"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "short",
+  "num_calls": 2,
+  "ground_truth_calls": [
+    {
+      "legal_case.find_parties": {
+        "party_name": [
+          "Charles Dickens"
+        ],
+        "city": [
+          "Boston",
+          "Boston, Massachusetts"
+        ]
+      }
+    },
+    {
+      "legal_case.find_parties": {
+        "party_name": [
+          "University of California",
+          "UC"
+        ],
+        "city": [
+          "Los Angeles",
+          "Los Angeles, California",
+          "LA"
+        ]
+      }
+    }
+  ],
+  "user_request": "Find all law cases where Charles Dickens is a party and it happened in Boston. Also, get cases where University of California was a party and happened in Los Angeles."
+}

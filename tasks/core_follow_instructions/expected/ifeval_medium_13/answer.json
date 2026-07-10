@@ -1,0 +1,31 @@
+{
+  "id": "ifeval_medium_13",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "detectable_content:number_placeholders",
+          "kwargs": {
+            "num_placeholders": 1
+          }
+        },
+        {
+          "constraint_id": "change_case:english_lowercase",
+          "kwargs": {}
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_constraints": 2,
+  "constraint_ids": [
+    "detectable_content:number_placeholders",
+    "change_case:english_lowercase"
+  ],
+  "source_key": 3035
+}

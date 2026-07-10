@@ -1,0 +1,121 @@
+{
+  "id": "parallel_medium_11",
+  "type": "core_parallel_tool_calls",
+  "matchers": [
+    {
+      "kind": "core_parallel_tool_calls",
+      "ground_truth": [
+        {
+          "restaurant.find_nearby": {
+            "location": [
+              "New York, NY",
+              "New York City",
+              "NYC",
+              "NY"
+            ],
+            "dietary_preference": [
+              [
+                "Vegan",
+                "Gluten-free",
+                "Dairy-free"
+              ]
+            ]
+          }
+        },
+        {
+          "restaurant.find_nearby": {
+            "location": [
+              "Los Angeles, CA",
+              "LA",
+              "Los Angeles",
+              "Los Angeles, CA",
+              "CA"
+            ],
+            "dietary_preference": [
+              [
+                "Vegan",
+                "Gluten-free",
+                "Dairy-free"
+              ]
+            ]
+          }
+        },
+        {
+          "restaurant.find_nearby": {
+            "location": [
+              "Chicago, IL",
+              "Chicago",
+              "IL"
+            ],
+            "dietary_preference": [
+              [
+                "Vegan",
+                "Gluten-free",
+                "Dairy-free"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_calls": 3,
+  "ground_truth_calls": [
+    {
+      "restaurant.find_nearby": {
+        "location": [
+          "New York, NY",
+          "New York City",
+          "NYC",
+          "NY"
+        ],
+        "dietary_preference": [
+          [
+            "Vegan",
+            "Gluten-free",
+            "Dairy-free"
+          ]
+        ]
+      }
+    },
+    {
+      "restaurant.find_nearby": {
+        "location": [
+          "Los Angeles, CA",
+          "LA",
+          "Los Angeles",
+          "Los Angeles, CA",
+          "CA"
+        ],
+        "dietary_preference": [
+          [
+            "Vegan",
+            "Gluten-free",
+            "Dairy-free"
+          ]
+        ]
+      }
+    },
+    {
+      "restaurant.find_nearby": {
+        "location": [
+          "Chicago, IL",
+          "Chicago",
+          "IL"
+        ],
+        "dietary_preference": [
+          [
+            "Vegan",
+            "Gluten-free",
+            "Dairy-free"
+          ]
+        ]
+      }
+    }
+  ],
+  "user_request": "Can you help me find restaurants in New York, NY that cater to my dietary preferences which include Vegan, Gluten-free and Dairy-free options, and then do the same for Los Angeles, CA and Chicago, IL?"
+}

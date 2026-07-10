@@ -1,0 +1,26 @@
+{
+  "id": "lme_knowledge_update_16",
+  "type": "core_multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "10",
+        "pounds"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "knowledge-update",
+  "question_type": "knowledge-update",
+  "gold_answer": "10 pounds",
+  "gold_keywords": [
+    "10",
+    "pounds"
+  ],
+  "num_sessions": 2,
+  "conversation_chars": 33807,
+  "source_qid": "cf22b7bf"
+}

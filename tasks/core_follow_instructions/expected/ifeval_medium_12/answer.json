@@ -1,0 +1,35 @@
+{
+  "id": "ifeval_medium_12",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "startend:quotation",
+          "kwargs": {}
+        },
+        {
+          "constraint_id": "keywords:forbidden_words",
+          "kwargs": {
+            "forbidden_words": [
+              "perfume",
+              "fresh",
+              "good"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_constraints": 2,
+  "constraint_ids": [
+    "startend:quotation",
+    "keywords:forbidden_words"
+  ],
+  "source_key": 3709
+}

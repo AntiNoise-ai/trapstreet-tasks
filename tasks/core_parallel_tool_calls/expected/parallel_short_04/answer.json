@@ -1,0 +1,79 @@
+{
+  "id": "parallel_short_04",
+  "type": "core_parallel_tool_calls",
+  "matchers": [
+    {
+      "kind": "core_parallel_tool_calls",
+      "ground_truth": [
+        {
+          "lawsuit_search": {
+            "entity": [
+              "Google"
+            ],
+            "county": [
+              "Santa Clara"
+            ],
+            "state": [
+              "California",
+              "CA",
+              ""
+            ]
+          }
+        },
+        {
+          "lawsuit_search": {
+            "entity": [
+              "Facebook"
+            ],
+            "county": [
+              "San Mateo"
+            ],
+            "state": [
+              "California",
+              "CA",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "short",
+  "num_calls": 2,
+  "ground_truth_calls": [
+    {
+      "lawsuit_search": {
+        "entity": [
+          "Google"
+        ],
+        "county": [
+          "Santa Clara"
+        ],
+        "state": [
+          "California",
+          "CA",
+          ""
+        ]
+      }
+    },
+    {
+      "lawsuit_search": {
+        "entity": [
+          "Facebook"
+        ],
+        "county": [
+          "San Mateo"
+        ],
+        "state": [
+          "California",
+          "CA",
+          ""
+        ]
+      }
+    }
+  ],
+  "user_request": "Can you use the lawsuit_search function to retrieve all lawsuits involving the entity \"Google\" from the county of \"Santa Clara\" and then do the same for the entity \"Facebook\" in the county of \"San Mateo\", both in the state of California?"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "ifeval_hard_23",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "detectable_format:number_highlighted_sections",
+          "kwargs": {
+            "num_highlights": 8
+          }
+        },
+        {
+          "constraint_id": "length_constraints:number_sentences",
+          "kwargs": {
+            "relation": "at least",
+            "num_sentences": 40
+          }
+        },
+        {
+          "constraint_id": "length_constraints:number_sentences",
+          "kwargs": {
+            "relation": "less than",
+            "num_sentences": 61
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "hard",
+  "num_constraints": 3,
+  "constraint_ids": [
+    "detectable_format:number_highlighted_sections",
+    "length_constraints:number_sentences",
+    "length_constraints:number_sentences"
+  ],
+  "source_key": 3089
+}

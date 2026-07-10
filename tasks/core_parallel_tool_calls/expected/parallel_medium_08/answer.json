@@ -1,0 +1,85 @@
+{
+  "id": "parallel_medium_08",
+  "type": "core_parallel_tool_calls",
+  "matchers": [
+    {
+      "kind": "core_parallel_tool_calls",
+      "ground_truth": [
+        {
+          "light_travel_time": {
+            "distance_in_light_years": [
+              4.22
+            ],
+            "speed_of_light": [
+              299792458,
+              ""
+            ]
+          }
+        },
+        {
+          "light_travel_time": {
+            "distance_in_light_years": [
+              6.1
+            ],
+            "speed_of_light": [
+              299792458,
+              ""
+            ]
+          }
+        },
+        {
+          "light_travel_time": {
+            "distance_in_light_years": [
+              5.88
+            ],
+            "speed_of_light": [
+              299792458,
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_calls": 3,
+  "ground_truth_calls": [
+    {
+      "light_travel_time": {
+        "distance_in_light_years": [
+          4.22
+        ],
+        "speed_of_light": [
+          299792458,
+          ""
+        ]
+      }
+    },
+    {
+      "light_travel_time": {
+        "distance_in_light_years": [
+          6.1
+        ],
+        "speed_of_light": [
+          299792458,
+          ""
+        ]
+      }
+    },
+    {
+      "light_travel_time": {
+        "distance_in_light_years": [
+          5.88
+        ],
+        "speed_of_light": [
+          299792458,
+          ""
+        ]
+      }
+    }
+  ],
+  "user_request": "\"Can you calculate the time it would take for light to travel from Earth to a newly discovered exoplanet that is 4.22 light years away, then to another exoplanet that is 6.1 light years from the first one, and finally back to Earth which is 5.88 light years from the second exoplanet? Assume the speed of light in vacuum is 299792458 m/s.\""
+}

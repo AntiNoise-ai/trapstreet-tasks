@@ -1,0 +1,24 @@
+{
+  "id": "lme_multi_session_04",
+  "type": "core_multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "190"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "multi-session",
+  "question_type": "multi-session",
+  "gold_answer": "190",
+  "gold_keywords": [
+    "190"
+  ],
+  "num_sessions": 2,
+  "conversation_chars": 22005,
+  "source_qid": "2311e44b"
+}

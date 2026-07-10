@@ -1,0 +1,32 @@
+{
+  "id": "ifeval_medium_10",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "change_case:english_lowercase",
+          "kwargs": {}
+        },
+        {
+          "constraint_id": "length_constraints:number_sentences",
+          "kwargs": {
+            "relation": "less than",
+            "num_sentences": 20
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "medium",
+  "num_constraints": 2,
+  "constraint_ids": [
+    "change_case:english_lowercase",
+    "length_constraints:number_sentences"
+  ],
+  "source_key": 1967
+}

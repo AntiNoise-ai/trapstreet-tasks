@@ -1,0 +1,26 @@
+{
+  "id": "lme_knowledge_update_20",
+  "type": "core_multi_turn_memory",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "every",
+        "week"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "knowledge-update",
+  "question_type": "knowledge-update",
+  "gold_answer": "every week",
+  "gold_keywords": [
+    "every",
+    "week"
+  ],
+  "num_sessions": 2,
+  "conversation_chars": 28216,
+  "source_qid": "2698e78f"
+}

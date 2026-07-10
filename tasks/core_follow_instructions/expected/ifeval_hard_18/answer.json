@@ -1,0 +1,41 @@
+{
+  "id": "ifeval_hard_18",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "length_constraints:number_words",
+          "kwargs": {
+            "relation": "at least",
+            "num_words": 300
+          }
+        },
+        {
+          "constraint_id": "detectable_content:number_placeholders",
+          "kwargs": {
+            "num_placeholders": 3
+          }
+        },
+        {
+          "constraint_id": "detectable_format:number_bullet_lists",
+          "kwargs": {
+            "num_bullets": 2
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "hard",
+  "num_constraints": 3,
+  "constraint_ids": [
+    "length_constraints:number_words",
+    "detectable_content:number_placeholders",
+    "detectable_format:number_bullet_lists"
+  ],
+  "source_key": 2284
+}

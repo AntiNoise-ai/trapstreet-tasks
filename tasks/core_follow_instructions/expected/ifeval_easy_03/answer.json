@@ -1,0 +1,26 @@
+{
+  "id": "ifeval_easy_03",
+  "type": "core_follow_instructions",
+  "matchers": [
+    {
+      "kind": "ifeval_constraints",
+      "constraints": [
+        {
+          "constraint_id": "startend:end_checker",
+          "kwargs": {
+            "end_phrase": "Naomi thanks you for reading."
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "easy",
+  "num_constraints": 1,
+  "constraint_ids": [
+    "startend:end_checker"
+  ],
+  "source_key": 3203
+}

@@ -1,0 +1,71 @@
+{
+  "id": "parallel_short_03",
+  "type": "core_parallel_tool_calls",
+  "matchers": [
+    {
+      "kind": "core_parallel_tool_calls",
+      "ground_truth": [
+        {
+          "model.DecisionTreeClassifier": {
+            "criterion": [
+              "gini"
+            ],
+            "max_depth": [
+              5
+            ],
+            "random_state": [
+              1
+            ]
+          }
+        },
+        {
+          "model.DecisionTreeClassifier": {
+            "criterion": [
+              "entropy"
+            ],
+            "max_depth": [
+              10
+            ],
+            "random_state": [
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "difficulty": "short",
+  "num_calls": 2,
+  "ground_truth_calls": [
+    {
+      "model.DecisionTreeClassifier": {
+        "criterion": [
+          "gini"
+        ],
+        "max_depth": [
+          5
+        ],
+        "random_state": [
+          1
+        ]
+      }
+    },
+    {
+      "model.DecisionTreeClassifier": {
+        "criterion": [
+          "entropy"
+        ],
+        "max_depth": [
+          10
+        ],
+        "random_state": [
+          1
+        ]
+      }
+    }
+  ],
+  "user_request": "Build a decision tree classifier model with gini criterion, maximum depth of 5 and random state of 1, another with entropy criterion, maximum depth of 10 and random state of 1."
+}
