@@ -1,0 +1,35 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: case_01
+  description: "Real bugfix-commit review: off-by-one / boundary condition"
+  tags: [code_review, python, off_by_one]
+- id: case_02
+  description: "Real bugfix-commit review: null/None dereference"
+  tags: [code_review, python, null_deref]
+- id: case_03
+  description: "Real bugfix-commit review: logic error (always-true condition)"
+  tags: [code_review, python, logic_error]
+- id: case_04
+  description: "Real bugfix-commit review: race condition"
+  tags: [code_review, python, race_condition]
+- id: case_05
+  description: "Real bugfix-commit review: resource leak"
+  tags: [code_review, python, resource_leak]
+- id: case_06
+  description: "Real bugfix-commit review: missing authentication check"
+  tags: [code_review, python, security]
+- id: case_07
+  description: "Real bugfix-commit review: mutable default argument"
+  tags: [code_review, python, mutable_default_arg]
+- id: case_08
+  description: "Real bugfix-commit review: overly broad except clause"
+  tags: [code_review, python, broad_except]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py
