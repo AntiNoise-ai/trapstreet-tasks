@@ -1,0 +1,20 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: freezegun/api.py
+
+  176| def fake_time():
+  177|     if _should_use_real_time():
+  178|         return real_time()
+  179|     current_time = get_current_time()
+  180|     return calendar.timegm(current_time.timetuple()) + current_time.microsecond / 1000000.0
+  181| 
+  182| if _TIME_NS_PRESENT:
+  183|     def fake_time_ns():
+  184|         if _should_use_real_time():
+  185|             return real_time_ns()
+  186|         return int(int(fake_time()) * 1e9)
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

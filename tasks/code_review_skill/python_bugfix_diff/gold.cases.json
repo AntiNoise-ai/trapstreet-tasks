@@ -12,7 +12,17 @@
       "snippet_text": "    def _get_low_from_current_date_number(cls, field_index, step, from_timestamp):\n        dt = datetime.datetime.fromtimestamp(from_timestamp, tz=UTC_DT)\n        if field_index == MINUTE_FIELD:\n            return dt.minute % step\n        if field_index == HOUR_FIELD:\n            return dt.hour % step\n        if field_index == DAY_FIELD:\n            return ((dt.day - 1) % step) + 1\n        if field_index == MONTH_FIELD:\n            return dt.month % step\n        if field_index == DOW_FIELD:\n            return (dt.weekday() + 1) % step\n\n        raise ValueError(\"Can't get current date number for index larger than 4\")\n",
       "buggy_line": 1276,
       "line_tolerance": 2,
-      "keywords": ["off-by-one", "1-based", "modulo", "boundary condition", "wrong range"],
+      "keywords": [
+        "off-by-one",
+        "off by one",
+        "1-based",
+        "1-indexed",
+        "modulo",
+        "boundary condition",
+        "boundary",
+        "wrong range",
+        "out of range"
+      ],
       "bug_description": "The month field is 1-based (1-12), but its low-bound is computed with `dt.month % step` instead of the 1-based formula `((dt.month - 1) % step) + 1` already used for the day field a few lines above. When step evenly divides the month, this yields 0, which is outside the valid 1-12 range."
     },
     {
@@ -26,7 +36,15 @@
       "snippet_text": "            for item in board_items:\n                if item[\"type\"] != \"PULL_REQUEST\":\n                    raise ValueError(\n                        \"Traffic Jam contains issues! All items must be pull requests. \"\n                        \"Please remove the issues and rerun the tool, \"\n                        \"https://github.com/orgs/google/projects/74/views/1\"\n                    )\n            # sort items by pr number\n            board_items.sort(key=lambda k: k[\"content\"][\"url\"])\n\n            # get files for prs which have more than 100 changed files\n            for item in board_items:\n                changed_files = item[\"content\"][\"files\"][\"totalCount\"]\n                if changed_files <= 100:\n                    continue\n                pr_number = item[\"content\"][\"number\"]\n                pr_url = item[\"content\"][\"url\"]\n                log.warn(\n                    f\"{pr_url} has {changed_files} changed files. Attempting to fetch them.\"\n                )\n                files = g.pr_files(pr_number)\n                item[\"content\"][\"files\"][\"nodes\"] = [\n                    {\"path\": f[\"filename\"]} for f in files\n                ]",
       "buggy_line": 535,
       "line_tolerance": 2,
-      "keywords": ["nonetype", "missing null check", "typeerror", "not subscriptable"],
+      "keywords": [
+        "nonetype",
+        "missing null check",
+        "missing none check",
+        "null check",
+        "none check",
+        "typeerror",
+        "not subscriptable"
+      ],
       "bug_description": "The loop indexes item[\"content\"][\"files\"][\"totalCount\"] for every board item without checking whether the PR is closed-but-not-merged; for such PRs the API returns files: null, so subscripting it raises \"TypeError: 'NoneType' object is not subscriptable\"."
     },
     {
@@ -40,7 +58,16 @@
       "snippet_text": "    def parse(\n        self,\n        conversation: \"Conversation\",\n        max_length: int,\n        preformatted: bool = False,\n        train_only_last_turn: bool = False,\n    ) -> List[torch.Tensor]:\n        # conversation = process_harmony_conversations(conversation)\n        if not preformatted:\n            prompt_text = \"\"\n            for j, message in enumerate(conversation):\n                if j == 0 and (\n                    message[\"role\"] != \"system\"\n                    or message[\"role\"] != \"assistant_reasoning_effort\"\n                ):\n                    prompt_text = self.build_single_turn_prompt(\n                        prompt_text,\n                        \"assistant_reasoning_effort\",\n                        self.default_reasoning_level,\n                    )\n                prompt_text = self.build_single_turn_prompt(\n                    prompt_text, message[\"role\"], message[\"content\"]\n                )\n            conversation = prompt_text",
       "buggy_line": 247,
       "line_tolerance": 2,
-      "keywords": ["always true", "wrong operator", "or should be and", "inverted condition", "logic error"],
+      "keywords": [
+        "always true",
+        "always evaluates to true",
+        "wrong operator",
+        "or should be and",
+        "and not or",
+        "inverted condition",
+        "logic error",
+        "de morgan"
+      ],
       "bug_description": "The condition `message[\"role\"] != \"system\" or message[\"role\"] != \"assistant_reasoning_effort\"` uses `or` where `and` is needed; a single string can never equal both values simultaneously, so the condition is always True."
     },
     {
@@ -54,7 +81,18 @@
       "snippet_text": "    async def establish(self) -> None:\n        if self.state != self.State.INIT:\n            raise InvalidStateError('sync not in init state')\n\n        options = hci.HCI_LE_Periodic_Advertising_Create_Sync_Command.Options(0)\n        if self.filter_duplicates:\n            options |= (\n                hci.HCI_LE_Periodic_Advertising_Create_Sync_Command.Options.DUPLICATE_FILTERING_INITIALLY_ENABLED\n            )\n\n        await self.device.send_async_command(\n            hci.HCI_LE_Periodic_Advertising_Create_Sync_Command(\n                options=options,\n                advertising_sid=self.sid,\n                advertiser_address_type=self.advertiser_address.address_type,\n                advertiser_address=self.advertiser_address,\n                skip=self.skip,\n                sync_timeout=int(self.sync_timeout * 100),\n                sync_cte_type=0,\n            )\n        )\n\n        self.state = self.State.PENDING\n",
       "buggy_line": 916,
       "line_tolerance": 2,
-      "keywords": ["race condition", "concurrent", "state overwritten", "async", "lost update"],
+      "keywords": [
+        "race condition",
+        "concurrent",
+        "concurrently",
+        "concurrency",
+        "state overwritten",
+        "overwritten",
+        "clobbers",
+        "async",
+        "lost update",
+        "toctou"
+      ],
       "bug_description": "The `await self.device.send_async_command(...)` call yields control to the event loop; if the sync-established HCI event arrives and advances state to ESTABLISHED before this resumes, the unconditional `self.state = self.State.PENDING` clobbers the concurrent update."
     },
     {
@@ -68,7 +106,17 @@
       "snippet_text": "    def guarded_connect(inst: socket.socket, *args: Any) -> None:\n        host = host_from_connect_args(args)\n        if host in allowed_ip_hosts_and_hostnames or (\n            _is_unix_socket(inst.family) and allow_unix_socket\n        ):\n            return _true_connect(inst, *args)\n\n        if host and networks and is_ipaddress(host):\n            ip = ipaddress.ip_address(host)\n            if any(ip in net for net in networks):\n                return _true_connect(inst, *args)\n\n        raise SocketConnectBlockedError(allowed_list, host)\n",
       "buggy_line": 356,
       "line_tolerance": 2,
-      "keywords": ["resource leak", "file descriptor leak", "socket not closed", "unclosed", "leaked fd"],
+      "keywords": [
+        "resource leak",
+        "file descriptor leak",
+        "file descriptor leaks",
+        "leaking",
+        "socket not closed",
+        "not closed",
+        "unclosed",
+        "leaked fd",
+        "fd leak"
+      ],
       "bug_description": "When a connection is disallowed, the function raises SocketConnectBlockedError without first closing the already-created real socket `inst`, leaking its file descriptor."
     },
     {
@@ -79,10 +127,23 @@
       "license": "MIT",
       "file_path": "src/ha_mcp/settings_ui.py",
       "snippet_start_line": 3033,
-      "snippet_text": "    def _mount(prefix: str) -> None:\n        for path, methods, handler_key in routes:\n            mcp.custom_route(f\"{prefix}{path}\", methods=methods)(handlers[handler_key])\n\n    if is_addon:\n        # Root mount lets HA ingress proxy localhost:9583/ → settings UI.\n        # Direct port 9583 LAN access also reaches these routes; in this\n        # respect they share the existing add-on networking model where\n        # port 9583 is exposed via host_network and the secret path is\n        # the auth for direct access. Document this in DOCS.md.\n        mcp.custom_route(\"/\", methods=[\"GET\"])(handlers[\"root_page\"])\n        _mount(\"\")\n\n    if secret_prefix:\n        # Mount under the MCP secret path so Docker / standalone clients\n        # need the same secret to reach the UI as they do for the MCP\n        # endpoint.\n        _mount(secret_prefix)",
+      "snippet_text": "    def _mount(prefix: str) -> None:\n        for path, methods, handler_key in routes:\n            mcp.custom_route(f\"{prefix}{path}\", methods=methods)(handlers[handler_key])\n\n    if is_addon:\n        # Root mount lets HA ingress proxy localhost:9583/ \u2192 settings UI.\n        # Direct port 9583 LAN access also reaches these routes; in this\n        # respect they share the existing add-on networking model where\n        # port 9583 is exposed via host_network and the secret path is\n        # the auth for direct access. Document this in DOCS.md.\n        mcp.custom_route(\"/\", methods=[\"GET\"])(handlers[\"root_page\"])\n        _mount(\"\")\n\n    if secret_prefix:\n        # Mount under the MCP secret path so Docker / standalone clients\n        # need the same secret to reach the UI as they do for the MCP\n        # endpoint.\n        _mount(secret_prefix)",
       "buggy_line": 3044,
       "line_tolerance": 2,
-      "keywords": ["missing authentication", "no auth check", "unauthenticated access", "authorization bypass", "publicly reachable"],
+      "keywords": [
+        "missing authentication",
+        "no authentication",
+        "without authentication",
+        "no auth check",
+        "no auth",
+        "unauthenticated access",
+        "unauthenticated",
+        "authorization bypass",
+        "bypass",
+        "bypassing",
+        "bypasses",
+        "publicly reachable"
+      ],
       "bug_description": "In add-on mode, the entire settings/backup/policy API is mounted at the bare root path via `_mount(\"\")` with zero authentication check, while the secret-path mount is the only place a secret is required; any client reaching the port directly can invoke these state-changing endpoints unauthenticated."
     },
     {
@@ -96,8 +157,15 @@
       "snippet_text": "@supports_dataset\ndef cost_distance(\n    raster: xr.DataArray,\n    friction: xr.DataArray,\n    x: str = \"x\",\n    y: str = \"y\",\n    target_values: list = [],\n    max_cost: float = np.inf,\n    connectivity: int = 8,\n) -> xr.DataArray:",
       "buggy_line": 1207,
       "line_tolerance": 1,
-      "keywords": ["mutable default argument", "shared list", "aliasing", "default parameter", "shared mutable state"],
-      "bug_description": "cost_distance declares `target_values: list = []`, a mutable default argument — the same list object is reused as the default across every call that omits target_values, the classic shared-mutable-default anti-pattern."
+      "keywords": [
+        "mutable default argument",
+        "mutable default",
+        "shared list",
+        "aliasing",
+        "default parameter",
+        "shared mutable state"
+      ],
+      "bug_description": "cost_distance declares `target_values: list = []`, a mutable default argument \u2014 the same list object is reused as the default across every call that omits target_values, the classic shared-mutable-default anti-pattern."
     },
     {
       "id": "case_08",
@@ -110,8 +178,68 @@
       "snippet_text": "            src_r0 = sr.y_off + int((clip_r0 - dst_r0) * scale_y)\n            src_c0 = sr.x_off + int((clip_c0 - dst_c0) * scale_x)\n            src_r1 = sr.y_off + int((clip_r1 - dst_r0) * scale_y)\n            src_c1 = sr.x_off + int((clip_c1 - dst_c0) * scale_x)\n\n            # Read from source file using windowed read\n            try:\n                src_arr, _ = read_to_array(\n                    src.filename,\n                    window=(src_r0, src_c0, src_r1, src_c1),\n                    band=src.band - 1,  # convert 1-based to 0-based\n                )\n            except Exception as e:\n                # Under XRSPATIAL_GEOTIFF_STRICT=1, surface the read failure\n                # so partial mosaics are caught in CI. Default mode warns\n                # once per missing source then continues, preserving the\n                # historical behaviour. See issue #1662.\n                import warnings\n                from . import _geotiff_strict_mode, GeoTIFFFallbackWarning\n                if _geotiff_strict_mode():\n                    raise\n                warnings.warn(\n                    f\"VRT source {src.filename!r} could not be read \"\n                    f\"({type(e).__name__}: {e}); skipping. The output \"\n                    f\"mosaic will have a hole at this tile.\",\n                    GeoTIFFFallbackWarning,\n                    stacklevel=2,\n                )\n                continue  # skip missing/unreadable sources",
       "buggy_line": 359,
       "line_tolerance": 2,
-      "keywords": ["bare except", "except exception", "too broad", "swallowing exceptions", "catches too much"],
+      "keywords": [
+        "bare except",
+        "except exception",
+        "too broad",
+        "overly broad",
+        "swallowing exceptions",
+        "swallows",
+        "catches too much",
+        "catches everything"
+      ],
       "bug_description": "The windowed read of each VRT source tile is wrapped in `except Exception as e`, far broader than the I/O errors read_to_array actually raises, silently catching genuine unrelated bugs like RuntimeError or MemoryError."
+    },
+    {
+      "id": "case_09",
+      "bug_category": "cache_invalidate_keyerror",
+      "source_repo": "Suor/funcy",
+      "source_commit_url": "https://github.com/Suor/funcy/commit/a96b449ee08d7355805e4c6037e9782e74241ff7",
+      "license": "BSD-3-Clause",
+      "file_path": "funcy/calc.py",
+      "snippet_start_line": 100,
+      "snippet_text": "def cache(timeout, key_func=None):\n    \"\"\"Caches a function results for timeout seconds.\"\"\"\n    if isinstance(timeout, int):\n        timeout = timedelta(seconds=timeout)\n\n    if key_func is None:\n        key_func = lambda *a, **kw: a + tuple(sorted(kw.items())) if kw else a\n\n    def decorator(func):\n        cache = {}\n\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            key = key_func(*args, **kwargs)\n            if key in cache:\n                result, timestamp = cache[key]\n                if datetime.now() - timestamp < timeout:\n                    return result\n                else:\n                    del cache[key]\n\n            result = func(*args, **kwargs)\n            cache[key] = result, datetime.now()\n            return result\n\n        def invalidate(*args, **kwargs):\n            cache.pop(key_func(*args, **kwargs))\n        wrapper.invalidate = invalidate\n\n        def invalidate_all():\n            cache.clear()\n        wrapper.invalidate_all = invalidate_all\n",
+      "buggy_line": 126,
+      "line_tolerance": 2,
+      "keywords": [
+        "keyerror",
+        "dict.pop without default",
+        "missing default value",
+        "pop raises keyerror",
+        "race condition",
+        "concurrent invalidation",
+        "cache invalidate crash",
+        "works in tests fails in production",
+        "idempotent",
+        "already removed"
+      ],
+      "bug_description": "The invalidate() closure calls cache.pop(key_func(*args, **kwargs)) without a default value; if the key was already removed -- e.g. it expired via the timeout-based eviction on the next read, or a concurrent thread already invalidated it -- pop() raises KeyError. Because unit tests rarely hit this timing/race window, the code appears correct until it crashes in production."
+    },
+    {
+      "id": "case_10",
+      "bug_category": "floating_point_truncation",
+      "source_repo": "spulec/freezegun",
+      "source_commit_url": "https://github.com/spulec/freezegun/commit/9591645e0fd49b54bab688ac7eeeec14b87a9226",
+      "license": "Apache-2.0",
+      "file_path": "freezegun/api.py",
+      "snippet_start_line": 176,
+      "snippet_text": "def fake_time():\n    if _should_use_real_time():\n        return real_time()\n    current_time = get_current_time()\n    return calendar.timegm(current_time.timetuple()) + current_time.microsecond / 1000000.0\n\nif _TIME_NS_PRESENT:\n    def fake_time_ns():\n        if _should_use_real_time():\n            return real_time_ns()\n        return int(int(fake_time()) * 1e9)\n",
+      "buggy_line": 186,
+      "line_tolerance": 1,
+      "keywords": [
+        "truncation order",
+        "int() called too early",
+        "microsecond precision lost",
+        "precision loss",
+        "floating point truncation",
+        "rounds down to the second",
+        "sub-second precision discarded",
+        "double truncation",
+        "multiply before truncating",
+        "uuid collision",
+        "loses microseconds"
+      ],
+      "bug_description": "fake_time_ns() computes int(int(fake_time()) * 1e9): the inner int() truncates fake_time()'s fractional (microsecond) part to zero BEFORE multiplying by 1e9, discarding all sub-second precision. It should multiply first and truncate once: int(fake_time() * 1e9). The practical symptom is that uuid1() calls made within the same frozen second collide, since time_ns() loses the microseconds that would otherwise differentiate them."
     }
   ]
 }

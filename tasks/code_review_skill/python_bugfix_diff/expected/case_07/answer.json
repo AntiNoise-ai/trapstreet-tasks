@@ -6,6 +6,7 @@
   "line_tolerance": 1,
   "keywords": [
     "mutable default argument",
+    "mutable default",
     "shared list",
     "aliasing",
     "default parameter",

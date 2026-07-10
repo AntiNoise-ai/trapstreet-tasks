@@ -1,0 +1,23 @@
+{
+  "id": "case_10",
+  "bug_category": "floating_point_truncation",
+  "file_path": "freezegun/api.py",
+  "buggy_line": 186,
+  "line_tolerance": 1,
+  "keywords": [
+    "truncation order",
+    "int() called too early",
+    "microsecond precision lost",
+    "precision loss",
+    "floating point truncation",
+    "rounds down to the second",
+    "sub-second precision discarded",
+    "double truncation",
+    "multiply before truncating",
+    "uuid collision",
+    "loses microseconds"
+  ],
+  "bug_description": "fake_time_ns() computes int(int(fake_time()) * 1e9): the inner int() truncates fake_time()'s fractional (microsecond) part to zero BEFORE multiplying by 1e9, discarding all sub-second precision. It should multiply first and truncate once: int(fake_time() * 1e9). The practical symptom is that uuid1() calls made within the same frozen second collide, since time_ns() loses the microseconds that would otherwise differentiate them.",
+  "source_commit_url": "https://github.com/spulec/freezegun/commit/9591645e0fd49b54bab688ac7eeeec14b87a9226",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,41 @@
+You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
+
+File: funcy/calc.py
+
+  100| def cache(timeout, key_func=None):
+  101|     """Caches a function results for timeout seconds."""
+  102|     if isinstance(timeout, int):
+  103|         timeout = timedelta(seconds=timeout)
+  104| 
+  105|     if key_func is None:
+  106|         key_func = lambda *a, **kw: a + tuple(sorted(kw.items())) if kw else a
+  107| 
+  108|     def decorator(func):
+  109|         cache = {}
+  110| 
+  111|         @wraps(func)
+  112|         def wrapper(*args, **kwargs):
+  113|             key = key_func(*args, **kwargs)
+  114|             if key in cache:
+  115|                 result, timestamp = cache[key]
+  116|                 if datetime.now() - timestamp < timeout:
+  117|                     return result
+  118|                 else:
+  119|                     del cache[key]
+  120| 
+  121|             result = func(*args, **kwargs)
+  122|             cache[key] = result, datetime.now()
+  123|             return result
+  124| 
+  125|         def invalidate(*args, **kwargs):
+  126|             cache.pop(key_func(*args, **kwargs))
+  127|         wrapper.invalidate = invalidate
+  128| 
+  129|         def invalidate_all():
+  130|             cache.clear()
+  131|         wrapper.invalidate_all = invalidate_all
+
+Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
+
+List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.

@@ -9,14 +9,14 @@ bug. Ground truth is the actual fix commit — not a synthetic injected bug.
 Community "AI code reviewer" skills are one of the most duplicated categories
 in the Claude Skills ecosystem — everyone has built one, nobody knows which
 is actually good at catching real bugs versus producing plausible-sounding
-comments. This task is a shootout: same 8 real diffs, same scoring, whichever
+comments. This task is a shootout: same 10 real diffs, same scoring, whichever
 skill catches the most real bugs wins.
 
 ## Files
 
 | File | Role |
 |------|------|
-| `gold.cases.json` | Source of truth — 8 real bugfix-commit cases. **Edit here.** |
+| `gold.cases.json` | Source of truth — 10 real bugfix-commit cases. **Edit here.** |
 | `build_cases.py`  | Generates `inputs/` + `expected/` and validates invariants. |
 | `judge.py`        | Per-case scoring. |
 | `grader.py`       | Run-level aggregation. |
@@ -43,11 +43,20 @@ are scored** (anti-shotgun) — flagging every line in the file does not help.
 - **Per case** (`judge.py`, deterministic, no LLM judge): a finding "hits"
   the gold bug only if ALL THREE hold — (1) `file` matches the case's file by
   basename, (2) `line` is within `line_tolerance` (default 2, tightened to 1
-  for case_07) of the real bug line, (3) `description` contains at least one
+  for case_07 and case_10, where the buggy line sits at the very edge of the
+  shown snippet) of the real bug line, (3) `description` contains at least one
   of the case's pre-curated `keywords` as a whole word (word-boundary match,
   case-insensitive). Score is `1.0` if any of the first 5 findings hits, else
   `0.0`. Non-hitting runs still surface `best_match_signals` (which of the 3
   signals came closest) as an ungraded diagnostic.
+  **Keyword curation note:** each case's `keywords` list includes several
+  natural synonyms/inflections of the core term (e.g. case_01 has both
+  `off-by-one` and `off by one`; case_04 has `concurrent`, `concurrently`,
+  and `concurrency`) — added after real testing against community skills
+  showed correct diagnoses getting scored as misses purely because the
+  skill's phrasing didn't exactly match a single curated phrase. This
+  doesn't eliminate the risk (a good but differently-worded description can
+  still miss), but it substantially narrows it.
 - **Per run** (`grader.py`): mean score across cases; `n_passed` counts full
   hits; `by_category` breaks score down by bug category. Run passes at mean
   ≥ `0.5` (deliberately lower than `connections`' 0.75 — these are real bugs
@@ -69,12 +78,28 @@ the license notice requirement for the small excerpts used here):
 | case_06 | missing auth check | [homeassistant-ai/ha-mcp@9f5b085](https://github.com/homeassistant-ai/ha-mcp/commit/9f5b085ad4a7b38b067c9da0dc5b45462c4d796e) | MIT |
 | case_07 | mutable default arg | [xarray-contrib/xarray-spatial@5103dc1](https://github.com/xarray-contrib/xarray-spatial/commit/5103dc15c84f19c1c373a7b453634c28fbd75f15) | MIT |
 | case_08 | broad except | [xarray-contrib/xarray-spatial@c6daae5](https://github.com/xarray-contrib/xarray-spatial/commit/c6daae54b8776b7c6ac67c77fcb9f9531cb56069) | MIT |
+| case_09 | cache invalidate KeyError | [Suor/funcy@a96b449](https://github.com/Suor/funcy/commit/a96b449ee08d7355805e4c6037e9782e74241ff7) | BSD-3-Clause |
+| case_10 | float truncation | [spulec/freezegun@9591645](https://github.com/spulec/freezegun/commit/9591645e0fd49b54bab688ac7eeeec14b87a9226) | Apache-2.0 |
 
 **Known limitation — leakage risk:** because these are real commits (not
 synthetic bug injection), a skill's underlying model may have seen the exact
 commit during pretraining. Mitigated, not eliminated, by preferring smaller
-repos (roughly 277–3,897 stars at time of writing, not framework-scale
+repos (roughly 277–4,517 stars at time of writing, not framework-scale
 mega-repos) and recent commits.
+
+**Why case_09/case_10 exist:** the original 8 cases included two "textbook
+famous" Python gotchas (case_07 mutable default argument, case_08 bare
+except) that every community skill tested against v1 caught instantly —
+likely pattern-matched from widely-discussed blog posts rather than reasoned
+about from the code itself, giving them poor long-term discriminative power.
+case_09 and case_10 were deliberately sourced to be subtler and much less
+discussed (a cache-invalidation KeyError and a float-truncation-order bug),
+while still meeting the same real-commit/permissive-license/modest-repo bar.
+One candidate considered and rejected for this round was a real, cleanly
+verified path-traversal CVE (formally tracked with a GHSA advisory) — passed
+over specifically because a *formally cataloged* CVE is arguably *more*
+likely to be indexed in training data than an obscure, unlabeled bugfix
+commit, which would work against the same discriminative-power goal.
 The design doc also floated renaming identifiers as an additional mitigation;
 v1 ships the snippets **verbatim** instead (see "Out of scope" in the
 implementation plan for why). See

@@ -20,13 +20,19 @@ cases:
   tags: [code_review, python, resource_leak]
 - id: case_06
   description: "Real bugfix-commit review: missing authentication check"
-  tags: [code_review, python, security]
+  tags: [code_review, python, security_missing_auth]
 - id: case_07
   description: "Real bugfix-commit review: mutable default argument"
   tags: [code_review, python, mutable_default_arg]
 - id: case_08
   description: "Real bugfix-commit review: overly broad except clause"
   tags: [code_review, python, broad_except]
+- id: case_09
+  description: "Real bugfix-commit review: cache.invalidate() raises KeyError on already-missing key"
+  tags: [code_review, python, cache_invalidate_keyerror]
+- id: case_10
+  description: "Real bugfix-commit review: float truncated before scaling, losing microsecond precision"
+  tags: [code_review, python, floating_point_truncation]
 
 judge:
   cmd: python3 judge.py

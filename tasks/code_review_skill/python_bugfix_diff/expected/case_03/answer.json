@@ -6,10 +6,13 @@
   "line_tolerance": 2,
   "keywords": [
     "always true",
+    "always evaluates to true",
     "wrong operator",
     "or should be and",
+    "and not or",
     "inverted condition",
-    "logic error"
+    "logic error",
+    "de morgan"
   ],
   "bug_description": "The condition `message[\"role\"] != \"system\" or message[\"role\"] != \"assistant_reasoning_effort\"` uses `or` where `and` is needed; a single string can never equal both values simultaneously, so the condition is always True.",
   "source_commit_url": "https://github.com/sgl-project/SpecForge/commit/361f5a11921264ae5c329bfa4968008ce4d2f231",

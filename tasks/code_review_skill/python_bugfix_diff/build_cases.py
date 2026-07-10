@@ -13,7 +13,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 GOLD = HERE / "gold.cases.json"
 
-ALLOWED_LICENSES = {"MIT", "Apache-2.0"}
+ALLOWED_LICENSES = {"MIT", "Apache-2.0", "BSD-3-Clause"}
 ID_RE = re.compile(r"^case_\d\d$")
 
 PROMPT_TEMPLATE = """You are reviewing a code change. Below is one file from \
