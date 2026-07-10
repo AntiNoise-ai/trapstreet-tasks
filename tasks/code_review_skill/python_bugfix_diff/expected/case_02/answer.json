@@ -5,7 +5,6 @@
   "buggy_line": 535,
   "line_tolerance": 2,
   "keywords": [
-    "none",
     "nonetype",
     "missing null check",
     "typeerror",

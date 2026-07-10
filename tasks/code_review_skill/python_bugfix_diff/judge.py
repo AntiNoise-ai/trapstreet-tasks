@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -53,8 +54,10 @@ def _finding_matches(finding: Any, expected: dict) -> dict[str, bool]:
     keyword_match = False
     desc = finding.get("description")
     if isinstance(desc, str) and desc:
-        norm = desc.lower()
-        keyword_match = any(kw.lower() in norm for kw in expected["keywords"])
+        keyword_match = any(
+            re.search(rf"\b{re.escape(kw)}\b", desc, re.IGNORECASE)
+            for kw in expected["keywords"]
+        )
 
     return {"file_match": file_match, "line_match": line_match, "keyword_match": keyword_match}
 
@@ -63,7 +66,7 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
     s = _strip_fences(stdout)
     try:
         obj = json.loads(s)
-    except (json.JSONDecodeError, TypeError):
+    except (json.JSONDecodeError, TypeError, RecursionError):
         return {"score": 0.0, "hit_index": None, "n_findings_considered": 0,
                 "format_ok": False, "reason": "output is not valid JSON"}
 
