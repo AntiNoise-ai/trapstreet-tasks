@@ -18,3 +18,23 @@ __pycache__/
 tasks/pdf_reader/tenancy_agreement/archive/
 tasks/pdf_reader/tenancy_agreement/*_Original.pdf
 .pytest_cache/
+
+# ─── LOCAL-ONLY tasks (license / IP risks — MUST NOT commit) ───
+# aita_verdict: Reddit ToS forbids redistribution
+tasks/aita_verdict/
+# drug_interaction_check: BMJ copyright + medical liability
+tasks/drug_interaction_check/
+# debugging_case: contains prior-employer production code (Fanatical/Fandom)
+tasks/debugging_case/
+
+# ─── Local research / reference materials ───
+data/
+docs/superpowers/
+Loop_paper_revised.pdf
+krgpt-*/
+krgpt-*.zip
+*.zip
+
+# ─── Loose PDFs at root (papers etc — commit specific ones explicitly if needed) ───
+/*.pdf
+
