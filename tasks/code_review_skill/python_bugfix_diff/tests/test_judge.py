@@ -183,3 +183,46 @@ def test_deeply_nested_json_does_not_raise_recursion_error():
         "format_ok": False,
         "reason": "output is not valid JSON",
     }
+
+
+# -- Regression test: Infinity/NaN line values must degrade gracefully --
+#
+# json.loads accepts the non-standard literals Infinity/-Infinity/NaN by
+# default, parsing them to float("inf")/float("-inf")/float("nan"). A
+# solution can therefore emit valid-per-json.loads output like
+# {"findings": [{"file": "x.py", "line": Infinity, "description": "..."}]}.
+# int(float("inf")) raises OverflowError and int(float("nan")) raises
+# ValueError -- both must be caught in _finding_matches so this degrades to
+# a clean miss instead of crashing score_case().
+
+def test_infinity_line_value_does_not_crash_and_misses():
+    out = _out([{
+        "file": "croniter.py",
+        "line": float("inf"),
+        "description": "classic off-by-one: 1-based month uses raw modulo",
+    }])
+    r = judge.score_case(out, EXPECTED)
+    assert r["score"] == 0.0
+    assert r["best_match_signals"]["line_match"] is False
+
+
+def test_negative_infinity_line_value_does_not_crash_and_misses():
+    out = _out([{
+        "file": "croniter.py",
+        "line": float("-inf"),
+        "description": "classic off-by-one: 1-based month uses raw modulo",
+    }])
+    r = judge.score_case(out, EXPECTED)
+    assert r["score"] == 0.0
+    assert r["best_match_signals"]["line_match"] is False
+
+
+def test_nan_line_value_does_not_crash_and_misses():
+    out = _out([{
+        "file": "croniter.py",
+        "line": float("nan"),
+        "description": "classic off-by-one: 1-based month uses raw modulo",
+    }])
+    r = judge.score_case(out, EXPECTED)
+    assert r["score"] == 0.0
+    assert r["best_match_signals"]["line_match"] is False

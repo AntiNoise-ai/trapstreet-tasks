@@ -49,7 +49,14 @@ def _finding_matches(finding: Any, expected: dict) -> dict[str, bool]:
     line_match = False
     line = finding.get("line")
     if isinstance(line, (int, float)) and not isinstance(line, bool):
-        line_match = abs(int(line) - expected["buggy_line"]) <= expected.get("line_tolerance", 2)
+        try:
+            line_match = abs(int(line) - expected["buggy_line"]) <= expected.get("line_tolerance", 2)
+        except (OverflowError, ValueError):
+            # int(float("inf"))/-inf raises OverflowError, int(float("nan")) raises
+            # ValueError. json.loads accepts these non-standard literals by default,
+            # so a solution can emit e.g. {"line": Infinity} and must degrade to a
+            # clean miss here rather than crashing score_case().
+            line_match = False
 
     keyword_match = False
     desc = finding.get("description")
