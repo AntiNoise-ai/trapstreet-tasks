@@ -73,7 +73,8 @@ the license notice requirement for the small excerpts used here):
 **Known limitation — leakage risk:** because these are real commits (not
 synthetic bug injection), a skill's underlying model may have seen the exact
 commit during pretraining. Mitigated, not eliminated, by preferring smaller
-repos (87–3,898 stars, not framework-scale mega-repos) and recent commits.
+repos (roughly 277–3,897 stars at time of writing, not framework-scale
+mega-repos) and recent commits.
 The design doc also floated renaming identifiers as an additional mitigation;
 v1 ships the snippets **verbatim** instead (see "Out of scope" in the
 implementation plan for why). See
