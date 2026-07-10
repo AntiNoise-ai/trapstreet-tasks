@@ -10,7 +10,6 @@
     "concurrently",
     "concurrency",
     "state overwritten",
-    "overwritten",
     "clobbers",
     "async",
     "lost update",

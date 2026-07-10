@@ -19,7 +19,6 @@
         "1-indexed",
         "modulo",
         "boundary condition",
-        "boundary",
         "wrong range",
         "out of range"
       ],
@@ -87,7 +86,6 @@
         "concurrently",
         "concurrency",
         "state overwritten",
-        "overwritten",
         "clobbers",
         "async",
         "lost update",
@@ -110,7 +108,6 @@
         "resource leak",
         "file descriptor leak",
         "file descriptor leaks",
-        "leaking",
         "socket not closed",
         "not closed",
         "unclosed",
@@ -139,9 +136,6 @@
         "unauthenticated access",
         "unauthenticated",
         "authorization bypass",
-        "bypass",
-        "bypassing",
-        "bypasses",
         "publicly reachable"
       ],
       "bug_description": "In add-on mode, the entire settings/backup/policy API is mounted at the bare root path via `_mount(\"\")` with zero authentication check, while the secret-path mount is the only place a secret is required; any client reaching the port directly can invoke these state-changing endpoints unauthenticated."
@@ -184,7 +178,6 @@
         "too broad",
         "overly broad",
         "swallowing exceptions",
-        "swallows",
         "catches too much",
         "catches everything"
       ],
@@ -225,7 +218,7 @@
       "snippet_start_line": 176,
       "snippet_text": "def fake_time():\n    if _should_use_real_time():\n        return real_time()\n    current_time = get_current_time()\n    return calendar.timegm(current_time.timetuple()) + current_time.microsecond / 1000000.0\n\nif _TIME_NS_PRESENT:\n    def fake_time_ns():\n        if _should_use_real_time():\n            return real_time_ns()\n        return int(int(fake_time()) * 1e9)\n",
       "buggy_line": 186,
-      "line_tolerance": 1,
+      "line_tolerance": 0,
       "keywords": [
         "truncation order",
         "int() called too early",

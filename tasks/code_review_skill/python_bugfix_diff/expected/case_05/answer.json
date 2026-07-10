@@ -8,7 +8,6 @@
     "resource leak",
     "file descriptor leak",
     "file descriptor leaks",
-    "leaking",
     "socket not closed",
     "not closed",
     "unclosed",

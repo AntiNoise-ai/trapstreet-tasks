@@ -3,7 +3,7 @@
   "bug_category": "floating_point_truncation",
   "file_path": "freezegun/api.py",
   "buggy_line": 186,
-  "line_tolerance": 1,
+  "line_tolerance": 0,
   "keywords": [
     "truncation order",
     "int() called too early",
