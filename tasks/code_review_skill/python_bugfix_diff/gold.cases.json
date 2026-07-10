@@ -17,7 +17,6 @@
         "off by one",
         "1-based",
         "1-indexed",
-        "modulo",
         "boundary condition",
         "wrong range",
         "out of range"
@@ -36,12 +35,10 @@
       "buggy_line": 535,
       "line_tolerance": 2,
       "keywords": [
-        "nonetype",
         "missing null check",
         "missing none check",
         "null check",
         "none check",
-        "typeerror",
         "not subscriptable"
       ],
       "bug_description": "The loop indexes item[\"content\"][\"files\"][\"totalCount\"] for every board item without checking whether the PR is closed-but-not-merged; for such PRs the API returns files: null, so subscripting it raises \"TypeError: 'NoneType' object is not subscriptable\"."
@@ -82,14 +79,11 @@
       "line_tolerance": 2,
       "keywords": [
         "race condition",
-        "concurrent",
-        "concurrently",
-        "concurrency",
         "state overwritten",
-        "clobbers",
-        "async",
         "lost update",
-        "toctou"
+        "concurrent access",
+        "concurrent modification",
+        "race window"
       ],
       "bug_description": "The `await self.device.send_async_command(...)` call yields control to the event loop; if the sync-established HCI event arrives and advances state to ESTABLISHED before this resumes, the unconditional `self.state = self.State.PENDING` clobbers the concurrent update."
     },
@@ -110,7 +104,6 @@
         "file descriptor leaks",
         "socket not closed",
         "not closed",
-        "unclosed",
         "leaked fd",
         "fd leak"
       ],
@@ -134,7 +127,6 @@
         "no auth check",
         "no auth",
         "unauthenticated access",
-        "unauthenticated",
         "authorization bypass",
         "publicly reachable"
       ],
@@ -155,7 +147,6 @@
         "mutable default argument",
         "mutable default",
         "shared list",
-        "aliasing",
         "default parameter",
         "shared mutable state"
       ],
@@ -195,7 +186,6 @@
       "buggy_line": 126,
       "line_tolerance": 2,
       "keywords": [
-        "keyerror",
         "dict.pop without default",
         "missing default value",
         "pop raises keyerror",
@@ -203,7 +193,6 @@
         "concurrent invalidation",
         "cache invalidate crash",
         "works in tests fails in production",
-        "idempotent",
         "already removed"
       ],
       "bug_description": "The invalidate() closure calls cache.pop(key_func(*args, **kwargs)) without a default value; if the key was already removed -- e.g. it expired via the timeout-based eviction on the next read, or a concurrent thread already invalidated it -- pop() raises KeyError. Because unit tests rarely hit this timing/race window, the code appears correct until it crashes in production."

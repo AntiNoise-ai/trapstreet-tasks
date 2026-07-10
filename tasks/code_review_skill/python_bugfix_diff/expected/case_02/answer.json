@@ -5,12 +5,10 @@
   "buggy_line": 535,
   "line_tolerance": 2,
   "keywords": [
-    "nonetype",
     "missing null check",
     "missing none check",
     "null check",
     "none check",
-    "typeerror",
     "not subscriptable"
   ],
   "bug_description": "The loop indexes item[\"content\"][\"files\"][\"totalCount\"] for every board item without checking whether the PR is closed-but-not-merged; for such PRs the API returns files: null, so subscripting it raises \"TypeError: 'NoneType' object is not subscriptable\".",

@@ -5,7 +5,6 @@
   "buggy_line": 126,
   "line_tolerance": 2,
   "keywords": [
-    "keyerror",
     "dict.pop without default",
     "missing default value",
     "pop raises keyerror",
@@ -13,7 +12,6 @@
     "concurrent invalidation",
     "cache invalidate crash",
     "works in tests fails in production",
-    "idempotent",
     "already removed"
   ],
   "bug_description": "The invalidate() closure calls cache.pop(key_func(*args, **kwargs)) without a default value; if the key was already removed -- e.g. it expired via the timeout-based eviction on the next read, or a concurrent thread already invalidated it -- pop() raises KeyError. Because unit tests rarely hit this timing/race window, the code appears correct until it crashes in production.",

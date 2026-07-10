@@ -11,7 +11,6 @@
     "no auth check",
     "no auth",
     "unauthenticated access",
-    "unauthenticated",
     "authorization bypass",
     "publicly reachable"
   ],

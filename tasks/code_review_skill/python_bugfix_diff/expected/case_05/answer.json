@@ -10,7 +10,6 @@
     "file descriptor leaks",
     "socket not closed",
     "not closed",
-    "unclosed",
     "leaked fd",
     "fd leak"
   ],

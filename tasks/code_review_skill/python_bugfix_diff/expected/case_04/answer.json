@@ -6,14 +6,11 @@
   "line_tolerance": 2,
   "keywords": [
     "race condition",
-    "concurrent",
-    "concurrently",
-    "concurrency",
     "state overwritten",
-    "clobbers",
-    "async",
     "lost update",
-    "toctou"
+    "concurrent access",
+    "concurrent modification",
+    "race window"
   ],
   "bug_description": "The `await self.device.send_async_command(...)` call yields control to the event loop; if the sync-established HCI event arrives and advances state to ESTABLISHED before this resumes, the unconditional `self.state = self.State.PENDING` clobbers the concurrent update.",
   "source_commit_url": "https://github.com/google/bumble/commit/55d8171ad89a668a04aaab905efa320ac0e8b9b1",
