@@ -39,3 +39,5 @@ Find the most significant bug in this code and report it. Respond with ONLY a JS
 {"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}
 
 List findings in order of confidence, most likely real bug first. You may report more than one finding, but only your first 5 will be scored.
+
+Optional: this file is part of a real, public repository. If it would help your review, `repo_context.json` (in this same input directory) gives you the repo and an exact commit you can check out to see the surrounding codebase as it existed at that point -- you are not limited to the snippet above if your review process benefits from more context.

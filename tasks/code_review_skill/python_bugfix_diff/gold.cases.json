@@ -21,7 +21,8 @@
         "wrong range",
         "out of range"
       ],
-      "bug_description": "The month field is 1-based (1-12), but its low-bound is computed with `dt.month % step` instead of the 1-based formula `((dt.month - 1) % step) + 1` already used for the day field a few lines above. When step evenly divides the month, this yields 0, which is outside the valid 1-12 range."
+      "bug_description": "The month field is 1-based (1-12), but its low-bound is computed with `dt.month % step` instead of the 1-based formula `((dt.month - 1) % step) + 1` already used for the day field a few lines above. When step evenly divides the month, this yields 0, which is outside the valid 1-12 range.",
+      "parent_commit_sha": "9810279c20030954e2f1ed2cf5f1d34b98c6b07f"
     },
     {
       "id": "case_02",
@@ -41,7 +42,8 @@
         "none check",
         "not subscriptable"
       ],
-      "bug_description": "The loop indexes item[\"content\"][\"files\"][\"totalCount\"] for every board item without checking whether the PR is closed-but-not-merged; for such PRs the API returns files: null, so subscripting it raises \"TypeError: 'NoneType' object is not subscriptable\"."
+      "bug_description": "The loop indexes item[\"content\"][\"files\"][\"totalCount\"] for every board item without checking whether the PR is closed-but-not-merged; for such PRs the API returns files: null, so subscripting it raises \"TypeError: 'NoneType' object is not subscriptable\".",
+      "parent_commit_sha": "462490b21c2ccd15bee30622b0a030920f5ae295"
     },
     {
       "id": "case_03",
@@ -64,7 +66,8 @@
         "logic error",
         "de morgan"
       ],
-      "bug_description": "The condition `message[\"role\"] != \"system\" or message[\"role\"] != \"assistant_reasoning_effort\"` uses `or` where `and` is needed; a single string can never equal both values simultaneously, so the condition is always True."
+      "bug_description": "The condition `message[\"role\"] != \"system\" or message[\"role\"] != \"assistant_reasoning_effort\"` uses `or` where `and` is needed; a single string can never equal both values simultaneously, so the condition is always True.",
+      "parent_commit_sha": "38e6959b4cb0ebf07e1e0573873105bf1203ce30"
     },
     {
       "id": "case_04",
@@ -85,7 +88,8 @@
         "concurrent modification",
         "race window"
       ],
-      "bug_description": "The `await self.device.send_async_command(...)` call yields control to the event loop; if the sync-established HCI event arrives and advances state to ESTABLISHED before this resumes, the unconditional `self.state = self.State.PENDING` clobbers the concurrent update."
+      "bug_description": "The `await self.device.send_async_command(...)` call yields control to the event loop; if the sync-established HCI event arrives and advances state to ESTABLISHED before this resumes, the unconditional `self.state = self.State.PENDING` clobbers the concurrent update.",
+      "parent_commit_sha": "47fcd8e9ec82f0546a68cc11ef665ab3261cb503"
     },
     {
       "id": "case_05",
@@ -107,7 +111,8 @@
         "leaked fd",
         "fd leak"
       ],
-      "bug_description": "When a connection is disallowed, the function raises SocketConnectBlockedError without first closing the already-created real socket `inst`, leaking its file descriptor."
+      "bug_description": "When a connection is disallowed, the function raises SocketConnectBlockedError without first closing the already-created real socket `inst`, leaking its file descriptor.",
+      "parent_commit_sha": "6205820ea70ed6bb6df1700ceb28f283dfddb3c5"
     },
     {
       "id": "case_06",
@@ -130,7 +135,8 @@
         "authorization bypass",
         "publicly reachable"
       ],
-      "bug_description": "In add-on mode, the entire settings/backup/policy API is mounted at the bare root path via `_mount(\"\")` with zero authentication check, while the secret-path mount is the only place a secret is required; any client reaching the port directly can invoke these state-changing endpoints unauthenticated."
+      "bug_description": "In add-on mode, the entire settings/backup/policy API is mounted at the bare root path via `_mount(\"\")` with zero authentication check, while the secret-path mount is the only place a secret is required; any client reaching the port directly can invoke these state-changing endpoints unauthenticated.",
+      "parent_commit_sha": "4f737ac7c116e9afa046ab45b1230e2cdb5ae959"
     },
     {
       "id": "case_07",
@@ -150,7 +156,8 @@
         "default parameter",
         "shared mutable state"
       ],
-      "bug_description": "cost_distance declares `target_values: list = []`, a mutable default argument \u2014 the same list object is reused as the default across every call that omits target_values, the classic shared-mutable-default anti-pattern."
+      "bug_description": "cost_distance declares `target_values: list = []`, a mutable default argument \u2014 the same list object is reused as the default across every call that omits target_values, the classic shared-mutable-default anti-pattern.",
+      "parent_commit_sha": "e2c258bf715c993b76cb3dfd17cf83db6218907c"
     },
     {
       "id": "case_08",
@@ -172,7 +179,8 @@
         "catches too much",
         "catches everything"
       ],
-      "bug_description": "The windowed read of each VRT source tile is wrapped in `except Exception as e`, far broader than the I/O errors read_to_array actually raises, silently catching genuine unrelated bugs like RuntimeError or MemoryError."
+      "bug_description": "The windowed read of each VRT source tile is wrapped in `except Exception as e`, far broader than the I/O errors read_to_array actually raises, silently catching genuine unrelated bugs like RuntimeError or MemoryError.",
+      "parent_commit_sha": "ef32bd73a5f8738c13dd6a443ac7f1671751bc29"
     },
     {
       "id": "case_09",
@@ -195,7 +203,8 @@
         "works in tests fails in production",
         "already removed"
       ],
-      "bug_description": "The invalidate() closure calls cache.pop(key_func(*args, **kwargs)) without a default value; if the key was already removed -- e.g. it expired via the timeout-based eviction on the next read, or a concurrent thread already invalidated it -- pop() raises KeyError. Because unit tests rarely hit this timing/race window, the code appears correct until it crashes in production."
+      "bug_description": "The invalidate() closure calls cache.pop(key_func(*args, **kwargs)) without a default value; if the key was already removed -- e.g. it expired via the timeout-based eviction on the next read, or a concurrent thread already invalidated it -- pop() raises KeyError. Because unit tests rarely hit this timing/race window, the code appears correct until it crashes in production.",
+      "parent_commit_sha": "c33f69dc7cf811f524a791a477775228ce7025cc"
     },
     {
       "id": "case_10",
@@ -221,7 +230,8 @@
         "uuid collision",
         "loses microseconds"
       ],
-      "bug_description": "fake_time_ns() computes int(int(fake_time()) * 1e9): the inner int() truncates fake_time()'s fractional (microsecond) part to zero BEFORE multiplying by 1e9, discarding all sub-second precision. It should multiply first and truncate once: int(fake_time() * 1e9). The practical symptom is that uuid1() calls made within the same frozen second collide, since time_ns() loses the microseconds that would otherwise differentiate them."
+      "bug_description": "fake_time_ns() computes int(int(fake_time()) * 1e9): the inner int() truncates fake_time()'s fractional (microsecond) part to zero BEFORE multiplying by 1e9, discarding all sub-second precision. It should multiply first and truncate once: int(fake_time() * 1e9). The practical symptom is that uuid1() calls made within the same frozen second collide, since time_ns() loses the microseconds that would otherwise differentiate them.",
+      "parent_commit_sha": "c65f4db6ef4824538061978be30954c1c739d38b"
     }
   ]
 }

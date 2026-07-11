@@ -1,0 +1,5 @@
+{
+  "repo": "https://github.com/xarray-contrib/xarray-spatial",
+  "parent_commit_sha": "e2c258bf715c993b76cb3dfd17cf83db6218907c",
+  "note": "Optional. Shallow-fetch this exact commit if your review process wants the full repo, e.g.: git init && git remote add origin <repo> && git fetch --depth 1 origin <parent_commit_sha> && git checkout FETCH_HEAD. This commit predates the bug being found/fixed -- it will not reveal which commit fixed it."
+}

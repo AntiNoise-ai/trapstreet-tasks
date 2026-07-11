@@ -1,0 +1,5 @@
+{
+  "repo": "https://github.com/sgl-project/SpecForge",
+  "parent_commit_sha": "38e6959b4cb0ebf07e1e0573873105bf1203ce30",
+  "note": "Optional. Shallow-fetch this exact commit if your review process wants the full repo, e.g.: git init && git remote add origin <repo> && git fetch --depth 1 origin <parent_commit_sha> && git checkout FETCH_HEAD. This commit predates the bug being found/fixed -- it will not reveal which commit fixed it."
+}

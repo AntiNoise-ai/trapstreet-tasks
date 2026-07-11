@@ -1,0 +1,5 @@
+{
+  "repo": "https://github.com/homeassistant-ai/ha-mcp",
+  "parent_commit_sha": "4f737ac7c116e9afa046ab45b1230e2cdb5ae959",
+  "note": "Optional. Shallow-fetch this exact commit if your review process wants the full repo, e.g.: git init && git remote add origin <repo> && git fetch --depth 1 origin <parent_commit_sha> && git checkout FETCH_HEAD. This commit predates the bug being found/fixed -- it will not reveal which commit fixed it."
+}
