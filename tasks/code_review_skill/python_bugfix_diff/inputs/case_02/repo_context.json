@@ -1,5 +1,0 @@
-{
-  "repo": "https://github.com/googlefonts/gftools",
-  "parent_commit_sha": "462490b21c2ccd15bee30622b0a030920f5ae295",
-  "note": "Optional. Shallow-fetch this exact commit if your review process wants the full repo, e.g.: git init && git remote add origin <repo> && git fetch --depth 1 origin <parent_commit_sha> && git checkout FETCH_HEAD. This commit predates the bug being found/fixed -- it will not reveal which commit fixed it."
-}

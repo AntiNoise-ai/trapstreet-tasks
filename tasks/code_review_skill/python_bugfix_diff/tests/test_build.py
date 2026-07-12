@@ -12,7 +12,7 @@ def _case(**over):
         "id": "case_01",
         "bug_category": "off_by_one",
         "source_repo": "example/repo",
-        "source_commit_url": "https://github.com/example/repo/commit/" + ("a" * 40),
+        "source_commit_url": "https://github.com/example/repo/commit/abc123",
         "license": "MIT",
         "file_path": "src/example.py",
         "snippet_start_line": 10,
@@ -21,7 +21,6 @@ def _case(**over):
         "line_tolerance": 2,
         "keywords": ["off-by-one", "boundary"],
         "bug_description": "example bug",
-        "parent_commit_sha": "b" * 40,
     }
     base.update(over)
     return base
@@ -67,54 +66,3 @@ def test_render_snippet_line_numbers():
     assert lines[0].startswith("   10| def f():")
     assert lines[1].startswith("   11|     return 1")
     assert len(lines) == 2  # trailing blank line from the source text is not rendered
-
-
-def test_rejects_malformed_parent_commit_sha():
-    c = _case(parent_commit_sha="not-a-real-sha")
-    with pytest.raises(ValueError, match="40-char lowercase hex SHA"):
-        build_cases.validate_case(c)
-
-
-def test_rejects_uppercase_parent_commit_sha():
-    c = _case(parent_commit_sha="B" * 40)
-    with pytest.raises(ValueError, match="40-char lowercase hex SHA"):
-        build_cases.validate_case(c)
-
-
-def test_rejects_parent_commit_sha_equal_to_fix_commit():
-    # parent_commit_sha matching the fix commit would hand solutions the
-    # answer via a clonable ref -- must be refused outright.
-    fix_sha = "a" * 40
-    c = _case(
-        source_commit_url=f"https://github.com/example/repo/commit/{fix_sha}",
-        parent_commit_sha=fix_sha,
-    )
-    with pytest.raises(ValueError, match="would leak the answer"):
-        build_cases.validate_case(c)
-
-
-def test_rejects_parent_commit_sha_equal_to_fix_commit_with_query_string():
-    # A naive rsplit("/")[-1] extraction would treat "<sha>?diff=split" as
-    # the fix sha and never match a clean parent_commit_sha -- silently
-    # bypassing the leak check. Must still be caught via regex extraction.
-    fix_sha = "a" * 40
-    c = _case(
-        source_commit_url=f"https://github.com/example/repo/commit/{fix_sha}?diff=split",
-        parent_commit_sha=fix_sha,
-    )
-    with pytest.raises(ValueError, match="would leak the answer"):
-        build_cases.validate_case(c)
-
-
-def test_rejects_parent_commit_sha_equal_to_fix_commit_case_insensitive():
-    # The same commit written in different case (GitHub SHAs are
-    # case-insensitive) must still be caught, not bypassed by a naive
-    # case-sensitive string comparison.
-    fix_sha_upper = "A" * 40
-    fix_sha_lower = "a" * 40
-    c = _case(
-        source_commit_url=f"https://github.com/example/repo/commit/{fix_sha_upper}",
-        parent_commit_sha=fix_sha_lower,
-    )
-    with pytest.raises(ValueError, match="would leak the answer"):
-        build_cases.validate_case(c)

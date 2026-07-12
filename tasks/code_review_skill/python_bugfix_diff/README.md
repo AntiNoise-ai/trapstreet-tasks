@@ -21,7 +21,6 @@ skill catches the most real bugs wins.
 | `judge.py`        | Per-case scoring. |
 | `grader.py`       | Run-level aggregation. |
 | `inputs/<id>/question.txt`  | GENERATED — the prompt shown to the skill. |
-| `inputs/<id>/repo_context.json` | GENERATED — optional real-repo access (see below). |
 | `expected/<id>/answer.json` | GENERATED — the gold bug location + keywords. |
 
 Regenerate after editing cases: `python3 build_cases.py`
@@ -38,51 +37,6 @@ object:
 
 Findings should be ordered most-confident-first. **Only the first 5 findings
 are scored** (anti-shotgun) — flagging every line in the file does not help.
-
-## Optional: real repo access
-
-`inputs/<id>/repo_context.json` gives a skill that wants more than the
-snippet a way to get it, without changing the submission shape (this
-follows the same principle established for the `minecraft-obtain-diamond`
-task: single-shot I/O only constrains *what gets submitted*, not what a
-solution does internally to produce it):
-
-```json
-{
-  "repo": "https://github.com/<owner>/<repo>",
-  "parent_commit_sha": "<the commit right BEFORE the fix -- never the fix itself>",
-  "note": "..."
-}
-```
-
-A solution can shallow-fetch exactly that commit and get the real,
-complete codebase as it existed at the moment the bug was present —
-enough for a skill whose methodology depends on repo-wide search (e.g.
-"look for existing utilities before flagging this as new code") or on
-running real static-analysis scripts against a real checkout, not just an
-isolated snippet:
-
-```bash
-git init && git remote add origin <repo>
-git fetch --depth 1 origin <parent_commit_sha>
-git checkout FETCH_HEAD
-```
-
-`build_cases.py` refuses to build (hard `ValueError`) if a case's
-`parent_commit_sha` ever matches its fix commit — that would hand the
-answer to any solution that reads the file. Using it is entirely
-optional: none of this task's own reference solutions read
-`repo_context.json` today; a solution that only reads `question.txt`
-behaves exactly as before.
-
-**Residual risk, stated plainly:** a shallow fetch of the parent commit
-has no ancestry, so it cannot reveal *which* later commit fixed the bug —
-but nothing stops a sufficiently motivated solution from separately
-querying the GitHub API for "commits touching this file after this SHA"
-or searching merged PRs, and finding the real fix commit that way. This
-is the same class of leakage risk already accepted for this task's use of
-real (not synthetic) commits — see "Known limitation — leakage risk"
-below — not a new problem introduced by exposing repo access.
 
 ## Scoring
 

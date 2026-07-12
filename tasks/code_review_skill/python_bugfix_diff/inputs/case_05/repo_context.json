@@ -1,5 +1,0 @@
-{
-  "repo": "https://github.com/miketheman/pytest-socket",
-  "parent_commit_sha": "6205820ea70ed6bb6df1700ceb28f283dfddb3c5",
-  "note": "Optional. Shallow-fetch this exact commit if your review process wants the full repo, e.g.: git init && git remote add origin <repo> && git fetch --depth 1 origin <parent_commit_sha> && git checkout FETCH_HEAD. This commit predates the bug being found/fixed -- it will not reveal which commit fixed it."
-}

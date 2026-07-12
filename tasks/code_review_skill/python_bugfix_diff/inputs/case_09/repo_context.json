@@ -1,5 +1,0 @@
-{
-  "repo": "https://github.com/Suor/funcy",
-  "parent_commit_sha": "c33f69dc7cf811f524a791a477775228ce7025cc",
-  "note": "Optional. Shallow-fetch this exact commit if your review process wants the full repo, e.g.: git init && git remote add origin <repo> && git fetch --depth 1 origin <parent_commit_sha> && git checkout FETCH_HEAD. This commit predates the bug being found/fixed -- it will not reveal which commit fixed it."
-}
