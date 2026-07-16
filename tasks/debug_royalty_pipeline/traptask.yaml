@@ -1,0 +1,23 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: case_01
+  description: "Change publisher for a SKU (all-time): must update BOTH publisher_id and sku column"
+  tags: [debug_royalty_pipeline, publisher_swap_alltime]
+- id: case_02
+  description: "Change publisher effective from a specific date: insert new catalog row, do not modify existing"
+  tags: [debug_royalty_pipeline, publisher_swap_dated]
+- id: case_03
+  description: "Change royalty from pct to fixed $ for SKU only in catalog (single-table trap)"
+  tags: [debug_royalty_pipeline, royalty_type_change_single_table]
+- id: case_04
+  description: "Change royalty from pct to fixed $ for SKU also in enterprise_deals (cross-table trap)"
+  tags: [debug_royalty_pipeline, royalty_type_change_multi_table]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

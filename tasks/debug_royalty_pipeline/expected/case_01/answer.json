@@ -1,0 +1,17 @@
+{
+  "id": "case_01",
+  "category": "publisher_swap_alltime",
+  "gold_edits": [
+    {
+      "file": "catalog.csv",
+      "op": "update",
+      "match": {
+        "product_id": "PID-042"
+      },
+      "set": {
+        "publisher_id": "MG",
+        "sku": "MED-042-MG"
+      }
+    }
+  ]
+}

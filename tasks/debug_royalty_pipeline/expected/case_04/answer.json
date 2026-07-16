@@ -1,0 +1,28 @@
+{
+  "id": "case_04",
+  "category": "royalty_type_change_multi_table",
+  "gold_edits": [
+    {
+      "file": "catalog.csv",
+      "op": "update",
+      "match": {
+        "product_id": "PID-311"
+      },
+      "set": {
+        "royalty_pct": null,
+        "royalty_fixed_usd": 2.0
+      }
+    },
+    {
+      "file": "enterprise_deals.csv",
+      "op": "update",
+      "match": {
+        "product_id": "PID-311"
+      },
+      "set": {
+        "royalty_pct": null,
+        "royalty_fixed_usd": 2.0
+      }
+    }
+  ]
+}

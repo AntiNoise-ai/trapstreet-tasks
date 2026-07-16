@@ -1,0 +1,4 @@
+product_id,sku,publisher_id,royalty_pct,royalty_fixed_usd,effective_from
+PID-234,MED-234-SS,SS,0.75,,2020-01-01
+PID-042,MED-042-NR,NR,0.8,,2020-01-01
+PID-201,MED-201-BW,BW,0.7,,2020-01-01

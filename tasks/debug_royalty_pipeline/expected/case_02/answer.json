@@ -1,0 +1,18 @@
+{
+  "id": "case_02",
+  "category": "publisher_swap_dated",
+  "gold_edits": [
+    {
+      "file": "catalog.csv",
+      "op": "insert",
+      "row": {
+        "product_id": "PID-107",
+        "sku": "MED-107-MG",
+        "publisher_id": "MG",
+        "royalty_pct": 0.7,
+        "royalty_fixed_usd": null,
+        "effective_from": "2024-06-01"
+      }
+    }
+  ]
+}

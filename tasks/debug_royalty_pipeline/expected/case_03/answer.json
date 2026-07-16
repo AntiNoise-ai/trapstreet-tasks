@@ -1,0 +1,17 @@
+{
+  "id": "case_03",
+  "category": "royalty_type_change_single_table",
+  "gold_edits": [
+    {
+      "file": "catalog.csv",
+      "op": "update",
+      "match": {
+        "product_id": "PID-234"
+      },
+      "set": {
+        "royalty_pct": null,
+        "royalty_fixed_usd": 4.0
+      }
+    }
+  ]
+}
