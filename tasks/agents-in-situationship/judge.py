@@ -214,17 +214,17 @@ def judge_case(stdout: str, expected: dict) -> dict[str, Any]:
 
 
 def main() -> None:
-    payload = json.loads(os.environ["TRAPTASK_PAYLOAD"])
+    manifest = json.loads(os.environ["TRAPTASK_MANIFEST"])
 
-    stdout = Path(payload["outputs"]["case_stdout"]).read_text()
-    exit_code = json.loads(Path(payload["outputs"]["case_meta.json"]).read_text())["exit_code"]
-    expected = json.loads(Path(payload["expected"]["answer.json"]).read_text())
+    stdout = Path(manifest["run"]["stdout"]).read_text()
+    exit_code = json.loads(Path(manifest["run"]["meta"]).read_text())["exit_code"]
+    expected = json.loads((Path(manifest["expected_dir"]) / "answer.json").read_text())
 
     usage_record: dict[str, Any] = {}
-    usage_path = payload["outputs"].get("usage.json")
-    if usage_path and Path(usage_path).exists():
+    usage_path = Path(manifest["outputs_dir"]) / "usage.json"
+    if usage_path.exists():
         try:
-            usage_record = json.loads(Path(usage_path).read_text())
+            usage_record = json.loads(usage_path.read_text())
         except json.JSONDecodeError:
             pass
 

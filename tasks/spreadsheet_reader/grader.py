@@ -16,7 +16,7 @@ PASS_THRESHOLD = 0.80
 
 
 def main() -> None:
-    cases = json.loads(os.environ["TRAPTASK_PAYLOAD"])
+    cases = json.loads(os.environ["TRAPTASK_MANIFEST"])
 
     scored = [c for c in cases if c.get("metrics") and c["metrics"].get("score") is not None]
     skipped = [c for c in cases if not c.get("metrics") or c["metrics"].get("score") is None]

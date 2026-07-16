@@ -8,7 +8,7 @@ matter). solved = well_formed AND all 4 groups correct, where well_formed means
 exactly 4 groups of 4 words forming a valid partition of the 16-word universe.
 Theme labels are surfaced but NOT graded.
 
-I/O contract matches personality/mbti_profile/judge.py: reads TRAPTASK_PAYLOAD.
+I/O contract matches personality/mbti_profile/judge.py: reads TRAPTASK_MANIFEST.
 """
 from __future__ import annotations
 
@@ -95,16 +95,16 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
 
 
 def main() -> None:
-    payload = json.loads(os.environ["TRAPTASK_PAYLOAD"])
-    stdout = Path(payload["outputs"]["case_stdout"]).read_text()
-    exit_code = json.loads(Path(payload["outputs"]["case_meta.json"]).read_text())["exit_code"]
-    expected = json.loads(Path(payload["expected"]["answer.json"]).read_text())
+    manifest = json.loads(os.environ["TRAPTASK_MANIFEST"])
+    stdout = Path(manifest["run"]["stdout"]).read_text()
+    exit_code = json.loads(Path(manifest["run"]["meta"]).read_text())["exit_code"]
+    expected = json.loads((Path(manifest["expected_dir"]) / "answer.json").read_text())
 
     usage_record: dict[str, Any] = {}
-    usage_path = payload["outputs"].get("usage.json")
-    if usage_path and Path(usage_path).exists():
+    usage_path = Path(manifest["outputs_dir"]) / "usage.json"
+    if usage_path.exists():
         try:
-            usage_record = json.loads(Path(usage_path).read_text())
+            usage_record = json.loads(usage_path.read_text())
         except json.JSONDecodeError:
             pass
 
