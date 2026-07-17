@@ -1,3 +1,3 @@
 # Ticket
 
-Reassign SKU MED-042-NR to Meridian Group. Effective all-time.
+Change SKU MED-042-NR's supplier from North Rock Media to Meridian Group.

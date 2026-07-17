@@ -5,7 +5,7 @@
     {
       "id": "case_01",
       "category": "supplier_change_alltime",
-      "ticket": "Reassign SKU MED-042-NR to Meridian Group. Effective all-time.",
+      "ticket": "Change SKU MED-042-NR's supplier from North Rock Media to Meridian Group.",
       "data": {
         "suppliers": [
           {"supplier_id": "NR", "supplier_name": "North Rock Media"},
@@ -36,7 +36,7 @@
     {
       "id": "case_02",
       "category": "supplier_change_dated",
-      "ticket": "Reassign SKU MED-107-BW to Meridian Group. Effective from 2024-06-01 (transactions before that date keep the old assignment).",
+      "ticket": "Change SKU MED-107-BW's supplier to Meridian Group, effective from 2024-06-01 onwards.",
       "data": {
         "suppliers": [
           {"supplier_id": "NR", "supplier_name": "North Rock Media"},
@@ -65,7 +65,7 @@
     {
       "id": "case_03",
       "category": "royalty_change_retail_only",
-      "ticket": "Change SKU MED-234-SS royalty from 75% to fixed $4.",
+      "ticket": "Change SKU MED-234-SS's royalty from 75% to fixed $4.",
       "data": {
         "suppliers": [
           {"supplier_id": "NR", "supplier_name": "North Rock Media"},
@@ -91,7 +91,7 @@
     {
       "id": "case_04",
       "category": "royalty_change_with_b2b",
-      "ticket": "Change SKU MED-311-NR royalty from 80% to fixed $2. Applies to all channels.",
+      "ticket": "Change SKU MED-311-NR's royalty from 80% to fixed $2.",
       "data": {
         "suppliers": [
           {"supplier_id": "NR", "supplier_name": "North Rock Media"},
