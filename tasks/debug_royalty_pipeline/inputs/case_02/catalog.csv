@@ -1,3 +1,5 @@
 product_id,sku,product_name,supplier_id,royalty_pct,royalty_fixed_usd,effective_from
 PID-107,MED-107-BW,Midnight Cartographer,BW,0.7,,2020-01-01
+PID-088,MED-088-MG,Midnight Cartographer,MG,0.75,,2020-01-01
 PID-042,MED-042-NR,Nebula Runner,NR,0.8,,2020-01-01
+PID-102,MED-102-SS,Solar Chronicles,SS,0.6,,2020-01-01

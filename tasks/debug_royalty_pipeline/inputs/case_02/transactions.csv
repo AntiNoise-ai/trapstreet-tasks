@@ -1,6 +1,6 @@
 transaction_id,product_id,channel,sku,supplier_name,sale_date,revenue_gross_usd,transaction_fee_usd,affiliate_commission_usd,status,promo_id,bundle_name,royalty_pct,royalty_fixed_usd
-TXN-100,PID-107,retail,MED-107-BW,BlueWave Records,2024-03-15,90.0,4.5,1.8,COMPLETE,PROMO-SPRING24,,,
+TXN-100,PID-107,retail,MED-107-BW,BlueWave Records,2024-03-15,90.0,4.5,1.8,COMPLETE,,,,
 TXN-101,PID-107,retail,MED-107-BW,BlueWave Records,2024-05-30,110.0,5.5,0.0,COMPLETE,,,,
 TXN-102,PID-107,retail,MED-107-BW,BlueWave Records,2024-06-15,130.0,6.5,0.0,COMPLETE,,,,
-TXN-103,PID-107,retail,MED-107-BW,BlueWave Records,2024-08-01,100.0,5.0,2.0,COMPLETE,,,,
-TXN-200,PID-042,retail,MED-042-NR,North Rock Media,2024-04-01,100.0,5.0,0.0,COMPLETE,PROMO-SPRING24,,,
+TXN-103,PID-107,retail,MED-107-BW,BlueWave Records,2024-08-01,100.0,5.0,0.0,COMPLETE,,,,
+TXN-200,PID-042,retail,MED-042-NR,North Rock Media,2024-04-01,100.0,5.0,2.0,COMPLETE,,,,

@@ -3,23 +3,15 @@
   "category": "supplier_change_alltime",
   "gold_edits": [
     {
-      "file": "catalog.csv",
-      "op": "update",
-      "match": {
-        "product_id": "PID-042"
-      },
-      "set": {
-        "supplier_id": "MG"
-      }
-    },
-    {
       "file": "transactions.csv",
       "op": "update",
       "match": {
         "product_id": "PID-042"
       },
       "set": {
-        "supplier_name": "Meridian Group"
+        "product_id": "PID-070",
+        "supplier_name": "Meridian Group",
+        "sku": "MED-070-MG"
       }
     }
   ]

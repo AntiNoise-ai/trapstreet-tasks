@@ -3,26 +3,15 @@
   "category": "supplier_change_dated",
   "gold_edits": [
     {
-      "file": "catalog.csv",
-      "op": "insert",
-      "row": {
-        "product_id": "PID-107",
-        "sku": "MED-107-BW",
-        "supplier_id": "MG",
-        "royalty_pct": 0.7,
-        "royalty_fixed_usd": null,
-        "effective_from": "2024-06-01",
-        "product_name": "Midnight Cartographer"
-      }
-    },
-    {
       "file": "transactions.csv",
       "op": "update",
       "match": {
         "transaction_id": "TXN-102"
       },
       "set": {
-        "supplier_name": "Meridian Group"
+        "product_id": "PID-088",
+        "supplier_name": "Meridian Group",
+        "sku": "MED-088-MG"
       }
     },
     {
@@ -32,7 +21,9 @@
         "transaction_id": "TXN-103"
       },
       "set": {
-        "supplier_name": "Meridian Group"
+        "product_id": "PID-088",
+        "supplier_name": "Meridian Group",
+        "sku": "MED-088-MG"
       }
     }
   ]

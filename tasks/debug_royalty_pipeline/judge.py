@@ -208,10 +208,42 @@ def tables_equal(t1: dict, t2: dict) -> tuple[bool, str]:
     return True, ""
 
 
+def write_tables_to_dir(tables: dict, out_dir: Path) -> None:
+    """Write tables dict back out as CSVs in out_dir."""
+    import csv
+    for fname, rows in tables.items():
+        if not rows:
+            continue
+        cols = list(rows[0].keys())
+        with (out_dir / fname).open("w", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=cols)
+            w.writeheader()
+            for row in rows:
+                w.writerow({c: row.get(c, "") for c in cols})
+
+
+def run_reports(work_dir: Path) -> tuple[str, str]:
+    """Run both report scripts in work_dir, return (pub_output, item_output)."""
+    import subprocess
+    import sys
+    pub = subprocess.run(
+        [sys.executable, "publisher_statement.py"],
+        cwd=work_dir, capture_output=True, text=True, timeout=30,
+    )
+    item = subprocess.run(
+        [sys.executable, "itemised_statement.py"],
+        cwd=work_dir, capture_output=True, text=True, timeout=30,
+    )
+    return pub.stdout, item.stdout
+
+
 def score_case(stdout: str, expected: dict, inputs_dir: Path = None) -> dict[str, Any]:
-    """Data-aware scoring: apply agent edits and gold edits to the input
-    tables, compare resulting states. Score 1.0 only if resulting states are
-    identical (semantic equivalence)."""
+    """Report-output-based scoring: apply agent edits and gold edits, then
+    RUN both report scripts and compare their stdout. Score 1.0 only if both
+    reports produce identical output (semantic equivalence at the report
+    layer -- multiple equivalent fix paths all pass)."""
+    import shutil
+    import tempfile
     gold_edits = expected.get("gold_edits", [])
     agent_edits = parse_agent_edits(stdout)
     if agent_edits is None:
@@ -237,27 +269,56 @@ def score_case(stdout: str, expected: dict, inputs_dir: Path = None) -> dict[str
         }
 
     initial = load_input_csvs(inputs_dir)
-    gold_state = apply_edits(initial, gold_edits)
-    agent_state = apply_edits(initial, agent_edits)
 
-    ok, diff = tables_equal(gold_state, agent_state)
-    if ok:
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            td_path = Path(td)
+            gold_dir = td_path / "gold"
+            agent_dir = td_path / "agent"
+
+            # Set up gold work dir: copy scripts + modified CSVs
+            shutil.copytree(inputs_dir, gold_dir)
+            gold_state = apply_edits(initial, gold_edits)
+            write_tables_to_dir(gold_state, gold_dir)
+            gold_pub, gold_item = run_reports(gold_dir)
+
+            # Set up agent work dir
+            shutil.copytree(inputs_dir, agent_dir)
+            agent_state = apply_edits(initial, agent_edits)
+            write_tables_to_dir(agent_state, agent_dir)
+            agent_pub, agent_item = run_reports(agent_dir)
+
+            pub_ok = gold_pub.strip() == agent_pub.strip()
+            item_ok = gold_item.strip() == agent_item.strip()
+
+            if pub_ok and item_ok:
+                return {
+                    "score": 1.0,
+                    "reason": "both reports match gold output",
+                    "category": expected.get("category"),
+                    "difficulty": expected.get("category"),
+                    "gold_edit_count": len(gold_edits),
+                    "agent_edit_count": len(agent_edits),
+                }
+            diffs = []
+            if not pub_ok:
+                diffs.append(f"publisher_statement differs; agent output first 300 chars: {agent_pub[:300]!r}")
+            if not item_ok:
+                diffs.append(f"itemised_statement differs; agent output first 300 chars: {agent_item[:300]!r}")
+            return {
+                "score": 0.0,
+                "reason": " | ".join(diffs),
+                "category": expected.get("category"),
+                "difficulty": expected.get("category"),
+                "gold_edit_count": len(gold_edits),
+                "agent_edit_count": len(agent_edits),
+            }
+    except Exception as e:
         return {
-            "score": 1.0,
-            "reason": "resulting table states are equivalent",
+            "score": 0.0,
+            "reason": f"judge crashed while running scripts: {e}",
             "category": expected.get("category"),
-            "difficulty": expected.get("category"),
-            "gold_edit_count": len(gold_edits),
-            "agent_edit_count": len(agent_edits),
         }
-    return {
-        "score": 0.0,
-        "reason": f"resulting states differ: {diff}",
-        "category": expected.get("category"),
-        "difficulty": expected.get("category"),
-        "gold_edit_count": len(gold_edits),
-        "agent_edit_count": len(agent_edits),
-    }
 
 
 def main() -> None:

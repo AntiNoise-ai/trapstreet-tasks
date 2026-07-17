@@ -33,38 +33,47 @@
           {
             "product_id": "PID-042",
             "sku": "MED-042-NR",
+            "product_name": "Nebula Runner",
             "supplier_id": "NR",
             "royalty_pct": 0.8,
             "royalty_fixed_usd": null,
-            "effective_from": "2020-01-01",
-            "product_name": "Nebula Runner"
+            "effective_from": "2020-01-01"
+          },
+          {
+            "product_id": "PID-070",
+            "sku": "MED-070-MG",
+            "product_name": "Nebula Runner",
+            "supplier_id": "MG",
+            "royalty_pct": 0.75,
+            "royalty_fixed_usd": null,
+            "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-050",
             "sku": "MED-050-NR",
+            "product_name": "Iron Grid",
             "supplier_id": "NR",
             "royalty_pct": 0.75,
             "royalty_fixed_usd": null,
-            "effective_from": "2020-01-01",
-            "product_name": "Iron Grid"
+            "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-102",
             "sku": "MED-102-SS",
+            "product_name": "Solar Chronicles",
             "supplier_id": "SS",
             "royalty_pct": 0.6,
             "royalty_fixed_usd": null,
-            "effective_from": "2020-01-01",
-            "product_name": "Solar Chronicles"
+            "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-201",
             "sku": "MED-201-BW",
+            "product_name": "The Silent Library",
             "supplier_id": "BW",
             "royalty_pct": 0.7,
             "royalty_fixed_usd": null,
-            "effective_from": "2020-01-01",
-            "product_name": "The Silent Library"
+            "effective_from": "2020-01-01"
           }
         ],
         "transactions": [
@@ -75,14 +84,14 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-03-15",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
             "affiliate_commission_usd": 2.0,
             "status": "COMPLETE",
-            "promo_id": "PROMO-SPRING24",
-            "bundle_name": ""
+            "promo_id": "",
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           },
           {
             "transaction_id": "TXN-002",
@@ -91,46 +100,30 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-04-20",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 120.0,
             "transaction_fee_usd": 6.0,
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           },
           {
             "transaction_id": "TXN-003",
-            "product_id": "PID-042",
-            "channel": "b2b",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
-            "sale_date": "2024-05-10",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
-            "revenue_gross_usd": 500.0,
-            "transaction_fee_usd": 10.0,
-            "affiliate_commission_usd": 0.0,
-            "status": "COMPLETE",
-            "promo_id": "",
-            "bundle_name": ""
-          },
-          {
-            "transaction_id": "TXN-004",
             "product_id": "PID-042",
             "channel": "retail",
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-08-10",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 150.0,
             "transaction_fee_usd": 7.5,
-            "affiliate_commission_usd": 3.0,
+            "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           },
           {
             "transaction_id": "TXN-010",
@@ -139,14 +132,14 @@
             "sku": "MED-050-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-05-01",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 80.0,
             "transaction_fee_usd": 4.0,
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
-            "promo_id": "PROMO-SPRING24",
-            "bundle_name": ""
+            "promo_id": "",
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           },
           {
             "transaction_id": "TXN-020",
@@ -155,14 +148,14 @@
             "sku": "MED-102-SS",
             "supplier_name": "Southstar Publishing",
             "sale_date": "2024-06-01",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 200.0,
             "transaction_fee_usd": 10.0,
-            "affiliate_commission_usd": 0.0,
+            "affiliate_commission_usd": 4.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           }
         ],
         "promotions": [
@@ -212,23 +205,15 @@
       },
       "gold_edits": [
         {
-          "file": "catalog.csv",
-          "op": "update",
-          "match": {
-            "product_id": "PID-042"
-          },
-          "set": {
-            "supplier_id": "MG"
-          }
-        },
-        {
           "file": "transactions.csv",
           "op": "update",
           "match": {
             "product_id": "PID-042"
           },
           "set": {
-            "supplier_name": "Meridian Group"
+            "product_id": "PID-070",
+            "supplier_name": "Meridian Group",
+            "sku": "MED-070-MG"
           }
         }
       ]
@@ -264,20 +249,38 @@
           {
             "product_id": "PID-107",
             "sku": "MED-107-BW",
+            "product_name": "Midnight Cartographer",
             "supplier_id": "BW",
             "royalty_pct": 0.7,
             "royalty_fixed_usd": null,
-            "effective_from": "2020-01-01",
-            "product_name": "Midnight Cartographer"
+            "effective_from": "2020-01-01"
+          },
+          {
+            "product_id": "PID-088",
+            "sku": "MED-088-MG",
+            "product_name": "Midnight Cartographer",
+            "supplier_id": "MG",
+            "royalty_pct": 0.75,
+            "royalty_fixed_usd": null,
+            "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-042",
             "sku": "MED-042-NR",
+            "product_name": "Nebula Runner",
             "supplier_id": "NR",
             "royalty_pct": 0.8,
             "royalty_fixed_usd": null,
-            "effective_from": "2020-01-01",
-            "product_name": "Nebula Runner"
+            "effective_from": "2020-01-01"
+          },
+          {
+            "product_id": "PID-102",
+            "sku": "MED-102-SS",
+            "product_name": "Solar Chronicles",
+            "supplier_id": "SS",
+            "royalty_pct": 0.6,
+            "royalty_fixed_usd": null,
+            "effective_from": "2020-01-01"
           }
         ],
         "transactions": [
@@ -288,14 +291,14 @@
             "sku": "MED-107-BW",
             "supplier_name": "BlueWave Records",
             "sale_date": "2024-03-15",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 90.0,
             "transaction_fee_usd": 4.5,
             "affiliate_commission_usd": 1.8,
             "status": "COMPLETE",
-            "promo_id": "PROMO-SPRING24",
-            "bundle_name": ""
+            "promo_id": "",
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           },
           {
             "transaction_id": "TXN-101",
@@ -304,14 +307,14 @@
             "sku": "MED-107-BW",
             "supplier_name": "BlueWave Records",
             "sale_date": "2024-05-30",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 110.0,
             "transaction_fee_usd": 5.5,
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           },
           {
             "transaction_id": "TXN-102",
@@ -320,14 +323,14 @@
             "sku": "MED-107-BW",
             "supplier_name": "BlueWave Records",
             "sale_date": "2024-06-15",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 130.0,
             "transaction_fee_usd": 6.5,
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           },
           {
             "transaction_id": "TXN-103",
@@ -336,14 +339,14 @@
             "sku": "MED-107-BW",
             "supplier_name": "BlueWave Records",
             "sale_date": "2024-08-01",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
-            "affiliate_commission_usd": 2.0,
+            "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           },
           {
             "transaction_id": "TXN-200",
@@ -352,14 +355,14 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-04-01",
-            "royalty_pct": null,
-            "royalty_fixed_usd": null,
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
-            "affiliate_commission_usd": 0.0,
+            "affiliate_commission_usd": 2.0,
             "status": "COMPLETE",
-            "promo_id": "PROMO-SPRING24",
-            "bundle_name": ""
+            "promo_id": "",
+            "bundle_name": "",
+            "royalty_pct": null,
+            "royalty_fixed_usd": null
           }
         ],
         "promotions": [
@@ -409,26 +412,15 @@
       },
       "gold_edits": [
         {
-          "file": "catalog.csv",
-          "op": "insert",
-          "row": {
-            "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_id": "MG",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
-            "effective_from": "2024-06-01",
-            "product_name": "Midnight Cartographer"
-          }
-        },
-        {
           "file": "transactions.csv",
           "op": "update",
           "match": {
             "transaction_id": "TXN-102"
           },
           "set": {
-            "supplier_name": "Meridian Group"
+            "product_id": "PID-088",
+            "supplier_name": "Meridian Group",
+            "sku": "MED-088-MG"
           }
         },
         {
@@ -438,7 +430,9 @@
             "transaction_id": "TXN-103"
           },
           "set": {
-            "supplier_name": "Meridian Group"
+            "product_id": "PID-088",
+            "supplier_name": "Meridian Group",
+            "sku": "MED-088-MG"
           }
         }
       ]
