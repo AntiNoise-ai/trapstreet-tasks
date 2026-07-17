@@ -1,5 +1,5 @@
-transaction_id,product_id,channel,sku,supplier_name,sale_date,revenue_usd,royalty_pct,royalty_fixed_usd
-TXN-234A,PID-234,retail,MED-234-SS,Southstar Publishing,2024-03-01,50.0,,
-TXN-234B,PID-234,retail,MED-234-SS,Southstar Publishing,2024-05-01,60.0,,
-TXN-234C,PID-234,retail,MED-234-SS,Southstar Publishing,2024-07-01,55.0,,
-TXN-042A,PID-042,retail,MED-042-NR,North Rock Media,2024-04-15,100.0,,
+transaction_id,product_id,channel,sku,supplier_name,sale_date,revenue_gross_usd,transaction_fee_usd,affiliate_commission_usd,status,promo_id,bundle_name,royalty_pct,royalty_fixed_usd
+TXN-234A,PID-234,retail,MED-234-SS,Southstar Publishing,2024-03-01,50.0,2.5,1.0,COMPLETE,PROMO-SPRING24,,,
+TXN-234B,PID-234,retail,MED-234-SS,Southstar Publishing,2024-05-01,60.0,3.0,0.0,COMPLETE,,,,
+TXN-234C,PID-234,retail,MED-234-SS,Southstar Publishing,2024-07-01,55.0,2.75,0.0,COMPLETE,,,,
+TXN-042A,PID-042,retail,MED-042-NR,North Rock Media,2024-04-15,100.0,5.0,2.0,COMPLETE,,,,

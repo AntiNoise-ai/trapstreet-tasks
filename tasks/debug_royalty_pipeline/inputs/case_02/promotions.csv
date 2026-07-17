@@ -1,0 +1,3 @@
+promo_id,promo_name,start_date,end_date,discount_pct
+PROMO-SPRING24,Spring Sale 2024,2024-03-01,2024-05-31,0.15
+PROMO-SUMMER24,Summer Deal 2024,2024-06-01,2024-08-31,0.1

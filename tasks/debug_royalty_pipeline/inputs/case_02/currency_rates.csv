@@ -1,0 +1,4 @@
+from_currency,to_currency,rate,effective_from
+USD,USD,1.0,2020-01-01
+USD,GBP,0.78,2020-01-01
+USD,EUR,0.92,2020-01-01

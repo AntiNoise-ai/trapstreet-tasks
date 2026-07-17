@@ -16,12 +16,23 @@ GOLD = HERE / "gold.cases.json"
 SHARED_SCRIPTS = HERE / "shared_scripts"
 
 VALID_OPS = {"update", "insert"}
-VALID_FILES = {"catalog.csv", "suppliers.csv", "transactions.csv"}
-REQUIRED_TABLES = ("suppliers", "catalog", "transactions")
+VALID_FILES = {
+    "catalog.csv", "suppliers.csv", "transactions.csv",
+    "promotions.csv", "product_discounts.csv", "currency_rates.csv",
+}
+REQUIRED_TABLES = ("suppliers", "catalog", "transactions",
+                   "promotions", "product_discounts", "currency_rates")
 
-CATALOG_COLS = ["product_id", "sku", "product_name", "supplier_id", "royalty_pct", "royalty_fixed_usd", "effective_from"]
-SUPPLIERS_COLS = ["supplier_id", "supplier_name"]
-TXN_COLS = ["transaction_id", "product_id", "channel", "sku", "supplier_name", "sale_date", "revenue_usd", "royalty_pct", "royalty_fixed_usd"]
+CATALOG_COLS = ["product_id", "sku", "product_name", "supplier_id",
+                "royalty_pct", "royalty_fixed_usd", "effective_from"]
+SUPPLIERS_COLS = ["supplier_id", "supplier_name", "supplier_currency"]
+TXN_COLS = ["transaction_id", "product_id", "channel", "sku", "supplier_name",
+            "sale_date", "revenue_gross_usd", "transaction_fee_usd",
+            "affiliate_commission_usd", "status", "promo_id", "bundle_name",
+            "royalty_pct", "royalty_fixed_usd"]
+PROMOTIONS_COLS = ["promo_id", "promo_name", "start_date", "end_date", "discount_pct"]
+DISCOUNTS_COLS = ["product_id", "discount_pct", "valid_from", "valid_until"]
+CURRENCY_COLS = ["from_currency", "to_currency", "rate", "effective_from"]
 
 
 def validate_case(case: dict) -> None:
@@ -89,8 +100,9 @@ A colleague filed a ticket asking for a change to the royalty pipeline. Read the
 ## Files in this directory
 
 - `ticket.md` — the change request
-- `catalog.csv`, `suppliers.csv`, `transactions.csv` — data tables
-- `publisher_statement.py`, `itemised_statement.py` — the two report scripts
+- `catalog.csv`, `suppliers.csv`, `transactions.csv` — main data tables
+- `promotions.csv`, `product_discounts.csv`, `currency_rates.csv` — auxiliary tables
+- `publisher_statement.py`, `itemised_statement.py` — the two report scripts (Python + SQL)
 
 ## Output format
 
@@ -103,13 +115,13 @@ Each edit is one of:
 {"file": "<name>.csv", "op": "insert", "row": {"<col>": <value>, ...}}
 ```
 
-For updates: `match` specifies which rows to change (all matching rows are affected); `set` specifies which columns to update to which values.
+For updates: `match` specifies which rows to change; `set` specifies which columns to update to which values.
 For inserts: `row` is the new row to add (include all columns for that table).
 Use `null` (JSON literal) for empty values.
 
 ## Scoring
 
-Your list of edits is compared to the gold edit set. Score 1.0 only if every gold edit is present AND there are no extra edits. **Extras count against you** — do not list every possibly-related edit; list only what is necessary.
+Your list of edits is compared to the gold edit set (data-aware equivalence: judge applies both edit sets to the initial tables and compares resulting state). Score 1.0 only if every gold edit is present AND there are no extra edits that change state. **Extras count against you** — do not list every possibly-related edit; list only what is necessary.
 
 Output ONLY the JSON array.
 """
@@ -131,6 +143,9 @@ def build() -> None:
         write_csv(in_dir / "catalog.csv", CATALOG_COLS, case["data"]["catalog"])
         write_csv(in_dir / "suppliers.csv", SUPPLIERS_COLS, case["data"]["suppliers"])
         write_csv(in_dir / "transactions.csv", TXN_COLS, case["data"]["transactions"])
+        write_csv(in_dir / "promotions.csv", PROMOTIONS_COLS, case["data"]["promotions"])
+        write_csv(in_dir / "product_discounts.csv", DISCOUNTS_COLS, case["data"]["product_discounts"])
+        write_csv(in_dir / "currency_rates.csv", CURRENCY_COLS, case["data"]["currency_rates"])
 
         (in_dir / "ticket.md").write_text(f"# Ticket\n\n{case['ticket']}\n", encoding="utf-8")
         (in_dir / "README.md").write_text(AGENT_INSTRUCTIONS, encoding="utf-8")

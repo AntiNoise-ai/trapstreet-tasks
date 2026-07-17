@@ -1,5 +1,5 @@
-supplier_id,supplier_name
-NR,North Rock Media
-SS,Southstar Publishing
-BW,BlueWave Records
-MG,Meridian Group
+supplier_id,supplier_name,supplier_currency
+NR,North Rock Media,USD
+SS,Southstar Publishing,USD
+BW,BlueWave Records,USD
+MG,Meridian Group,USD

@@ -10,19 +10,23 @@
         "suppliers": [
           {
             "supplier_id": "NR",
-            "supplier_name": "North Rock Media"
+            "supplier_name": "North Rock Media",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "SS",
-            "supplier_name": "Southstar Publishing"
+            "supplier_name": "Southstar Publishing",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "BW",
-            "supplier_name": "BlueWave Records"
+            "supplier_name": "BlueWave Records",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "MG",
-            "supplier_name": "Meridian Group"
+            "supplier_name": "Meridian Group",
+            "supplier_currency": "USD"
           }
         ],
         "catalog": [
@@ -71,9 +75,14 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-03-15",
-            "revenue_usd": 100.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 100.0,
+            "transaction_fee_usd": 5.0,
+            "affiliate_commission_usd": 2.0,
+            "status": "COMPLETE",
+            "promo_id": "PROMO-SPRING24",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-002",
@@ -82,9 +91,14 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-04-20",
-            "revenue_usd": 120.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 120.0,
+            "transaction_fee_usd": 6.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-003",
@@ -93,9 +107,14 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-05-10",
-            "revenue_usd": 500.0,
             "royalty_pct": 0.8,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 500.0,
+            "transaction_fee_usd": 10.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-004",
@@ -104,9 +123,14 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-08-10",
-            "revenue_usd": 150.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 150.0,
+            "transaction_fee_usd": 7.5,
+            "affiliate_commission_usd": 3.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-010",
@@ -115,9 +139,14 @@
             "sku": "MED-050-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-05-01",
-            "revenue_usd": 80.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 80.0,
+            "transaction_fee_usd": 4.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "PROMO-SPRING24",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-020",
@@ -126,9 +155,58 @@
             "sku": "MED-102-SS",
             "supplier_name": "Southstar Publishing",
             "sale_date": "2024-06-01",
-            "revenue_usd": 200.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 200.0,
+            "transaction_fee_usd": 10.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
+          }
+        ],
+        "promotions": [
+          {
+            "promo_id": "PROMO-SPRING24",
+            "promo_name": "Spring Sale 2024",
+            "start_date": "2024-03-01",
+            "end_date": "2024-05-31",
+            "discount_pct": 0.15
+          },
+          {
+            "promo_id": "PROMO-SUMMER24",
+            "promo_name": "Summer Deal 2024",
+            "start_date": "2024-06-01",
+            "end_date": "2024-08-31",
+            "discount_pct": 0.1
+          }
+        ],
+        "product_discounts": [
+          {
+            "product_id": "PID-050",
+            "discount_pct": 0.05,
+            "valid_from": "2024-01-01",
+            "valid_until": "2024-12-31"
+          }
+        ],
+        "currency_rates": [
+          {
+            "from_currency": "USD",
+            "to_currency": "USD",
+            "rate": 1.0,
+            "effective_from": "2020-01-01"
+          },
+          {
+            "from_currency": "USD",
+            "to_currency": "GBP",
+            "rate": 0.78,
+            "effective_from": "2020-01-01"
+          },
+          {
+            "from_currency": "USD",
+            "to_currency": "EUR",
+            "rate": 0.92,
+            "effective_from": "2020-01-01"
           }
         ]
       },
@@ -163,19 +241,23 @@
         "suppliers": [
           {
             "supplier_id": "NR",
-            "supplier_name": "North Rock Media"
+            "supplier_name": "North Rock Media",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "SS",
-            "supplier_name": "Southstar Publishing"
+            "supplier_name": "Southstar Publishing",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "BW",
-            "supplier_name": "BlueWave Records"
+            "supplier_name": "BlueWave Records",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "MG",
-            "supplier_name": "Meridian Group"
+            "supplier_name": "Meridian Group",
+            "supplier_currency": "USD"
           }
         ],
         "catalog": [
@@ -206,9 +288,14 @@
             "sku": "MED-107-BW",
             "supplier_name": "BlueWave Records",
             "sale_date": "2024-03-15",
-            "revenue_usd": 90.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 90.0,
+            "transaction_fee_usd": 4.5,
+            "affiliate_commission_usd": 1.8,
+            "status": "COMPLETE",
+            "promo_id": "PROMO-SPRING24",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-101",
@@ -217,9 +304,14 @@
             "sku": "MED-107-BW",
             "supplier_name": "BlueWave Records",
             "sale_date": "2024-05-30",
-            "revenue_usd": 110.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 110.0,
+            "transaction_fee_usd": 5.5,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-102",
@@ -228,9 +320,14 @@
             "sku": "MED-107-BW",
             "supplier_name": "BlueWave Records",
             "sale_date": "2024-06-15",
-            "revenue_usd": 130.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 130.0,
+            "transaction_fee_usd": 6.5,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-103",
@@ -239,9 +336,14 @@
             "sku": "MED-107-BW",
             "supplier_name": "BlueWave Records",
             "sale_date": "2024-08-01",
-            "revenue_usd": 100.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 100.0,
+            "transaction_fee_usd": 5.0,
+            "affiliate_commission_usd": 2.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-200",
@@ -250,9 +352,58 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-04-01",
-            "revenue_usd": 100.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 100.0,
+            "transaction_fee_usd": 5.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "PROMO-SPRING24",
+            "bundle_name": ""
+          }
+        ],
+        "promotions": [
+          {
+            "promo_id": "PROMO-SPRING24",
+            "promo_name": "Spring Sale 2024",
+            "start_date": "2024-03-01",
+            "end_date": "2024-05-31",
+            "discount_pct": 0.15
+          },
+          {
+            "promo_id": "PROMO-SUMMER24",
+            "promo_name": "Summer Deal 2024",
+            "start_date": "2024-06-01",
+            "end_date": "2024-08-31",
+            "discount_pct": 0.1
+          }
+        ],
+        "product_discounts": [
+          {
+            "product_id": "PID-050",
+            "discount_pct": 0.05,
+            "valid_from": "2024-01-01",
+            "valid_until": "2024-12-31"
+          }
+        ],
+        "currency_rates": [
+          {
+            "from_currency": "USD",
+            "to_currency": "USD",
+            "rate": 1.0,
+            "effective_from": "2020-01-01"
+          },
+          {
+            "from_currency": "USD",
+            "to_currency": "GBP",
+            "rate": 0.78,
+            "effective_from": "2020-01-01"
+          },
+          {
+            "from_currency": "USD",
+            "to_currency": "EUR",
+            "rate": 0.92,
+            "effective_from": "2020-01-01"
           }
         ]
       },
@@ -300,19 +451,23 @@
         "suppliers": [
           {
             "supplier_id": "NR",
-            "supplier_name": "North Rock Media"
+            "supplier_name": "North Rock Media",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "SS",
-            "supplier_name": "Southstar Publishing"
+            "supplier_name": "Southstar Publishing",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "BW",
-            "supplier_name": "BlueWave Records"
+            "supplier_name": "BlueWave Records",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "MG",
-            "supplier_name": "Meridian Group"
+            "supplier_name": "Meridian Group",
+            "supplier_currency": "USD"
           }
         ],
         "catalog": [
@@ -343,9 +498,14 @@
             "sku": "MED-234-SS",
             "supplier_name": "Southstar Publishing",
             "sale_date": "2024-03-01",
-            "revenue_usd": 50.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 50.0,
+            "transaction_fee_usd": 2.5,
+            "affiliate_commission_usd": 1.0,
+            "status": "COMPLETE",
+            "promo_id": "PROMO-SPRING24",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-234B",
@@ -354,9 +514,14 @@
             "sku": "MED-234-SS",
             "supplier_name": "Southstar Publishing",
             "sale_date": "2024-05-01",
-            "revenue_usd": 60.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 60.0,
+            "transaction_fee_usd": 3.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-234C",
@@ -365,9 +530,14 @@
             "sku": "MED-234-SS",
             "supplier_name": "Southstar Publishing",
             "sale_date": "2024-07-01",
-            "revenue_usd": 55.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 55.0,
+            "transaction_fee_usd": 2.75,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-042A",
@@ -376,9 +546,58 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-04-15",
-            "revenue_usd": 100.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 100.0,
+            "transaction_fee_usd": 5.0,
+            "affiliate_commission_usd": 2.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
+          }
+        ],
+        "promotions": [
+          {
+            "promo_id": "PROMO-SPRING24",
+            "promo_name": "Spring Sale 2024",
+            "start_date": "2024-03-01",
+            "end_date": "2024-05-31",
+            "discount_pct": 0.15
+          },
+          {
+            "promo_id": "PROMO-SUMMER24",
+            "promo_name": "Summer Deal 2024",
+            "start_date": "2024-06-01",
+            "end_date": "2024-08-31",
+            "discount_pct": 0.1
+          }
+        ],
+        "product_discounts": [
+          {
+            "product_id": "PID-050",
+            "discount_pct": 0.05,
+            "valid_from": "2024-01-01",
+            "valid_until": "2024-12-31"
+          }
+        ],
+        "currency_rates": [
+          {
+            "from_currency": "USD",
+            "to_currency": "USD",
+            "rate": 1.0,
+            "effective_from": "2020-01-01"
+          },
+          {
+            "from_currency": "USD",
+            "to_currency": "GBP",
+            "rate": 0.78,
+            "effective_from": "2020-01-01"
+          },
+          {
+            "from_currency": "USD",
+            "to_currency": "EUR",
+            "rate": 0.92,
+            "effective_from": "2020-01-01"
           }
         ]
       },
@@ -404,19 +623,23 @@
         "suppliers": [
           {
             "supplier_id": "NR",
-            "supplier_name": "North Rock Media"
+            "supplier_name": "North Rock Media",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "SS",
-            "supplier_name": "Southstar Publishing"
+            "supplier_name": "Southstar Publishing",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "BW",
-            "supplier_name": "BlueWave Records"
+            "supplier_name": "BlueWave Records",
+            "supplier_currency": "USD"
           },
           {
             "supplier_id": "MG",
-            "supplier_name": "Meridian Group"
+            "supplier_name": "Meridian Group",
+            "supplier_currency": "USD"
           }
         ],
         "catalog": [
@@ -447,9 +670,14 @@
             "sku": "MED-311-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-03-01",
-            "revenue_usd": 40.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 40.0,
+            "transaction_fee_usd": 2.0,
+            "affiliate_commission_usd": 0.8,
+            "status": "COMPLETE",
+            "promo_id": "PROMO-SPRING24",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-311B",
@@ -458,9 +686,14 @@
             "sku": "MED-311-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-05-15",
-            "revenue_usd": 45.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 45.0,
+            "transaction_fee_usd": 2.25,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-311C",
@@ -469,9 +702,14 @@
             "sku": "MED-311-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-06-10",
-            "revenue_usd": 400.0,
             "royalty_pct": 0.8,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 400.0,
+            "transaction_fee_usd": 8.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-311D",
@@ -480,9 +718,14 @@
             "sku": "MED-311-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-07-20",
-            "revenue_usd": 550.0,
             "royalty_pct": 0.8,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 550.0,
+            "transaction_fee_usd": 11.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "",
+            "bundle_name": ""
           },
           {
             "transaction_id": "TXN-042A",
@@ -491,9 +734,58 @@
             "sku": "MED-042-NR",
             "supplier_name": "North Rock Media",
             "sale_date": "2024-04-01",
-            "revenue_usd": 100.0,
             "royalty_pct": null,
-            "royalty_fixed_usd": null
+            "royalty_fixed_usd": null,
+            "revenue_gross_usd": 100.0,
+            "transaction_fee_usd": 5.0,
+            "affiliate_commission_usd": 0.0,
+            "status": "COMPLETE",
+            "promo_id": "PROMO-SPRING24",
+            "bundle_name": ""
+          }
+        ],
+        "promotions": [
+          {
+            "promo_id": "PROMO-SPRING24",
+            "promo_name": "Spring Sale 2024",
+            "start_date": "2024-03-01",
+            "end_date": "2024-05-31",
+            "discount_pct": 0.15
+          },
+          {
+            "promo_id": "PROMO-SUMMER24",
+            "promo_name": "Summer Deal 2024",
+            "start_date": "2024-06-01",
+            "end_date": "2024-08-31",
+            "discount_pct": 0.1
+          }
+        ],
+        "product_discounts": [
+          {
+            "product_id": "PID-050",
+            "discount_pct": 0.05,
+            "valid_from": "2024-01-01",
+            "valid_until": "2024-12-31"
+          }
+        ],
+        "currency_rates": [
+          {
+            "from_currency": "USD",
+            "to_currency": "USD",
+            "rate": 1.0,
+            "effective_from": "2020-01-01"
+          },
+          {
+            "from_currency": "USD",
+            "to_currency": "GBP",
+            "rate": 0.78,
+            "effective_from": "2020-01-01"
+          },
+          {
+            "from_currency": "USD",
+            "to_currency": "EUR",
+            "rate": 0.92,
+            "effective_from": "2020-01-01"
           }
         ]
       },
