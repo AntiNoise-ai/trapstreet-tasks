@@ -11,7 +11,8 @@
         "supplier_id": "MG",
         "royalty_pct": 0.7,
         "royalty_fixed_usd": null,
-        "effective_from": "2024-06-01"
+        "effective_from": "2024-06-01",
+        "product_name": "Midnight Cartographer"
       }
     },
     {

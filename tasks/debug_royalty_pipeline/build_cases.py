@@ -19,7 +19,7 @@ VALID_OPS = {"update", "insert"}
 VALID_FILES = {"catalog.csv", "suppliers.csv", "transactions.csv"}
 REQUIRED_TABLES = ("suppliers", "catalog", "transactions")
 
-CATALOG_COLS = ["product_id", "sku", "supplier_id", "royalty_pct", "royalty_fixed_usd", "effective_from"]
+CATALOG_COLS = ["product_id", "sku", "product_name", "supplier_id", "royalty_pct", "royalty_fixed_usd", "effective_from"]
 SUPPLIERS_COLS = ["supplier_id", "supplier_name"]
 TXN_COLS = ["transaction_id", "product_id", "channel", "sku", "supplier_name", "sale_date", "revenue_usd", "royalty_pct", "royalty_fixed_usd"]
 
