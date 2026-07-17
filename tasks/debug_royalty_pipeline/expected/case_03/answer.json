@@ -1,6 +1,6 @@
 {
   "id": "case_03",
-  "category": "royalty_type_change_single_table",
+  "category": "royalty_change_retail_only",
   "gold_edits": [
     {
       "file": "catalog.csv",

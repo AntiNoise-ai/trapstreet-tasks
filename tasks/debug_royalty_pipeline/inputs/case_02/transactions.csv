@@ -1,7 +1,6 @@
-transaction_id,product_id,channel,sale_date,revenue_usd
-TXN-100,PID-107,retail,2024-03-15,90.0
-TXN-101,PID-107,retail,2024-05-30,110.0
-TXN-102,PID-107,retail,2024-06-15,130.0
-TXN-103,PID-107,retail,2024-08-01,100.0
-TXN-200,PID-042,retail,2024-04-01,100.0
-TXN-201,PID-102,retail,2024-07-15,200.0
+transaction_id,product_id,channel,sku,supplier_name,sale_date,revenue_usd,royalty_pct,royalty_fixed_usd
+TXN-100,PID-107,retail,MED-107-BW,BlueWave Records,2024-03-15,90.0,,
+TXN-101,PID-107,retail,MED-107-BW,BlueWave Records,2024-05-30,110.0,,
+TXN-102,PID-107,retail,MED-107-BW,BlueWave Records,2024-06-15,130.0,,
+TXN-103,PID-107,retail,MED-107-BW,BlueWave Records,2024-08-01,100.0,,
+TXN-200,PID-042,retail,MED-042-NR,North Rock Media,2024-04-01,100.0,,

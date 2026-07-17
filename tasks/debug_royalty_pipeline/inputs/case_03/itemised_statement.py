@@ -1,15 +1,17 @@
-"""Itemised statement report — per-transaction detail with sku + publisher.
+"""Itemised statement report — per-transaction detail with sku + supplier.
 
-Reads: catalog.csv, enterprise_deals.csv, publishers.csv, transactions.csv
-Output: prints one row per transaction with sku, publisher_name, royalty amount.
+Reads: catalog.csv, transactions.csv
+Output: prints one row per transaction with sku, supplier_name, royalty amount.
 
-Lookup rules (same as publisher_statement.py):
-- For enterprise-channel transactions, if the product exists in
-  enterprise_deals.csv, use that row's terms (sku, publisher_id, royalty).
-- Otherwise, look up terms from catalog.csv, picking the row with the
-  largest `effective_from` <= transaction sale_date for the product.
-- Publisher name resolved via publisher_id -> publishers.csv.
-- SKU comes from the same lookup row (catalog or enterprise_deals).
+Lookup rules:
+- Supplier name: read the transaction's supplier_name field DIRECTLY (BAKED
+  at time of sale). No lookup through catalog/suppliers.
+- SKU: read the transaction's sku field DIRECTLY (BAKED at time of sale).
+- Royalty amount:
+  - retail channel: computed from catalog's royalty_pct/royalty_fixed_usd
+    (looked up via product_id + effective_from routing).
+  - b2b channel: computed from the TRANSACTION's own royalty_pct/
+    royalty_fixed_usd (BAKED at contract time).
 """
 import csv
 from pathlib import Path
@@ -27,17 +29,12 @@ def to_float(v):
     return float(v)
 
 
-def resolve(txn, catalog_by_pid, enterprise_by_pid):
-    """Return (sku, publisher_id, royalty_pct, royalty_fixed_usd)."""
+def resolve_catalog(txn, catalog_by_pid):
     pid = txn["product_id"]
-    if txn["channel"] == "enterprise" and pid in enterprise_by_pid:
-        row = enterprise_by_pid[pid]
-        return row["sku"], row["publisher_id"], to_float(row["royalty_pct"]), to_float(row["royalty_fixed_usd"])
     candidates = [r for r in catalog_by_pid.get(pid, []) if r["effective_from"] <= txn["sale_date"]]
     if not candidates:
-        return None, None, None, None
-    row = max(candidates, key=lambda r: r["effective_from"])
-    return row["sku"], row["publisher_id"], to_float(row["royalty_pct"]), to_float(row["royalty_fixed_usd"])
+        return None
+    return max(candidates, key=lambda r: r["effective_from"])
 
 
 def compute_royalty(revenue, pct, fixed):
@@ -51,23 +48,30 @@ def compute_royalty(revenue, pct, fixed):
 def main():
     here = Path(__file__).parent
     catalog = load_csv(here / "catalog.csv")
-    enterprise = load_csv(here / "enterprise_deals.csv")
-    publishers = load_csv(here / "publishers.csv")
     transactions = load_csv(here / "transactions.csv")
 
     catalog_by_pid = defaultdict(list)
     for r in catalog:
         catalog_by_pid[r["product_id"]].append(r)
-    enterprise_by_pid = {r["product_id"]: r for r in enterprise}
-    publisher_name_by_id = {r["publisher_id"]: r["publisher_name"] for r in publishers}
 
-    print("transaction_id,sale_date,sku,channel,publisher_name,revenue_usd,royalty_usd")
+    print("transaction_id,sale_date,sku,channel,supplier_name,revenue_usd,royalty_usd")
     for txn in sorted(transactions, key=lambda t: (t["sale_date"], t["transaction_id"])):
-        sku, pub_id, pct, fixed = resolve(txn, catalog_by_pid, enterprise_by_pid)
-        pub_name = publisher_name_by_id.get(pub_id, pub_id or "")
         revenue = float(txn["revenue_usd"])
+        # Royalty: retail uses catalog terms, b2b uses baked terms
+        if txn["channel"] == "b2b":
+            pct = to_float(txn.get("royalty_pct"))
+            fixed = to_float(txn.get("royalty_fixed_usd"))
+        else:
+            cat_row = resolve_catalog(txn, catalog_by_pid)
+            if cat_row:
+                pct = to_float(cat_row.get("royalty_pct"))
+                fixed = to_float(cat_row.get("royalty_fixed_usd"))
+            else:
+                pct = fixed = None
         royalty = compute_royalty(revenue, pct, fixed)
-        print(f'{txn["transaction_id"]},{txn["sale_date"]},{sku or ""},{txn["channel"]},"{pub_name}",{revenue:.2f},{royalty:.2f}')
+
+        # Supplier name + SKU: read BAKED from transaction directly
+        print(f'{txn["transaction_id"]},{txn["sale_date"]},{txn["sku"]},{txn["channel"]},"{txn["supplier_name"]}",{revenue:.2f},{royalty:.2f}')
 
 
 if __name__ == "__main__":

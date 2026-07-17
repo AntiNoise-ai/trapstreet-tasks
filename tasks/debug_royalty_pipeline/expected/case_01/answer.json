@@ -1,6 +1,6 @@
 {
   "id": "case_01",
-  "category": "publisher_swap_alltime",
+  "category": "supplier_change_alltime",
   "gold_edits": [
     {
       "file": "catalog.csv",
@@ -9,8 +9,17 @@
         "product_id": "PID-042"
       },
       "set": {
-        "publisher_id": "MG",
-        "sku": "MED-042-MG"
+        "supplier_id": "MG"
+      }
+    },
+    {
+      "file": "transactions.csv",
+      "op": "update",
+      "match": {
+        "product_id": "PID-042"
+      },
+      "set": {
+        "supplier_name": "Meridian Group"
       }
     }
   ]

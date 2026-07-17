@@ -1,6 +1,6 @@
 {
   "id": "case_04",
-  "category": "royalty_type_change_multi_table",
+  "category": "royalty_change_with_b2b",
   "gold_edits": [
     {
       "file": "catalog.csv",
@@ -14,10 +14,21 @@
       }
     },
     {
-      "file": "enterprise_deals.csv",
+      "file": "transactions.csv",
       "op": "update",
       "match": {
-        "product_id": "PID-311"
+        "transaction_id": "TXN-311C"
+      },
+      "set": {
+        "royalty_pct": null,
+        "royalty_fixed_usd": 2.0
+      }
+    },
+    {
+      "file": "transactions.csv",
+      "op": "update",
+      "match": {
+        "transaction_id": "TXN-311D"
       },
       "set": {
         "royalty_pct": null,

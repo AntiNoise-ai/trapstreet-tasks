@@ -1,17 +1,21 @@
-"""Publisher statement report — aggregate revenue and royalty by publisher.
+"""Publisher statement report — aggregate revenue and royalty by supplier.
 
-Reads: catalog.csv, enterprise_deals.csv, publishers.csv, transactions.csv
-Output: prints per-publisher totals (revenue, royalty, transaction count)
+Reads: catalog.csv, suppliers.csv, transactions.csv
+Output: prints per-supplier totals (revenue, royalty, transaction count)
 
 Lookup rules:
-- For enterprise-channel transactions, if the product exists in
-  enterprise_deals.csv, use that row's terms (publisher_id + royalty).
-- Otherwise, look up terms from catalog.csv, picking the row with the
-  largest `effective_from` <= transaction sale_date for the product.
-- Publisher name is resolved via publisher_id -> publishers.csv lookup.
+- Supplier name: for every transaction, look up via
+  catalog[product_id] -> suppliers[supplier_id] -> supplier_name.
+  (LOOKUP path; the transaction's own supplier_name field is IGNORED.)
+- Royalty amount:
+  - retail channel: computed from catalog's royalty_pct or royalty_fixed_usd.
+  - b2b channel: computed from the TRANSACTION's own royalty_pct or
+    royalty_fixed_usd (BAKED at contract time, not looked up from catalog).
+- catalog can have multiple rows per product_id with different
+  effective_from; scripts pick the row with the largest effective_from
+  that is <= the transaction's sale_date.
 """
 import csv
-import sys
 from pathlib import Path
 from collections import defaultdict
 
@@ -27,18 +31,13 @@ def to_float(v):
     return float(v)
 
 
-def resolve_terms(txn, catalog_by_pid, enterprise_by_pid):
-    """Return (publisher_id, royalty_pct, royalty_fixed_usd) for a transaction."""
+def resolve_catalog(txn, catalog_by_pid):
+    """Return the applicable catalog row for this transaction, or None."""
     pid = txn["product_id"]
-    if txn["channel"] == "enterprise" and pid in enterprise_by_pid:
-        row = enterprise_by_pid[pid]
-        return row["publisher_id"], to_float(row["royalty_pct"]), to_float(row["royalty_fixed_usd"])
-    # Catalog lookup — pick latest effective_from <= sale_date
     candidates = [r for r in catalog_by_pid.get(pid, []) if r["effective_from"] <= txn["sale_date"]]
     if not candidates:
-        return None, None, None
-    row = max(candidates, key=lambda r: r["effective_from"])
-    return row["publisher_id"], to_float(row["royalty_pct"]), to_float(row["royalty_fixed_usd"])
+        return None
+    return max(candidates, key=lambda r: r["effective_from"])
 
 
 def compute_royalty(revenue, pct, fixed):
@@ -52,35 +51,40 @@ def compute_royalty(revenue, pct, fixed):
 def main():
     here = Path(__file__).parent
     catalog = load_csv(here / "catalog.csv")
-    enterprise = load_csv(here / "enterprise_deals.csv")
-    publishers = load_csv(here / "publishers.csv")
+    suppliers = load_csv(here / "suppliers.csv")
     transactions = load_csv(here / "transactions.csv")
 
-    # Index
     catalog_by_pid = defaultdict(list)
     for r in catalog:
         catalog_by_pid[r["product_id"]].append(r)
-    enterprise_by_pid = {r["product_id"]: r for r in enterprise}
-    publisher_name_by_id = {r["publisher_id"]: r["publisher_name"] for r in publishers}
+    supplier_name_by_id = {r["supplier_id"]: r["supplier_name"] for r in suppliers}
 
-    # Aggregate by publisher
     agg = defaultdict(lambda: {"revenue": 0.0, "royalty": 0.0, "txn_count": 0})
     for txn in transactions:
-        pub_id, pct, fixed = resolve_terms(txn, catalog_by_pid, enterprise_by_pid)
-        if pub_id is None:
+        cat_row = resolve_catalog(txn, catalog_by_pid)
+        if not cat_row:
             continue
+        # Supplier name via LOOKUP path
+        supplier_name = supplier_name_by_id.get(cat_row["supplier_id"], cat_row["supplier_id"])
         revenue = float(txn["revenue_usd"])
-        royalty = compute_royalty(revenue, pct, fixed)
-        pub_name = publisher_name_by_id.get(pub_id, pub_id)
-        agg[pub_name]["revenue"] += revenue
-        agg[pub_name]["royalty"] += royalty
-        agg[pub_name]["txn_count"] += 1
 
-    # Print report
-    print("publisher_name,total_revenue_usd,total_royalty_usd,transaction_count")
-    for pub_name in sorted(agg):
-        d = agg[pub_name]
-        print(f'"{pub_name}",{d["revenue"]:.2f},{d["royalty"]:.2f},{d["txn_count"]}')
+        # Royalty computation: retail uses catalog terms, b2b uses baked terms
+        if txn["channel"] == "b2b":
+            pct = to_float(txn.get("royalty_pct"))
+            fixed = to_float(txn.get("royalty_fixed_usd"))
+        else:
+            pct = to_float(cat_row.get("royalty_pct"))
+            fixed = to_float(cat_row.get("royalty_fixed_usd"))
+        royalty = compute_royalty(revenue, pct, fixed)
+
+        agg[supplier_name]["revenue"] += revenue
+        agg[supplier_name]["royalty"] += royalty
+        agg[supplier_name]["txn_count"] += 1
+
+    print("supplier_name,total_revenue_usd,total_royalty_usd,transaction_count")
+    for name in sorted(agg):
+        d = agg[name]
+        print(f'"{name}",{d["revenue"]:.2f},{d["royalty"]:.2f},{d["txn_count"]}')
 
 
 if __name__ == "__main__":

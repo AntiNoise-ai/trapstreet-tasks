@@ -1,95 +1,87 @@
 {
   "_doc": "Source of truth for the debug_royalty_pipeline task. inputs/ and expected/ are GENERATED from this file by build_cases.py -- edit here, never there.",
-  "_domain": "Synthetic digital-media publisher royalty accounting. Two reports (publisher_statement, itemised_statement) read from three data tables (catalog, enterprise_deals, publishers) plus a transactions log. A ticket asks the agent to make a change; the agent must correctly identify ALL tables + rows + columns needing edits so BOTH reports come out consistent. Failure mode: agent updates one place, misses the other, one report right one wrong.",
+  "_domain": "Synthetic digital-media publisher royalty accounting. Two reports use DIFFERENT lookup paths: publisher_statement uses LOOKUP (catalog[product_id] -> suppliers[supplier_id] -> name), itemised_statement reads BAKED text from transactions. A ticket asks for a change; agent must produce the minimal edit set so BOTH reports come out consistent. The two reports must be fixed via DIFFERENT edits because they read supplier/sku from different sources.",
   "cases": [
     {
       "id": "case_01",
-      "category": "publisher_swap_alltime",
-      "ticket": "Change SKU MED-042-NR's publisher from North Rock Media (NR) to Meridian Group (MG). This is a permanent, all-time reassignment - all transactions past and future should be attributed to Meridian Group. Note our SKU convention: each publisher has their own SKU prefix (MED-nnn-XX where XX is the publisher's 2-letter code), so the SKU will need to update accordingly.",
+      "category": "supplier_change_alltime",
+      "ticket": "Reassign SKU MED-042-NR to Meridian Group. Effective all-time.",
       "data": {
-        "publishers": [
-          {"publisher_id": "NR", "publisher_name": "North Rock Media"},
-          {"publisher_id": "SS", "publisher_name": "Southstar Publishing"},
-          {"publisher_id": "BW", "publisher_name": "BlueWave Records"},
-          {"publisher_id": "MG", "publisher_name": "Meridian Group"}
+        "suppliers": [
+          {"supplier_id": "NR", "supplier_name": "North Rock Media"},
+          {"supplier_id": "SS", "supplier_name": "Southstar Publishing"},
+          {"supplier_id": "BW", "supplier_name": "BlueWave Records"},
+          {"supplier_id": "MG", "supplier_name": "Meridian Group"}
         ],
         "catalog": [
-          {"product_id": "PID-042", "sku": "MED-042-NR", "publisher_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-050", "sku": "MED-050-NR", "publisher_id": "NR", "royalty_pct": 0.75, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-102", "sku": "MED-102-SS", "publisher_id": "SS", "royalty_pct": 0.60, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-201", "sku": "MED-201-BW", "publisher_id": "BW", "royalty_pct": 0.70, "royalty_fixed_usd": null, "effective_from": "2020-01-01"}
-        ],
-        "enterprise_deals": [
-          {"product_id": "PID-201", "sku": "MED-201-BW", "publisher_id": "BW", "publisher_name": "BlueWave Records", "royalty_pct": 0.65, "royalty_fixed_usd": null}
+          {"product_id": "PID-042", "sku": "MED-042-NR", "supplier_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
+          {"product_id": "PID-050", "sku": "MED-050-NR", "supplier_id": "NR", "royalty_pct": 0.75, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
+          {"product_id": "PID-102", "sku": "MED-102-SS", "supplier_id": "SS", "royalty_pct": 0.60, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
+          {"product_id": "PID-201", "sku": "MED-201-BW", "supplier_id": "BW", "royalty_pct": 0.70, "royalty_fixed_usd": null, "effective_from": "2020-01-01"}
         ],
         "transactions": [
-          {"transaction_id": "TXN-001", "product_id": "PID-042", "channel": "retail", "sale_date": "2024-03-15", "revenue_usd": 100.00},
-          {"transaction_id": "TXN-002", "product_id": "PID-042", "channel": "retail", "sale_date": "2024-04-20", "revenue_usd": 120.00},
-          {"transaction_id": "TXN-003", "product_id": "PID-042", "channel": "retail", "sale_date": "2024-08-10", "revenue_usd": 150.00},
-          {"transaction_id": "TXN-010", "product_id": "PID-050", "channel": "retail", "sale_date": "2024-05-01", "revenue_usd": 80.00},
-          {"transaction_id": "TXN-020", "product_id": "PID-102", "channel": "retail", "sale_date": "2024-06-01", "revenue_usd": 200.00},
-          {"transaction_id": "TXN-030", "product_id": "PID-201", "channel": "enterprise", "sale_date": "2024-07-01", "revenue_usd": 500.00}
+          {"transaction_id": "TXN-001", "product_id": "PID-042", "channel": "retail", "sku": "MED-042-NR", "supplier_name": "North Rock Media", "sale_date": "2024-03-15", "revenue_usd": 100.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-002", "product_id": "PID-042", "channel": "retail", "sku": "MED-042-NR", "supplier_name": "North Rock Media", "sale_date": "2024-04-20", "revenue_usd": 120.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-003", "product_id": "PID-042", "channel": "b2b", "sku": "MED-042-NR", "supplier_name": "North Rock Media", "sale_date": "2024-05-10", "revenue_usd": 500.00, "royalty_pct": 0.80, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-004", "product_id": "PID-042", "channel": "retail", "sku": "MED-042-NR", "supplier_name": "North Rock Media", "sale_date": "2024-08-10", "revenue_usd": 150.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-010", "product_id": "PID-050", "channel": "retail", "sku": "MED-050-NR", "supplier_name": "North Rock Media", "sale_date": "2024-05-01", "revenue_usd": 80.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-020", "product_id": "PID-102", "channel": "retail", "sku": "MED-102-SS", "supplier_name": "Southstar Publishing", "sale_date": "2024-06-01", "revenue_usd": 200.00, "royalty_pct": null, "royalty_fixed_usd": null}
         ]
       },
       "gold_edits": [
-        {"file": "catalog.csv", "op": "update", "match": {"product_id": "PID-042"}, "set": {"publisher_id": "MG", "sku": "MED-042-MG"}}
+        {"file": "catalog.csv", "op": "update", "match": {"product_id": "PID-042"}, "set": {"supplier_id": "MG"}},
+        {"file": "transactions.csv", "op": "update", "match": {"product_id": "PID-042"}, "set": {"supplier_name": "Meridian Group"}}
       ]
     },
     {
       "id": "case_02",
-      "category": "publisher_swap_dated",
-      "ticket": "Change SKU MED-107-BW's publisher to Meridian Group (MG). This change is effective from 2024-06-01 onward. Transactions BEFORE 2024-06-01 must REMAIN attributed to BlueWave Records with the original SKU. Transactions on/after 2024-06-01 should be attributed to Meridian Group with the new SKU (MED-107-MG per our per-publisher SKU naming convention).",
+      "category": "supplier_change_dated",
+      "ticket": "Reassign SKU MED-107-BW to Meridian Group. Effective from 2024-06-01 (transactions before that date keep the old assignment).",
       "data": {
-        "publishers": [
-          {"publisher_id": "NR", "publisher_name": "North Rock Media"},
-          {"publisher_id": "SS", "publisher_name": "Southstar Publishing"},
-          {"publisher_id": "BW", "publisher_name": "BlueWave Records"},
-          {"publisher_id": "MG", "publisher_name": "Meridian Group"}
+        "suppliers": [
+          {"supplier_id": "NR", "supplier_name": "North Rock Media"},
+          {"supplier_id": "SS", "supplier_name": "Southstar Publishing"},
+          {"supplier_id": "BW", "supplier_name": "BlueWave Records"},
+          {"supplier_id": "MG", "supplier_name": "Meridian Group"}
         ],
         "catalog": [
-          {"product_id": "PID-107", "sku": "MED-107-BW", "publisher_id": "BW", "royalty_pct": 0.70, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-042", "sku": "MED-042-NR", "publisher_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-102", "sku": "MED-102-SS", "publisher_id": "SS", "royalty_pct": 0.60, "royalty_fixed_usd": null, "effective_from": "2020-01-01"}
+          {"product_id": "PID-107", "sku": "MED-107-BW", "supplier_id": "BW", "royalty_pct": 0.70, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
+          {"product_id": "PID-042", "sku": "MED-042-NR", "supplier_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"}
         ],
-        "enterprise_deals": [],
         "transactions": [
-          {"transaction_id": "TXN-100", "product_id": "PID-107", "channel": "retail", "sale_date": "2024-03-15", "revenue_usd": 90.00},
-          {"transaction_id": "TXN-101", "product_id": "PID-107", "channel": "retail", "sale_date": "2024-05-30", "revenue_usd": 110.00},
-          {"transaction_id": "TXN-102", "product_id": "PID-107", "channel": "retail", "sale_date": "2024-06-15", "revenue_usd": 130.00},
-          {"transaction_id": "TXN-103", "product_id": "PID-107", "channel": "retail", "sale_date": "2024-08-01", "revenue_usd": 100.00},
-          {"transaction_id": "TXN-200", "product_id": "PID-042", "channel": "retail", "sale_date": "2024-04-01", "revenue_usd": 100.00},
-          {"transaction_id": "TXN-201", "product_id": "PID-102", "channel": "retail", "sale_date": "2024-07-15", "revenue_usd": 200.00}
+          {"transaction_id": "TXN-100", "product_id": "PID-107", "channel": "retail", "sku": "MED-107-BW", "supplier_name": "BlueWave Records", "sale_date": "2024-03-15", "revenue_usd": 90.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-101", "product_id": "PID-107", "channel": "retail", "sku": "MED-107-BW", "supplier_name": "BlueWave Records", "sale_date": "2024-05-30", "revenue_usd": 110.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-102", "product_id": "PID-107", "channel": "retail", "sku": "MED-107-BW", "supplier_name": "BlueWave Records", "sale_date": "2024-06-15", "revenue_usd": 130.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-103", "product_id": "PID-107", "channel": "retail", "sku": "MED-107-BW", "supplier_name": "BlueWave Records", "sale_date": "2024-08-01", "revenue_usd": 100.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-200", "product_id": "PID-042", "channel": "retail", "sku": "MED-042-NR", "supplier_name": "North Rock Media", "sale_date": "2024-04-01", "revenue_usd": 100.00, "royalty_pct": null, "royalty_fixed_usd": null}
         ]
       },
       "gold_edits": [
-        {"file": "catalog.csv", "op": "insert", "row": {"product_id": "PID-107", "sku": "MED-107-MG", "publisher_id": "MG", "royalty_pct": 0.70, "royalty_fixed_usd": null, "effective_from": "2024-06-01"}}
+        {"file": "catalog.csv", "op": "insert", "row": {"product_id": "PID-107", "sku": "MED-107-BW", "supplier_id": "MG", "royalty_pct": 0.70, "royalty_fixed_usd": null, "effective_from": "2024-06-01"}},
+        {"file": "transactions.csv", "op": "update", "match": {"transaction_id": "TXN-102"}, "set": {"supplier_name": "Meridian Group"}},
+        {"file": "transactions.csv", "op": "update", "match": {"transaction_id": "TXN-103"}, "set": {"supplier_name": "Meridian Group"}}
       ]
     },
     {
       "id": "case_03",
-      "category": "royalty_type_change_single_table",
-      "ticket": "Change SKU MED-234-SS's royalty from 75% percentage to a fixed $4.00 per unit sold. This change is permanent (all-time).",
+      "category": "royalty_change_retail_only",
+      "ticket": "Change SKU MED-234-SS royalty from 75% to fixed $4.",
       "data": {
-        "publishers": [
-          {"publisher_id": "NR", "publisher_name": "North Rock Media"},
-          {"publisher_id": "SS", "publisher_name": "Southstar Publishing"},
-          {"publisher_id": "BW", "publisher_name": "BlueWave Records"},
-          {"publisher_id": "MG", "publisher_name": "Meridian Group"}
+        "suppliers": [
+          {"supplier_id": "NR", "supplier_name": "North Rock Media"},
+          {"supplier_id": "SS", "supplier_name": "Southstar Publishing"},
+          {"supplier_id": "BW", "supplier_name": "BlueWave Records"},
+          {"supplier_id": "MG", "supplier_name": "Meridian Group"}
         ],
         "catalog": [
-          {"product_id": "PID-234", "sku": "MED-234-SS", "publisher_id": "SS", "royalty_pct": 0.75, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-042", "sku": "MED-042-NR", "publisher_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-201", "sku": "MED-201-BW", "publisher_id": "BW", "royalty_pct": 0.70, "royalty_fixed_usd": null, "effective_from": "2020-01-01"}
-        ],
-        "enterprise_deals": [
-          {"product_id": "PID-201", "sku": "MED-201-BW", "publisher_id": "BW", "publisher_name": "BlueWave Records", "royalty_pct": 0.65, "royalty_fixed_usd": null}
+          {"product_id": "PID-234", "sku": "MED-234-SS", "supplier_id": "SS", "royalty_pct": 0.75, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
+          {"product_id": "PID-042", "sku": "MED-042-NR", "supplier_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"}
         ],
         "transactions": [
-          {"transaction_id": "TXN-234A", "product_id": "PID-234", "channel": "retail", "sale_date": "2024-03-01", "revenue_usd": 50.00},
-          {"transaction_id": "TXN-234B", "product_id": "PID-234", "channel": "retail", "sale_date": "2024-05-01", "revenue_usd": 60.00},
-          {"transaction_id": "TXN-234C", "product_id": "PID-234", "channel": "retail", "sale_date": "2024-07-01", "revenue_usd": 55.00},
-          {"transaction_id": "TXN-042A", "product_id": "PID-042", "channel": "retail", "sale_date": "2024-04-15", "revenue_usd": 100.00},
-          {"transaction_id": "TXN-201A", "product_id": "PID-201", "channel": "enterprise", "sale_date": "2024-06-01", "revenue_usd": 300.00}
+          {"transaction_id": "TXN-234A", "product_id": "PID-234", "channel": "retail", "sku": "MED-234-SS", "supplier_name": "Southstar Publishing", "sale_date": "2024-03-01", "revenue_usd": 50.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-234B", "product_id": "PID-234", "channel": "retail", "sku": "MED-234-SS", "supplier_name": "Southstar Publishing", "sale_date": "2024-05-01", "revenue_usd": 60.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-234C", "product_id": "PID-234", "channel": "retail", "sku": "MED-234-SS", "supplier_name": "Southstar Publishing", "sale_date": "2024-07-01", "revenue_usd": 55.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-042A", "product_id": "PID-042", "channel": "retail", "sku": "MED-042-NR", "supplier_name": "North Rock Media", "sale_date": "2024-04-15", "revenue_usd": 100.00, "royalty_pct": null, "royalty_fixed_usd": null}
         ]
       },
       "gold_edits": [
@@ -98,34 +90,31 @@
     },
     {
       "id": "case_04",
-      "category": "royalty_type_change_multi_table",
-      "ticket": "Change SKU MED-311-NR's royalty from 80% percentage to a fixed $2.00 per unit sold. This change is permanent (all-time), applies to all channels (both retail and enterprise).",
+      "category": "royalty_change_with_b2b",
+      "ticket": "Change SKU MED-311-NR royalty from 80% to fixed $2. Applies to all channels.",
       "data": {
-        "publishers": [
-          {"publisher_id": "NR", "publisher_name": "North Rock Media"},
-          {"publisher_id": "SS", "publisher_name": "Southstar Publishing"},
-          {"publisher_id": "BW", "publisher_name": "BlueWave Records"},
-          {"publisher_id": "MG", "publisher_name": "Meridian Group"}
+        "suppliers": [
+          {"supplier_id": "NR", "supplier_name": "North Rock Media"},
+          {"supplier_id": "SS", "supplier_name": "Southstar Publishing"},
+          {"supplier_id": "BW", "supplier_name": "BlueWave Records"},
+          {"supplier_id": "MG", "supplier_name": "Meridian Group"}
         ],
         "catalog": [
-          {"product_id": "PID-311", "sku": "MED-311-NR", "publisher_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-042", "sku": "MED-042-NR", "publisher_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
-          {"product_id": "PID-102", "sku": "MED-102-SS", "publisher_id": "SS", "royalty_pct": 0.60, "royalty_fixed_usd": null, "effective_from": "2020-01-01"}
-        ],
-        "enterprise_deals": [
-          {"product_id": "PID-311", "sku": "MED-311-NR", "publisher_id": "NR", "publisher_name": "North Rock Media", "royalty_pct": 0.80, "royalty_fixed_usd": null}
+          {"product_id": "PID-311", "sku": "MED-311-NR", "supplier_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"},
+          {"product_id": "PID-042", "sku": "MED-042-NR", "supplier_id": "NR", "royalty_pct": 0.80, "royalty_fixed_usd": null, "effective_from": "2020-01-01"}
         ],
         "transactions": [
-          {"transaction_id": "TXN-311A", "product_id": "PID-311", "channel": "retail", "sale_date": "2024-03-01", "revenue_usd": 40.00},
-          {"transaction_id": "TXN-311B", "product_id": "PID-311", "channel": "retail", "sale_date": "2024-05-15", "revenue_usd": 45.00},
-          {"transaction_id": "TXN-311C", "product_id": "PID-311", "channel": "enterprise", "sale_date": "2024-06-10", "revenue_usd": 400.00},
-          {"transaction_id": "TXN-311D", "product_id": "PID-311", "channel": "enterprise", "sale_date": "2024-07-20", "revenue_usd": 550.00},
-          {"transaction_id": "TXN-042A", "product_id": "PID-042", "channel": "retail", "sale_date": "2024-04-01", "revenue_usd": 100.00}
+          {"transaction_id": "TXN-311A", "product_id": "PID-311", "channel": "retail", "sku": "MED-311-NR", "supplier_name": "North Rock Media", "sale_date": "2024-03-01", "revenue_usd": 40.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-311B", "product_id": "PID-311", "channel": "retail", "sku": "MED-311-NR", "supplier_name": "North Rock Media", "sale_date": "2024-05-15", "revenue_usd": 45.00, "royalty_pct": null, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-311C", "product_id": "PID-311", "channel": "b2b", "sku": "MED-311-NR", "supplier_name": "North Rock Media", "sale_date": "2024-06-10", "revenue_usd": 400.00, "royalty_pct": 0.80, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-311D", "product_id": "PID-311", "channel": "b2b", "sku": "MED-311-NR", "supplier_name": "North Rock Media", "sale_date": "2024-07-20", "revenue_usd": 550.00, "royalty_pct": 0.80, "royalty_fixed_usd": null},
+          {"transaction_id": "TXN-042A", "product_id": "PID-042", "channel": "retail", "sku": "MED-042-NR", "supplier_name": "North Rock Media", "sale_date": "2024-04-01", "revenue_usd": 100.00, "royalty_pct": null, "royalty_fixed_usd": null}
         ]
       },
       "gold_edits": [
         {"file": "catalog.csv", "op": "update", "match": {"product_id": "PID-311"}, "set": {"royalty_pct": null, "royalty_fixed_usd": 2.00}},
-        {"file": "enterprise_deals.csv", "op": "update", "match": {"product_id": "PID-311"}, "set": {"royalty_pct": null, "royalty_fixed_usd": 2.00}}
+        {"file": "transactions.csv", "op": "update", "match": {"transaction_id": "TXN-311C"}, "set": {"royalty_pct": null, "royalty_fixed_usd": 2.00}},
+        {"file": "transactions.csv", "op": "update", "match": {"transaction_id": "TXN-311D"}, "set": {"royalty_pct": null, "royalty_fixed_usd": 2.00}}
       ]
     }
   ]

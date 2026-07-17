@@ -1,17 +1,37 @@
 {
   "id": "case_02",
-  "category": "publisher_swap_dated",
+  "category": "supplier_change_dated",
   "gold_edits": [
     {
       "file": "catalog.csv",
       "op": "insert",
       "row": {
         "product_id": "PID-107",
-        "sku": "MED-107-MG",
-        "publisher_id": "MG",
+        "sku": "MED-107-BW",
+        "supplier_id": "MG",
         "royalty_pct": 0.7,
         "royalty_fixed_usd": null,
         "effective_from": "2024-06-01"
+      }
+    },
+    {
+      "file": "transactions.csv",
+      "op": "update",
+      "match": {
+        "transaction_id": "TXN-102"
+      },
+      "set": {
+        "supplier_name": "Meridian Group"
+      }
+    },
+    {
+      "file": "transactions.csv",
+      "op": "update",
+      "match": {
+        "transaction_id": "TXN-103"
+      },
+      "set": {
+        "supplier_name": "Meridian Group"
       }
     }
   ]

@@ -19,6 +19,8 @@ from typing import Any
 
 def strip_fences(s: str) -> str:
     s = s.strip()
+    # Strip <think>...</think> blocks that some models emit
+    s = re.sub(r"<think>.*?</think>\s*", "", s, flags=re.DOTALL)
     s = re.sub(r"^```(?:json)?\s*", "", s)
     s = re.sub(r"\s*```$", "", s)
     return s.strip()
@@ -29,18 +31,38 @@ def parse_agent_edits(stdout: str) -> list | None:
     s = strip_fences(stdout)
     try:
         parsed = json.loads(s)
+        if isinstance(parsed, list):
+            return parsed
     except Exception:
-        # Try to find first JSON array in output
-        m = re.search(r"\[[^\[\]]*(?:\[[^\[\]]*\][^\[\]]*)*\]", s, re.DOTALL)
-        if not m:
-            return None
+        pass
+    # Try to find first well-formed JSON array anywhere in the output.
+    # Match balanced brackets by scanning for [ and finding matching ].
+    for start in range(len(s)):
+        if s[start] != '[':
+            continue
+        depth = 0
+        for end in range(start, len(s)):
+            if s[end] == '[':
+                depth += 1
+            elif s[end] == ']':
+                depth -= 1
+                if depth == 0:
+                    try:
+                        parsed = json.loads(s[start:end+1])
+                        if isinstance(parsed, list):
+                            return parsed
+                    except Exception:
+                        break
+    # Fallback: search for JSON array in markdown code block
+    m = re.search(r"```(?:json)?\s*(\[.*?\])\s*```", s, re.DOTALL)
+    if m:
         try:
-            parsed = json.loads(m.group(0))
+            parsed = json.loads(m.group(1))
+            if isinstance(parsed, list):
+                return parsed
         except Exception:
-            return None
-    if not isinstance(parsed, list):
-        return None
-    return parsed
+            pass
+    return None
 
 
 def normalize_scalar(v):
@@ -124,11 +146,73 @@ def edit_matches_gold(agent_edit: dict, gold_edit: dict) -> bool:
     return False
 
 
-def score_case(stdout: str, expected: dict) -> dict[str, Any]:
-    """Compare agent edits vs gold edits. Score 1.0 if sets match exactly."""
-    gold_edits = expected.get("gold_edits", [])
-    gold_canonical = {canonicalize_edit(e) for e in gold_edits}
+def load_input_csvs(inputs_dir: Path) -> dict:
+    """Load all *.csv from inputs_dir as list-of-dicts."""
+    import csv
+    tables = {}
+    for path in inputs_dir.glob("*.csv"):
+        with path.open() as f:
+            tables[path.name] = list(csv.DictReader(f))
+    return tables
 
+
+def apply_edits(tables: dict, edits: list) -> dict:
+    """Apply a list of edits to a COPY of tables. Returns new state."""
+    import copy
+    new_tables = {name: copy.deepcopy(rows) for name, rows in tables.items()}
+    for edit in edits:
+        if not isinstance(edit, dict):
+            continue
+        file = edit.get("file")
+        op = edit.get("op")
+        if file not in new_tables:
+            continue
+        if op == "update":
+            match = edit.get("match", {})
+            set_ = edit.get("set", {})
+            if not isinstance(match, dict) or not isinstance(set_, dict):
+                continue
+            for row in new_tables[file]:
+                if all(str(row.get(k, "")) == str(v) if v is not None else (row.get(k) in (None, "", "None")) for k, v in match.items()):
+                    for sk, sv in set_.items():
+                        row[sk] = "" if sv is None else str(sv)
+        elif op == "insert":
+            row_data = edit.get("row", {})
+            if isinstance(row_data, dict):
+                new_row = {k: ("" if v is None else str(v)) for k, v in row_data.items()}
+                new_tables[file].append(new_row)
+    return new_tables
+
+
+def normalize_row(row: dict) -> tuple:
+    """Convert a row dict to a normalized tuple for comparison."""
+    items = []
+    for k in sorted(row.keys()):
+        v = row.get(k, "")
+        v = normalize_scalar(v)
+        items.append((k, v))
+    return tuple(items)
+
+
+def tables_equal(t1: dict, t2: dict) -> tuple[bool, str]:
+    """Compare two table dicts. Returns (equal, diff_description)."""
+    if set(t1.keys()) != set(t2.keys()):
+        return False, f"file set mismatch: {set(t1.keys()) ^ set(t2.keys())}"
+    for fname in t1:
+        rows1 = sorted([normalize_row(r) for r in t1[fname]])
+        rows2 = sorted([normalize_row(r) for r in t2[fname]])
+        if rows1 != rows2:
+            only1 = [r for r in rows1 if r not in rows2]
+            only2 = [r for r in rows2 if r not in rows1]
+            return False, f"{fname} differs: gold-only={only1[:2]}, agent-only={only2[:2]}"
+    return True, ""
+
+
+def score_case(stdout: str, expected: dict, inputs_dir: Path = None) -> dict[str, Any]:
+    """Data-aware scoring: apply agent edits and gold edits to the input
+    tables, compare resulting states. Score 1.0 only if resulting states are
+    identical (semantic equivalence)."""
+    gold_edits = expected.get("gold_edits", [])
     agent_edits = parse_agent_edits(stdout)
     if agent_edits is None:
         return {
@@ -137,61 +221,42 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
             "category": expected.get("category"),
             "difficulty": expected.get("category"),
             "gold_edit_count": len(gold_edits),
-            "agent_edit_count": None,
         }
-
     if not isinstance(agent_edits, list):
         return {
             "score": 0.0,
             "reason": "agent output not a JSON list",
             "category": expected.get("category"),
-            "difficulty": expected.get("category"),
         }
 
-    # Match each gold edit against a compatible agent edit (semantic match,
-    # tolerates over-specified match dicts on updates). Track which agent
-    # edits got used so we can flag extras.
-    matched_agent_indices = set()
-    missing = []
-    for g in gold_edits:
-        found = None
-        for i, a in enumerate(agent_edits):
-            if i in matched_agent_indices:
-                continue
-            if edit_matches_gold(a, g):
-                found = i
-                break
-        if found is None:
-            missing.append(g)
-        else:
-            matched_agent_indices.add(found)
+    if inputs_dir is None or not inputs_dir.exists():
+        return {
+            "score": 0.0,
+            "reason": "inputs_dir not available for data-aware scoring",
+            "category": expected.get("category"),
+        }
 
-    extra = [a for i, a in enumerate(agent_edits) if i not in matched_agent_indices]
+    initial = load_input_csvs(inputs_dir)
+    gold_state = apply_edits(initial, gold_edits)
+    agent_state = apply_edits(initial, agent_edits)
 
-    if not missing and not extra:
+    ok, diff = tables_equal(gold_state, agent_state)
+    if ok:
         return {
             "score": 1.0,
-            "reason": "all gold edits present, no extras",
+            "reason": "resulting table states are equivalent",
             "category": expected.get("category"),
             "difficulty": expected.get("category"),
             "gold_edit_count": len(gold_edits),
             "agent_edit_count": len(agent_edits),
         }
-
-    reason_parts = []
-    if missing:
-        reason_parts.append(f"missing {len(missing)} gold edit(s): {missing[:3]}")
-    if extra:
-        reason_parts.append(f"has {len(extra)} extra unnecessary edit(s): {extra[:3]}")
     return {
         "score": 0.0,
-        "reason": "; ".join(reason_parts),
+        "reason": f"resulting states differ: {diff}",
         "category": expected.get("category"),
         "difficulty": expected.get("category"),
         "gold_edit_count": len(gold_edits),
         "agent_edit_count": len(agent_edits),
-        "missing_count": len(missing),
-        "extra_count": len(extra),
     }
 
 
@@ -200,6 +265,7 @@ def main() -> None:
     stdout = Path(m["run"]["stdout"]).read_text()
     exit_code = json.loads(Path(m["run"]["meta"]).read_text())["exit_code"]
     expected = json.loads((Path(m["expected_dir"]) / "answer.json").read_text())
+    inputs_dir = Path(m["inputs_dir"])
 
     base = {"id": expected.get("id")}
 
@@ -212,7 +278,7 @@ def main() -> None:
                            "agent_output": ""}))
         return
 
-    metrics = score_case(stdout, expected)
+    metrics = score_case(stdout, expected, inputs_dir)
     metrics.update(base)
     metrics["agent_output"] = stdout.strip()[:500]
     print(json.dumps(metrics))

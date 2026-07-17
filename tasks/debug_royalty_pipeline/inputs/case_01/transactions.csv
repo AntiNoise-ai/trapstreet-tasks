@@ -1,7 +1,7 @@
-transaction_id,product_id,channel,sale_date,revenue_usd
-TXN-001,PID-042,retail,2024-03-15,100.0
-TXN-002,PID-042,retail,2024-04-20,120.0
-TXN-003,PID-042,retail,2024-08-10,150.0
-TXN-010,PID-050,retail,2024-05-01,80.0
-TXN-020,PID-102,retail,2024-06-01,200.0
-TXN-030,PID-201,enterprise,2024-07-01,500.0
+transaction_id,product_id,channel,sku,supplier_name,sale_date,revenue_usd,royalty_pct,royalty_fixed_usd
+TXN-001,PID-042,retail,MED-042-NR,North Rock Media,2024-03-15,100.0,,
+TXN-002,PID-042,retail,MED-042-NR,North Rock Media,2024-04-20,120.0,,
+TXN-003,PID-042,b2b,MED-042-NR,North Rock Media,2024-05-10,500.0,0.8,
+TXN-004,PID-042,retail,MED-042-NR,North Rock Media,2024-08-10,150.0,,
+TXN-010,PID-050,retail,MED-050-NR,North Rock Media,2024-05-01,80.0,,
+TXN-020,PID-102,retail,MED-102-SS,Southstar Publishing,2024-06-01,200.0,,
