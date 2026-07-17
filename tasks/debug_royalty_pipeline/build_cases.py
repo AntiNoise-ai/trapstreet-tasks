@@ -95,7 +95,22 @@ def write_csv(path: Path, cols: list, rows: list) -> None:
 
 AGENT_INSTRUCTIONS = """# Task
 
-A colleague filed a ticket asking for a change to the royalty pipeline. Read the ticket, the data files, and the two report scripts. Figure out EXACTLY which edits are needed so both reports (`publisher_statement.py` and `itemised_statement.py`) come out correct.
+A colleague filed a ticket asking for a fix to the royalty pipeline.
+
+**Your goal:** ensure both reports (`publisher_statement.py` and `itemised_statement.py`) come out CORRECT after the fix is applied.
+
+You will not be graded on your intermediate reasoning or on the structure of your edits. You will be graded on **whether the reports the two scripts produce match the reports they would produce after a correct fix**. Judge applies your edits + runs both scripts + compares stdout to the gold reports.
+
+## How to approach this
+
+In a real production system:
+- The data tables are LARGE — you cannot solve this by scanning every row.
+- No one documents the business rules explicitly — you have to reverse-engineer them by reading the pipeline code (`publisher_statement.py` and `itemised_statement.py`) and understanding what each script does with the data.
+
+To decide what edits are needed, read the scripts carefully:
+- Where does each report get its values from? Which table? Which column? Lookup or baked?
+- If you change X in the source data, which report changes and how?
+- Multiple valid fix approaches may exist — pick the one that produces reports consistent with the business intent of the ticket.
 
 ## Files in this directory
 
@@ -118,10 +133,6 @@ Each edit is one of:
 For updates: `match` specifies which rows to change; `set` specifies which columns to update to which values.
 For inserts: `row` is the new row to add (include all columns for that table).
 Use `null` (JSON literal) for empty values.
-
-## Scoring
-
-Your list of edits is compared to the gold edit set (data-aware equivalence: judge applies both edit sets to the initial tables and compares resulting state). Score 1.0 only if every gold edit is present AND there are no extra edits that change state. **Extras count against you** — do not list every possibly-related edit; list only what is necessary.
 
 Output ONLY the JSON array.
 """

@@ -1,3 +1,3 @@
 # Ticket
 
-Change River of Stones's royalty from 75% to fixed $4.
+River of Stones's royalty terms have been renegotiated from 75% to a fixed $4 per sale. Please update.

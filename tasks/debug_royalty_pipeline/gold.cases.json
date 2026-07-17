@@ -5,7 +5,7 @@
     {
       "id": "case_01",
       "category": "supplier_change_alltime",
-      "ticket": "Change Nebula Runner's supplier from North Rock Media to Meridian Group.",
+      "ticket": "Nebula Runner sales are being misattributed to North Rock Media \u2014 they should be attributed to Meridian Group. Please correct.",
       "data": {
         "suppliers": [
           {
@@ -221,7 +221,7 @@
     {
       "id": "case_02",
       "category": "supplier_change_dated",
-      "ticket": "Change Midnight Cartographer's supplier to Meridian Group, effective from 2024-06-01 onwards.",
+      "ticket": "Midnight Cartographer sales from 2024-06-01 onwards are being misattributed to BlueWave Records \u2014 from that date on, they should be attributed to Meridian Group. Please correct (sales before 2024-06-01 stay as-is).",
       "data": {
         "suppliers": [
           {
@@ -440,7 +440,7 @@
     {
       "id": "case_03",
       "category": "royalty_change_retail_only",
-      "ticket": "Change River of Stones's royalty from 75% to fixed $4.",
+      "ticket": "River of Stones's royalty terms have been renegotiated from 75% to a fixed $4 per sale. Please update.",
       "data": {
         "suppliers": [
           {
@@ -612,7 +612,7 @@
     {
       "id": "case_04",
       "category": "royalty_change_with_b2b",
-      "ticket": "Change Voidwalker's royalty from 80% to fixed $2.",
+      "ticket": "Voidwalker's royalty terms have been renegotiated from 80% to a fixed $2 per sale. Please update.",
       "data": {
         "suppliers": [
           {
