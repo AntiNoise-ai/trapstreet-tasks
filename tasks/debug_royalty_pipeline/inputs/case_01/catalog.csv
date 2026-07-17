@@ -1,6 +1,10 @@
 product_id,sku,product_name,supplier_id,royalty_pct,royalty_fixed_usd,effective_from
 PID-042,MED-042-NR,Nebula Runner,NR,0.8,,2020-01-01
 PID-070,MED-070-MG,Nebula Runner,MG,0.75,,2020-01-01
+PID-107,MED-107-BW,Midnight Cartographer,BW,0.7,,2020-01-01
+PID-088,MED-088-MG,Midnight Cartographer,MG,0.75,,2020-01-01
+PID-234,MED-234-SS,River of Stones,SS,0.75,,2020-01-01
+PID-311,MED-311-NR,Voidwalker,NR,0.8,,2020-01-01
 PID-050,MED-050-NR,Iron Grid,NR,0.75,,2020-01-01
 PID-102,MED-102-SS,Solar Chronicles,SS,0.6,,2020-01-01
 PID-201,MED-201-BW,The Silent Library,BW,0.7,,2020-01-01
