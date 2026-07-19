@@ -14,21 +14,10 @@
       }
     },
     {
-      "file": "transactions.csv",
+      "file": "b2b_details.csv",
       "op": "update",
       "match": {
-        "transaction_id": "TXN-311C"
-      },
-      "set": {
-        "royalty_pct": null,
-        "royalty_fixed_usd": 2.0
-      }
-    },
-    {
-      "file": "transactions.csv",
-      "op": "update",
-      "match": {
-        "transaction_id": "TXN-311D"
+        "product_id": "PID-311"
       },
       "set": {
         "royalty_pct": null,

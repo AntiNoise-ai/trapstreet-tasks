@@ -17,19 +17,21 @@ SHARED_SCRIPTS = HERE / "shared_scripts"
 
 VALID_OPS = {"update", "insert"}
 VALID_FILES = {
-    "catalog.csv", "suppliers.csv", "transactions.csv",
+    "catalog.csv", "suppliers.csv", "transactions.csv", "b2b_details.csv",
     "promotions.csv", "product_discounts.csv", "currency_rates.csv",
 }
-REQUIRED_TABLES = ("suppliers", "catalog", "transactions",
+REQUIRED_TABLES = ("suppliers", "catalog", "transactions", "b2b_details",
                    "promotions", "product_discounts", "currency_rates")
 
 CATALOG_COLS = ["product_id", "sku", "product_name", "supplier_id",
                 "royalty_pct", "royalty_fixed_usd", "effective_from"]
 SUPPLIERS_COLS = ["supplier_id", "supplier_name", "supplier_currency"]
-TXN_COLS = ["transaction_id", "product_id", "channel", "sku", "supplier_name",
+TXN_COLS = ["transaction_id", "product_id", "sku", "supplier_name",
             "sale_date", "revenue_gross_usd", "transaction_fee_usd",
-            "affiliate_commission_usd", "status", "promo_id", "bundle_name",
-            "royalty_pct", "royalty_fixed_usd"]
+            "affiliate_commission_usd", "status", "promo_id", "bundle_name"]
+B2B_COLS = ["b2b_txn_id", "product_id", "sku", "supplier_name", "sale_date",
+            "unit_count", "unit_price_usd", "revenue_gross_usd",
+            "royalty_pct", "royalty_fixed_usd", "status"]
 PROMOTIONS_COLS = ["promo_id", "promo_name", "start_date", "end_date", "discount_pct"]
 DISCOUNTS_COLS = ["product_id", "discount_pct", "valid_from", "valid_until"]
 CURRENCY_COLS = ["from_currency", "to_currency", "rate", "effective_from"]
@@ -65,8 +67,10 @@ def validate_case(case: dict) -> None:
         for col in TXN_COLS:
             if col not in row:
                 raise ValueError(f"case {case['id']}: transaction row missing column {col!r}: {row}")
-        if row["channel"] not in ("retail", "b2b"):
-            raise ValueError(f"case {case['id']}: unknown channel {row['channel']!r}")
+    for row in data["b2b_details"]:
+        for col in B2B_COLS:
+            if col not in row:
+                raise ValueError(f"case {case['id']}: b2b_details row missing column {col!r}: {row}")
 
     for edit in case["gold_edits"]:
         for field in ("file", "op"):
@@ -115,7 +119,9 @@ To decide what edits are needed, read the scripts carefully:
 ## Files in this directory
 
 - `ticket.md` — the change request
-- `catalog.csv`, `suppliers.csv`, `transactions.csv` — main data tables
+- `catalog.csv`, `suppliers.csv` — product/supplier master
+- `transactions.csv` — retail sales
+- `b2b_details.csv` — B2B/wholesale sales (high volume: many units per order)
 - `promotions.csv`, `product_discounts.csv`, `currency_rates.csv` — auxiliary tables
 - `publisher_statement.py`, `itemised_statement.py` — the two report scripts (Python + SQL)
 
@@ -154,6 +160,7 @@ def build() -> None:
         write_csv(in_dir / "catalog.csv", CATALOG_COLS, case["data"]["catalog"])
         write_csv(in_dir / "suppliers.csv", SUPPLIERS_COLS, case["data"]["suppliers"])
         write_csv(in_dir / "transactions.csv", TXN_COLS, case["data"]["transactions"])
+        write_csv(in_dir / "b2b_details.csv", B2B_COLS, case["data"]["b2b_details"])
         write_csv(in_dir / "promotions.csv", PROMOTIONS_COLS, case["data"]["promotions"])
         write_csv(in_dir / "product_discounts.csv", DISCOUNTS_COLS, case["data"]["product_discounts"])
         write_csv(in_dir / "currency_rates.csv", CURRENCY_COLS, case["data"]["currency_rates"])

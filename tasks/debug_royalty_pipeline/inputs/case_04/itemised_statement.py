@@ -1,16 +1,8 @@
-"""Itemised statement — per-transaction detail via SQL over multiple tables.
+"""Itemised statement — per-transaction detail with sku + supplier via SQL.
 
-Reads: catalog.csv, suppliers.csv (JOIN target for catalog side only),
-       transactions.csv, promotions.csv, product_discounts.csv
-Runs a multi-CTE SQL query and prints one row per transaction.
-
-Data flow (relevant to how supplier_name and sku are resolved):
-- The catalog+suppliers JOIN is available in the CTEs but is used ONLY for
-  royalty term lookup on retail channel transactions.
-- The transaction's own baked `supplier_name` field is what's displayed in
-  the itemised output -- NOT the resolved name from the catalog+suppliers
-  JOIN.
-- The transaction's own baked `sku` field is what's displayed for SKU.
+Reads: catalog.csv, transactions.csv (retail), b2b_details.csv (B2B).
+Displays sku and supplier_name FROM the transaction's own baked fields
+(no lookup) for BOTH retail and b2b.
 """
 import csv
 import sqlite3
@@ -19,55 +11,38 @@ from pathlib import Path
 
 CATALOG_SCHEMA = """
 CREATE TABLE catalog (
-    product_id TEXT,
-    sku TEXT,
-    product_name TEXT,
-    supplier_id TEXT,
-    royalty_pct REAL,
-    royalty_fixed_usd REAL,
-    effective_from TEXT
+    product_id TEXT, sku TEXT, product_name TEXT, supplier_id TEXT,
+    royalty_pct REAL, royalty_fixed_usd REAL, effective_from TEXT
 )"""
 
 SUPPLIERS_SCHEMA = """
 CREATE TABLE suppliers (
-    supplier_id TEXT,
-    supplier_name TEXT,
-    supplier_currency TEXT
+    supplier_id TEXT, supplier_name TEXT, supplier_currency TEXT
 )"""
 
 TXN_SCHEMA = """
 CREATE TABLE transactions (
-    transaction_id TEXT,
-    product_id TEXT,
-    channel TEXT,
-    sku TEXT,
-    supplier_name TEXT,
-    sale_date TEXT,
-    revenue_gross_usd REAL,
-    transaction_fee_usd REAL,
-    affiliate_commission_usd REAL,
-    status TEXT,
-    promo_id TEXT,
-    bundle_name TEXT,
-    royalty_pct REAL,
-    royalty_fixed_usd REAL
+    transaction_id TEXT, product_id TEXT, sku TEXT, supplier_name TEXT,
+    sale_date TEXT, revenue_gross_usd REAL, transaction_fee_usd REAL,
+    affiliate_commission_usd REAL, status TEXT, promo_id TEXT, bundle_name TEXT
+)"""
+
+B2B_SCHEMA = """
+CREATE TABLE b2b_details (
+    b2b_txn_id TEXT, product_id TEXT, sku TEXT, supplier_name TEXT,
+    sale_date TEXT, unit_count INTEGER, unit_price_usd REAL,
+    revenue_gross_usd REAL, royalty_pct REAL, royalty_fixed_usd REAL,
+    status TEXT
 )"""
 
 PROMOTIONS_SCHEMA = """
 CREATE TABLE promotions (
-    promo_id TEXT,
-    promo_name TEXT,
-    start_date TEXT,
-    end_date TEXT,
-    discount_pct REAL
+    promo_id TEXT, promo_name TEXT, start_date TEXT, end_date TEXT, discount_pct REAL
 )"""
 
 DISCOUNTS_SCHEMA = """
 CREATE TABLE product_discounts (
-    product_id TEXT,
-    discount_pct REAL,
-    valid_from TEXT,
-    valid_until TEXT
+    product_id TEXT, discount_pct REAL, valid_from TEXT, valid_until TEXT
 )"""
 
 
@@ -87,133 +62,123 @@ def to_num(v):
         return None
 
 
+def to_int(v):
+    if v is None or v == "":
+        return None
+    try:
+        return int(float(v))
+    except (ValueError, TypeError):
+        return None
+
+
 def init_db(here: Path) -> sqlite3.Connection:
     conn = sqlite3.connect(":memory:")
     conn.row_factory = sqlite3.Row
     conn.execute(CATALOG_SCHEMA)
     conn.execute(SUPPLIERS_SCHEMA)
     conn.execute(TXN_SCHEMA)
+    conn.execute(B2B_SCHEMA)
     conn.execute(PROMOTIONS_SCHEMA)
     conn.execute(DISCOUNTS_SCHEMA)
 
     for r in load_csv(here / "catalog.csv"):
-        conn.execute(
-            "INSERT INTO catalog VALUES (?,?,?,?,?,?,?)",
-            (r["product_id"], r["sku"], r["product_name"], r["supplier_id"],
-             to_num(r.get("royalty_pct")), to_num(r.get("royalty_fixed_usd")),
-             r["effective_from"]),
-        )
+        conn.execute("INSERT INTO catalog VALUES (?,?,?,?,?,?,?)", (
+            r["product_id"], r["sku"], r["product_name"], r["supplier_id"],
+            to_num(r.get("royalty_pct")), to_num(r.get("royalty_fixed_usd")),
+            r["effective_from"]))
     for r in load_csv(here / "suppliers.csv"):
-        conn.execute(
-            "INSERT INTO suppliers VALUES (?,?,?)",
-            (r["supplier_id"], r["supplier_name"], r.get("supplier_currency", "USD")),
-        )
+        conn.execute("INSERT INTO suppliers VALUES (?,?,?)", (
+            r["supplier_id"], r["supplier_name"], r.get("supplier_currency", "USD")))
     for r in load_csv(here / "transactions.csv"):
-        conn.execute(
-            "INSERT INTO transactions VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            (r["transaction_id"], r["product_id"], r["channel"], r["sku"],
-             r["supplier_name"], r["sale_date"], to_num(r.get("revenue_gross_usd")),
-             to_num(r.get("transaction_fee_usd")), to_num(r.get("affiliate_commission_usd")),
-             r.get("status", "COMPLETE"), r.get("promo_id", ""), r.get("bundle_name", ""),
-             to_num(r.get("royalty_pct")), to_num(r.get("royalty_fixed_usd"))),
-        )
+        conn.execute("INSERT INTO transactions VALUES (?,?,?,?,?,?,?,?,?,?,?)", (
+            r["transaction_id"], r["product_id"], r["sku"], r["supplier_name"],
+            r["sale_date"], to_num(r.get("revenue_gross_usd")),
+            to_num(r.get("transaction_fee_usd")), to_num(r.get("affiliate_commission_usd")),
+            r.get("status", "COMPLETE"), r.get("promo_id", ""), r.get("bundle_name", "")))
+    for r in load_csv(here / "b2b_details.csv"):
+        conn.execute("INSERT INTO b2b_details VALUES (?,?,?,?,?,?,?,?,?,?,?)", (
+            r["b2b_txn_id"], r["product_id"], r["sku"], r["supplier_name"],
+            r["sale_date"], to_int(r.get("unit_count")), to_num(r.get("unit_price_usd")),
+            to_num(r.get("revenue_gross_usd")),
+            to_num(r.get("royalty_pct")), to_num(r.get("royalty_fixed_usd")),
+            r.get("status", "COMPLETE")))
     for r in load_csv(here / "promotions.csv"):
-        conn.execute(
-            "INSERT INTO promotions VALUES (?,?,?,?,?)",
-            (r["promo_id"], r["promo_name"], r["start_date"], r["end_date"],
-             to_num(r.get("discount_pct"))),
-        )
+        conn.execute("INSERT INTO promotions VALUES (?,?,?,?,?)", (
+            r["promo_id"], r["promo_name"], r["start_date"], r["end_date"],
+            to_num(r.get("discount_pct"))))
     for r in load_csv(here / "product_discounts.csv"):
-        conn.execute(
-            "INSERT INTO product_discounts VALUES (?,?,?,?)",
-            (r["product_id"], to_num(r.get("discount_pct")), r["valid_from"], r["valid_until"]),
-        )
+        conn.execute("INSERT INTO product_discounts VALUES (?,?,?,?)", (
+            r["product_id"], to_num(r.get("discount_pct")),
+            r["valid_from"], r["valid_until"]))
     conn.commit()
     return conn
 
 
 ITEMISED_STATEMENT_SQL = """
 WITH catalog_versioned AS (
-    SELECT
-        c.product_id,
-        c.sku AS catalog_sku,
-        c.product_name,
-        c.supplier_id AS catalog_supplier_id,
-        s.supplier_name AS resolved_supplier_name,
-        c.royalty_pct AS catalog_royalty_pct,
-        c.royalty_fixed_usd AS catalog_royalty_fixed_usd,
-        c.effective_from AS catalog_effective_from,
-        ROW_NUMBER() OVER (
-            PARTITION BY c.product_id
-            ORDER BY c.effective_from DESC
-        ) AS row_recency
+    SELECT c.product_id, c.sku AS catalog_sku, c.supplier_id AS catalog_supplier_id,
+           c.royalty_pct AS catalog_royalty_pct, c.royalty_fixed_usd AS catalog_royalty_fixed_usd,
+           c.effective_from AS catalog_effective_from,
+           ROW_NUMBER() OVER (PARTITION BY c.product_id ORDER BY c.effective_from DESC) AS row_recency
     FROM catalog c
-    JOIN suppliers s ON c.supplier_id = s.supplier_id
 ),
 active_catalog AS (
     SELECT * FROM catalog_versioned WHERE row_recency = 1
 ),
-per_txn AS (
+retail_lines AS (
     SELECT
-        t.transaction_id,
+        t.transaction_id AS txn_ref,
         t.sale_date,
         t.sku AS display_sku,
-        t.channel,
+        'retail' AS channel,
         t.supplier_name AS display_supplier_name,
+        1 AS units,
         t.revenue_gross_usd,
-        COALESCE(t.transaction_fee_usd, 0) AS transaction_fee_usd,
-        COALESCE(t.affiliate_commission_usd, 0) AS affiliate_commission_usd,
-        t.status,
-        t.promo_id,
-        t.bundle_name,
-        t.royalty_pct AS baked_royalty_pct,
-        t.royalty_fixed_usd AS baked_royalty_fixed_usd,
-        ac.catalog_royalty_pct,
-        ac.catalog_royalty_fixed_usd,
-        pr.promo_name,
-        pd.discount_pct AS product_discount_pct
+        (COALESCE(t.transaction_fee_usd, 0) + COALESCE(t.affiliate_commission_usd, 0)) AS deductions_usd,
+        CASE
+            WHEN ac.catalog_royalty_fixed_usd IS NOT NULL THEN ac.catalog_royalty_fixed_usd
+            WHEN ac.catalog_royalty_pct IS NOT NULL THEN t.revenue_gross_usd * ac.catalog_royalty_pct
+            ELSE 0
+        END AS royalty_amount_usd
     FROM transactions t
     LEFT JOIN active_catalog ac
         ON t.product_id = ac.product_id
         AND ac.catalog_effective_from <= t.sale_date
-    LEFT JOIN promotions pr
-        ON t.promo_id = pr.promo_id
-        AND t.sale_date BETWEEN pr.start_date AND pr.end_date
-    LEFT JOIN product_discounts pd
-        ON t.product_id = pd.product_id
-        AND t.sale_date BETWEEN pd.valid_from AND pd.valid_until
     WHERE t.status = 'COMPLETE'
+),
+b2b_lines AS (
+    SELECT
+        b.b2b_txn_id AS txn_ref,
+        b.sale_date,
+        b.sku AS display_sku,
+        'b2b' AS channel,
+        b.supplier_name AS display_supplier_name,
+        b.unit_count AS units,
+        b.revenue_gross_usd,
+        0.0 AS deductions_usd,
+        CASE
+            WHEN b.royalty_fixed_usd IS NOT NULL THEN b.royalty_fixed_usd * b.unit_count
+            WHEN b.royalty_pct IS NOT NULL THEN b.revenue_gross_usd * b.royalty_pct
+            ELSE 0
+        END AS royalty_amount_usd
+    FROM b2b_details b
+    WHERE b.status = 'COMPLETE'
+),
+unioned AS (
+    SELECT * FROM retail_lines UNION ALL SELECT * FROM b2b_lines
 )
 SELECT
-    transaction_id,
+    txn_ref,
     sale_date,
     display_sku AS sku,
     channel,
     display_supplier_name AS supplier_name,
+    units,
     ROUND(revenue_gross_usd, 2) AS revenue_gross_usd,
-    ROUND((transaction_fee_usd + affiliate_commission_usd), 2) AS deductions_usd,
-    ROUND(
-        CASE
-            WHEN channel = 'b2b' AND baked_royalty_fixed_usd IS NOT NULL
-                THEN baked_royalty_fixed_usd
-            WHEN channel = 'b2b' AND baked_royalty_pct IS NOT NULL
-                THEN revenue_gross_usd * baked_royalty_pct
-            WHEN catalog_royalty_fixed_usd IS NOT NULL
-                THEN catalog_royalty_fixed_usd
-            WHEN catalog_royalty_pct IS NOT NULL
-                THEN revenue_gross_usd * catalog_royalty_pct
-            ELSE 0
-        END,
-        2
-    ) AS royalty_amount_usd,
-    CASE
-        WHEN bundle_name IS NOT NULL AND bundle_name != '' THEN 'Bundle'
-        WHEN promo_name IS NOT NULL AND promo_name != '' THEN 'Promo'
-        ELSE ''
-    END AS promo_flag,
-    COALESCE(bundle_name, promo_name, '') AS bundle_or_promo_name
-FROM per_txn
-ORDER BY sale_date, transaction_id;
+    ROUND(deductions_usd, 2) AS deductions_usd,
+    ROUND(royalty_amount_usd, 2) AS royalty_amount_usd
+FROM unioned
+ORDER BY sale_date, txn_ref;
 """
 
 

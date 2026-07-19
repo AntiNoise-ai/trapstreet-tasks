@@ -20,7 +20,9 @@ To decide what edits are needed, read the scripts carefully:
 ## Files in this directory
 
 - `ticket.md` — the change request
-- `catalog.csv`, `suppliers.csv`, `transactions.csv` — main data tables
+- `catalog.csv`, `suppliers.csv` — product/supplier master
+- `transactions.csv` — retail sales
+- `b2b_details.csv` — B2B/wholesale sales (high volume: many units per order)
 - `promotions.csv`, `product_discounts.csv`, `currency_rates.csv` — auxiliary tables
 - `publisher_statement.py`, `itemised_statement.py` — the two report scripts (Python + SQL)
 
