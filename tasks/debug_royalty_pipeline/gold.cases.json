@@ -858,8 +858,8 @@
     },
     {
       "id": "case_03",
-      "category": "royalty_change_retail_only",
-      "ticket": "River of Stones's royalty terms have been renegotiated from 75% to a fixed $4 per sale. Please update.",
+      "category": "srp_change_recalc_royalty",
+      "ticket": "River of Stones's SRP has been renegotiated to 2x the current recorded price. Please correct all affected sale prices and ensure royalty reflects the new pricing.",
       "data": {
         "suppliers": [
           {
@@ -1264,14 +1264,33 @@
       },
       "gold_edits": [
         {
-          "file": "catalog.csv",
+          "file": "transactions.csv",
           "op": "update",
           "match": {
-            "product_id": "PID-234"
+            "transaction_id": "TXN-234A"
           },
           "set": {
-            "royalty_pct": null,
-            "royalty_fixed_usd": 4.0
+            "revenue_gross_usd": 100.0
+          }
+        },
+        {
+          "file": "transactions.csv",
+          "op": "update",
+          "match": {
+            "transaction_id": "TXN-234B"
+          },
+          "set": {
+            "revenue_gross_usd": 120.0
+          }
+        },
+        {
+          "file": "transactions.csv",
+          "op": "update",
+          "match": {
+            "transaction_id": "TXN-234C"
+          },
+          "set": {
+            "revenue_gross_usd": 110.0
           }
         }
       ]
