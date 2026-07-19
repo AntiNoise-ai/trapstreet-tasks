@@ -1,4 +1,4 @@
-"""Per-case judge for debug_royalty_pipeline.
+"""Per-case judge for debug_vendor_payout_pipeline.
 
 Compares the agent's JSON list of edits to the gold edit set. Scoring is
 strictly set-based: 1.0 only if the agent's edits, as a SET, exactly match

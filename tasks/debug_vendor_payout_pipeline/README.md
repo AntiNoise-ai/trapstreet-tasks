@@ -1,4 +1,4 @@
-# debug_royalty_pipeline — Multi-Source Consistency Debugging
+# debug_vendor_payout_pipeline — Multi-Source Consistency Debugging
 
 An open-source evaluation task for **cross-file consistency debugging** — when a ticket asks for a change to a data pipeline, does the agent identify ALL the places that need updating so that TWO reports (with DIFFERENT lookup paths) both come out correct?
 

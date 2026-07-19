@@ -1,5 +1,5 @@
 {
-  "_doc": "Source of truth for the debug_royalty_pipeline task. inputs/ and expected/ are GENERATED from this file by build_cases.py -- edit here, never there.",
+  "_doc": "Source of truth for the debug_vendor_payout_pipeline task. inputs/ and expected/ are GENERATED from this file by build_cases.py -- edit here, never there.",
   "_domain": "Synthetic supermarket vendor-consignment accounting. Two reports use DIFFERENT lookup paths: vendor_statement uses LOOKUP (catalog[product_id] -> suppliers[supplier_id] -> name), itemised_statement reads BAKED text from transactions. A ticket asks for a change; agent must produce the minimal edit set so BOTH reports come out consistent. The two reports must be fixed via DIFFERENT edits because they read supplier/sku from different sources.",
   "cases": [
     {

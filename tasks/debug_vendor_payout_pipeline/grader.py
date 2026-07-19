@@ -1,4 +1,4 @@
-"""Overall grader for debug_royalty_pipeline.
+"""Overall grader for debug_vendor_payout_pipeline.
 
 Aggregates per-case judge results (the trap-cli TRAPTASK_MANIFEST list)
 into a run-level verdict. This aggregation logic is standard across every
