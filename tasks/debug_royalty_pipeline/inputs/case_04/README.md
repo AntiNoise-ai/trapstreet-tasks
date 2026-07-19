@@ -6,6 +6,14 @@ A colleague filed a ticket asking for a fix to the royalty pipeline.
 
 You will not be graded on your intermediate reasoning or on the structure of your edits. You will be graded on **whether the reports the two scripts produce match the reports they would produce after a correct fix**. Judge applies your edits + runs both scripts + compares stdout to the gold reports.
 
+## Business context
+
+These two reports are the source of truth for supplier royalty payouts each period:
+- `publisher_statement` — the per-supplier summary Finance uses to cut royalty checks. The `total_royalty_usd` column IS the amount each supplier gets paid.
+- `itemised_statement` — the per-transaction breakdown suppliers audit against their sales.
+
+Getting `royalty_amount_usd` right on every affected line is the whole point. An inconsistency here is a real over/under-payment to a supplier. So when a ticket changes something upstream — attribution, pricing, terms — think through: does the change move royalty money around, or change how much royalty is owed? Both flow through these reports and both must land right.
+
 ## How to approach this
 
 In a real production system:
