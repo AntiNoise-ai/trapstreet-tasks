@@ -9,7 +9,8 @@
         "transaction_id": "TXN-234A"
       },
       "set": {
-        "revenue_gross_usd": 100.0
+        "revenue_gross_usd": 100.0,
+        "royalty_amount_usd": 75.0
       }
     },
     {
@@ -19,7 +20,8 @@
         "transaction_id": "TXN-234B"
       },
       "set": {
-        "revenue_gross_usd": 120.0
+        "revenue_gross_usd": 120.0,
+        "royalty_amount_usd": 90.0
       }
     },
     {
@@ -29,7 +31,8 @@
         "transaction_id": "TXN-234C"
       },
       "set": {
-        "revenue_gross_usd": 110.0
+        "revenue_gross_usd": 110.0,
+        "royalty_amount_usd": 82.5
       }
     }
   ]

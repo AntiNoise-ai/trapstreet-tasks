@@ -3,7 +3,27 @@
   "category": "royalty_change_with_b2b",
   "gold_edits": [
     {
-      "file": "catalog.csv",
+      "file": "transactions.csv",
+      "op": "update",
+      "match": {
+        "transaction_id": "TXN-311A"
+      },
+      "set": {
+        "royalty_amount_usd": 2.0
+      }
+    },
+    {
+      "file": "transactions.csv",
+      "op": "update",
+      "match": {
+        "transaction_id": "TXN-311B"
+      },
+      "set": {
+        "royalty_amount_usd": 2.0
+      }
+    },
+    {
+      "file": "b2b_details.csv",
       "op": "update",
       "match": {
         "product_id": "PID-311"
@@ -14,7 +34,7 @@
       }
     },
     {
-      "file": "b2b_details.csv",
+      "file": "catalog.csv",
       "op": "update",
       "match": {
         "product_id": "PID-311"

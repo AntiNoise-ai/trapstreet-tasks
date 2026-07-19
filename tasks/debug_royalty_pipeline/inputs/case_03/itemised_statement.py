@@ -23,8 +23,9 @@ CREATE TABLE suppliers (
 TXN_SCHEMA = """
 CREATE TABLE transactions (
     transaction_id TEXT, product_id TEXT, sku TEXT, supplier_name TEXT,
-    sale_date TEXT, revenue_gross_usd REAL, transaction_fee_usd REAL,
-    affiliate_commission_usd REAL, status TEXT, promo_id TEXT, bundle_name TEXT
+    sale_date TEXT, revenue_gross_usd REAL, royalty_amount_usd REAL,
+    transaction_fee_usd REAL, affiliate_commission_usd REAL,
+    status TEXT, promo_id TEXT, bundle_name TEXT
 )"""
 
 B2B_SCHEMA = """
@@ -90,9 +91,10 @@ def init_db(here: Path) -> sqlite3.Connection:
         conn.execute("INSERT INTO suppliers VALUES (?,?,?)", (
             r["supplier_id"], r["supplier_name"], r.get("supplier_currency", "USD")))
     for r in load_csv(here / "transactions.csv"):
-        conn.execute("INSERT INTO transactions VALUES (?,?,?,?,?,?,?,?,?,?,?)", (
+        conn.execute("INSERT INTO transactions VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (
             r["transaction_id"], r["product_id"], r["sku"], r["supplier_name"],
             r["sale_date"], to_num(r.get("revenue_gross_usd")),
+            to_num(r.get("royalty_amount_usd")),
             to_num(r.get("transaction_fee_usd")), to_num(r.get("affiliate_commission_usd")),
             r.get("status", "COMPLETE"), r.get("promo_id", ""), r.get("bundle_name", "")))
     for r in load_csv(here / "b2b_details.csv"):
@@ -135,15 +137,8 @@ retail_lines AS (
         1 AS units,
         t.revenue_gross_usd,
         (COALESCE(t.transaction_fee_usd, 0) + COALESCE(t.affiliate_commission_usd, 0)) AS deductions_usd,
-        CASE
-            WHEN ac.catalog_royalty_fixed_usd IS NOT NULL THEN ac.catalog_royalty_fixed_usd
-            WHEN ac.catalog_royalty_pct IS NOT NULL THEN t.revenue_gross_usd * ac.catalog_royalty_pct
-            ELSE 0
-        END AS royalty_amount_usd
+        COALESCE(t.royalty_amount_usd, 0) AS royalty_amount_usd
     FROM transactions t
-    LEFT JOIN active_catalog ac
-        ON t.product_id = ac.product_id
-        AND ac.catalog_effective_from <= t.sale_date
     WHERE t.status = 'COMPLETE'
 ),
 b2b_lines AS (

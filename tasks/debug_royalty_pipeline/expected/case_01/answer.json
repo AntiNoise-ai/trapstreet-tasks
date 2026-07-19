@@ -6,12 +6,39 @@
       "file": "transactions.csv",
       "op": "update",
       "match": {
-        "product_id": "PID-042"
+        "transaction_id": "TXN-001"
       },
       "set": {
         "product_id": "PID-070",
         "supplier_name": "Meridian Group",
-        "sku": "MED-070-MG"
+        "sku": "MED-070-MG",
+        "royalty_amount_usd": 75.0
+      }
+    },
+    {
+      "file": "transactions.csv",
+      "op": "update",
+      "match": {
+        "transaction_id": "TXN-002"
+      },
+      "set": {
+        "product_id": "PID-070",
+        "supplier_name": "Meridian Group",
+        "sku": "MED-070-MG",
+        "royalty_amount_usd": 90.0
+      }
+    },
+    {
+      "file": "transactions.csv",
+      "op": "update",
+      "match": {
+        "transaction_id": "TXN-003"
+      },
+      "set": {
+        "product_id": "PID-070",
+        "supplier_name": "Meridian Group",
+        "sku": "MED-070-MG",
+        "royalty_amount_usd": 112.5
       }
     }
   ]

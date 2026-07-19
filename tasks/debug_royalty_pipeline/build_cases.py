@@ -27,8 +27,9 @@ CATALOG_COLS = ["product_id", "sku", "product_name", "supplier_id",
                 "royalty_pct", "royalty_fixed_usd", "effective_from"]
 SUPPLIERS_COLS = ["supplier_id", "supplier_name", "supplier_currency"]
 TXN_COLS = ["transaction_id", "product_id", "sku", "supplier_name",
-            "sale_date", "revenue_gross_usd", "transaction_fee_usd",
-            "affiliate_commission_usd", "status", "promo_id", "bundle_name"]
+            "sale_date", "revenue_gross_usd", "royalty_amount_usd",
+            "transaction_fee_usd", "affiliate_commission_usd",
+            "status", "promo_id", "bundle_name"]
 B2B_COLS = ["b2b_txn_id", "product_id", "sku", "supplier_name", "sale_date",
             "unit_count", "unit_price_usd", "revenue_gross_usd",
             "royalty_pct", "royalty_fixed_usd", "status"]

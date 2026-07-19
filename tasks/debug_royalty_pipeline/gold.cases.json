@@ -124,7 +124,8 @@
             "affiliate_commission_usd": 2.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 80.0
           },
           {
             "transaction_id": "TXN-002",
@@ -137,7 +138,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 96.0
           },
           {
             "transaction_id": "TXN-003",
@@ -150,7 +152,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 120.0
           },
           {
             "transaction_id": "TXN-100",
@@ -163,7 +166,8 @@
             "affiliate_commission_usd": 1.8,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 63.0
           },
           {
             "transaction_id": "TXN-101",
@@ -176,7 +180,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 77.0
           },
           {
             "transaction_id": "TXN-102",
@@ -189,7 +194,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 91.0
           },
           {
             "transaction_id": "TXN-103",
@@ -202,7 +208,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 70.0
           },
           {
             "transaction_id": "TXN-234A",
@@ -215,7 +222,8 @@
             "affiliate_commission_usd": 1.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 37.5
           },
           {
             "transaction_id": "TXN-234B",
@@ -228,7 +236,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 45.0
           },
           {
             "transaction_id": "TXN-234C",
@@ -241,7 +250,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 41.25
           },
           {
             "transaction_id": "TXN-311A",
@@ -254,7 +264,8 @@
             "affiliate_commission_usd": 0.8,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 32.0
           },
           {
             "transaction_id": "TXN-311B",
@@ -267,7 +278,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 36.0
           },
           {
             "transaction_id": "TXN-050A",
@@ -280,7 +292,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 60.0
           },
           {
             "transaction_id": "TXN-102A",
@@ -293,7 +306,8 @@
             "affiliate_commission_usd": 4.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 120.0
           }
         ],
         "promotions": [
@@ -413,12 +427,39 @@
           "file": "transactions.csv",
           "op": "update",
           "match": {
-            "product_id": "PID-042"
+            "transaction_id": "TXN-001"
           },
           "set": {
             "product_id": "PID-070",
             "supplier_name": "Meridian Group",
-            "sku": "MED-070-MG"
+            "sku": "MED-070-MG",
+            "royalty_amount_usd": 75.0
+          }
+        },
+        {
+          "file": "transactions.csv",
+          "op": "update",
+          "match": {
+            "transaction_id": "TXN-002"
+          },
+          "set": {
+            "product_id": "PID-070",
+            "supplier_name": "Meridian Group",
+            "sku": "MED-070-MG",
+            "royalty_amount_usd": 90.0
+          }
+        },
+        {
+          "file": "transactions.csv",
+          "op": "update",
+          "match": {
+            "transaction_id": "TXN-003"
+          },
+          "set": {
+            "product_id": "PID-070",
+            "supplier_name": "Meridian Group",
+            "sku": "MED-070-MG",
+            "royalty_amount_usd": 112.5
           }
         }
       ]
@@ -545,7 +586,8 @@
             "affiliate_commission_usd": 2.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 80.0
           },
           {
             "transaction_id": "TXN-002",
@@ -558,7 +600,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 96.0
           },
           {
             "transaction_id": "TXN-003",
@@ -571,7 +614,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 120.0
           },
           {
             "transaction_id": "TXN-100",
@@ -584,7 +628,8 @@
             "affiliate_commission_usd": 1.8,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 63.0
           },
           {
             "transaction_id": "TXN-101",
@@ -597,7 +642,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 77.0
           },
           {
             "transaction_id": "TXN-102",
@@ -610,7 +656,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 91.0
           },
           {
             "transaction_id": "TXN-103",
@@ -623,7 +670,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 70.0
           },
           {
             "transaction_id": "TXN-234A",
@@ -636,7 +684,8 @@
             "affiliate_commission_usd": 1.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 37.5
           },
           {
             "transaction_id": "TXN-234B",
@@ -649,7 +698,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 45.0
           },
           {
             "transaction_id": "TXN-234C",
@@ -662,7 +712,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 41.25
           },
           {
             "transaction_id": "TXN-311A",
@@ -675,7 +726,8 @@
             "affiliate_commission_usd": 0.8,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 32.0
           },
           {
             "transaction_id": "TXN-311B",
@@ -688,7 +740,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 36.0
           },
           {
             "transaction_id": "TXN-050A",
@@ -701,7 +754,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 60.0
           },
           {
             "transaction_id": "TXN-102A",
@@ -714,7 +768,8 @@
             "affiliate_commission_usd": 4.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 120.0
           }
         ],
         "promotions": [
@@ -839,7 +894,8 @@
           "set": {
             "product_id": "PID-088",
             "supplier_name": "Meridian Group",
-            "sku": "MED-088-MG"
+            "sku": "MED-088-MG",
+            "royalty_amount_usd": 97.5
           }
         },
         {
@@ -851,7 +907,8 @@
           "set": {
             "product_id": "PID-088",
             "supplier_name": "Meridian Group",
-            "sku": "MED-088-MG"
+            "sku": "MED-088-MG",
+            "royalty_amount_usd": 75.0
           }
         }
       ]
@@ -978,7 +1035,8 @@
             "affiliate_commission_usd": 2.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 80.0
           },
           {
             "transaction_id": "TXN-002",
@@ -991,7 +1049,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 96.0
           },
           {
             "transaction_id": "TXN-003",
@@ -1004,7 +1063,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 120.0
           },
           {
             "transaction_id": "TXN-100",
@@ -1017,7 +1077,8 @@
             "affiliate_commission_usd": 1.8,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 63.0
           },
           {
             "transaction_id": "TXN-101",
@@ -1030,7 +1091,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 77.0
           },
           {
             "transaction_id": "TXN-102",
@@ -1043,7 +1105,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 91.0
           },
           {
             "transaction_id": "TXN-103",
@@ -1056,7 +1119,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 70.0
           },
           {
             "transaction_id": "TXN-234A",
@@ -1069,7 +1133,8 @@
             "affiliate_commission_usd": 1.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 37.5
           },
           {
             "transaction_id": "TXN-234B",
@@ -1082,7 +1147,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 45.0
           },
           {
             "transaction_id": "TXN-234C",
@@ -1095,7 +1161,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 41.25
           },
           {
             "transaction_id": "TXN-311A",
@@ -1108,7 +1175,8 @@
             "affiliate_commission_usd": 0.8,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 32.0
           },
           {
             "transaction_id": "TXN-311B",
@@ -1121,7 +1189,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 36.0
           },
           {
             "transaction_id": "TXN-050A",
@@ -1134,7 +1203,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 60.0
           },
           {
             "transaction_id": "TXN-102A",
@@ -1147,7 +1217,8 @@
             "affiliate_commission_usd": 4.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 120.0
           }
         ],
         "promotions": [
@@ -1270,7 +1341,8 @@
             "transaction_id": "TXN-234A"
           },
           "set": {
-            "revenue_gross_usd": 100.0
+            "revenue_gross_usd": 100.0,
+            "royalty_amount_usd": 75.0
           }
         },
         {
@@ -1280,7 +1352,8 @@
             "transaction_id": "TXN-234B"
           },
           "set": {
-            "revenue_gross_usd": 120.0
+            "revenue_gross_usd": 120.0,
+            "royalty_amount_usd": 90.0
           }
         },
         {
@@ -1290,7 +1363,8 @@
             "transaction_id": "TXN-234C"
           },
           "set": {
-            "revenue_gross_usd": 110.0
+            "revenue_gross_usd": 110.0,
+            "royalty_amount_usd": 82.5
           }
         }
       ]
@@ -1417,7 +1491,8 @@
             "affiliate_commission_usd": 2.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 80.0
           },
           {
             "transaction_id": "TXN-002",
@@ -1430,7 +1505,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 96.0
           },
           {
             "transaction_id": "TXN-003",
@@ -1443,7 +1519,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 120.0
           },
           {
             "transaction_id": "TXN-100",
@@ -1456,7 +1533,8 @@
             "affiliate_commission_usd": 1.8,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 63.0
           },
           {
             "transaction_id": "TXN-101",
@@ -1469,7 +1547,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 77.0
           },
           {
             "transaction_id": "TXN-102",
@@ -1482,7 +1561,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 91.0
           },
           {
             "transaction_id": "TXN-103",
@@ -1495,7 +1575,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 70.0
           },
           {
             "transaction_id": "TXN-234A",
@@ -1508,7 +1589,8 @@
             "affiliate_commission_usd": 1.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 37.5
           },
           {
             "transaction_id": "TXN-234B",
@@ -1521,7 +1603,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 45.0
           },
           {
             "transaction_id": "TXN-234C",
@@ -1534,7 +1617,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 41.25
           },
           {
             "transaction_id": "TXN-311A",
@@ -1547,7 +1631,8 @@
             "affiliate_commission_usd": 0.8,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 32.0
           },
           {
             "transaction_id": "TXN-311B",
@@ -1560,7 +1645,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 36.0
           },
           {
             "transaction_id": "TXN-050A",
@@ -1573,7 +1659,8 @@
             "affiliate_commission_usd": 0.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 60.0
           },
           {
             "transaction_id": "TXN-102A",
@@ -1586,7 +1673,8 @@
             "affiliate_commission_usd": 4.0,
             "status": "COMPLETE",
             "promo_id": "",
-            "bundle_name": ""
+            "bundle_name": "",
+            "royalty_amount_usd": 120.0
           }
         ],
         "promotions": [
@@ -1703,7 +1791,27 @@
       },
       "gold_edits": [
         {
-          "file": "catalog.csv",
+          "file": "transactions.csv",
+          "op": "update",
+          "match": {
+            "transaction_id": "TXN-311A"
+          },
+          "set": {
+            "royalty_amount_usd": 2.0
+          }
+        },
+        {
+          "file": "transactions.csv",
+          "op": "update",
+          "match": {
+            "transaction_id": "TXN-311B"
+          },
+          "set": {
+            "royalty_amount_usd": 2.0
+          }
+        },
+        {
+          "file": "b2b_details.csv",
           "op": "update",
           "match": {
             "product_id": "PID-311"
@@ -1714,7 +1822,7 @@
           }
         },
         {
-          "file": "b2b_details.csv",
+          "file": "catalog.csv",
           "op": "update",
           "match": {
             "product_id": "PID-311"
