@@ -1,114 +1,114 @@
 {
   "_doc": "Source of truth for the debug_royalty_pipeline task. inputs/ and expected/ are GENERATED from this file by build_cases.py -- edit here, never there.",
-  "_domain": "Synthetic digital-media publisher royalty accounting. Two reports use DIFFERENT lookup paths: publisher_statement uses LOOKUP (catalog[product_id] -> suppliers[supplier_id] -> name), itemised_statement reads BAKED text from transactions. A ticket asks for a change; agent must produce the minimal edit set so BOTH reports come out consistent. The two reports must be fixed via DIFFERENT edits because they read supplier/sku from different sources.",
+  "_domain": "Synthetic supermarket vendor-consignment accounting. Two reports use DIFFERENT lookup paths: vendor_statement uses LOOKUP (catalog[product_id] -> suppliers[supplier_id] -> name), itemised_statement reads BAKED text from transactions. A ticket asks for a change; agent must produce the minimal edit set so BOTH reports come out consistent. The two reports must be fixed via DIFFERENT edits because they read supplier/sku from different sources.",
   "cases": [
     {
       "id": "case_01",
       "category": "supplier_change_alltime",
-      "ticket": "Nebula Runner sales are being misattributed to North Rock Media \u2014 they should be attributed to Meridian Group under MG's contract terms. Please re-book.",
+      "ticket": "Cola Classic 500ml sales are being misattributed to Anchor Distributors \u2014 they should be attributed to MerchantGate Distributors under MG's vendor payout terms. Please re-book.",
       "data": {
         "suppliers": [
           {
-            "supplier_id": "NR",
-            "supplier_name": "North Rock Media",
+            "supplier_id": "AD",
+            "supplier_name": "Anchor Distributors",
             "supplier_currency": "USD"
           },
           {
-            "supplier_id": "SS",
-            "supplier_name": "Southstar Publishing",
+            "supplier_id": "HD",
+            "supplier_name": "Heartland Distributors",
             "supplier_currency": "USD"
           },
           {
-            "supplier_id": "BW",
-            "supplier_name": "BlueWave Records",
+            "supplier_id": "BL",
+            "supplier_name": "BayLine Distributors",
             "supplier_currency": "USD"
           },
           {
             "supplier_id": "MG",
-            "supplier_name": "Meridian Group",
+            "supplier_name": "MerchantGate Distributors",
             "supplier_currency": "USD"
           }
         ],
         "catalog": [
           {
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "product_name": "Nebula Runner",
-            "supplier_id": "NR",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-042-AD",
+            "product_name": "Cola Classic 500ml",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-070",
-            "sku": "MED-070-MG",
-            "product_name": "Nebula Runner",
+            "sku": "SKU-070-MG",
+            "product_name": "Cola Classic 500ml",
             "supplier_id": "MG",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "product_name": "Midnight Cartographer",
-            "supplier_id": "BW",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-107-BL",
+            "product_name": "Organic Soy Milk 1L",
+            "supplier_id": "BL",
+            "vendor_share_pct": 0.7,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-088",
-            "sku": "MED-088-MG",
-            "product_name": "Midnight Cartographer",
+            "sku": "SKU-088-MG",
+            "product_name": "Organic Soy Milk 1L",
             "supplier_id": "MG",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "product_name": "River of Stones",
-            "supplier_id": "SS",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-234-HD",
+            "product_name": "Extra Virgin Olive Oil 500ml",
+            "supplier_id": "HD",
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "product_name": "Voidwalker",
-            "supplier_id": "NR",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-311-AD",
+            "product_name": "Sparkling Water 12-pack",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "product_name": "Iron Grid",
-            "supplier_id": "NR",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-050-AD",
+            "product_name": "Rolled Oats 1kg",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-102",
-            "sku": "MED-102-SS",
-            "product_name": "Solar Chronicles",
-            "supplier_id": "SS",
-            "royalty_pct": 0.6,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-102-HD",
+            "product_name": "Almond Butter 340g",
+            "supplier_id": "HD",
+            "vendor_share_pct": 0.6,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-201",
-            "sku": "MED-201-BW",
-            "product_name": "The Silent Library",
-            "supplier_id": "BW",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-201-BL",
+            "product_name": "Sourdough Loaf 500g",
+            "supplier_id": "BL",
+            "vendor_share_pct": 0.7,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           }
         ],
@@ -116,8 +116,8 @@
           {
             "transaction_id": "TXN-001",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-03-15",
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
@@ -125,13 +125,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 74.4
+            "vendor_payout_usd": 74.4
           },
           {
             "transaction_id": "TXN-002",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-04-20",
             "revenue_gross_usd": 120.0,
             "transaction_fee_usd": 6.0,
@@ -139,13 +139,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 91.2
+            "vendor_payout_usd": 91.2
           },
           {
             "transaction_id": "TXN-003",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-08-10",
             "revenue_gross_usd": 150.0,
             "transaction_fee_usd": 7.5,
@@ -153,13 +153,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 114.0
+            "vendor_payout_usd": 114.0
           },
           {
             "transaction_id": "TXN-100",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-03-15",
             "revenue_gross_usd": 90.0,
             "transaction_fee_usd": 4.5,
@@ -167,13 +167,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 58.59
+            "vendor_payout_usd": 58.59
           },
           {
             "transaction_id": "TXN-101",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-05-30",
             "revenue_gross_usd": 110.0,
             "transaction_fee_usd": 5.5,
@@ -181,13 +181,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 73.15
+            "vendor_payout_usd": 73.15
           },
           {
             "transaction_id": "TXN-102",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-06-15",
             "revenue_gross_usd": 130.0,
             "transaction_fee_usd": 6.5,
@@ -195,13 +195,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 86.45
+            "vendor_payout_usd": 86.45
           },
           {
             "transaction_id": "TXN-103",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-08-01",
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
@@ -209,13 +209,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 66.5
+            "vendor_payout_usd": 66.5
           },
           {
             "transaction_id": "TXN-234A",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-03-01",
             "revenue_gross_usd": 50.0,
             "transaction_fee_usd": 2.5,
@@ -223,13 +223,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 34.875
+            "vendor_payout_usd": 34.875
           },
           {
             "transaction_id": "TXN-234B",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-05-01",
             "revenue_gross_usd": 60.0,
             "transaction_fee_usd": 3.0,
@@ -237,13 +237,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 42.75
+            "vendor_payout_usd": 42.75
           },
           {
             "transaction_id": "TXN-234C",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-07-01",
             "revenue_gross_usd": 55.0,
             "transaction_fee_usd": 2.75,
@@ -251,13 +251,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 39.1875
+            "vendor_payout_usd": 39.1875
           },
           {
             "transaction_id": "TXN-311A",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-03-01",
             "revenue_gross_usd": 40.0,
             "transaction_fee_usd": 2.0,
@@ -265,13 +265,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 29.76
+            "vendor_payout_usd": 29.76
           },
           {
             "transaction_id": "TXN-311B",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-15",
             "revenue_gross_usd": 45.0,
             "transaction_fee_usd": 2.25,
@@ -279,13 +279,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 34.2
+            "vendor_payout_usd": 34.2
           },
           {
             "transaction_id": "TXN-050A",
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-050-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-01",
             "revenue_gross_usd": 80.0,
             "transaction_fee_usd": 4.0,
@@ -293,13 +293,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 57.0
+            "vendor_payout_usd": 57.0
           },
           {
             "transaction_id": "TXN-102A",
             "product_id": "PID-102",
-            "sku": "MED-102-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-102-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-06-01",
             "revenue_gross_usd": 200.0,
             "transaction_fee_usd": 10.0,
@@ -307,7 +307,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 111.6
+            "vendor_payout_usd": 111.6
           }
         ],
         "promotions": [
@@ -358,66 +358,66 @@
           {
             "b2b_txn_id": "B2B-311C",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-06-10",
             "unit_count": 40,
             "unit_price_usd": 10.0,
             "revenue_gross_usd": 400.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-311D",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-07-20",
             "unit_count": 40,
             "unit_price_usd": 13.75,
             "revenue_gross_usd": 550.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-201A",
             "product_id": "PID-201",
-            "sku": "MED-201-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-201-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-06-01",
             "unit_count": 40,
             "unit_price_usd": 7.5,
             "revenue_gross_usd": 300.0,
-            "royalty_pct": 0.65,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.65,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-311E",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-04-15",
             "unit_count": 50,
             "unit_price_usd": 12.0,
             "revenue_gross_usd": 600.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-050A",
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-050-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-20",
             "unit_count": 30,
             "unit_price_usd": 8.0,
             "revenue_gross_usd": 240.0,
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           }
         ]
@@ -431,9 +431,9 @@
           },
           "set": {
             "product_id": "PID-070",
-            "supplier_name": "Meridian Group",
-            "sku": "MED-070-MG",
-            "royalty_amount_usd": 69.75
+            "supplier_name": "MerchantGate Distributors",
+            "sku": "SKU-070-MG",
+            "vendor_payout_usd": 69.75
           }
         },
         {
@@ -444,9 +444,9 @@
           },
           "set": {
             "product_id": "PID-070",
-            "supplier_name": "Meridian Group",
-            "sku": "MED-070-MG",
-            "royalty_amount_usd": 85.5
+            "supplier_name": "MerchantGate Distributors",
+            "sku": "SKU-070-MG",
+            "vendor_payout_usd": 85.5
           }
         },
         {
@@ -457,9 +457,9 @@
           },
           "set": {
             "product_id": "PID-070",
-            "supplier_name": "Meridian Group",
-            "sku": "MED-070-MG",
-            "royalty_amount_usd": 106.875
+            "supplier_name": "MerchantGate Distributors",
+            "sku": "SKU-070-MG",
+            "vendor_payout_usd": 106.875
           }
         }
       ]
@@ -467,110 +467,110 @@
     {
       "id": "case_02",
       "category": "supplier_change_dated",
-      "ticket": "Midnight Cartographer sales from 2024-06-01 onwards are being misattributed to BlueWave Records \u2014 from that date on, they should be attributed to Meridian Group under MG's contract terms. Please re-book (sales before 2024-06-01 stay as-is).",
+      "ticket": "Organic Soy Milk 1L sales from 2024-06-01 onwards are being misattributed to BayLine Distributors \u2014 from that date on, they should be attributed to MerchantGate Distributors under MG's vendor payout terms. Please re-book (sales before 2024-06-01 stay as-is).",
       "data": {
         "suppliers": [
           {
-            "supplier_id": "NR",
-            "supplier_name": "North Rock Media",
+            "supplier_id": "AD",
+            "supplier_name": "Anchor Distributors",
             "supplier_currency": "USD"
           },
           {
-            "supplier_id": "SS",
-            "supplier_name": "Southstar Publishing",
+            "supplier_id": "HD",
+            "supplier_name": "Heartland Distributors",
             "supplier_currency": "USD"
           },
           {
-            "supplier_id": "BW",
-            "supplier_name": "BlueWave Records",
+            "supplier_id": "BL",
+            "supplier_name": "BayLine Distributors",
             "supplier_currency": "USD"
           },
           {
             "supplier_id": "MG",
-            "supplier_name": "Meridian Group",
+            "supplier_name": "MerchantGate Distributors",
             "supplier_currency": "USD"
           }
         ],
         "catalog": [
           {
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "product_name": "Nebula Runner",
-            "supplier_id": "NR",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-042-AD",
+            "product_name": "Cola Classic 500ml",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-070",
-            "sku": "MED-070-MG",
-            "product_name": "Nebula Runner",
+            "sku": "SKU-070-MG",
+            "product_name": "Cola Classic 500ml",
             "supplier_id": "MG",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "product_name": "Midnight Cartographer",
-            "supplier_id": "BW",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-107-BL",
+            "product_name": "Organic Soy Milk 1L",
+            "supplier_id": "BL",
+            "vendor_share_pct": 0.7,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-088",
-            "sku": "MED-088-MG",
-            "product_name": "Midnight Cartographer",
+            "sku": "SKU-088-MG",
+            "product_name": "Organic Soy Milk 1L",
             "supplier_id": "MG",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "product_name": "River of Stones",
-            "supplier_id": "SS",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-234-HD",
+            "product_name": "Extra Virgin Olive Oil 500ml",
+            "supplier_id": "HD",
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "product_name": "Voidwalker",
-            "supplier_id": "NR",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-311-AD",
+            "product_name": "Sparkling Water 12-pack",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "product_name": "Iron Grid",
-            "supplier_id": "NR",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-050-AD",
+            "product_name": "Rolled Oats 1kg",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-102",
-            "sku": "MED-102-SS",
-            "product_name": "Solar Chronicles",
-            "supplier_id": "SS",
-            "royalty_pct": 0.6,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-102-HD",
+            "product_name": "Almond Butter 340g",
+            "supplier_id": "HD",
+            "vendor_share_pct": 0.6,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-201",
-            "sku": "MED-201-BW",
-            "product_name": "The Silent Library",
-            "supplier_id": "BW",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-201-BL",
+            "product_name": "Sourdough Loaf 500g",
+            "supplier_id": "BL",
+            "vendor_share_pct": 0.7,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           }
         ],
@@ -578,8 +578,8 @@
           {
             "transaction_id": "TXN-001",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-03-15",
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
@@ -587,13 +587,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 74.4
+            "vendor_payout_usd": 74.4
           },
           {
             "transaction_id": "TXN-002",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-04-20",
             "revenue_gross_usd": 120.0,
             "transaction_fee_usd": 6.0,
@@ -601,13 +601,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 91.2
+            "vendor_payout_usd": 91.2
           },
           {
             "transaction_id": "TXN-003",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-08-10",
             "revenue_gross_usd": 150.0,
             "transaction_fee_usd": 7.5,
@@ -615,13 +615,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 114.0
+            "vendor_payout_usd": 114.0
           },
           {
             "transaction_id": "TXN-100",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-03-15",
             "revenue_gross_usd": 90.0,
             "transaction_fee_usd": 4.5,
@@ -629,13 +629,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 58.59
+            "vendor_payout_usd": 58.59
           },
           {
             "transaction_id": "TXN-101",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-05-30",
             "revenue_gross_usd": 110.0,
             "transaction_fee_usd": 5.5,
@@ -643,13 +643,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 73.15
+            "vendor_payout_usd": 73.15
           },
           {
             "transaction_id": "TXN-102",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-06-15",
             "revenue_gross_usd": 130.0,
             "transaction_fee_usd": 6.5,
@@ -657,13 +657,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 86.45
+            "vendor_payout_usd": 86.45
           },
           {
             "transaction_id": "TXN-103",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-08-01",
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
@@ -671,13 +671,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 66.5
+            "vendor_payout_usd": 66.5
           },
           {
             "transaction_id": "TXN-234A",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-03-01",
             "revenue_gross_usd": 50.0,
             "transaction_fee_usd": 2.5,
@@ -685,13 +685,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 34.875
+            "vendor_payout_usd": 34.875
           },
           {
             "transaction_id": "TXN-234B",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-05-01",
             "revenue_gross_usd": 60.0,
             "transaction_fee_usd": 3.0,
@@ -699,13 +699,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 42.75
+            "vendor_payout_usd": 42.75
           },
           {
             "transaction_id": "TXN-234C",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-07-01",
             "revenue_gross_usd": 55.0,
             "transaction_fee_usd": 2.75,
@@ -713,13 +713,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 39.1875
+            "vendor_payout_usd": 39.1875
           },
           {
             "transaction_id": "TXN-311A",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-03-01",
             "revenue_gross_usd": 40.0,
             "transaction_fee_usd": 2.0,
@@ -727,13 +727,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 29.76
+            "vendor_payout_usd": 29.76
           },
           {
             "transaction_id": "TXN-311B",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-15",
             "revenue_gross_usd": 45.0,
             "transaction_fee_usd": 2.25,
@@ -741,13 +741,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 34.2
+            "vendor_payout_usd": 34.2
           },
           {
             "transaction_id": "TXN-050A",
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-050-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-01",
             "revenue_gross_usd": 80.0,
             "transaction_fee_usd": 4.0,
@@ -755,13 +755,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 57.0
+            "vendor_payout_usd": 57.0
           },
           {
             "transaction_id": "TXN-102A",
             "product_id": "PID-102",
-            "sku": "MED-102-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-102-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-06-01",
             "revenue_gross_usd": 200.0,
             "transaction_fee_usd": 10.0,
@@ -769,7 +769,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 111.6
+            "vendor_payout_usd": 111.6
           }
         ],
         "promotions": [
@@ -820,66 +820,66 @@
           {
             "b2b_txn_id": "B2B-311C",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-06-10",
             "unit_count": 40,
             "unit_price_usd": 10.0,
             "revenue_gross_usd": 400.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-311D",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-07-20",
             "unit_count": 40,
             "unit_price_usd": 13.75,
             "revenue_gross_usd": 550.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-201A",
             "product_id": "PID-201",
-            "sku": "MED-201-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-201-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-06-01",
             "unit_count": 40,
             "unit_price_usd": 7.5,
             "revenue_gross_usd": 300.0,
-            "royalty_pct": 0.65,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.65,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-311E",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-04-15",
             "unit_count": 50,
             "unit_price_usd": 12.0,
             "revenue_gross_usd": 600.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-050A",
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-050-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-20",
             "unit_count": 30,
             "unit_price_usd": 8.0,
             "revenue_gross_usd": 240.0,
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           }
         ]
@@ -893,9 +893,9 @@
           },
           "set": {
             "product_id": "PID-088",
-            "supplier_name": "Meridian Group",
-            "sku": "MED-088-MG",
-            "royalty_amount_usd": 92.625
+            "supplier_name": "MerchantGate Distributors",
+            "sku": "SKU-088-MG",
+            "vendor_payout_usd": 92.625
           }
         },
         {
@@ -906,9 +906,9 @@
           },
           "set": {
             "product_id": "PID-088",
-            "supplier_name": "Meridian Group",
-            "sku": "MED-088-MG",
-            "royalty_amount_usd": 71.25
+            "supplier_name": "MerchantGate Distributors",
+            "sku": "SKU-088-MG",
+            "vendor_payout_usd": 71.25
           }
         }
       ]
@@ -916,110 +916,110 @@
     {
       "id": "case_03",
       "category": "srp_change_recalc_royalty",
-      "ticket": "River of Stones's SRP has been renegotiated to 2x the current recorded price. Please correct all affected sale prices and ensure royalty reflects the new pricing.",
+      "ticket": "Extra Virgin Olive Oil 500ml's SRP has been renegotiated to 2x the current recorded price. Please correct all affected sale prices and ensure vendor payout reflects the new pricing.",
       "data": {
         "suppliers": [
           {
-            "supplier_id": "NR",
-            "supplier_name": "North Rock Media",
+            "supplier_id": "AD",
+            "supplier_name": "Anchor Distributors",
             "supplier_currency": "USD"
           },
           {
-            "supplier_id": "SS",
-            "supplier_name": "Southstar Publishing",
+            "supplier_id": "HD",
+            "supplier_name": "Heartland Distributors",
             "supplier_currency": "USD"
           },
           {
-            "supplier_id": "BW",
-            "supplier_name": "BlueWave Records",
+            "supplier_id": "BL",
+            "supplier_name": "BayLine Distributors",
             "supplier_currency": "USD"
           },
           {
             "supplier_id": "MG",
-            "supplier_name": "Meridian Group",
+            "supplier_name": "MerchantGate Distributors",
             "supplier_currency": "USD"
           }
         ],
         "catalog": [
           {
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "product_name": "Nebula Runner",
-            "supplier_id": "NR",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-042-AD",
+            "product_name": "Cola Classic 500ml",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-070",
-            "sku": "MED-070-MG",
-            "product_name": "Nebula Runner",
+            "sku": "SKU-070-MG",
+            "product_name": "Cola Classic 500ml",
             "supplier_id": "MG",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "product_name": "Midnight Cartographer",
-            "supplier_id": "BW",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-107-BL",
+            "product_name": "Organic Soy Milk 1L",
+            "supplier_id": "BL",
+            "vendor_share_pct": 0.7,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-088",
-            "sku": "MED-088-MG",
-            "product_name": "Midnight Cartographer",
+            "sku": "SKU-088-MG",
+            "product_name": "Organic Soy Milk 1L",
             "supplier_id": "MG",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "product_name": "River of Stones",
-            "supplier_id": "SS",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-234-HD",
+            "product_name": "Extra Virgin Olive Oil 500ml",
+            "supplier_id": "HD",
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "product_name": "Voidwalker",
-            "supplier_id": "NR",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-311-AD",
+            "product_name": "Sparkling Water 12-pack",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "product_name": "Iron Grid",
-            "supplier_id": "NR",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-050-AD",
+            "product_name": "Rolled Oats 1kg",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-102",
-            "sku": "MED-102-SS",
-            "product_name": "Solar Chronicles",
-            "supplier_id": "SS",
-            "royalty_pct": 0.6,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-102-HD",
+            "product_name": "Almond Butter 340g",
+            "supplier_id": "HD",
+            "vendor_share_pct": 0.6,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-201",
-            "sku": "MED-201-BW",
-            "product_name": "The Silent Library",
-            "supplier_id": "BW",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-201-BL",
+            "product_name": "Sourdough Loaf 500g",
+            "supplier_id": "BL",
+            "vendor_share_pct": 0.7,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           }
         ],
@@ -1027,8 +1027,8 @@
           {
             "transaction_id": "TXN-001",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-03-15",
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
@@ -1036,13 +1036,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 74.4
+            "vendor_payout_usd": 74.4
           },
           {
             "transaction_id": "TXN-002",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-04-20",
             "revenue_gross_usd": 120.0,
             "transaction_fee_usd": 6.0,
@@ -1050,13 +1050,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 91.2
+            "vendor_payout_usd": 91.2
           },
           {
             "transaction_id": "TXN-003",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-08-10",
             "revenue_gross_usd": 150.0,
             "transaction_fee_usd": 7.5,
@@ -1064,13 +1064,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 114.0
+            "vendor_payout_usd": 114.0
           },
           {
             "transaction_id": "TXN-100",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-03-15",
             "revenue_gross_usd": 90.0,
             "transaction_fee_usd": 4.5,
@@ -1078,13 +1078,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 58.59
+            "vendor_payout_usd": 58.59
           },
           {
             "transaction_id": "TXN-101",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-05-30",
             "revenue_gross_usd": 110.0,
             "transaction_fee_usd": 5.5,
@@ -1092,13 +1092,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 73.15
+            "vendor_payout_usd": 73.15
           },
           {
             "transaction_id": "TXN-102",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-06-15",
             "revenue_gross_usd": 130.0,
             "transaction_fee_usd": 6.5,
@@ -1106,13 +1106,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 86.45
+            "vendor_payout_usd": 86.45
           },
           {
             "transaction_id": "TXN-103",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-08-01",
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
@@ -1120,13 +1120,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 66.5
+            "vendor_payout_usd": 66.5
           },
           {
             "transaction_id": "TXN-234A",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-03-01",
             "revenue_gross_usd": 50.0,
             "transaction_fee_usd": 2.5,
@@ -1134,13 +1134,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 34.875
+            "vendor_payout_usd": 34.875
           },
           {
             "transaction_id": "TXN-234B",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-05-01",
             "revenue_gross_usd": 60.0,
             "transaction_fee_usd": 3.0,
@@ -1148,13 +1148,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 42.75
+            "vendor_payout_usd": 42.75
           },
           {
             "transaction_id": "TXN-234C",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-07-01",
             "revenue_gross_usd": 55.0,
             "transaction_fee_usd": 2.75,
@@ -1162,13 +1162,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 39.1875
+            "vendor_payout_usd": 39.1875
           },
           {
             "transaction_id": "TXN-311A",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-03-01",
             "revenue_gross_usd": 40.0,
             "transaction_fee_usd": 2.0,
@@ -1176,13 +1176,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 29.76
+            "vendor_payout_usd": 29.76
           },
           {
             "transaction_id": "TXN-311B",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-15",
             "revenue_gross_usd": 45.0,
             "transaction_fee_usd": 2.25,
@@ -1190,13 +1190,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 34.2
+            "vendor_payout_usd": 34.2
           },
           {
             "transaction_id": "TXN-050A",
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-050-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-01",
             "revenue_gross_usd": 80.0,
             "transaction_fee_usd": 4.0,
@@ -1204,13 +1204,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 57.0
+            "vendor_payout_usd": 57.0
           },
           {
             "transaction_id": "TXN-102A",
             "product_id": "PID-102",
-            "sku": "MED-102-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-102-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-06-01",
             "revenue_gross_usd": 200.0,
             "transaction_fee_usd": 10.0,
@@ -1218,7 +1218,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 111.6
+            "vendor_payout_usd": 111.6
           }
         ],
         "promotions": [
@@ -1269,66 +1269,66 @@
           {
             "b2b_txn_id": "B2B-311C",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-06-10",
             "unit_count": 40,
             "unit_price_usd": 10.0,
             "revenue_gross_usd": 400.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-311D",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-07-20",
             "unit_count": 40,
             "unit_price_usd": 13.75,
             "revenue_gross_usd": 550.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-201A",
             "product_id": "PID-201",
-            "sku": "MED-201-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-201-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-06-01",
             "unit_count": 40,
             "unit_price_usd": 7.5,
             "revenue_gross_usd": 300.0,
-            "royalty_pct": 0.65,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.65,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-311E",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-04-15",
             "unit_count": 50,
             "unit_price_usd": 12.0,
             "revenue_gross_usd": 600.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-050A",
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-050-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-20",
             "unit_count": 30,
             "unit_price_usd": 8.0,
             "revenue_gross_usd": 240.0,
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           }
         ]
@@ -1342,7 +1342,7 @@
           },
           "set": {
             "revenue_gross_usd": 100.0,
-            "royalty_amount_usd": 72.375
+            "vendor_payout_usd": 72.375
           }
         },
         {
@@ -1353,7 +1353,7 @@
           },
           "set": {
             "revenue_gross_usd": 120.0,
-            "royalty_amount_usd": 87.75
+            "vendor_payout_usd": 87.75
           }
         },
         {
@@ -1364,7 +1364,7 @@
           },
           "set": {
             "revenue_gross_usd": 110.0,
-            "royalty_amount_usd": 80.4375
+            "vendor_payout_usd": 80.4375
           }
         }
       ]
@@ -1372,110 +1372,110 @@
     {
       "id": "case_04",
       "category": "royalty_change_with_b2b",
-      "ticket": "Voidwalker's royalty terms have been renegotiated from 80% to a fixed $2 per sale. Please update.",
+      "ticket": "Sparkling Water 12-pack's vendor payout terms have been renegotiated from 80% to a fixed $2 per unit sold. Please update.",
       "data": {
         "suppliers": [
           {
-            "supplier_id": "NR",
-            "supplier_name": "North Rock Media",
+            "supplier_id": "AD",
+            "supplier_name": "Anchor Distributors",
             "supplier_currency": "USD"
           },
           {
-            "supplier_id": "SS",
-            "supplier_name": "Southstar Publishing",
+            "supplier_id": "HD",
+            "supplier_name": "Heartland Distributors",
             "supplier_currency": "USD"
           },
           {
-            "supplier_id": "BW",
-            "supplier_name": "BlueWave Records",
+            "supplier_id": "BL",
+            "supplier_name": "BayLine Distributors",
             "supplier_currency": "USD"
           },
           {
             "supplier_id": "MG",
-            "supplier_name": "Meridian Group",
+            "supplier_name": "MerchantGate Distributors",
             "supplier_currency": "USD"
           }
         ],
         "catalog": [
           {
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "product_name": "Nebula Runner",
-            "supplier_id": "NR",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-042-AD",
+            "product_name": "Cola Classic 500ml",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-070",
-            "sku": "MED-070-MG",
-            "product_name": "Nebula Runner",
+            "sku": "SKU-070-MG",
+            "product_name": "Cola Classic 500ml",
             "supplier_id": "MG",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "product_name": "Midnight Cartographer",
-            "supplier_id": "BW",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-107-BL",
+            "product_name": "Organic Soy Milk 1L",
+            "supplier_id": "BL",
+            "vendor_share_pct": 0.7,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-088",
-            "sku": "MED-088-MG",
-            "product_name": "Midnight Cartographer",
+            "sku": "SKU-088-MG",
+            "product_name": "Organic Soy Milk 1L",
             "supplier_id": "MG",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "product_name": "River of Stones",
-            "supplier_id": "SS",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-234-HD",
+            "product_name": "Extra Virgin Olive Oil 500ml",
+            "supplier_id": "HD",
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "product_name": "Voidwalker",
-            "supplier_id": "NR",
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-311-AD",
+            "product_name": "Sparkling Water 12-pack",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "product_name": "Iron Grid",
-            "supplier_id": "NR",
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-050-AD",
+            "product_name": "Rolled Oats 1kg",
+            "supplier_id": "AD",
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-102",
-            "sku": "MED-102-SS",
-            "product_name": "Solar Chronicles",
-            "supplier_id": "SS",
-            "royalty_pct": 0.6,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-102-HD",
+            "product_name": "Almond Butter 340g",
+            "supplier_id": "HD",
+            "vendor_share_pct": 0.6,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           },
           {
             "product_id": "PID-201",
-            "sku": "MED-201-BW",
-            "product_name": "The Silent Library",
-            "supplier_id": "BW",
-            "royalty_pct": 0.7,
-            "royalty_fixed_usd": null,
+            "sku": "SKU-201-BL",
+            "product_name": "Sourdough Loaf 500g",
+            "supplier_id": "BL",
+            "vendor_share_pct": 0.7,
+            "vendor_share_fixed_usd": null,
             "effective_from": "2020-01-01"
           }
         ],
@@ -1483,8 +1483,8 @@
           {
             "transaction_id": "TXN-001",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-03-15",
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
@@ -1492,13 +1492,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 74.4
+            "vendor_payout_usd": 74.4
           },
           {
             "transaction_id": "TXN-002",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-04-20",
             "revenue_gross_usd": 120.0,
             "transaction_fee_usd": 6.0,
@@ -1506,13 +1506,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 91.2
+            "vendor_payout_usd": 91.2
           },
           {
             "transaction_id": "TXN-003",
             "product_id": "PID-042",
-            "sku": "MED-042-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-042-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-08-10",
             "revenue_gross_usd": 150.0,
             "transaction_fee_usd": 7.5,
@@ -1520,13 +1520,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 114.0
+            "vendor_payout_usd": 114.0
           },
           {
             "transaction_id": "TXN-100",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-03-15",
             "revenue_gross_usd": 90.0,
             "transaction_fee_usd": 4.5,
@@ -1534,13 +1534,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 58.59
+            "vendor_payout_usd": 58.59
           },
           {
             "transaction_id": "TXN-101",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-05-30",
             "revenue_gross_usd": 110.0,
             "transaction_fee_usd": 5.5,
@@ -1548,13 +1548,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 73.15
+            "vendor_payout_usd": 73.15
           },
           {
             "transaction_id": "TXN-102",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-06-15",
             "revenue_gross_usd": 130.0,
             "transaction_fee_usd": 6.5,
@@ -1562,13 +1562,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 86.45
+            "vendor_payout_usd": 86.45
           },
           {
             "transaction_id": "TXN-103",
             "product_id": "PID-107",
-            "sku": "MED-107-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-107-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-08-01",
             "revenue_gross_usd": 100.0,
             "transaction_fee_usd": 5.0,
@@ -1576,13 +1576,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 66.5
+            "vendor_payout_usd": 66.5
           },
           {
             "transaction_id": "TXN-234A",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-03-01",
             "revenue_gross_usd": 50.0,
             "transaction_fee_usd": 2.5,
@@ -1590,13 +1590,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 34.875
+            "vendor_payout_usd": 34.875
           },
           {
             "transaction_id": "TXN-234B",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-05-01",
             "revenue_gross_usd": 60.0,
             "transaction_fee_usd": 3.0,
@@ -1604,13 +1604,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 42.75
+            "vendor_payout_usd": 42.75
           },
           {
             "transaction_id": "TXN-234C",
             "product_id": "PID-234",
-            "sku": "MED-234-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-234-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-07-01",
             "revenue_gross_usd": 55.0,
             "transaction_fee_usd": 2.75,
@@ -1618,13 +1618,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 39.1875
+            "vendor_payout_usd": 39.1875
           },
           {
             "transaction_id": "TXN-311A",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-03-01",
             "revenue_gross_usd": 40.0,
             "transaction_fee_usd": 2.0,
@@ -1632,13 +1632,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 29.76
+            "vendor_payout_usd": 29.76
           },
           {
             "transaction_id": "TXN-311B",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-15",
             "revenue_gross_usd": 45.0,
             "transaction_fee_usd": 2.25,
@@ -1646,13 +1646,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 34.2
+            "vendor_payout_usd": 34.2
           },
           {
             "transaction_id": "TXN-050A",
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-050-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-01",
             "revenue_gross_usd": 80.0,
             "transaction_fee_usd": 4.0,
@@ -1660,13 +1660,13 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 57.0
+            "vendor_payout_usd": 57.0
           },
           {
             "transaction_id": "TXN-102A",
             "product_id": "PID-102",
-            "sku": "MED-102-SS",
-            "supplier_name": "Southstar Publishing",
+            "sku": "SKU-102-HD",
+            "supplier_name": "Heartland Distributors",
             "sale_date": "2024-06-01",
             "revenue_gross_usd": 200.0,
             "transaction_fee_usd": 10.0,
@@ -1674,7 +1674,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 111.6
+            "vendor_payout_usd": 111.6
           }
         ],
         "promotions": [
@@ -1725,66 +1725,66 @@
           {
             "b2b_txn_id": "B2B-311C",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-06-10",
             "unit_count": 40,
             "unit_price_usd": 10.0,
             "revenue_gross_usd": 400.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-311D",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-07-20",
             "unit_count": 40,
             "unit_price_usd": 13.75,
             "revenue_gross_usd": 550.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-201A",
             "product_id": "PID-201",
-            "sku": "MED-201-BW",
-            "supplier_name": "BlueWave Records",
+            "sku": "SKU-201-BL",
+            "supplier_name": "BayLine Distributors",
             "sale_date": "2024-06-01",
             "unit_count": 40,
             "unit_price_usd": 7.5,
             "revenue_gross_usd": 300.0,
-            "royalty_pct": 0.65,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.65,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-311E",
             "product_id": "PID-311",
-            "sku": "MED-311-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-311-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-04-15",
             "unit_count": 50,
             "unit_price_usd": 12.0,
             "revenue_gross_usd": 600.0,
-            "royalty_pct": 0.8,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.8,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           },
           {
             "b2b_txn_id": "B2B-050A",
             "product_id": "PID-050",
-            "sku": "MED-050-NR",
-            "supplier_name": "North Rock Media",
+            "sku": "SKU-050-AD",
+            "supplier_name": "Anchor Distributors",
             "sale_date": "2024-05-20",
             "unit_count": 30,
             "unit_price_usd": 8.0,
             "revenue_gross_usd": 240.0,
-            "royalty_pct": 0.75,
-            "royalty_fixed_usd": null,
+            "vendor_share_pct": 0.75,
+            "vendor_share_fixed_usd": null,
             "status": "COMPLETE"
           }
         ]
@@ -1797,7 +1797,7 @@
             "transaction_id": "TXN-311A"
           },
           "set": {
-            "royalty_amount_usd": 2.0
+            "vendor_payout_usd": 2.0
           }
         },
         {
@@ -1807,7 +1807,7 @@
             "transaction_id": "TXN-311B"
           },
           "set": {
-            "royalty_amount_usd": 2.0
+            "vendor_payout_usd": 2.0
           }
         },
         {
@@ -1817,8 +1817,8 @@
             "product_id": "PID-311"
           },
           "set": {
-            "royalty_pct": null,
-            "royalty_fixed_usd": 2.0
+            "vendor_share_pct": null,
+            "vendor_share_fixed_usd": 2.0
           }
         },
         {
@@ -1828,8 +1828,8 @@
             "product_id": "PID-311"
           },
           "set": {
-            "royalty_pct": null,
-            "royalty_fixed_usd": 2.0
+            "vendor_share_pct": null,
+            "vendor_share_fixed_usd": 2.0
           }
         }
       ]

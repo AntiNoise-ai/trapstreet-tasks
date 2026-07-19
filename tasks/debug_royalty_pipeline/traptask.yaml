@@ -4,17 +4,17 @@ dirs:
 
 cases:
 - id: case_01
-  description: "Change publisher for a SKU (all-time): must update BOTH publisher_id and sku column"
-  tags: [debug_royalty_pipeline, publisher_swap_alltime]
+  description: "Re-book misattributed sales to correct vendor (all-time); must update lookup path + baked fields + baked payout"
+  tags: [debug_vendor_payout_pipeline, supplier_change_alltime]
 - id: case_02
-  description: "Change publisher effective from a specific date: insert new catalog row, do not modify existing"
-  tags: [debug_royalty_pipeline, publisher_swap_dated]
+  description: "Re-book misattributed sales to correct vendor from a specific date onwards (partial re-book)"
+  tags: [debug_vendor_payout_pipeline, supplier_change_dated]
 - id: case_03
-  description: "Change royalty from pct to fixed $ for SKU only in catalog (single-table trap)"
-  tags: [debug_royalty_pipeline, royalty_type_change_single_table]
+  description: "SRP renegotiated to 2x current price; must recompute baked vendor payout to reflect new pricing"
+  tags: [debug_vendor_payout_pipeline, srp_change_recalc_payout]
 - id: case_04
-  description: "Change royalty from pct to fixed $ for SKU also in enterprise_deals (cross-table trap)"
-  tags: [debug_royalty_pipeline, royalty_type_change_multi_table]
+  description: "Vendor payout terms renegotiated from pct to fixed $ per unit; must update retail baked + b2b terms"
+  tags: [debug_vendor_payout_pipeline, payout_terms_change_with_b2b]
 
 judge:
   cmd: python3 judge.py

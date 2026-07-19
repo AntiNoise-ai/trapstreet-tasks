@@ -4,52 +4,66 @@ An open-source evaluation task for **cross-file consistency debugging** — when
 
 Useful for evaluating agents that maintain data pipelines, do schema migrations, or fix data + code together — the class of task where "I changed one thing and now half my reports are wrong."
 
+## Domain
+
+Synthetic supermarket vendor-consignment accounting. The store carries products stocked by outside vendors; each period Finance owes each vendor a share of what sold. Two reports drive that payout run.
+
 ## What this task tests
 
-**Given a ticket asking for a change to a royalty accounting pipeline, does the agent produce the correct MINIMAL edit set so BOTH reports come out consistent?**
+**Given a ticket asking for a change to the vendor-payout pipeline, does the agent produce the correct MINIMAL edit set so BOTH reports come out consistent?**
 
 The two reports use DIFFERENT lookup paths for the same conceptual data:
-- **`publisher_statement.py`** — uses LOOKUP: `catalog[product_id] → suppliers[supplier_id] → supplier_name`. Aggregates revenue and royalty by supplier.
+- **`vendor_statement.py`** — uses LOOKUP: `catalog[product_id] → suppliers[supplier_id] → supplier_name`. Aggregates revenue and payout by vendor.
 - **`itemised_statement.py`** — uses BAKED text: reads `transactions.supplier_name` and `transactions.sku` DIRECTLY (recorded at time of sale, no lookup).
 
-Because the two reports read supplier from different sources, a supplier change requires TWO edits (one for each lookup path). This is the core trap — agent reading only ONE report's code won't find it.
+Because the two reports read supplier from different sources, a supplier change requires TWO edits (one for each lookup path). And because retail `vendor_payout_usd` is BAKED at sale time (not recomputed), any change that affects the payout amount (attribution → different vendor terms, SRP change, terms renegotiation) requires updating baked values too.
 
-## Case structure: 4 cases × 4 trap types
+## Case structure
 
 | Case | Trap | Fix requires |
 |---|---|---|
-| **case_01** | Change supplier for a SKU (all-time) | catalog.supplier_id (fixes publisher_statement via lookup) + transactions.supplier_name (fixes itemised via baked text) |
-| **case_02** | Change supplier from a specific date onward | INSERT new catalog row + UPDATE only transactions after the date |
-| **case_03** | Change royalty pct→fixed, SKU has retail only | catalog.royalty_pct/fixed (both reports use catalog for retail royalty) |
-| **case_04** | Change royalty pct→fixed, SKU has retail+b2b transactions | catalog + transactions (b2b rows have BAKED royalty terms; must update both) |
+| **case_01** | Misattributed sales — re-book to correct vendor (all-time) | route transactions.product_id + baked supplier_name/sku + recompute baked vendor_payout at new vendor's terms |
+| **case_02** | Same as case_01 but partial re-book (from a date onwards) | same edits, only for post-date transactions |
+| **case_03** | SRP renegotiated to 2× current price | update revenue + recompute baked vendor_payout on new net |
+| **case_04** | Vendor payout terms change (pct → fixed $ per unit) | update baked retail payout + b2b_details terms; catalog for future sales |
 
 ## Data schema
 
-- `catalog.csv` — product master. Columns: `product_id, sku, supplier_id, royalty_pct, royalty_fixed_usd, effective_from`. Can have multiple rows per product_id for effective-date routing.
-- `suppliers.csv` — supplier registry. Columns: `supplier_id, supplier_name`.
-- `transactions.csv` — sales log with BAKED fields. Columns: `transaction_id, product_id, channel, sku, supplier_name, sale_date, revenue_usd, royalty_pct, royalty_fixed_usd`. Retail rows have null royalty_pct/fixed (use catalog); b2b rows have BAKED royalty terms.
+- `catalog.csv` — product master. Columns: `product_id, sku, product_name, supplier_id, vendor_share_pct, vendor_share_fixed_usd, effective_from`. Can have multiple rows per product for different suppliers.
+- `suppliers.csv` — vendor registry: `supplier_id, supplier_name, supplier_currency`.
+- `transactions.csv` — retail (checkout) sales with BAKED fields: `transaction_id, product_id, sku, supplier_name, sale_date, revenue_gross_usd, vendor_payout_usd, transaction_fee_usd, affiliate_commission_usd, status, ...`. `vendor_payout_usd` is BAKED at sale time = `vendor_share_pct × (revenue - fees)`.
+- `b2b_details.csv` — wholesale/bulk orders with BAKED terms: `b2b_txn_id, product_id, sku, supplier_name, sale_date, unit_count, unit_price_usd, revenue_gross_usd, vendor_share_pct, vendor_share_fixed_usd, status`.
+- `promotions.csv`, `product_discounts.csv`, `currency_rates.csv` — auxiliary tables (currently unused noise).
 
 ## Script behavior
 
-### `publisher_statement.py`
-For each transaction:
-- Supplier via LOOKUP: `catalog[product_id].supplier_id → suppliers[supplier_id].supplier_name`
-- Royalty: retail uses catalog terms, b2b uses transaction's BAKED terms
+### `vendor_statement.py`
+Per-vendor summary. For each transaction:
+- supplier via LOOKUP: `catalog[product_id].supplier_id → suppliers[supplier_id].supplier_name`
+- payout: retail reads baked `vendor_payout_usd` (fallback to `pct × net` from catalog); b2b computes from baked terms × units
 - Aggregate by supplier_name
 
 ### `itemised_statement.py`
-For each transaction:
+Per-transaction breakdown. For each transaction:
 - SKU and supplier_name from transaction DIRECTLY (BAKED text)
-- Royalty: same as publisher_statement (retail from catalog, b2b from transaction BAKED)
-- Per-row output
+- payout: same source as vendor_statement (baked + fallback)
 
-## Input
+## Scoring — report-output equivalence
 
-Per case (`inputs/<case_id>/`):
+Judge applies BOTH agent's edits AND gold's edits to a copy of the input, RUNS both report scripts, compares stdout. Score is 1.0 only if BOTH reports produce identical output.
+
+This means:
+- Multiple valid fix paths pass (any edit set producing the correct reports)
+- Judge doesn't care about edit structure or intermediate reasoning
+- Agent that carpet-bombs edits still fails if it changes the reports incorrectly
+
+## Files per case
+
+`inputs/<case_id>/`:
 - `README.md` — task instructions + output format
 - `ticket.md` — the change request
-- `catalog.csv`, `suppliers.csv`, `transactions.csv` — data tables
-- `publisher_statement.py`, `itemised_statement.py` — report scripts
+- `catalog.csv`, `suppliers.csv`, `transactions.csv`, `b2b_details.csv`, `promotions.csv`, `product_discounts.csv`, `currency_rates.csv`
+- `vendor_statement.py`, `itemised_statement.py` — report scripts
 
 ## Expected output
 
@@ -57,56 +71,13 @@ A JSON array of edits:
 
 ```json
 [
-  {"file": "catalog.csv", "op": "update", "match": {"product_id": "PID-042"}, "set": {"supplier_id": "MG"}},
-  {"file": "transactions.csv", "op": "update", "match": {"product_id": "PID-042"}, "set": {"supplier_name": "Meridian Group"}}
+  {"file": "transactions.csv", "op": "update", "match": {"transaction_id": "TXN-001"},
+   "set": {"product_id": "PID-070", "sku": "SKU-070-MG",
+           "supplier_name": "MerchantGate Distributors", "vendor_payout_usd": 69.75}}
 ]
 ```
 
-Or:
-```json
-[
-  {"file": "catalog.csv", "op": "insert", "row": {"product_id": "PID-107", "sku": "MED-107-BW", "supplier_id": "MG", "royalty_pct": 0.70, "royalty_fixed_usd": null, "effective_from": "2024-06-01"}}
-]
-```
-
-## Scoring — data-aware equivalence
-
-Judge applies BOTH agent's edits AND gold's edits to the initial input tables, then compares the resulting states row-by-row. Score is 1.0 only if resulting states are IDENTICAL.
-
-**This means agent has flexibility in HOW to express edits:**
-- Can match by `product_id` OR `sku` OR `transaction_id` (as long as it uniquely identifies the same row)
-- Can use `set: {supplier_id: "MG"}` alone OR bundle multiple field updates in one edit
-- Order of edits doesn't matter
-
-**What agent CAN'T get away with:**
-- Missing updates that gold requires (any table row differs from expected)
-- Adding updates that gold didn't require (any table row differs from expected)
-- Over-matching (e.g., updating ALL rows when only some should change)
-
-## Why extras count against the agent
-
-An agent that carpet-bombs the change across every plausible table/column would pass "did you cover it" checks trivially. The real skill is **the MINIMAL correct edit set** — bloating the change surface in a real pipeline creates its own bugs.
-
-## Measured baseline (2026-07-10, sparse tickets + data-aware judge)
-
-| Model | Score | Cost | Failure mode |
-|---|---|---|---|
-| Haiku 4.5 | 3/4 | ~$0.01 | Misses `case_04`: doesn't update b2b transactions' baked royalty terms |
-| Sonnet 4.6 | 3/4 | ~$0.06 | Over-edits `case_03`: adds unnecessary royalty updates to retail transactions |
-| Opus 4.8 | 4/4 | ~$0.36 | — |
-
-Each model fails a different case, exposing different real gaps in cross-file consistency reasoning.
-
-## Cost
-
-4 small cases, ~2-4k input tokens per case. Full run: **$0.03-$0.60 depending on model**.
-
-## Honest limitations
-
-- **4 cases is a small sample.** Production version should have 10-15+ cases across multiple variants of each trap type.
-- **Scripts are read-only reference.** Judge doesn't execute the pipeline; it compares resulting table states. Agent can't verify by running; must reason from the code.
-- **Fully synthetic domain.** Scenarios inspired by real production royalty pipelines but no proprietary code or data.
-- **Sparse instructions.** The task README does not describe business rules (SKU convention, lookup semantics, etc). Agent must infer these from reading the scripts.
+Supported ops: `update` (with `match` + `set`), `insert` (with `row`).
 
 ## Data source & license
 

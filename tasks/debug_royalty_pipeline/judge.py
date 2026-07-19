@@ -227,7 +227,7 @@ def run_reports(work_dir: Path) -> tuple[str, str]:
     import subprocess
     import sys
     pub = subprocess.run(
-        [sys.executable, "publisher_statement.py"],
+        [sys.executable, "vendor_statement.py"],
         cwd=work_dir, capture_output=True, text=True, timeout=30,
     )
     item = subprocess.run(
@@ -302,7 +302,7 @@ def score_case(stdout: str, expected: dict, inputs_dir: Path = None) -> dict[str
                 }
             diffs = []
             if not pub_ok:
-                diffs.append(f"publisher_statement differs; agent output first 300 chars: {agent_pub[:300]!r}")
+                diffs.append(f"vendor_statement differs; agent output first 300 chars: {agent_pub[:300]!r}")
             if not item_ok:
                 diffs.append(f"itemised_statement differs; agent output first 300 chars: {agent_item[:300]!r}")
             return {

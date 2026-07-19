@@ -1,10 +1,10 @@
-product_id,sku,product_name,supplier_id,royalty_pct,royalty_fixed_usd,effective_from
-PID-042,MED-042-NR,Nebula Runner,NR,0.8,,2020-01-01
-PID-070,MED-070-MG,Nebula Runner,MG,0.75,,2020-01-01
-PID-107,MED-107-BW,Midnight Cartographer,BW,0.7,,2020-01-01
-PID-088,MED-088-MG,Midnight Cartographer,MG,0.75,,2020-01-01
-PID-234,MED-234-SS,River of Stones,SS,0.75,,2020-01-01
-PID-311,MED-311-NR,Voidwalker,NR,0.8,,2020-01-01
-PID-050,MED-050-NR,Iron Grid,NR,0.75,,2020-01-01
-PID-102,MED-102-SS,Solar Chronicles,SS,0.6,,2020-01-01
-PID-201,MED-201-BW,The Silent Library,BW,0.7,,2020-01-01
+product_id,sku,product_name,supplier_id,vendor_share_pct,vendor_share_fixed_usd,effective_from
+PID-042,SKU-042-AD,Cola Classic 500ml,AD,0.8,,2020-01-01
+PID-070,SKU-070-MG,Cola Classic 500ml,MG,0.75,,2020-01-01
+PID-107,SKU-107-BL,Organic Soy Milk 1L,BL,0.7,,2020-01-01
+PID-088,SKU-088-MG,Organic Soy Milk 1L,MG,0.75,,2020-01-01
+PID-234,SKU-234-HD,Extra Virgin Olive Oil 500ml,HD,0.75,,2020-01-01
+PID-311,SKU-311-AD,Sparkling Water 12-pack,AD,0.8,,2020-01-01
+PID-050,SKU-050-AD,Rolled Oats 1kg,AD,0.75,,2020-01-01
+PID-102,SKU-102-HD,Almond Butter 340g,HD,0.6,,2020-01-01
+PID-201,SKU-201-BL,Sourdough Loaf 500g,BL,0.7,,2020-01-01

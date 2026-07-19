@@ -10,7 +10,7 @@
       },
       "set": {
         "revenue_gross_usd": 100.0,
-        "royalty_amount_usd": 72.375
+        "vendor_payout_usd": 72.375
       }
     },
     {
@@ -21,7 +21,7 @@
       },
       "set": {
         "revenue_gross_usd": 120.0,
-        "royalty_amount_usd": 87.75
+        "vendor_payout_usd": 87.75
       }
     },
     {
@@ -32,7 +32,7 @@
       },
       "set": {
         "revenue_gross_usd": 110.0,
-        "royalty_amount_usd": 80.4375
+        "vendor_payout_usd": 80.4375
       }
     }
   ]

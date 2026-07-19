@@ -1,7 +1,7 @@
-"""Publisher statement — aggregate royalty by supplier via SQL over multiple tables.
+"""Vendor statement — aggregate vendor payout by supplier via SQL over multiple tables.
 
 Reads: catalog.csv, suppliers.csv, transactions.csv (retail only),
-       b2b_details.csv (B2B sales in a separate table),
+       b2b_details.csv (bulk/wholesale orders in a separate table),
        promotions.csv, product_discounts.csv, currency_rates.csv
 
 Runs a multi-CTE SQL query in in-memory sqlite. Retail and B2B are UNIONed
@@ -15,7 +15,7 @@ from pathlib import Path
 CATALOG_SCHEMA = """
 CREATE TABLE catalog (
     product_id TEXT, sku TEXT, product_name TEXT, supplier_id TEXT,
-    royalty_pct REAL, royalty_fixed_usd REAL, effective_from TEXT
+    vendor_share_pct REAL, vendor_share_fixed_usd REAL, effective_from TEXT
 )"""
 
 SUPPLIERS_SCHEMA = """
@@ -26,7 +26,7 @@ CREATE TABLE suppliers (
 TXN_SCHEMA = """
 CREATE TABLE transactions (
     transaction_id TEXT, product_id TEXT, sku TEXT, supplier_name TEXT,
-    sale_date TEXT, revenue_gross_usd REAL, royalty_amount_usd REAL,
+    sale_date TEXT, revenue_gross_usd REAL, vendor_payout_usd REAL,
     transaction_fee_usd REAL, affiliate_commission_usd REAL,
     status TEXT, promo_id TEXT, bundle_name TEXT
 )"""
@@ -35,7 +35,7 @@ B2B_SCHEMA = """
 CREATE TABLE b2b_details (
     b2b_txn_id TEXT, product_id TEXT, sku TEXT, supplier_name TEXT,
     sale_date TEXT, unit_count INTEGER, unit_price_usd REAL,
-    revenue_gross_usd REAL, royalty_pct REAL, royalty_fixed_usd REAL,
+    revenue_gross_usd REAL, vendor_share_pct REAL, vendor_share_fixed_usd REAL,
     status TEXT
 )"""
 
@@ -94,7 +94,7 @@ def init_db(here: Path) -> sqlite3.Connection:
     for r in load_csv(here / "catalog.csv"):
         conn.execute("INSERT INTO catalog VALUES (?,?,?,?,?,?,?)", (
             r["product_id"], r["sku"], r["product_name"], r["supplier_id"],
-            to_num(r.get("royalty_pct")), to_num(r.get("royalty_fixed_usd")),
+            to_num(r.get("vendor_share_pct")), to_num(r.get("vendor_share_fixed_usd")),
             r["effective_from"]))
     for r in load_csv(here / "suppliers.csv"):
         conn.execute("INSERT INTO suppliers VALUES (?,?,?)", (
@@ -103,7 +103,7 @@ def init_db(here: Path) -> sqlite3.Connection:
         conn.execute("INSERT INTO transactions VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (
             r["transaction_id"], r["product_id"], r["sku"], r["supplier_name"],
             r["sale_date"], to_num(r.get("revenue_gross_usd")),
-            to_num(r.get("royalty_amount_usd")),
+            to_num(r.get("vendor_payout_usd")),
             to_num(r.get("transaction_fee_usd")), to_num(r.get("affiliate_commission_usd")),
             r.get("status", "COMPLETE"), r.get("promo_id", ""), r.get("bundle_name", "")))
     for r in load_csv(here / "b2b_details.csv"):
@@ -111,7 +111,7 @@ def init_db(here: Path) -> sqlite3.Connection:
             r["b2b_txn_id"], r["product_id"], r["sku"], r["supplier_name"],
             r["sale_date"], to_int(r.get("unit_count")), to_num(r.get("unit_price_usd")),
             to_num(r.get("revenue_gross_usd")),
-            to_num(r.get("royalty_pct")), to_num(r.get("royalty_fixed_usd")),
+            to_num(r.get("vendor_share_pct")), to_num(r.get("vendor_share_fixed_usd")),
             r.get("status", "COMPLETE")))
     for r in load_csv(here / "promotions.csv"):
         conn.execute("INSERT INTO promotions VALUES (?,?,?,?,?)", (
@@ -129,11 +129,12 @@ def init_db(here: Path) -> sqlite3.Connection:
     return conn
 
 
-PUBLISHER_STATEMENT_SQL = """
+VENDOR_STATEMENT_SQL = """
 WITH catalog_versioned AS (
     SELECT c.product_id, c.sku AS catalog_sku, c.product_name,
            c.supplier_id AS catalog_supplier_id, s.supplier_name AS resolved_supplier_name,
-           c.royalty_pct AS catalog_royalty_pct, c.royalty_fixed_usd AS catalog_royalty_fixed_usd,
+           c.vendor_share_pct AS catalog_vendor_share_pct,
+           c.vendor_share_fixed_usd AS catalog_vendor_share_fixed_usd,
            c.effective_from AS catalog_effective_from,
            ROW_NUMBER() OVER (PARTITION BY c.product_id ORDER BY c.effective_from DESC) AS row_recency
     FROM catalog c
@@ -142,41 +143,41 @@ WITH catalog_versioned AS (
 active_catalog AS (
     SELECT * FROM catalog_versioned WHERE row_recency = 1
 ),
-retail_royalty AS (
+retail_payout AS (
     SELECT
         t.transaction_id AS txn_ref,
         ac.resolved_supplier_name AS supplier_name,
         t.revenue_gross_usd,
         (COALESCE(t.transaction_fee_usd, 0) + COALESCE(t.affiliate_commission_usd, 0)) AS deductions_usd,
         COALESCE(
-            t.royalty_amount_usd,
+            t.vendor_payout_usd,
             CASE
-                WHEN ac.catalog_royalty_fixed_usd IS NOT NULL THEN ac.catalog_royalty_fixed_usd
-                WHEN ac.catalog_royalty_pct IS NOT NULL THEN
+                WHEN ac.catalog_vendor_share_fixed_usd IS NOT NULL THEN ac.catalog_vendor_share_fixed_usd
+                WHEN ac.catalog_vendor_share_pct IS NOT NULL THEN
                     (t.revenue_gross_usd
                      - COALESCE(t.transaction_fee_usd, 0)
                      - COALESCE(t.affiliate_commission_usd, 0)
-                    ) * ac.catalog_royalty_pct
+                    ) * ac.catalog_vendor_share_pct
                 ELSE 0
             END
-        ) AS royalty_amount
+        ) AS payout_amount
     FROM transactions t
     LEFT JOIN active_catalog ac
         ON t.product_id = ac.product_id
         AND ac.catalog_effective_from <= t.sale_date
     WHERE t.status = 'COMPLETE'
 ),
-b2b_royalty AS (
+b2b_payout AS (
     SELECT
         b.b2b_txn_id AS txn_ref,
         ac.resolved_supplier_name AS supplier_name,
         b.revenue_gross_usd,
         0.0 AS deductions_usd,
         CASE
-            WHEN b.royalty_fixed_usd IS NOT NULL THEN b.royalty_fixed_usd * b.unit_count
-            WHEN b.royalty_pct IS NOT NULL THEN b.revenue_gross_usd * b.royalty_pct
+            WHEN b.vendor_share_fixed_usd IS NOT NULL THEN b.vendor_share_fixed_usd * b.unit_count
+            WHEN b.vendor_share_pct IS NOT NULL THEN b.revenue_gross_usd * b.vendor_share_pct
             ELSE 0
-        END AS royalty_amount
+        END AS payout_amount
     FROM b2b_details b
     LEFT JOIN active_catalog ac
         ON b.product_id = ac.product_id
@@ -184,7 +185,7 @@ b2b_royalty AS (
     WHERE b.status = 'COMPLETE'
 ),
 unioned AS (
-    SELECT * FROM retail_royalty UNION ALL SELECT * FROM b2b_royalty
+    SELECT * FROM retail_payout UNION ALL SELECT * FROM b2b_payout
 )
 SELECT
     supplier_name,
@@ -192,7 +193,7 @@ SELECT
     ROUND(SUM(revenue_gross_usd), 2) AS total_revenue_usd,
     ROUND(SUM(deductions_usd), 2) AS total_deductions_usd,
     ROUND(SUM(revenue_gross_usd - deductions_usd), 2) AS total_net_usd,
-    ROUND(SUM(royalty_amount), 2) AS total_royalty_usd
+    ROUND(SUM(payout_amount), 2) AS total_payout_usd
 FROM unioned
 GROUP BY supplier_name
 ORDER BY supplier_name;
@@ -202,7 +203,7 @@ ORDER BY supplier_name;
 def main():
     here = Path(__file__).parent
     conn = init_db(here)
-    cursor = conn.execute(PUBLISHER_STATEMENT_SQL)
+    cursor = conn.execute(VENDOR_STATEMENT_SQL)
     columns = [d[0] for d in cursor.description]
     print(",".join(columns))
     for row in cursor.fetchall():

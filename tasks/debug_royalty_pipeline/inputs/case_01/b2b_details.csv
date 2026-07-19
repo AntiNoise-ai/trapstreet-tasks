@@ -1,6 +1,6 @@
-b2b_txn_id,product_id,sku,supplier_name,sale_date,unit_count,unit_price_usd,revenue_gross_usd,royalty_pct,royalty_fixed_usd,status
-B2B-311C,PID-311,MED-311-NR,North Rock Media,2024-06-10,40,10.0,400.0,0.8,,COMPLETE
-B2B-311D,PID-311,MED-311-NR,North Rock Media,2024-07-20,40,13.75,550.0,0.8,,COMPLETE
-B2B-201A,PID-201,MED-201-BW,BlueWave Records,2024-06-01,40,7.5,300.0,0.65,,COMPLETE
-B2B-311E,PID-311,MED-311-NR,North Rock Media,2024-04-15,50,12.0,600.0,0.8,,COMPLETE
-B2B-050A,PID-050,MED-050-NR,North Rock Media,2024-05-20,30,8.0,240.0,0.75,,COMPLETE
+b2b_txn_id,product_id,sku,supplier_name,sale_date,unit_count,unit_price_usd,revenue_gross_usd,vendor_share_pct,vendor_share_fixed_usd,status
+B2B-311C,PID-311,SKU-311-AD,Anchor Distributors,2024-06-10,40,10.0,400.0,0.8,,COMPLETE
+B2B-311D,PID-311,SKU-311-AD,Anchor Distributors,2024-07-20,40,13.75,550.0,0.8,,COMPLETE
+B2B-201A,PID-201,SKU-201-BL,BayLine Distributors,2024-06-01,40,7.5,300.0,0.65,,COMPLETE
+B2B-311E,PID-311,SKU-311-AD,Anchor Distributors,2024-04-15,50,12.0,600.0,0.8,,COMPLETE
+B2B-050A,PID-050,SKU-050-AD,Anchor Distributors,2024-05-20,30,8.0,240.0,0.75,,COMPLETE

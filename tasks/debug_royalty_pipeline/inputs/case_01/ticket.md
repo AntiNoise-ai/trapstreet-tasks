@@ -1,3 +1,3 @@
 # Ticket
 
-Nebula Runner sales are being misattributed to North Rock Media — they should be attributed to Meridian Group under MG's contract terms. Please re-book.
+Cola Classic 500ml sales are being misattributed to Anchor Distributors — they should be attributed to MerchantGate Distributors under MG's vendor payout terms. Please re-book.

@@ -1,24 +1,24 @@
 # Task
 
-A colleague filed a ticket asking for a fix to the royalty pipeline.
+A colleague filed a ticket asking for a fix to the vendor-payout pipeline.
 
-**Your goal:** ensure both reports (`publisher_statement.py` and `itemised_statement.py`) come out CORRECT after the fix is applied.
+**Your goal:** ensure both reports (`vendor_statement.py` and `itemised_statement.py`) come out CORRECT after the fix is applied.
 
 You will not be graded on your intermediate reasoning or on the structure of your edits. You will be graded on **whether the reports the two scripts produce match the reports they would produce after a correct fix**. Judge applies your edits + runs both scripts + compares stdout to the gold reports.
 
 ## Business context
 
-These two reports are the source of truth for supplier royalty payouts each period:
-- `publisher_statement` — the per-supplier summary Finance uses to cut royalty checks. The `total_royalty_usd` column IS the amount each supplier gets paid.
-- `itemised_statement` — the per-transaction breakdown suppliers audit against their sales.
+This supermarket runs a consignment model: vendors stock the shelves, and every period the store owes each vendor a share of what sold. These two reports are the source of truth for that monthly payout run:
+- `vendor_statement` — the per-vendor summary Finance uses to cut monthly payout checks. The `total_payout_usd` column IS the amount each vendor gets paid.
+- `itemised_statement` — the per-transaction breakdown vendors audit against their sales.
 
-Getting `royalty_amount_usd` right on every affected line is the whole point. An inconsistency here is a real over/under-payment to a supplier. So when a ticket changes something upstream — attribution, pricing, terms — think through: does the change move royalty money around, or change how much royalty is owed? Both flow through these reports and both must land right.
+Getting `vendor_payout_usd` right on every affected line is the whole point. An inconsistency here is a real over/under-payment to a vendor. So when a ticket changes something upstream — attribution, pricing, terms — think through: does the change move payout money around, or change how much payout is owed? Both flow through these reports and both must land right.
 
 ## How to approach this
 
 In a real production system:
 - The data tables are LARGE — you cannot solve this by scanning every row.
-- No one documents the business rules explicitly — you have to reverse-engineer them by reading the pipeline code (`publisher_statement.py` and `itemised_statement.py`) and understanding what each script does with the data.
+- No one documents the business rules explicitly — you have to reverse-engineer them by reading the pipeline code (`vendor_statement.py` and `itemised_statement.py`) and understanding what each script does with the data.
 
 To decide what edits are needed, read the scripts carefully:
 - Where does each report get its values from? Which table? Which column? Lookup or baked?
@@ -28,11 +28,11 @@ To decide what edits are needed, read the scripts carefully:
 ## Files in this directory
 
 - `ticket.md` — the change request
-- `catalog.csv`, `suppliers.csv` — product/supplier master
-- `transactions.csv` — retail sales
-- `b2b_details.csv` — B2B/wholesale sales (high volume: many units per order)
+- `catalog.csv`, `suppliers.csv` — product/vendor master
+- `transactions.csv` — retail (checkout) sales
+- `b2b_details.csv` — wholesale/bulk orders (high volume: many units per order, e.g. restaurant supply)
 - `promotions.csv`, `product_discounts.csv`, `currency_rates.csv` — auxiliary tables
-- `publisher_statement.py`, `itemised_statement.py` — the two report scripts (Python + SQL)
+- `vendor_statement.py`, `itemised_statement.py` — the two report scripts (Python + SQL)
 
 ## Output format
 

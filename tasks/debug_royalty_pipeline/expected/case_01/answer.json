@@ -10,9 +10,9 @@
       },
       "set": {
         "product_id": "PID-070",
-        "supplier_name": "Meridian Group",
-        "sku": "MED-070-MG",
-        "royalty_amount_usd": 69.75
+        "supplier_name": "MerchantGate Distributors",
+        "sku": "SKU-070-MG",
+        "vendor_payout_usd": 69.75
       }
     },
     {
@@ -23,9 +23,9 @@
       },
       "set": {
         "product_id": "PID-070",
-        "supplier_name": "Meridian Group",
-        "sku": "MED-070-MG",
-        "royalty_amount_usd": 85.5
+        "supplier_name": "MerchantGate Distributors",
+        "sku": "SKU-070-MG",
+        "vendor_payout_usd": 85.5
       }
     },
     {
@@ -36,9 +36,9 @@
       },
       "set": {
         "product_id": "PID-070",
-        "supplier_name": "Meridian Group",
-        "sku": "MED-070-MG",
-        "royalty_amount_usd": 106.875
+        "supplier_name": "MerchantGate Distributors",
+        "sku": "SKU-070-MG",
+        "vendor_payout_usd": 106.875
       }
     }
   ]

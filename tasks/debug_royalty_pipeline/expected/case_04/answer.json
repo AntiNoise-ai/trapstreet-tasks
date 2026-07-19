@@ -9,7 +9,7 @@
         "transaction_id": "TXN-311A"
       },
       "set": {
-        "royalty_amount_usd": 2.0
+        "vendor_payout_usd": 2.0
       }
     },
     {
@@ -19,7 +19,7 @@
         "transaction_id": "TXN-311B"
       },
       "set": {
-        "royalty_amount_usd": 2.0
+        "vendor_payout_usd": 2.0
       }
     },
     {
@@ -29,8 +29,8 @@
         "product_id": "PID-311"
       },
       "set": {
-        "royalty_pct": null,
-        "royalty_fixed_usd": 2.0
+        "vendor_share_pct": null,
+        "vendor_share_fixed_usd": 2.0
       }
     },
     {
@@ -40,8 +40,8 @@
         "product_id": "PID-311"
       },
       "set": {
-        "royalty_pct": null,
-        "royalty_fixed_usd": 2.0
+        "vendor_share_pct": null,
+        "vendor_share_fixed_usd": 2.0
       }
     }
   ]
