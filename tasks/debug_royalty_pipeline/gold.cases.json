@@ -5,7 +5,7 @@
     {
       "id": "case_01",
       "category": "supplier_change_alltime",
-      "ticket": "Nebula Runner sales are being misattributed to North Rock Media \u2014 they should be attributed to Meridian Group. Please correct.",
+      "ticket": "Nebula Runner sales are being misattributed to North Rock Media \u2014 they should be attributed to Meridian Group under MG's contract terms. Please re-book.",
       "data": {
         "suppliers": [
           {
@@ -467,7 +467,7 @@
     {
       "id": "case_02",
       "category": "supplier_change_dated",
-      "ticket": "Midnight Cartographer sales from 2024-06-01 onwards are being misattributed to BlueWave Records \u2014 from that date on, they should be attributed to Meridian Group. Please correct (sales before 2024-06-01 stay as-is).",
+      "ticket": "Midnight Cartographer sales from 2024-06-01 onwards are being misattributed to BlueWave Records \u2014 from that date on, they should be attributed to Meridian Group under MG's contract terms. Please re-book (sales before 2024-06-01 stay as-is).",
       "data": {
         "suppliers": [
           {
