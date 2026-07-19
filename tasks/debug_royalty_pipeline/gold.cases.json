@@ -125,7 +125,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 80.0
+            "royalty_amount_usd": 74.4
           },
           {
             "transaction_id": "TXN-002",
@@ -139,7 +139,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 96.0
+            "royalty_amount_usd": 91.2
           },
           {
             "transaction_id": "TXN-003",
@@ -153,7 +153,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 120.0
+            "royalty_amount_usd": 114.0
           },
           {
             "transaction_id": "TXN-100",
@@ -167,7 +167,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 63.0
+            "royalty_amount_usd": 58.59
           },
           {
             "transaction_id": "TXN-101",
@@ -181,7 +181,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 77.0
+            "royalty_amount_usd": 73.15
           },
           {
             "transaction_id": "TXN-102",
@@ -195,7 +195,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 91.0
+            "royalty_amount_usd": 86.45
           },
           {
             "transaction_id": "TXN-103",
@@ -209,7 +209,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 70.0
+            "royalty_amount_usd": 66.5
           },
           {
             "transaction_id": "TXN-234A",
@@ -223,7 +223,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 37.5
+            "royalty_amount_usd": 34.875
           },
           {
             "transaction_id": "TXN-234B",
@@ -237,7 +237,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 45.0
+            "royalty_amount_usd": 42.75
           },
           {
             "transaction_id": "TXN-234C",
@@ -251,7 +251,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 41.25
+            "royalty_amount_usd": 39.1875
           },
           {
             "transaction_id": "TXN-311A",
@@ -265,7 +265,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 32.0
+            "royalty_amount_usd": 29.76
           },
           {
             "transaction_id": "TXN-311B",
@@ -279,7 +279,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 36.0
+            "royalty_amount_usd": 34.2
           },
           {
             "transaction_id": "TXN-050A",
@@ -293,7 +293,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 60.0
+            "royalty_amount_usd": 57.0
           },
           {
             "transaction_id": "TXN-102A",
@@ -307,7 +307,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 120.0
+            "royalty_amount_usd": 111.6
           }
         ],
         "promotions": [
@@ -433,7 +433,7 @@
             "product_id": "PID-070",
             "supplier_name": "Meridian Group",
             "sku": "MED-070-MG",
-            "royalty_amount_usd": 75.0
+            "royalty_amount_usd": 69.75
           }
         },
         {
@@ -446,7 +446,7 @@
             "product_id": "PID-070",
             "supplier_name": "Meridian Group",
             "sku": "MED-070-MG",
-            "royalty_amount_usd": 90.0
+            "royalty_amount_usd": 85.5
           }
         },
         {
@@ -459,7 +459,7 @@
             "product_id": "PID-070",
             "supplier_name": "Meridian Group",
             "sku": "MED-070-MG",
-            "royalty_amount_usd": 112.5
+            "royalty_amount_usd": 106.875
           }
         }
       ]
@@ -587,7 +587,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 80.0
+            "royalty_amount_usd": 74.4
           },
           {
             "transaction_id": "TXN-002",
@@ -601,7 +601,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 96.0
+            "royalty_amount_usd": 91.2
           },
           {
             "transaction_id": "TXN-003",
@@ -615,7 +615,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 120.0
+            "royalty_amount_usd": 114.0
           },
           {
             "transaction_id": "TXN-100",
@@ -629,7 +629,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 63.0
+            "royalty_amount_usd": 58.59
           },
           {
             "transaction_id": "TXN-101",
@@ -643,7 +643,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 77.0
+            "royalty_amount_usd": 73.15
           },
           {
             "transaction_id": "TXN-102",
@@ -657,7 +657,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 91.0
+            "royalty_amount_usd": 86.45
           },
           {
             "transaction_id": "TXN-103",
@@ -671,7 +671,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 70.0
+            "royalty_amount_usd": 66.5
           },
           {
             "transaction_id": "TXN-234A",
@@ -685,7 +685,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 37.5
+            "royalty_amount_usd": 34.875
           },
           {
             "transaction_id": "TXN-234B",
@@ -699,7 +699,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 45.0
+            "royalty_amount_usd": 42.75
           },
           {
             "transaction_id": "TXN-234C",
@@ -713,7 +713,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 41.25
+            "royalty_amount_usd": 39.1875
           },
           {
             "transaction_id": "TXN-311A",
@@ -727,7 +727,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 32.0
+            "royalty_amount_usd": 29.76
           },
           {
             "transaction_id": "TXN-311B",
@@ -741,7 +741,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 36.0
+            "royalty_amount_usd": 34.2
           },
           {
             "transaction_id": "TXN-050A",
@@ -755,7 +755,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 60.0
+            "royalty_amount_usd": 57.0
           },
           {
             "transaction_id": "TXN-102A",
@@ -769,7 +769,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 120.0
+            "royalty_amount_usd": 111.6
           }
         ],
         "promotions": [
@@ -895,7 +895,7 @@
             "product_id": "PID-088",
             "supplier_name": "Meridian Group",
             "sku": "MED-088-MG",
-            "royalty_amount_usd": 97.5
+            "royalty_amount_usd": 92.625
           }
         },
         {
@@ -908,7 +908,7 @@
             "product_id": "PID-088",
             "supplier_name": "Meridian Group",
             "sku": "MED-088-MG",
-            "royalty_amount_usd": 75.0
+            "royalty_amount_usd": 71.25
           }
         }
       ]
@@ -1036,7 +1036,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 80.0
+            "royalty_amount_usd": 74.4
           },
           {
             "transaction_id": "TXN-002",
@@ -1050,7 +1050,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 96.0
+            "royalty_amount_usd": 91.2
           },
           {
             "transaction_id": "TXN-003",
@@ -1064,7 +1064,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 120.0
+            "royalty_amount_usd": 114.0
           },
           {
             "transaction_id": "TXN-100",
@@ -1078,7 +1078,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 63.0
+            "royalty_amount_usd": 58.59
           },
           {
             "transaction_id": "TXN-101",
@@ -1092,7 +1092,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 77.0
+            "royalty_amount_usd": 73.15
           },
           {
             "transaction_id": "TXN-102",
@@ -1106,7 +1106,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 91.0
+            "royalty_amount_usd": 86.45
           },
           {
             "transaction_id": "TXN-103",
@@ -1120,7 +1120,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 70.0
+            "royalty_amount_usd": 66.5
           },
           {
             "transaction_id": "TXN-234A",
@@ -1134,7 +1134,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 37.5
+            "royalty_amount_usd": 34.875
           },
           {
             "transaction_id": "TXN-234B",
@@ -1148,7 +1148,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 45.0
+            "royalty_amount_usd": 42.75
           },
           {
             "transaction_id": "TXN-234C",
@@ -1162,7 +1162,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 41.25
+            "royalty_amount_usd": 39.1875
           },
           {
             "transaction_id": "TXN-311A",
@@ -1176,7 +1176,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 32.0
+            "royalty_amount_usd": 29.76
           },
           {
             "transaction_id": "TXN-311B",
@@ -1190,7 +1190,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 36.0
+            "royalty_amount_usd": 34.2
           },
           {
             "transaction_id": "TXN-050A",
@@ -1204,7 +1204,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 60.0
+            "royalty_amount_usd": 57.0
           },
           {
             "transaction_id": "TXN-102A",
@@ -1218,7 +1218,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 120.0
+            "royalty_amount_usd": 111.6
           }
         ],
         "promotions": [
@@ -1342,7 +1342,7 @@
           },
           "set": {
             "revenue_gross_usd": 100.0,
-            "royalty_amount_usd": 75.0
+            "royalty_amount_usd": 72.375
           }
         },
         {
@@ -1353,7 +1353,7 @@
           },
           "set": {
             "revenue_gross_usd": 120.0,
-            "royalty_amount_usd": 90.0
+            "royalty_amount_usd": 87.75
           }
         },
         {
@@ -1364,7 +1364,7 @@
           },
           "set": {
             "revenue_gross_usd": 110.0,
-            "royalty_amount_usd": 82.5
+            "royalty_amount_usd": 80.4375
           }
         }
       ]
@@ -1492,7 +1492,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 80.0
+            "royalty_amount_usd": 74.4
           },
           {
             "transaction_id": "TXN-002",
@@ -1506,7 +1506,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 96.0
+            "royalty_amount_usd": 91.2
           },
           {
             "transaction_id": "TXN-003",
@@ -1520,7 +1520,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 120.0
+            "royalty_amount_usd": 114.0
           },
           {
             "transaction_id": "TXN-100",
@@ -1534,7 +1534,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 63.0
+            "royalty_amount_usd": 58.59
           },
           {
             "transaction_id": "TXN-101",
@@ -1548,7 +1548,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 77.0
+            "royalty_amount_usd": 73.15
           },
           {
             "transaction_id": "TXN-102",
@@ -1562,7 +1562,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 91.0
+            "royalty_amount_usd": 86.45
           },
           {
             "transaction_id": "TXN-103",
@@ -1576,7 +1576,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 70.0
+            "royalty_amount_usd": 66.5
           },
           {
             "transaction_id": "TXN-234A",
@@ -1590,7 +1590,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 37.5
+            "royalty_amount_usd": 34.875
           },
           {
             "transaction_id": "TXN-234B",
@@ -1604,7 +1604,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 45.0
+            "royalty_amount_usd": 42.75
           },
           {
             "transaction_id": "TXN-234C",
@@ -1618,7 +1618,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 41.25
+            "royalty_amount_usd": 39.1875
           },
           {
             "transaction_id": "TXN-311A",
@@ -1632,7 +1632,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 32.0
+            "royalty_amount_usd": 29.76
           },
           {
             "transaction_id": "TXN-311B",
@@ -1646,7 +1646,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 36.0
+            "royalty_amount_usd": 34.2
           },
           {
             "transaction_id": "TXN-050A",
@@ -1660,7 +1660,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 60.0
+            "royalty_amount_usd": 57.0
           },
           {
             "transaction_id": "TXN-102A",
@@ -1674,7 +1674,7 @@
             "status": "COMPLETE",
             "promo_id": "",
             "bundle_name": "",
-            "royalty_amount_usd": 120.0
+            "royalty_amount_usd": 111.6
           }
         ],
         "promotions": [

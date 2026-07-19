@@ -137,8 +137,22 @@ retail_lines AS (
         1 AS units,
         t.revenue_gross_usd,
         (COALESCE(t.transaction_fee_usd, 0) + COALESCE(t.affiliate_commission_usd, 0)) AS deductions_usd,
-        COALESCE(t.royalty_amount_usd, 0) AS royalty_amount_usd
+        COALESCE(
+            t.royalty_amount_usd,
+            CASE
+                WHEN ac.catalog_royalty_fixed_usd IS NOT NULL THEN ac.catalog_royalty_fixed_usd
+                WHEN ac.catalog_royalty_pct IS NOT NULL THEN
+                    (t.revenue_gross_usd
+                     - COALESCE(t.transaction_fee_usd, 0)
+                     - COALESCE(t.affiliate_commission_usd, 0)
+                    ) * ac.catalog_royalty_pct
+                ELSE 0
+            END
+        ) AS royalty_amount_usd
     FROM transactions t
+    LEFT JOIN active_catalog ac
+        ON t.product_id = ac.product_id
+        AND ac.catalog_effective_from <= t.sale_date
     WHERE t.status = 'COMPLETE'
 ),
 b2b_lines AS (

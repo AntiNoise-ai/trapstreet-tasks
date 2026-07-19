@@ -12,7 +12,7 @@
         "product_id": "PID-088",
         "supplier_name": "Meridian Group",
         "sku": "MED-088-MG",
-        "royalty_amount_usd": 97.5
+        "royalty_amount_usd": 92.625
       }
     },
     {
@@ -25,7 +25,7 @@
         "product_id": "PID-088",
         "supplier_name": "Meridian Group",
         "sku": "MED-088-MG",
-        "royalty_amount_usd": 75.0
+        "royalty_amount_usd": 71.25
       }
     }
   ]
