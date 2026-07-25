@@ -1,0 +1,10 @@
+{
+  "id": "case_01",
+  "category": "call_chain",
+  "answer": [
+    "app/services/payment_service.py:charge_card",
+    "app/services/inventory_service.py:reserve_stock",
+    "app/services/inventory_service.py:_decrement",
+    "app/services/ledger_service.py:record_transaction"
+  ]
+}

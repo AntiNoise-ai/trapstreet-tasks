@@ -1,0 +1,10 @@
+{
+  "id": "case_04",
+  "category": "import_chain",
+  "answer": [
+    "app/api/router.py",
+    "app/api/orders_api.py",
+    "app/api/health_api.py",
+    "app/db/connection.py"
+  ]
+}

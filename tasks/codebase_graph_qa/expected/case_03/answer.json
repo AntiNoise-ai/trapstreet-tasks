@@ -1,0 +1,11 @@
+{
+  "id": "case_03",
+  "category": "call_chain",
+  "answer": [
+    "app/core/base_processor.py:validate",
+    "app/core/order_processor.py:finalize",
+    "app/core/decorators.py:_audit",
+    "app/core/ledger.py:post_entry",
+    "app/core/ledger.py:_write"
+  ]
+}

@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: Starting from `sales` in schema.sql, list every table it transitively depends on via an actually-declared foreign key constraint. Both inline `REFERENCES` and a separate `ALTER TABLE ... ADD CONSTRAINT ... FOREIGN KEY` statement count. A column that merely looks like a foreign key by name, with no declared constraint anywhere in the file, does NOT count. Use bare table names.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

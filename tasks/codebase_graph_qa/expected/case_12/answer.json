@@ -1,0 +1,8 @@
+{
+  "id": "case_12",
+  "category": "config_trace",
+  "answer": [
+    "app/bootstrap.py",
+    "app/checkout/flow.py"
+  ]
+}

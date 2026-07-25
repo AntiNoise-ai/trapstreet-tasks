@@ -1,0 +1,7 @@
+{
+  "id": "case_06",
+  "category": "import_chain",
+  "answer": [
+    "app/pricing/calculator.py"
+  ]
+}

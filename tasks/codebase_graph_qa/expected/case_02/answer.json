@@ -1,0 +1,10 @@
+{
+  "id": "case_02",
+  "category": "call_chain",
+  "answer": [
+    "app/services/payment_service.py:charge_card",
+    "app/services/payment_service.py:_log_charge",
+    "app/services/notification_service.py:notify_customer",
+    "app/services/notification_service.py:_send"
+  ]
+}

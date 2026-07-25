@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: Consider calling `OrderProcessor().run(item)`, where OrderProcessor is defined in app/core/order_processor.py and inherits `run` from BaseProcessor in app/core/base_processor.py. `finalize` is overridden in OrderProcessor and wrapped with the `@with_logging` decorator from app/core/decorators.py. List every function actually INVOKED when `run(item)` executes at runtime (excluding run itself) -- this includes methods called via `self.`, and includes whatever the decorator's wrapper calls when finalize is invoked. Do not include `with_logging` itself (it only runs once, at class-definition/decoration time, not when run() executes). Use `<path>:<function_name>` format, paths relative to repo/.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

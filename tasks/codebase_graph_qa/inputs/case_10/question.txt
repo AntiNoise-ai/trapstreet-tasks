@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: List every file that reads the config key `PAYMENT_TIMEOUT_MS` via an environment variable (exact key match only -- a similarly-named but different key does not count). Use paths relative to repo/.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

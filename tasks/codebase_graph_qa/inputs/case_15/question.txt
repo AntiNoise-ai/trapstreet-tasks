@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: docs/api.md documents a function called `estimate_delivery_date`, said to live in `src/shipping.py`. That exact name may or may not still exist there -- the function may have been renamed while keeping the same behavior, or it may have been removed entirely. Find the function in src/shipping.py that matches the DOCUMENTED BEHAVIOR (estimating a delivery date for an order), even if its name now differs from the doc -- do not match on superficial name or domain similarity alone (e.g. other shipping-related functions that do something else don't count). Answer with a JSON list containing exactly one string: `["<path>:<current_function_name>"]` if you find a behavioral match, or `["NOT_FOUND"]` if none exists.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

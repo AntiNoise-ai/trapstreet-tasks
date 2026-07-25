@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: List every file that is actually imported at RUNTIME (not merely referenced inside a `TYPE_CHECKING` block, which never executes) when app/models/order.py is loaded and `Order(...).total()` is subsequently called. Use paths relative to repo/. Exclude the entry file, and exclude any TYPE_CHECKING-only import.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

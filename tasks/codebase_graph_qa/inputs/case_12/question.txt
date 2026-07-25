@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: List every file that reads the feature flag `NEW_CHECKOUT` as defined in config/app.yaml -- i.e. any file that traces back to that yaml key via the app's config loader (app/bootstrap.py's `load_flags`). Do NOT count a file that reads a same-named but unrelated environment variable directly via `os.environ`, unconnected to the yaml file. Use paths relative to repo/.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

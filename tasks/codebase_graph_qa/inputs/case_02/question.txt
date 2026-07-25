@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: Starting from `handle_webhook` in app/handlers/webhook_handler.py, list every function it calls, directly or indirectly, within this repo (excluding handle_webhook itself). Note that `charge_card` is imported under the alias `pay` in this file. A function is only in scope if it's actually reachable by following calls starting from handle_webhook -- a function elsewhere that happens to call the same helper, but is never itself called from handle_webhook, does not count. Use `<path>:<function_name>` format, paths relative to repo/, e.g. `app/services/payment_service.py:charge_card`.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

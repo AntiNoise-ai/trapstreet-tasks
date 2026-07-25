@@ -1,0 +1,56 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: case_01
+  description: "Simple 3-hop call chain across 4 files, no indirection"
+  tags: [call_chain, easy]
+- id: case_02
+  description: "Call chain through a renamed import (`as pay`), with a distractor file that calls the same helper from outside the reachable chain"
+  tags: [call_chain, import_aliasing, precision]
+- id: case_03
+  description: "Call chain through inheritance, an overridden method, and a decorator wrapper, with unrelated dead code as a distractor"
+  tags: [call_chain, oop, decorators]
+- id: case_04
+  description: "Transitive import chain including a call-time import, with an unreferenced legacy file as a distractor"
+  tags: [import_chain, easy, precision]
+- id: case_05
+  description: "Import chain via a function-local import used to break a circular import"
+  tags: [import_chain, lazy_import]
+- id: case_06
+  description: "Distinguish real runtime imports from TYPE_CHECKING-only imports"
+  tags: [import_chain, type_checking, precision]
+- id: case_07
+  description: "Simple 2-hop foreign key chain, with an unrelated table as distractor"
+  tags: [schema_fk, easy, precision]
+- id: case_08
+  description: "Foreign key chain through a many-to-many join table, with a self-referencing FK that shouldn't add a new table"
+  tags: [schema_fk, self_reference, many_to_many]
+- id: case_09
+  description: "Foreign key chain mixing inline REFERENCES and ALTER TABLE syntax, with a same-named-but-unconstrained decoy column"
+  tags: [schema_fk, syntax_variants, precision]
+- id: case_10
+  description: "Direct os.environ config key read across two files, with a similarly-named-but-different key as distractor"
+  tags: [config_trace, env_var, precision]
+- id: case_11
+  description: "Config key read indirectly via a shared settings object's attribute"
+  tags: [config_trace, indirection]
+- id: case_12
+  description: "Config flag traced through a YAML loader, distinguished from an unrelated same-named environment variable"
+  tags: [config_trace, yaml, precision]
+- id: case_13
+  description: "Doc-documented function still exists under the same name -- confirm, don't hallucinate drift"
+  tags: [doc_code_xref, accurate_doc]
+- id: case_14
+  description: "Doc-documented function was renamed but kept the same behavior -- match by behavior, not name"
+  tags: [doc_code_xref, renamed]
+- id: case_15
+  description: "Doc-documented function was removed entirely, with same-domain decoy functions nearby"
+  tags: [doc_code_xref, removed, precision]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

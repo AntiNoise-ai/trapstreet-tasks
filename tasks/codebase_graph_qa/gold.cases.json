@@ -1,0 +1,218 @@
+{
+  "_doc": "Source of truth for the codebase_graph_qa task. All repo content is ORIGINAL/synthetic (authored for this task, not sourced from any real project) -- zero leakage risk, zero licensing exposure. inputs/ and expected/ are GENERATED from this file by build_cases.py -- edit here, never there.",
+  "cases": [
+    {
+      "id": "case_01",
+      "category": "call_chain",
+      "files": {
+        "app/handlers/order_handler.py": "from app.services.payment_service import charge_card\nfrom app.services.inventory_service import reserve_stock\n\n\ndef handle_order(order):\n    reserve_stock(order.items)\n    charge_card(order.customer_id, order.total)\n    return {\"status\": \"ok\"}\n",
+        "app/services/payment_service.py": "from app.services.ledger_service import record_transaction\n\n\ndef charge_card(customer_id, amount):\n    record_transaction(customer_id, amount, kind=\"charge\")\n    return True\n",
+        "app/services/inventory_service.py": "def reserve_stock(items):\n    for item in items:\n        _decrement(item)\n\n\ndef _decrement(item):\n    item.quantity -= 1\n",
+        "app/services/ledger_service.py": "def record_transaction(customer_id, amount, kind):\n    print(f\"{kind}: {customer_id} {amount}\")\n"
+      },
+      "question": "Starting from `handle_order` in app/handlers/order_handler.py, list every function it calls, directly or indirectly, within this repo (excluding handle_order itself). Use `<path>:<function_name>` format, paths relative to repo/, e.g. `app/services/payment_service.py:charge_card`.",
+      "answer": [
+        "app/services/payment_service.py:charge_card",
+        "app/services/inventory_service.py:reserve_stock",
+        "app/services/inventory_service.py:_decrement",
+        "app/services/ledger_service.py:record_transaction"
+      ]
+    },
+    {
+      "id": "case_02",
+      "category": "call_chain",
+      "files": {
+        "app/handlers/webhook_handler.py": "from app.services.payment_service import charge_card as pay\nfrom app.services.notification_service import notify_customer\n\n\ndef handle_webhook(event):\n    if event.type == \"payment.requested\":\n        pay(event.customer_id, event.amount)\n        notify_customer(event.customer_id, \"charged\")\n    return {\"status\": \"ok\"}\n",
+        "app/services/payment_service.py": "def charge_card(customer_id, amount):\n    _log_charge(customer_id, amount)\n    return True\n\n\ndef _log_charge(customer_id, amount):\n    print(f\"charge {customer_id} {amount}\")\n",
+        "app/services/notification_service.py": "def notify_customer(customer_id, message):\n    _send(customer_id, message)\n\n\ndef _send(customer_id, message):\n    print(f\"-> {customer_id}: {message}\")\n",
+        "app/services/report_service.py": "from app.services.payment_service import charge_card\n\n\ndef process(order):\n    # generates a nightly report; NOT part of the webhook flow, never called\n    # from handle_webhook.\n    charge_card(order.customer_id, order.total)\n    return \"reported\"\n"
+      },
+      "question": "Starting from `handle_webhook` in app/handlers/webhook_handler.py, list every function it calls, directly or indirectly, within this repo (excluding handle_webhook itself). Note that `charge_card` is imported under the alias `pay` in this file. A function is only in scope if it's actually reachable by following calls starting from handle_webhook -- a function elsewhere that happens to call the same helper, but is never itself called from handle_webhook, does not count. Use `<path>:<function_name>` format, paths relative to repo/, e.g. `app/services/payment_service.py:charge_card`.",
+      "answer": [
+        "app/services/payment_service.py:charge_card",
+        "app/services/payment_service.py:_log_charge",
+        "app/services/notification_service.py:notify_customer",
+        "app/services/notification_service.py:_send"
+      ]
+    },
+    {
+      "id": "case_03",
+      "category": "call_chain",
+      "files": {
+        "app/core/decorators.py": "import functools\n\n\ndef with_logging(func):\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        _audit(func.__name__)\n        return func(*args, **kwargs)\n    return wrapper\n\n\ndef _audit(name):\n    print(f\"audit: {name}\")\n",
+        "app/core/base_processor.py": "class BaseProcessor:\n    def run(self, item):\n        self.validate(item)\n        return self.finalize(item)\n\n    def validate(self, item):\n        if item is None:\n            raise ValueError(\"empty item\")\n",
+        "app/core/order_processor.py": "from app.core.base_processor import BaseProcessor\nfrom app.core.decorators import with_logging\nfrom app.core.ledger import post_entry\n\n\nclass OrderProcessor(BaseProcessor):\n    @with_logging\n    def finalize(self, item):\n        post_entry(item.id, item.total)\n        return \"finalized\"\n",
+        "app/core/ledger.py": "def post_entry(order_id, amount):\n    _write(order_id, amount)\n\n\ndef _write(order_id, amount):\n    print(f\"ledger: {order_id} {amount}\")\n\n\ndef reconcile_all():\n    # scheduled job, unrelated to OrderProcessor.run\n    print(\"reconciling\")\n"
+      },
+      "question": "Consider calling `OrderProcessor().run(item)`, where OrderProcessor is defined in app/core/order_processor.py and inherits `run` from BaseProcessor in app/core/base_processor.py. `finalize` is overridden in OrderProcessor and wrapped with the `@with_logging` decorator from app/core/decorators.py. List every function actually INVOKED when `run(item)` executes at runtime (excluding run itself) -- this includes methods called via `self.`, and includes whatever the decorator's wrapper calls when finalize is invoked. Do not include `with_logging` itself (it only runs once, at class-definition/decoration time, not when run() executes). Use `<path>:<function_name>` format, paths relative to repo/.",
+      "answer": [
+        "app/core/base_processor.py:validate",
+        "app/core/order_processor.py:finalize",
+        "app/core/decorators.py:_audit",
+        "app/core/ledger.py:post_entry",
+        "app/core/ledger.py:_write"
+      ]
+    },
+    {
+      "id": "case_04",
+      "category": "import_chain",
+      "files": {
+        "app/main.py": "import app.api.router as router\n\n\ndef start():\n    router.setup()\n",
+        "app/api/router.py": "from app.api import orders_api\nfrom app.api import health_api as health\n\n\ndef setup():\n    orders_api.register()\n    health.register()\n",
+        "app/api/orders_api.py": "from app.db import connection\n\n\ndef register():\n    connection.get_pool()\n",
+        "app/api/health_api.py": "def register():\n    print(\"health ok\")\n",
+        "app/db/connection.py": "def get_pool():\n    return object()\n",
+        "app/legacy/old_router.py": "from app.db import connection\n\n\ndef setup_legacy():\n    # not imported or called from anywhere in the app.main -> start() chain\n    connection.get_pool()\n"
+      },
+      "question": "Starting from app/main.py, list every other file in this repo that gets imported -- directly or transitively -- when app/main.py is loaded AND `start()` has been called normally (include modules imported inside function bodies at call time, not only module-load-time imports). Use paths relative to repo/. Exclude app/main.py itself.",
+      "answer": [
+        "app/api/router.py",
+        "app/api/orders_api.py",
+        "app/api/health_api.py",
+        "app/db/connection.py"
+      ]
+    },
+    {
+      "id": "case_05",
+      "category": "import_chain",
+      "files": {
+        "app/services/user_service.py": "def get_user(user_id):\n    from app.services.order_service import get_orders_for_user  # local import to avoid a circular import\n    orders = get_orders_for_user(user_id)\n    return {\"id\": user_id, \"orders\": orders}\n",
+        "app/services/order_service.py": "from app.services.pricing_service import total_for_order\n\n\ndef get_orders_for_user(user_id):\n    return [total_for_order(o) for o in _fetch(user_id)]\n\n\ndef _fetch(user_id):\n    return []\n",
+        "app/services/pricing_service.py": "def total_for_order(order):\n    return 0\n"
+      },
+      "question": "Starting from app/services/user_service.py, list every other file in this repo that is transitively imported when `get_user(user_id)` is called -- including imports that happen inside a function body rather than at the top of the file (those still count, they just execute lazily on first call). Use paths relative to repo/. Exclude the entry file itself.",
+      "answer": [
+        "app/services/order_service.py",
+        "app/services/pricing_service.py"
+      ]
+    },
+    {
+      "id": "case_06",
+      "category": "import_chain",
+      "files": {
+        "app/models/order.py": "from typing import TYPE_CHECKING\n\nif TYPE_CHECKING:\n    from app.models.customer import Customer  # only for type hints, never executes at runtime\n\n\nclass Order:\n    def __init__(self, customer_id):\n        self.customer_id = customer_id\n\n    def total(self):\n        from app.pricing.calculator import compute_total  # real runtime import\n        return compute_total(self)\n",
+        "app/models/customer.py": "class Customer:\n    pass\n",
+        "app/pricing/calculator.py": "def compute_total(order):\n    return 0\n"
+      },
+      "question": "List every file that is actually imported at RUNTIME (not merely referenced inside a `TYPE_CHECKING` block, which never executes) when app/models/order.py is loaded and `Order(...).total()` is subsequently called. Use paths relative to repo/. Exclude the entry file, and exclude any TYPE_CHECKING-only import.",
+      "answer": [
+        "app/pricing/calculator.py"
+      ]
+    },
+    {
+      "id": "case_07",
+      "category": "schema_fk",
+      "files": {
+        "schema.sql": "CREATE TABLE customers (\n    id INTEGER PRIMARY KEY,\n    name TEXT NOT NULL\n);\n\nCREATE TABLE orders (\n    id INTEGER PRIMARY KEY,\n    customer_id INTEGER NOT NULL REFERENCES customers(id),\n    total NUMERIC NOT NULL\n);\n\nCREATE TABLE order_items (\n    id INTEGER PRIMARY KEY,\n    order_id INTEGER NOT NULL REFERENCES orders(id),\n    sku TEXT NOT NULL\n);\n\nCREATE TABLE warehouses (\n    id INTEGER PRIMARY KEY,\n    location TEXT\n);\n"
+      },
+      "question": "Starting from `order_items` in schema.sql, list every table it transitively depends on via foreign key (i.e. every table reachable by following FK references outward, excluding order_items itself). Use bare table names.",
+      "answer": [
+        "orders",
+        "customers"
+      ]
+    },
+    {
+      "id": "case_08",
+      "category": "schema_fk",
+      "files": {
+        "schema.sql": "CREATE TABLE employees (\n    id INTEGER PRIMARY KEY,\n    name TEXT NOT NULL,\n    manager_id INTEGER REFERENCES employees(id)\n);\n\nCREATE TABLE projects (\n    id INTEGER PRIMARY KEY,\n    title TEXT NOT NULL\n);\n\nCREATE TABLE project_members (\n    project_id INTEGER NOT NULL REFERENCES projects(id),\n    employee_id INTEGER NOT NULL REFERENCES employees(id),\n    PRIMARY KEY (project_id, employee_id)\n);\n\nCREATE TABLE departments (\n    id INTEGER PRIMARY KEY,\n    name TEXT\n);\n"
+      },
+      "question": "Starting from `project_members` in schema.sql, list every table it transitively depends on via foreign key, following references outward (exclude project_members itself; note `employees` has a self-referencing FK via manager_id -- that doesn't add any new table beyond employees itself; list each reachable table only once). Use bare table names.",
+      "answer": [
+        "projects",
+        "employees"
+      ]
+    },
+    {
+      "id": "case_09",
+      "category": "schema_fk",
+      "files": {
+        "schema.sql": "CREATE TABLE regions (\n    id INTEGER PRIMARY KEY,\n    name TEXT NOT NULL\n);\n\nCREATE TABLE stores (\n    id INTEGER PRIMARY KEY,\n    region_id INTEGER NOT NULL,\n    legacy_customer_ref INTEGER,  -- old free-text field from a decommissioned system, NOT a real FK: no constraint is declared on it anywhere, and there is no customers table in this schema at all\n    name TEXT\n);\n\nALTER TABLE stores\n    ADD CONSTRAINT fk_stores_region\n    FOREIGN KEY (region_id) REFERENCES regions(id);\n\nCREATE TABLE sales (\n    id INTEGER PRIMARY KEY,\n    store_id INTEGER NOT NULL REFERENCES stores(id),\n    amount NUMERIC\n);\n"
+      },
+      "question": "Starting from `sales` in schema.sql, list every table it transitively depends on via an actually-declared foreign key constraint. Both inline `REFERENCES` and a separate `ALTER TABLE ... ADD CONSTRAINT ... FOREIGN KEY` statement count. A column that merely looks like a foreign key by name, with no declared constraint anywhere in the file, does NOT count. Use bare table names.",
+      "answer": [
+        "stores",
+        "regions"
+      ]
+    },
+    {
+      "id": "case_10",
+      "category": "config_trace",
+      "files": {
+        "app/billing/charge.py": "import os\n\n\ndef charge(amount):\n    timeout = int(os.environ[\"PAYMENT_TIMEOUT_MS\"])\n    return _do_charge(amount, timeout)\n\n\ndef _do_charge(amount, timeout):\n    return True\n",
+        "app/billing/refund.py": "import os\n\n\ndef refund(amount):\n    timeout = int(os.environ.get(\"PAYMENT_TIMEOUT_MS\", \"3000\"))\n    return True\n",
+        "app/notifications/email.py": "import os\n\n\ndef send(to):\n    timeout = int(os.environ[\"EMAIL_TIMEOUT_MS\"])  # a different key -- not PAYMENT_TIMEOUT_MS\n    return True\n"
+      },
+      "question": "List every file that reads the config key `PAYMENT_TIMEOUT_MS` via an environment variable (exact key match only -- a similarly-named but different key does not count). Use paths relative to repo/.",
+      "answer": [
+        "app/billing/charge.py",
+        "app/billing/refund.py"
+      ]
+    },
+    {
+      "id": "case_11",
+      "category": "config_trace",
+      "files": {
+        "app/config.py": "import os\n\n\nclass Settings:\n    def __init__(self):\n        self.RETRY_LIMIT = int(os.environ.get(\"RETRY_LIMIT\", \"3\"))\n        self.QUEUE_NAME = os.environ.get(\"QUEUE_NAME\", \"default\")\n\n\nsettings = Settings()\n",
+        "app/workers/order_worker.py": "from app.config import settings\n\n\ndef process():\n    for _ in range(settings.RETRY_LIMIT):\n        _attempt()\n\n\ndef _attempt():\n    return True\n",
+        "app/workers/email_worker.py": "from app.config import settings\n\n\ndef process():\n    print(settings.QUEUE_NAME)\n"
+      },
+      "question": "List every file that reads the config key `RETRY_LIMIT`, either directly (via `os.environ`) or indirectly via the shared `settings` object defined in app/config.py (i.e. any file that accesses `settings.RETRY_LIMIT`). Include app/config.py itself, since that's where the environment variable is actually read. A file that only reads a different `settings` attribute does not count. Use paths relative to repo/.",
+      "answer": [
+        "app/config.py",
+        "app/workers/order_worker.py"
+      ]
+    },
+    {
+      "id": "case_12",
+      "category": "config_trace",
+      "files": {
+        "config/app.yaml": "feature_flags:\n  NEW_CHECKOUT: true\n  BETA_SEARCH: false\n",
+        "app/bootstrap.py": "import yaml\n\n\ndef load_flags():\n    with open(\"config/app.yaml\") as f:\n        data = yaml.safe_load(f)\n    return data[\"feature_flags\"]\n",
+        "app/checkout/flow.py": "from app.bootstrap import load_flags\n\n\ndef start_checkout():\n    flags = load_flags()\n    if flags[\"NEW_CHECKOUT\"]:\n        return _new_flow()\n    return _old_flow()\n\n\ndef _new_flow():\n    return \"new\"\n\n\ndef _old_flow():\n    return \"old\"\n",
+        "app/search/flow.py": "import os\n\n\ndef search(query):\n    # reads an OS environment variable that happens to share a name with the\n    # unrelated feature_flags.NEW_CHECKOUT key in config/app.yaml -- these are\n    # two different config sources with no connection to each other.\n    if os.environ.get(\"NEW_CHECKOUT\") == \"1\":\n        pass\n    return []\n"
+      },
+      "question": "List every file that reads the feature flag `NEW_CHECKOUT` as defined in config/app.yaml -- i.e. any file that traces back to that yaml key via the app's config loader (app/bootstrap.py's `load_flags`). Do NOT count a file that reads a same-named but unrelated environment variable directly via `os.environ`, unconnected to the yaml file. Use paths relative to repo/.",
+      "answer": [
+        "app/bootstrap.py",
+        "app/checkout/flow.py"
+      ]
+    },
+    {
+      "id": "case_13",
+      "category": "doc_code_xref",
+      "files": {
+        "docs/api.md": "## Pricing\n\n### calculate_discount(price, code)\nLocated in `src/pricing.py`. Applies a promo code discount to a price.\n",
+        "src/pricing.py": "def calculate_discount(price, code):\n    if code == \"SAVE10\":\n        return price * 0.9\n    return price\n"
+      },
+      "question": "docs/api.md documents a function called `calculate_discount`, said to live in `src/pricing.py`. Confirm whether a function with that exact name and documented behavior still exists there. Answer with a JSON list containing exactly one string: `[\"<path>:<function_name>\"]` giving its current location (path relative to repo/), or `[\"NOT_FOUND\"]` if no function matching the documented behavior exists there anymore (whether renamed or removed).",
+      "answer": [
+        "src/pricing.py:calculate_discount"
+      ]
+    },
+    {
+      "id": "case_14",
+      "category": "doc_code_xref",
+      "files": {
+        "docs/api.md": "## Notifications\n\n### send_receipt_email(order_id)\nLocated in `src/notify.py`. Sends the customer their order receipt by email.\n",
+        "src/notify.py": "def send_order_receipt(order_id):\n    \"\"\"Sends the customer their order receipt by email. (Renamed from send_receipt_email; same behavior.)\"\"\"\n    _dispatch(order_id)\n\n\ndef _dispatch(order_id):\n    print(f\"emailing receipt for {order_id}\")\n"
+      },
+      "question": "docs/api.md documents a function called `send_receipt_email`, said to live in `src/notify.py`. That exact name may or may not still exist there -- the function may have been renamed while keeping the same behavior, or it may have been removed entirely. Find the function in src/notify.py that matches the DOCUMENTED BEHAVIOR (sending the customer their order receipt by email), even if its name now differs from the doc. Answer with a JSON list containing exactly one string: `[\"<path>:<current_function_name>\"]` if you find a behavioral match (renamed or not), or `[\"NOT_FOUND\"]` if none exists.",
+      "answer": [
+        "src/notify.py:send_order_receipt"
+      ]
+    },
+    {
+      "id": "case_15",
+      "category": "doc_code_xref",
+      "files": {
+        "docs/api.md": "## Shipping\n\n### estimate_delivery_date(order_id)\nLocated in `src/shipping.py`. Returns the estimated delivery date for an order based on carrier and destination.\n",
+        "src/shipping.py": "def get_shipping_cost(order_id):\n    \"\"\"Returns the shipping cost for an order. Unrelated to delivery dates.\"\"\"\n    return 0\n\n\ndef track_package(tracking_number):\n    \"\"\"Looks up the current package location for a tracking number. Also unrelated to delivery dates.\"\"\"\n    return \"in transit\"\n"
+      },
+      "question": "docs/api.md documents a function called `estimate_delivery_date`, said to live in `src/shipping.py`. That exact name may or may not still exist there -- the function may have been renamed while keeping the same behavior, or it may have been removed entirely. Find the function in src/shipping.py that matches the DOCUMENTED BEHAVIOR (estimating a delivery date for an order), even if its name now differs from the doc -- do not match on superficial name or domain similarity alone (e.g. other shipping-related functions that do something else don't count). Answer with a JSON list containing exactly one string: `[\"<path>:<current_function_name>\"]` if you find a behavioral match, or `[\"NOT_FOUND\"]` if none exists.",
+      "answer": [
+        "NOT_FOUND"
+      ]
+    }
+  ]
+}

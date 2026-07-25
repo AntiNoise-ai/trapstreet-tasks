@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: docs/api.md documents a function called `calculate_discount`, said to live in `src/pricing.py`. Confirm whether a function with that exact name and documented behavior still exists there. Answer with a JSON list containing exactly one string: `["<path>:<function_name>"]` giving its current location (path relative to repo/), or `["NOT_FOUND"]` if no function matching the documented behavior exists there anymore (whether renamed or removed).
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

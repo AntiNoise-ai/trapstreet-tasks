@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: Starting from `project_members` in schema.sql, list every table it transitively depends on via foreign key, following references outward (exclude project_members itself; note `employees` has a self-referencing FK via manager_id -- that doesn't add any new table beyond employees itself; list each reachable table only once). Use bare table names.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.

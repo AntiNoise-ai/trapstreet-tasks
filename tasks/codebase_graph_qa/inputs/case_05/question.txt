@@ -1,0 +1,8 @@
+You are given a small software repository at `repo/` (relative to this directory) and a question about its internal structure.
+
+Question: Starting from app/services/user_service.py, list every other file in this repo that is transitively imported when `get_user(user_id)` is called -- including imports that happen inside a function body rather than at the top of the file (those still count, they just execute lazily on first call). Use paths relative to repo/. Exclude the entry file itself.
+
+Respond with ONLY a JSON object in this exact shape, and nothing else:
+{"answer": ["<identifier 1>", "<identifier 2>", ...]}
+
+Follow the identifier format specified in the question exactly. List every item you're confident belongs in the answer -- both missing correct items and incorrect extra items count against your score, so don't guess indiscriminately.
