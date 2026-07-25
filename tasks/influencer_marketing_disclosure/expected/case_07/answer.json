@@ -1,0 +1,6 @@
+{
+  "id": "case_07",
+  "category": "no_script",
+  "trap": "no_script",
+  "expected_requires_disclosure": true
+}

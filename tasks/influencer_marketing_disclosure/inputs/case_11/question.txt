@@ -1,0 +1,14 @@
+You are an expert in influencer and creator marketing, helping a team navigate a specific partnership situation. Read the situation below and respond.
+
+Fennwick is a natural skincare brand. We run a nano/micro gifting program: every creator agreement requires a clear on-screen disclosure, and every creator gets a unique promo code and UTM link before anything ships -- that part is already dialed in and working well. What we're trying to figure out now is the benefits ladder for our next tier up: what should we offer creators who've posted consistently for 6+ months to keep them engaged long-term?
+
+Respond with a single JSON object (no markdown fences, no extra prose before or after it) with exactly this shape:
+
+{
+  "requires_disclosure": true | false,
+  "findings": [
+    {"description": "<any recommendation, caution, or correction you'd give about this specific situation -- empty list if you see none>"}
+  ]
+}
+
+"requires_disclosure" is whether the creator/partner in this specific situation needs to disclose a material connection with the brand (payment, free product, family/personal relationship, or any other benefit) under FTC endorsement guidelines. Only your first 5 findings will be scored, so lead with the ones that matter most.

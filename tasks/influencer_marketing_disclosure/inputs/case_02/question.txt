@@ -1,0 +1,14 @@
+You are an expert in influencer and creator marketing, helping a team navigate a specific partnership situation. Read the situation below and respond.
+
+Ledgerbase is a B2B accounting SaaS. We want to give a YouTuber who covers small-business tools a free year of our top-tier plan (normally $2,400/year) in exchange for an honest review video. No money changes hands, just free software access. Since it's not a cash payment, do we still need them to disclose the arrangement in the video?
+
+Respond with a single JSON object (no markdown fences, no extra prose before or after it) with exactly this shape:
+
+{
+  "requires_disclosure": true | false,
+  "findings": [
+    {"description": "<any recommendation, caution, or correction you'd give about this specific situation -- empty list if you see none>"}
+  ]
+}
+
+"requires_disclosure" is whether the creator/partner in this specific situation needs to disclose a material connection with the brand (payment, free product, family/personal relationship, or any other benefit) under FTC endorsement guidelines. Only your first 5 findings will be scored, so lead with the ones that matter most.

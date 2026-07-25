@@ -1,0 +1,6 @@
+{
+  "id": "case_03",
+  "category": "gifting_disclosure",
+  "trap": "gifting_disclosure",
+  "expected_requires_disclosure": true
+}

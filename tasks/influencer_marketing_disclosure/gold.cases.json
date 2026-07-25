@@ -1,0 +1,148 @@
+{
+  "_doc": "Source of truth for the influencer_marketing_disclosure task. inputs/ and expected/ are GENERATED from this file by build_cases.py -- edit here, never there.",
+  "cases": [
+    {
+      "id": "case_01",
+      "category": "gifting_disclosure",
+      "trap": "gifting_disclosure",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "disclosure"
+      ],
+      "description": "Free product gifting, team assumes no payment = no disclosure needed -- gifting-is-not-a-loophole trap.",
+      "scenario": "Roastwell is a DTC coffee subscription brand. We want to send free bags of coffee to a handful of nano-tier creators (2k-8k followers) in exchange for an honest post if they like it -- no cash payment involved. Since nothing is being paid, does the creator still need to say it was gifted or use a disclosure hashtag?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_02",
+      "category": "gifting_disclosure",
+      "trap": "gifting_disclosure",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "disclosure"
+      ],
+      "description": "Free service access (not physical product) as compensation, same disclosure trap in a different form.",
+      "scenario": "Ledgerbase is a B2B accounting SaaS. We want to give a YouTuber who covers small-business tools a free year of our top-tier plan (normally $2,400/year) in exchange for an honest review video. No money changes hands, just free software access. Since it's not a cash payment, do we still need them to disclose the arrangement in the video?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_03",
+      "category": "gifting_disclosure",
+      "trap": "gifting_disclosure",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "disclosure"
+      ],
+      "description": "Family/personal relationship posting for free as a favor -- still a material connection.",
+      "scenario": "Our founder's cousin has a decent Instagram following (about 15k) in the same city as our new restaurant. She wants to post about her visit as a favor to family -- we're not paying her and she's not getting a free meal, she's just posting because she's excited for us. Since there's no payment or free product involved and it's just a family member being supportive, is there anything we need to worry about disclosure-wise?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_04",
+      "category": "attribution",
+      "trap": "attribution",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "attribution"
+      ],
+      "description": "Audio-only podcast sponsorship, no clickable links -- needs promo-code-specific attribution.",
+      "scenario": "Fernway is a plant-delivery startup. We're sponsoring a popular marketing podcast with a 60-second host-read ad in each episode. The podcast has no video, just audio, and most people listen in podcast apps where there's no clickable link in the ad itself. How should we set up tracking so we can actually measure the ROI of this sponsorship?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_05",
+      "category": "attribution",
+      "trap": "attribution",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "attribution"
+      ],
+      "description": "YouTube sponsorship relying only on a description link, misses the attribution blind spot -- needs promo code + landing page + survey.",
+      "scenario": "Hazelloop is a reusable packaging startup. We sponsored a YouTuber who mentions us on-camera and puts a link in the video description. So far our plan for measuring results is just watching for a bump in link clicks from the description. Is that enough to actually understand this sponsorship's impact, or are we going to miss things?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_06",
+      "category": "no_script",
+      "trap": "no_script",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "creative-brief"
+      ],
+      "description": "Brand asks for a literal word-for-word script for the creator to read on camera -- should decline and offer a brief instead.",
+      "scenario": "Suncrate is a solar-powered cooler brand. We're working with a camping and outdoors creator on a sponsored video. Can you write us a word-for-word script -- exactly what the creator should say, start to finish -- so we know precisely what will be said about the product?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_07",
+      "category": "no_script",
+      "trap": "no_script",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "creative-brief"
+      ],
+      "description": "Same trap for Instagram caption copy -- 'don't leave anything to interpretation.'",
+      "scenario": "Mellowroot is an herbal tea brand. We have a sponsored Instagram post going out with a lifestyle creator next week. Can you write the exact caption wording for her to post, word for word, so there's no room for her to improvise or leave anything to interpretation?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_08",
+      "category": "macro_flat_fee",
+      "trap": "macro_flat_fee",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "deal-structure"
+      ],
+      "description": "Naive flat-fee-only deal with a large macro creator, no other terms -- misses hybrid comp, usage rights, and the micro/nano alternative.",
+      "scenario": "Vintix is a vintage-inspired sneaker brand. A creator with about 2 million followers reached out with a flat rate of $18,000 for one sponsored video. We're planning to just pay their rate for the single post and call it done. Anything we should think about before agreeing to that?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_09",
+      "category": "macro_flat_fee",
+      "trap": "macro_flat_fee",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "deal-structure"
+      ],
+      "description": "Same trap, celebrity-tier creator and a single YouTube integration.",
+      "scenario": "Northlume is a smart-lighting startup. A creator with 850k YouTube subscribers quoted us a flat $25,000 fee for a single sponsored integration in their next video, no other deliverables. We're leaning toward just paying it since their audience is a good fit. What should we think through before locking that in?",
+      "expected_requires_disclosure": true
+    },
+    {
+      "id": "case_10",
+      "category": "clean_control",
+      "trap": "none",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "clean"
+      ],
+      "description": "Genuine unprompted organic advocate, zero material connection -- should NOT hallucinate a disclosure requirement.",
+      "scenario": "Bramblewood is a small furniture maker. A long-time customer with about 9k Instagram followers posted about her new dining table completely on her own -- we didn't ask her to, we're not paying her, and we never sent her anything for free. We just noticed the post and want to know if there's anything we need to do on our end regarding disclosure.",
+      "expected_requires_disclosure": false
+    },
+    {
+      "id": "case_11",
+      "category": "clean_control",
+      "trap": "none",
+      "tags": [
+        "marketing",
+        "influencer-marketing",
+        "clean"
+      ],
+      "description": "Already-correct gifting program with disclosure and attribution both properly set up -- asks a genuinely different next-step question, should not re-flag solved problems.",
+      "scenario": "Fennwick is a natural skincare brand. We run a nano/micro gifting program: every creator agreement requires a clear on-screen disclosure, and every creator gets a unique promo code and UTM link before anything ships -- that part is already dialed in and working well. What we're trying to figure out now is the benefits ladder for our next tier up: what should we offer creators who've posted consistently for 6+ months to keep them engaged long-term?",
+      "expected_requires_disclosure": true
+    }
+  ]
+}

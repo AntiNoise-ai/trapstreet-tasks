@@ -1,0 +1,6 @@
+{
+  "id": "case_04",
+  "category": "attribution",
+  "trap": "attribution",
+  "expected_requires_disclosure": true
+}

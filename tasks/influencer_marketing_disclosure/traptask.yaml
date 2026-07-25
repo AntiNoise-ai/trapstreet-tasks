@@ -1,0 +1,44 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: case_01
+  description: "Free product gifting, team assumes no payment = no disclosure needed -- gifting-is-not-a-loophole trap."
+  tags: [marketing, influencer-marketing, disclosure]
+- id: case_02
+  description: "Free service access (not physical product) as compensation, same disclosure trap in a different form."
+  tags: [marketing, influencer-marketing, disclosure]
+- id: case_03
+  description: "Family/personal relationship posting for free as a favor -- still a material connection."
+  tags: [marketing, influencer-marketing, disclosure]
+- id: case_04
+  description: "Audio-only podcast sponsorship, no clickable links -- needs promo-code-specific attribution."
+  tags: [marketing, influencer-marketing, attribution]
+- id: case_05
+  description: "YouTube sponsorship relying only on a description link, misses the attribution blind spot."
+  tags: [marketing, influencer-marketing, attribution]
+- id: case_06
+  description: "Brand asks for a literal word-for-word script for the creator to read on camera -- should decline and offer a brief instead."
+  tags: [marketing, influencer-marketing, creative-brief]
+- id: case_07
+  description: "Same trap for Instagram caption copy -- 'don't leave anything to interpretation.'"
+  tags: [marketing, influencer-marketing, creative-brief]
+- id: case_08
+  description: "Naive flat-fee-only deal with a large macro creator, no other terms -- misses hybrid comp, usage rights, and the micro/nano alternative."
+  tags: [marketing, influencer-marketing, deal-structure]
+- id: case_09
+  description: "Same trap, celebrity-tier creator and a single YouTube integration."
+  tags: [marketing, influencer-marketing, deal-structure]
+- id: case_10
+  description: "Genuine unprompted organic advocate, zero material connection -- should NOT hallucinate a disclosure requirement."
+  tags: [marketing, influencer-marketing, clean]
+- id: case_11
+  description: "Already-correct gifting program with disclosure and attribution both properly set up -- asks a genuinely different next-step question, should not re-flag solved problems."
+  tags: [marketing, influencer-marketing, clean]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

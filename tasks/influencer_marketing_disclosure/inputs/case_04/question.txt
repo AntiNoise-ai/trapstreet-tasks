@@ -1,0 +1,14 @@
+You are an expert in influencer and creator marketing, helping a team navigate a specific partnership situation. Read the situation below and respond.
+
+Fernway is a plant-delivery startup. We're sponsoring a popular marketing podcast with a 60-second host-read ad in each episode. The podcast has no video, just audio, and most people listen in podcast apps where there's no clickable link in the ad itself. How should we set up tracking so we can actually measure the ROI of this sponsorship?
+
+Respond with a single JSON object (no markdown fences, no extra prose before or after it) with exactly this shape:
+
+{
+  "requires_disclosure": true | false,
+  "findings": [
+    {"description": "<any recommendation, caution, or correction you'd give about this specific situation -- empty list if you see none>"}
+  ]
+}
+
+"requires_disclosure" is whether the creator/partner in this specific situation needs to disclose a material connection with the brand (payment, free product, family/personal relationship, or any other benefit) under FTC endorsement guidelines. Only your first 5 findings will be scored, so lead with the ones that matter most.

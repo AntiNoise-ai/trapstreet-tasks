@@ -1,0 +1,6 @@
+{
+  "id": "case_09",
+  "category": "macro_flat_fee",
+  "trap": "macro_flat_fee",
+  "expected_requires_disclosure": true
+}

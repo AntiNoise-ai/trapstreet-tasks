@@ -1,0 +1,14 @@
+You are an expert in influencer and creator marketing, helping a team navigate a specific partnership situation. Read the situation below and respond.
+
+Our founder's cousin has a decent Instagram following (about 15k) in the same city as our new restaurant. She wants to post about her visit as a favor to family -- we're not paying her and she's not getting a free meal, she's just posting because she's excited for us. Since there's no payment or free product involved and it's just a family member being supportive, is there anything we need to worry about disclosure-wise?
+
+Respond with a single JSON object (no markdown fences, no extra prose before or after it) with exactly this shape:
+
+{
+  "requires_disclosure": true | false,
+  "findings": [
+    {"description": "<any recommendation, caution, or correction you'd give about this specific situation -- empty list if you see none>"}
+  ]
+}
+
+"requires_disclosure" is whether the creator/partner in this specific situation needs to disclose a material connection with the brand (payment, free product, family/personal relationship, or any other benefit) under FTC endorsement guidelines. Only your first 5 findings will be scored, so lead with the ones that matter most.

@@ -1,0 +1,6 @@
+{
+  "id": "case_10",
+  "category": "clean_control",
+  "trap": "none",
+  "expected_requires_disclosure": false
+}
