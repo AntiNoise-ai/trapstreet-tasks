@@ -1,0 +1,2 @@
+subscription_id,customer_id,plan_id,addon_ids,discount_code,status,start_date
+SUB-004,CUST-004,PLAN-ENTERPRISE,ADDON-SSO;ADDON-AUDIT;ADDON-PRIORITY,PARTNER20,active,2023-08-01

@@ -1,0 +1,28 @@
+{
+  "id": "case_04",
+  "category": "discount_code_pct_correction",
+  "gold_edits": [
+    {
+      "file": "discount_codes.csv",
+      "op": "update",
+      "match": {
+        "code": "PARTNER20"
+      },
+      "set": {
+        "discount_pct": 0.25
+      }
+    },
+    {
+      "file": "invoices.csv",
+      "op": "update",
+      "match": {
+        "invoice_id": "INV-4002"
+      },
+      "set": {
+        "baked_discount_applied_usd": 253.0,
+        "baked_tax_usd": 144.21,
+        "baked_total_usd": 903.21
+      }
+    }
+  ]
+}

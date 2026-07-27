@@ -1,0 +1,3 @@
+invoice_id,subscription_id,period,baked_customer_name,baked_plan_name,baked_addon_names,baked_base_price_usd,baked_addon_total_usd,baked_discount_applied_usd,baked_tax_usd,baked_total_usd,status
+INV-4001,SUB-004,2024-06,Umbrella GmbH,Enterprise Monthly,Audit Log Export; Priority Support; Single Sign-On,899.0,113.0,101.2,173.05,1083.85,paid
+INV-4002,SUB-004,2024-08,Umbrella GmbH,Enterprise Monthly,Audit Log Export; Priority Support; Single Sign-On,899.0,113.0,202.4,153.82,963.42,paid

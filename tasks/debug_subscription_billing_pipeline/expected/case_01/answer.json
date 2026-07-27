@@ -1,0 +1,27 @@
+{
+  "id": "case_01",
+  "category": "region_migration_dated",
+  "gold_edits": [
+    {
+      "file": "customers.csv",
+      "op": "update",
+      "match": {
+        "customer_id": "CUST-001"
+      },
+      "set": {
+        "region_id": "REG-TX"
+      }
+    },
+    {
+      "file": "invoices.csv",
+      "op": "update",
+      "match": {
+        "invoice_id": "INV-1002"
+      },
+      "set": {
+        "baked_tax_usd": 0.0,
+        "baked_total_usd": 167.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+subscription_id,customer_id,plan_id,addon_ids,discount_code,status,start_date
+SUB-002,CUST-002,PLAN-SCALE,ADDON-PRIORITY,,active,2023-04-01

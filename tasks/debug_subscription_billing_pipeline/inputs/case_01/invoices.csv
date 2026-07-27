@@ -1,0 +1,4 @@
+invoice_id,subscription_id,period,baked_customer_name,baked_plan_name,baked_addon_names,baked_base_price_usd,baked_addon_total_usd,baked_discount_applied_usd,baked_tax_usd,baked_total_usd,status
+INV-1001,SUB-001,2024-01,Acme Corp,Growth Monthly,API Access; Single Sign-On,99.0,68.0,0.0,14.2,181.19,paid
+INV-1002,SUB-001,2024-02,Acme Corp,Growth Monthly,API Access; Single Sign-On,99.0,68.0,0.0,14.2,181.19,paid
+INV-1003,SUB-002,2024-02,Globex Ltd,Scale Monthly,Priority Support,299.0,39.0,0.0,67.6,405.6,paid

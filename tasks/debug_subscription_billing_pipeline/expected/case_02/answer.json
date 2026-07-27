@@ -1,0 +1,42 @@
+{
+  "id": "case_02",
+  "category": "plan_price_change_dated",
+  "gold_edits": [
+    {
+      "file": "plans.csv",
+      "op": "update",
+      "match": {
+        "plan_id": "PLAN-GROWTH"
+      },
+      "set": {
+        "base_price_usd": 129.0
+      }
+    },
+    {
+      "file": "invoices.csv",
+      "op": "update",
+      "match": {
+        "invoice_id": "INV-2002"
+      },
+      "set": {
+        "baked_base_price_usd": 129.0,
+        "baked_discount_applied_usd": 12.9,
+        "baked_tax_usd": 9.87,
+        "baked_total_usd": 125.97
+      }
+    },
+    {
+      "file": "invoices.csv",
+      "op": "update",
+      "match": {
+        "invoice_id": "INV-2004"
+      },
+      "set": {
+        "baked_base_price_usd": 129.0,
+        "baked_discount_applied_usd": 50.0,
+        "baked_tax_usd": 7.84,
+        "baked_total_usd": 105.84
+      }
+    }
+  ]
+}

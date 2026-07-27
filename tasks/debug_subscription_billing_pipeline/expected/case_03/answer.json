@@ -1,0 +1,17 @@
+{
+  "id": "case_03",
+  "category": "addon_rename_reprice_no_backfill",
+  "gold_edits": [
+    {
+      "file": "addons.csv",
+      "op": "update",
+      "match": {
+        "addon_id": "ADDON-PRIORITY"
+      },
+      "set": {
+        "addon_name": "Premium Support",
+        "addon_price_usd": 59.0
+      }
+    }
+  ]
+}

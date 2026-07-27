@@ -1,0 +1,3 @@
+customer_id,customer_name,region_id,signup_date
+CUST-001,Acme Corp,REG-CA,2022-01-10
+CUST-002,Globex Ltd,REG-UK,2022-03-22
