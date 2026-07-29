@@ -1,0 +1,27 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+  - id: netflix_2017_current_liab
+    description: "Netflix FY2017 total current liabilities (USD millions). Single-statement extraction from the consolidated balance sheet."
+    tags: [balance_sheet, single_statement, basic_metric, large_cap]
+
+  - id: aes_2022_roa
+    description: "AES FY2022 return on assets — derived from net income / avg(total assets 2021, 2022). Requires balance-sheet + income-statement cross-reference."
+    tags: [derived_metric, multi_statement, ratio]
+
+  - id: threem_2018_net_ppne
+    description: "3M FY2018 net property, plant & equipment (USD billions). Single-statement extraction; convert millions → billions."
+    tags: [balance_sheet, single_statement, basic_metric, unit_conversion]
+
+  - id: walmart_2018_dpo
+    description: "Walmart FY2018 days payable outstanding — derived: 365 * avg(AP) / (COGS + Δinventory). Multi-statement, tricky averaging."
+    tags: [derived_metric, multi_statement, ratio, hard]
+
+  - id: block_2016_working_capital
+    description: "Block (Square) FY2016 working capital ratio = total current assets / total current liabilities."
+    tags: [balance_sheet, single_statement, ratio]
+
+judge:
+  cmd: python3 judge.py
