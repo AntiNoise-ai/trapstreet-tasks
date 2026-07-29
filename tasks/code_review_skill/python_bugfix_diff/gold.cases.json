@@ -19,7 +19,13 @@
         "1-indexed",
         "boundary condition",
         "wrong range",
-        "out of range"
+        "out of range",
+        "+1 correction",
+        "1-12 range",
+        "valid 1-12",
+        "falls outside",
+        "outside the valid range",
+        "no correction to keep"
       ],
       "bug_description": "The month field is 1-based (1-12), but its low-bound is computed with `dt.month % step` instead of the 1-based formula `((dt.month - 1) % step) + 1` already used for the day field a few lines above. When step evenly divides the month, this yields 0, which is outside the valid 1-12 range."
     },
@@ -128,7 +134,13 @@
         "no auth",
         "unauthenticated access",
         "authorization bypass",
-        "publicly reachable"
+        "publicly reachable",
+        "without requiring the secret",
+        "bypassing the secret",
+        "secret-based auth",
+        "without the secret path",
+        "no secret required",
+        "without the secret"
       ],
       "bug_description": "In add-on mode, the entire settings/backup/policy API is mounted at the bare root path via `_mount(\"\")` with zero authentication check, while the secret-path mount is the only place a secret is required; any client reaching the port directly can invoke these state-changing endpoints unauthenticated."
     },
@@ -170,7 +182,12 @@
         "overly broad",
         "swallowing exceptions",
         "catches too much",
-        "catches everything"
+        "catches everything",
+        "should be narrowed",
+        "narrowed to",
+        "can mask genuine",
+        "mask genuine errors",
+        "masks genuine"
       ],
       "bug_description": "The windowed read of each VRT source tile is wrapped in `except Exception as e`, far broader than the I/O errors read_to_array actually raises, silently catching genuine unrelated bugs like RuntimeError or MemoryError."
     },
@@ -193,7 +210,12 @@
         "concurrent invalidation",
         "cache invalidate crash",
         "works in tests fails in production",
-        "already removed"
+        "already removed",
+        "raises a keyerror",
+        "raises keyerror if",
+        "key is not present",
+        "was never cached",
+        "already expired"
       ],
       "bug_description": "The invalidate() closure calls cache.pop(key_func(*args, **kwargs)) without a default value; if the key was already removed -- e.g. it expired via the timeout-based eviction on the next read, or a concurrent thread already invalidated it -- pop() raises KeyError. Because unit tests rarely hit this timing/race window, the code appears correct until it crashes in production."
     },
@@ -219,7 +241,13 @@
         "double truncation",
         "multiply before truncating",
         "uuid collision",
-        "loses microseconds"
+        "loses microseconds",
+        "discarding all sub-second precision",
+        "discarding sub-second precision",
+        "discards sub-second precision",
+        "rounded down to a whole second",
+        "before multiplying by 1e9",
+        "loses the microseconds"
       ],
       "bug_description": "fake_time_ns() computes int(int(fake_time()) * 1e9): the inner int() truncates fake_time()'s fractional (microsecond) part to zero BEFORE multiplying by 1e9, discarding all sub-second precision. It should multiply first and truncate once: int(fake_time() * 1e9). The practical symptom is that uuid1() calls made within the same frozen second collide, since time_ns() loses the microseconds that would otherwise differentiate them."
     }

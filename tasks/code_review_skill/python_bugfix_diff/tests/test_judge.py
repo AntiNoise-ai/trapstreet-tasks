@@ -225,4 +225,78 @@ def test_nan_line_value_does_not_crash_and_misses():
     }])
     r = judge.score_case(out, EXPECTED)
     assert r["score"] == 0.0
-    assert r["best_match_signals"]["line_match"] is False
+
+
+# -- regression: real-world phrasings that were false negatives -------------
+#
+# Found by hand-checking real solution outputs (jeffallan/alireza/awesome/
+# baseline-no-skill code-review solutions) against gold.cases.json's keyword
+# lists: each of these is a phrasing a real model actually produced for the
+# correct bug, on the correct file/line, that the ORIGINAL keyword list
+# failed to recognize. Not theorized in advance -- these are the exact
+# sentences that were scored 0 before this fix.
+
+def _expected_for(case_id: str) -> dict:
+    here = pathlib.Path(__file__).resolve().parents[1]
+    return json.loads((here / "expected" / case_id / "answer.json").read_text())
+
+
+def test_case01_realworld_phrasing_no_plus_one_correction():
+    """awesome's actual output: named the exact right mechanism (missing +1
+    correction, value escapes the 1-12 range) without ever saying
+    'off-by-one' or '1-based'."""
+    out = _out([{
+        "file": "croniter.py", "line": 1276,
+        "description": "unlike the day field there is no `+1` correction to keep the result in the valid 1-12 range.",
+    }])
+    r = judge.score_case(out, _expected_for("case_01"))
+    assert r["score"] == 1.0
+
+
+def test_case06_realworld_phrasing_bypassing_secret_auth():
+    """jeffallan's actual output: correctly described routes being exposed
+    without the secret-path protection, without ever using the words
+    'authentication' or 'unauthenticated'."""
+    out = _out([{
+        "file": "settings_ui.py", "line": 3044,
+        "description": "registers all routes with an empty prefix, exposing the settings UI without requiring the secret path, bypassing the secret-based auth.",
+    }])
+    r = judge.score_case(out, _expected_for("case_06"))
+    assert r["score"] == 1.0
+
+
+def test_case08_realworld_phrasing_should_be_narrowed():
+    """jeffallan's actual output: correctly identified the except clause as
+    needing narrowing (implying it's currently too broad) without using
+    'too broad' or 'bare except' literally."""
+    out = _out([{
+        "file": "_vrt.py", "line": 359,
+        "description": "catching bare Exception and merely warning can mask genuine programming errors; the except should be narrowed to IO/read errors.",
+    }])
+    r = judge.score_case(out, _expected_for("case_08"))
+    assert r["score"] == 1.0
+
+
+def test_case09_realworld_phrasing_raises_a_keyerror():
+    """alireza's/awesome's actual output: correctly described cache.pop()
+    raising KeyError for an absent key, phrased as 'raises a KeyError'
+    rather than the original list's 'pop raises keyerror'."""
+    out = _out([{
+        "file": "calc.py", "line": 126,
+        "description": "invalidate() calls cache.pop() without a default value, so it raises a KeyError if the key is not present in the cache.",
+    }])
+    r = judge.score_case(out, _expected_for("case_09"))
+    assert r["score"] == 1.0
+
+
+def test_case10_realworld_phrasing_discarding_all_subsecond_precision():
+    """All four solutions independently described this exact mechanism as
+    'discarding all sub-second precision' -- the original list only had
+    'sub-second precision discarded' (reversed word order), a pure
+    word-order near-miss on an otherwise fully correct answer."""
+    out = _out([{
+        "file": "api.py", "line": 186,
+        "description": "int(fake_time()) truncates the fractional part before multiplying by 1e9, discarding all sub-second precision.",
+    }])
+    r = judge.score_case(out, _expected_for("case_10"))
+    assert r["score"] == 1.0

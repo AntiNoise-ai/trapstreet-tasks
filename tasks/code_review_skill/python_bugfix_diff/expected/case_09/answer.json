@@ -12,7 +12,12 @@
     "concurrent invalidation",
     "cache invalidate crash",
     "works in tests fails in production",
-    "already removed"
+    "already removed",
+    "raises a keyerror",
+    "raises keyerror if",
+    "key is not present",
+    "was never cached",
+    "already expired"
   ],
   "bug_description": "The invalidate() closure calls cache.pop(key_func(*args, **kwargs)) without a default value; if the key was already removed -- e.g. it expired via the timeout-based eviction on the next read, or a concurrent thread already invalidated it -- pop() raises KeyError. Because unit tests rarely hit this timing/race window, the code appears correct until it crashes in production.",
   "source_commit_url": "https://github.com/Suor/funcy/commit/a96b449ee08d7355805e4c6037e9782e74241ff7",
