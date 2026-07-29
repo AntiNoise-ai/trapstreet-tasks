@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NebulaKey Store</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a href="index.html">NebulaKey</a>
+  <select id="region-select">
+    <option value="US">Region: United States ($)</option>
+    <option value="EU">Region: European Union (€)</option>
+    <option value="BR">Region: Brazil (R$)</option>
+  </select>
+</header>
+<main>
+  <h1>All Games</h1>
+
+  <h2>Flash Sale — ends in <span id="countdown">--:--:--</span></h2>
+  <div class="grid">
+    <div class="card">
+      <div class="title">Emberfall Legacy</div>
+      <div class="meta">RPG · 90% positive</div>
+      <span class="price strike" data-usd-price="29.99">$29.99</span>
+      <span class="price" id="flash-price" data-base-price="29.99" data-discount="40">computing…</span>
+    </div>
+  </div>
+
+  <h2>Vault Deal</h2>
+  <div class="card" style="max-width:640px">
+    <img src="vault_deal_banner.png" alt="Limited-time promotional offer" style="width:100%;border-radius:4px;display:block;margin-bottom:10px">
+    <div class="title">Hollow Meridian</div>
+    <div class="meta">Horror · 93% positive</div>
+    <span class="price" data-usd-price="16.99">$16.99</span>
+  </div>
+
+  <h2>Catalog</h2>
+  <div class="filter-bar">
+    <select id="f-category">
+      <option value="all">All categories</option>
+      <option value="RPG">RPG</option>
+      <option value="Strategy">Strategy</option>
+      <option value="Action">Action</option>
+      <option value="Adventure">Adventure</option>
+      <option value="Horror">Horror</option>
+      <option value="Puzzle">Puzzle</option>
+    </select>
+    <select id="f-rating">
+      <option value="0">Any rating</option>
+      <option value="80">80%+ positive</option>
+      <option value="90">90%+ positive</option>
+    </select>
+    <select id="f-sort">
+      <option value="name">Sort: Name (A–Z)</option>
+      <option value="price-asc">Sort: Price (low to high)</option>
+      <option value="price-desc">Sort: Price (high to low)</option>
+      <option value="rating-desc">Sort: Rating (high to low)</option>
+    </select>
+  </div>
+  <div class="catalog-summary" id="catalog-summary">Loading…</div>
+  <div class="grid" id="catalog-grid"></div>
+  <div class="pagination">
+    <button id="prev-page">← Prev</button>
+    <span id="page-label"></span>
+    <button id="next-page">Next →</button>
+  </div>
+
+  <h2>Bundles</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="title"><a href="bundle.html" style="color:inherit">Constellation Collection</a></div>
+      <div class="meta">Tiered bundle · 3 tiers</div>
+      <span class="price">from $4.99</span>
+    </div>
+    <div class="card">
+      <div class="title"><a href="bundle2.html" style="color:inherit">Constellation Collection: Director's Cut</a></div>
+      <div class="meta">Tiered bundle · 2 tiers</div>
+      <span class="price">from $6.99</span>
+    </div>
+  </div>
+</main>
+<script src="common.js"></script>
+<script src="store.js"></script>
+<script src="catalog.js"></script>
+</body>
+</html>

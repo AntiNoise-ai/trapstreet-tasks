@@ -1,0 +1,8 @@
+This case includes an offline copy of a small game storefront (NebulaKey Store) as static files in this same directory. Start a local web server before navigating -- fetch()-based pages (bundle tiers, the catalog) need http:// to work; opening the files directly via file:// will not work correctly:
+
+    python3 serve.py            # serves at http://localhost:8000/index.html
+    python3 serve.py 8080        # or pick a different port
+
+Then browse the site to answer the question below. Print ONLY the final numeric answer to stdout -- a bare number, optionally with a leading currency symbol -- no extra prose.
+
+Question: If you switch the store's region selector to European Union, what is Wraithbound's price?

@@ -1,0 +1,6 @@
+{
+  "id": "case_03",
+  "mechanism": "image_text_combined",
+  "gold": "11.89",
+  "question": "What is the Vault Deal price for Hollow Meridian? (The discount percentage is shown only in the promotional banner image, not anywhere in the page text.)"
+}

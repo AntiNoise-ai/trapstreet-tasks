@@ -1,0 +1,65 @@
+{
+  "_doc": "Source of truth for game_store_navigation. inputs/ and expected/ are GENERATED from this file + site_src/ by build_cases.py -- edit here, never there. Every `gold` value is derived mechanically from site_src/games.json + bundle-data*.json by build_cases.py's self-check (see verify_gold_answers()), not hand-typed independently, to avoid the exact kind of manual-arithmetic drift that motivated that check.",
+  "cases": [
+    {
+      "id": "case_01",
+      "mechanism": "static",
+      "question": "What is the price of Ironclad Vanguard in the catalog?",
+      "gold": "14.99"
+    },
+    {
+      "id": "case_02",
+      "mechanism": "js_computed",
+      "question": "What is the current Flash Sale price for Emberfall Legacy?",
+      "gold": "17.99"
+    },
+    {
+      "id": "case_03",
+      "mechanism": "image_text_combined",
+      "question": "What is the Vault Deal price for Hollow Meridian? (The discount percentage is shown only in the promotional banner image, not anywhere in the page text.)",
+      "gold": "11.89"
+    },
+    {
+      "id": "case_04",
+      "mechanism": "bundle_tier_value",
+      "question": "Across the three tiers of the Constellation Collection bundle, what is the lowest price-per-game (in dollars, rounded to 2 decimal places) offered by any single tier?",
+      "gold": "1.66"
+    },
+    {
+      "id": "case_05",
+      "mechanism": "bundle_tier_marginal",
+      "question": "How much more does the top tier cost than the middle tier in the Constellation Collection bundle (in dollars)?",
+      "gold": "3.00"
+    },
+    {
+      "id": "case_06",
+      "mechanism": "bundle_disambiguation",
+      "question": "What is the entry-tier (cheapest tier) price of the original Constellation Collection bundle? (Not the Director's Cut -- that is a separate bundle with its own tiers.)",
+      "gold": "4.99"
+    },
+    {
+      "id": "case_07",
+      "mechanism": "dlc_vs_edition",
+      "question": "How much would you save by buying Wraithbound and the Wraithbound: Ashes DLC separately, instead of buying Wraithbound: Deluxe Edition (in dollars)?",
+      "gold": "3.01"
+    },
+    {
+      "id": "case_08",
+      "mechanism": "filter_sort",
+      "question": "Among Action-category games rated 90% or higher, what is the price of the cheapest one?",
+      "gold": "20.99"
+    },
+    {
+      "id": "case_09",
+      "mechanism": "pagination_count",
+      "question": "How many games in the catalog have a rating of 90% or higher?",
+      "gold": "10"
+    },
+    {
+      "id": "case_10",
+      "mechanism": "region_pricing",
+      "question": "If you switch the store's region selector to European Union, what is Wraithbound's price?",
+      "gold": "23.24"
+    }
+  ]
+}

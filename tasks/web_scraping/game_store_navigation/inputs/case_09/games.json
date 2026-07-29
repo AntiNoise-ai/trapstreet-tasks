@@ -1,0 +1,21 @@
+[
+  {"id": "nova-ascendant", "name": "Nova Ascendant", "category": "RPG", "price": 19.99, "rating": 92},
+  {"id": "ironclad-vanguard", "name": "Ironclad Vanguard", "category": "Strategy", "price": 14.99, "rating": 88},
+  {"id": "wraithbound", "name": "Wraithbound", "category": "Action", "price": 24.99, "rating": 95},
+  {"id": "skybreak-chronicles", "name": "Skybreak Chronicles", "category": "Adventure", "price": 9.99, "rating": 78},
+  {"id": "skybreak-chronicles-2", "name": "Skybreak Chronicles 2", "category": "Adventure", "price": 17.99, "rating": 91},
+  {"id": "ferric-outpost", "name": "Ferric Outpost", "category": "Strategy", "price": 12.99, "rating": 85},
+  {"id": "hollow-meridian", "name": "Hollow Meridian", "category": "Horror", "price": 16.99, "rating": 93},
+  {"id": "glass-requiem", "name": "Glass Requiem", "category": "Puzzle", "price": 7.99, "rating": 89},
+  {"id": "emberfall-legacy", "name": "Emberfall Legacy", "category": "RPG", "price": 29.99, "rating": 90},
+  {"id": "iron-static", "name": "Iron Static", "category": "Strategy", "price": 22.99, "rating": 81},
+  {"id": "duskfarer", "name": "Duskfarer", "category": "RPG", "price": 27.99, "rating": 96},
+  {"id": "marrow-court", "name": "Marrow Court", "category": "Horror", "price": 13.99, "rating": 74},
+  {"id": "nightloom-vale", "name": "Nightloom Vale", "category": "Adventure", "price": 21.99, "rating": 87},
+  {"id": "choir-of-ash", "name": "Choir of Ash", "category": "Puzzle", "price": 11.99, "rating": 92},
+  {"id": "vantage-rejected", "name": "Vantage Rejected", "category": "Action", "price": 18.99, "rating": 68},
+  {"id": "halberds-reach", "name": "Halberd's Reach", "category": "Strategy", "price": 26.99, "rating": 94},
+  {"id": "petrichor-drift", "name": "Petrichor Drift", "category": "Adventure", "price": 15.99, "rating": 90},
+  {"id": "cinder-atlas", "name": "Cinder Atlas", "category": "RPG", "price": 23.99, "rating": 88},
+  {"id": "redshift-protocol", "name": "Redshift Protocol", "category": "Action", "price": 20.99, "rating": 93}
+]

@@ -1,0 +1,129 @@
+body {
+  font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+  background: #16181d;
+  color: #e6e6e6;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #0f1114;
+  padding: 16px 32px;
+  border-bottom: 1px solid #2a2d33;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header a {
+  color: #6fb1ff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 20px;
+}
+header select {
+  background: #1e2126;
+  color: #e6e6e6;
+  border: 1px solid #2a2d33;
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.filter-bar select {
+  background: #1e2126;
+  color: #e6e6e6;
+  border: 1px solid #2a2d33;
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+.catalog-summary {
+  color: #9aa0aa;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.pagination button {
+  background: #1e2126;
+  color: #e6e6e6;
+  border: 1px solid #2a2d33;
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.pagination button:disabled { opacity: 0.4; cursor: default; }
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 32px 64px;
+}
+h1 { font-size: 22px; }
+h2 { font-size: 18px; color: #cfd3da; margin-top: 32px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: #1e2126;
+  border: 1px solid #2a2d33;
+  border-radius: 6px;
+  padding: 14px;
+}
+.card .title { font-weight: 600; margin-bottom: 4px; }
+.card .meta { font-size: 12px; color: #9aa0aa; margin-bottom: 8px; }
+.price { font-weight: 700; color: #7ee787; }
+.price.strike { color: #9aa0aa; text-decoration: line-through; font-weight: 400; font-size: 12px; }
+.badge {
+  display: inline-block;
+  background: #d1493a;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+}
+.tier-row {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+.tier-btn {
+  flex: 1;
+  padding: 16px;
+  background: #1e2126;
+  border: 2px solid #2a2d33;
+  border-radius: 6px;
+  color: #e6e6e6;
+  cursor: pointer;
+  font-size: 15px;
+  text-align: center;
+}
+.tier-btn.active { border-color: #6fb1ff; background: #232a33; }
+.tier-btn .tier-price { display: block; font-size: 20px; font-weight: 700; color: #7ee787; margin-top: 6px; }
+#tier-detail {
+  background: #1e2126;
+  border: 1px solid #2a2d33;
+  border-radius: 6px;
+  padding: 20px;
+  min-height: 60px;
+}
+#tier-detail .placeholder { color: #9aa0aa; }
+.game-list-inline { list-style: none; padding: 0; margin: 8px 0 0; }
+.game-list-inline li { padding: 4px 0; border-bottom: 1px solid #2a2d33; }
+details {
+  background: #1e2126;
+  border: 1px solid #2a2d33;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 10px 0;
+}
+summary { cursor: pointer; font-weight: 600; }
+.dlc-note { font-size: 12px; color: #d19a3a; }

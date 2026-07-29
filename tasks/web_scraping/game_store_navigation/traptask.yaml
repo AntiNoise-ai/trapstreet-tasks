@@ -1,0 +1,50 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: case_01
+  description: "Static baseline -- price is plainly in the catalog's raw HTML, no JS execution needed."
+  tags: [web_scraping, static, baseline]
+
+- id: case_02
+  description: "Flash-sale price is computed client-side from data attributes; raw HTML shows 'computing…'."
+  tags: [web_scraping, js_computed, requires_js]
+
+- id: case_03
+  description: "Discount percentage exists only as pixels in a promo banner PNG; base price is in page text. Requires combining text extraction with image reading (OCR/vision)."
+  tags: [web_scraping, image_text_combined, requires_vision]
+
+- id: case_04
+  description: "Tiered bundle: each tier's price and game list are fetched only on click; per-game value is non-monotonic across tiers (a naive 'pick the biggest tier' heuristic gets this wrong)."
+  tags: [web_scraping, bundle_tier_value, requires_js, requires_interaction]
+
+- id: case_05
+  description: "Same tiered-bundle mechanism as case_04, asking for a marginal (tier-to-tier) price difference instead of an absolute value."
+  tags: [web_scraping, bundle_tier_marginal, requires_js, requires_interaction]
+
+- id: case_06
+  description: "Two bundles share a near-identical name (Constellation Collection vs. ...: Director's Cut); the question requires picking the correct one."
+  tags: [web_scraping, bundle_disambiguation, requires_interaction]
+
+- id: case_07
+  description: "Derived reasoning across a base game + its DLC (on the game's detail page) vs. a separately-listed bundled edition."
+  tags: [web_scraping, dlc_vs_edition, derived_metric]
+
+- id: case_08
+  description: "Requires applying a category filter, a rating filter, and a price sort together (client-side, no page reload) to find the answer."
+  tags: [web_scraping, filter_sort, requires_interaction]
+
+- id: case_09
+  description: "Catalog is paginated (6 games/page, 19 total, 4 pages) -- answer requires paging through every page, not just reading the first render."
+  tags: [web_scraping, pagination_count, requires_interaction]
+
+- id: case_10
+  description: "Store-wide region selector changes displayed currency/price via client-side conversion + localStorage persistence across pages."
+  tags: [web_scraping, region_pricing, requires_js, requires_interaction]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

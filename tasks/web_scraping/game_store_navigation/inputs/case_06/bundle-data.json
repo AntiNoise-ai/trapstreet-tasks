@@ -1,0 +1,20 @@
+{
+  "name": "Constellation Collection",
+  "tiers": [
+    {
+      "tier": 1,
+      "price": 4.99,
+      "games": ["Nova Ascendant", "Ironclad Vanguard", "Wraithbound"]
+    },
+    {
+      "tier": 2,
+      "price": 9.99,
+      "games": ["Nova Ascendant", "Ironclad Vanguard", "Wraithbound", "Skybreak Chronicles", "Ferric Outpost"]
+    },
+    {
+      "tier": 3,
+      "price": 12.99,
+      "games": ["Nova Ascendant", "Ironclad Vanguard", "Wraithbound", "Skybreak Chronicles", "Ferric Outpost", "Hollow Meridian", "Glass Requiem"]
+    }
+  ]
+}

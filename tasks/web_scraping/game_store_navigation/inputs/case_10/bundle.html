@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Constellation Collection — NebulaKey Store</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a href="index.html">NebulaKey</a>
+  <select id="region-select">
+    <option value="US">Region: United States ($)</option>
+    <option value="EU">Region: European Union (€)</option>
+    <option value="BR">Region: Brazil (R$)</option>
+  </select>
+</header>
+<main>
+  <h1>Constellation Collection</h1>
+  <p>Pick how much you want to pay. Higher tiers add more games — but the
+     per-game price doesn't always get cheaper as you go up.</p>
+
+  <div class="tier-row" id="tier-buttons" data-source="bundle-data.json">
+    <!-- filled by bundle.js from bundle-data.json; nothing hardcoded here -->
+  </div>
+
+  <div id="tier-detail"><div class="placeholder">Select a tier above to see what's included.</div></div>
+</main>
+<script src="common.js"></script>
+<script src="bundle.js"></script>
+</body>
+</html>

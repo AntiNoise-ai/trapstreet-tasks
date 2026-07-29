@@ -1,0 +1,15 @@
+{
+  "name": "Constellation Collection: Director's Cut",
+  "tiers": [
+    {
+      "tier": 1,
+      "price": 6.99,
+      "games": ["Duskfarer", "Redshift Protocol", "Choir of Ash", "Nightloom Vale"]
+    },
+    {
+      "tier": 2,
+      "price": 11.99,
+      "games": ["Duskfarer", "Redshift Protocol", "Choir of Ash", "Nightloom Vale", "Halberd's Reach", "Cinder Atlas"]
+    }
+  ]
+}

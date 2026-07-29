@@ -1,0 +1,6 @@
+{
+  "id": "case_08",
+  "mechanism": "filter_sort",
+  "gold": "20.99",
+  "question": "Among Action-category games rated 90% or higher, what is the price of the cheapest one?"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "case_09",
+  "mechanism": "pagination_count",
+  "gold": "10",
+  "question": "How many games in the catalog have a rating of 90% or higher?"
+}
