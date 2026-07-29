@@ -1,30 +1,40 @@
 You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
 
-File: bumble/device.py
+File: backoff/_sync.py
 
-  894|     async def establish(self) -> None:
-  895|         if self.state != self.State.INIT:
-  896|             raise InvalidStateError('sync not in init state')
-  897| 
-  898|         options = hci.HCI_LE_Periodic_Advertising_Create_Sync_Command.Options(0)
-  899|         if self.filter_duplicates:
-  900|             options |= (
-  901|                 hci.HCI_LE_Periodic_Advertising_Create_Sync_Command.Options.DUPLICATE_FILTERING_INITIALLY_ENABLED
-  902|             )
-  903| 
-  904|         await self.device.send_async_command(
-  905|             hci.HCI_LE_Periodic_Advertising_Create_Sync_Command(
-  906|                 options=options,
-  907|                 advertising_sid=self.sid,
-  908|                 advertiser_address_type=self.advertiser_address.address_type,
-  909|                 advertiser_address=self.advertiser_address,
-  910|                 skip=self.skip,
-  911|                 sync_timeout=int(self.sync_timeout * 100),
-  912|                 sync_cte_type=0,
-  913|             )
-  914|         )
-  915| 
-  916|         self.state = self.State.PENDING
+   23| def retry_predicate(target, wait_gen, predicate,
+   24|                     *,
+   25|                     max_tries, max_time, jitter,
+   26|                     on_success, on_backoff, on_giveup,
+   27|                     wait_gen_kwargs):
+   28| 
+   29|     @functools.wraps(target)
+   30|     def retry(*args, **kwargs):
+   31| 
+   32|         # update variables from outer function args
+   33|         nonlocal max_tries, max_time
+   34|         max_tries = _maybe_call(max_tries)
+   35|         max_time = _maybe_call(max_time)
+   36| 
+   37|         tries = 0
+   38|         start = datetime.datetime.now()
+   39|         wait = _init_wait_gen(wait_gen, wait_gen_kwargs)
+   40|         while True:
+   41|             tries += 1
+   42|             elapsed = timedelta.total_seconds(datetime.datetime.now() - start)
+   43|             details = {
+   44|                 "target": target,
+   45|                 "args": args,
+   46|                 "kwargs": kwargs,
+   47|                 "tries": tries,
+   48|                 "elapsed": elapsed,
+   49|             }
+   50| 
+   51|             ret = target(*args, **kwargs)
+   52|             if predicate(ret):
+   53|                 max_tries_exceeded = (tries == max_tries)
+   54|                 max_time_exceeded = (max_time is not None and
+   55|                                      elapsed >= max_time)
 
 Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
 {"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}

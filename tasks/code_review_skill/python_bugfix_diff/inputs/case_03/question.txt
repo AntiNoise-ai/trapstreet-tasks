@@ -1,31 +1,43 @@
 You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
 
-File: specforge/data/parse.py
+File: rest_access_policy/access_policy.py
 
-  235|     def parse(
-  236|         self,
-  237|         conversation: "Conversation",
-  238|         max_length: int,
-  239|         preformatted: bool = False,
-  240|         train_only_last_turn: bool = False,
-  241|     ) -> List[torch.Tensor]:
-  242|         # conversation = process_harmony_conversations(conversation)
-  243|         if not preformatted:
-  244|             prompt_text = ""
-  245|             for j, message in enumerate(conversation):
-  246|                 if j == 0 and (
-  247|                     message["role"] != "system"
-  248|                     or message["role"] != "assistant_reasoning_effort"
-  249|                 ):
-  250|                     prompt_text = self.build_single_turn_prompt(
-  251|                         prompt_text,
-  252|                         "assistant_reasoning_effort",
-  253|                         self.default_reasoning_level,
-  254|                     )
-  255|                 prompt_text = self.build_single_turn_prompt(
-  256|                     prompt_text, message["role"], message["content"]
-  257|                 )
-  258|             conversation = prompt_text
+   88|     def _get_statements_matching_principal(
+   89|         self, request, statements: List[dict]
+   90|     ) -> List[dict]:
+   91|         user = request.user
+   92|         user_roles = None
+   93|         matched = []
+   94| 
+   95|         for statement in statements:
+   96|             principals = statement["principal"]
+   97|             found = False
+   98| 
+   99|             if "*" in principals:
+  100|                 found = True
+  101|             elif "admin" in principals:
+  102|                 found = user.is_superuser
+  103|             elif "staff" in principals:
+  104|                 found = user.is_staff
+  105|             elif "authenticated" in principals:
+  106|                 found = not user.is_anonymous
+  107|             elif "anonymous" in principals:
+  108|                 found = user.is_anonymous
+  109|             elif self.id_prefix + str(user.pk) in principals:
+  110|                 found = True
+  111|             else:
+  112|                 if not user_roles:
+  113|                     user_roles = self.get_user_group_values(user)
+  114| 
+  115|                 for user_role in user_roles:
+  116|                     if self.group_prefix + user_role in principals:
+  117|                         found = True
+  118|                         break
+  119| 
+  120|             if found:
+  121|                 matched.append(statement)
+  122| 
+  123|         return matched
 
 Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
 {"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}

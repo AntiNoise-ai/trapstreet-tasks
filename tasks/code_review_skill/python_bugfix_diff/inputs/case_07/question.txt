@@ -1,17 +1,26 @@
 You are reviewing a code change. Below is one file from the change, shown with its real line numbers.
 
-File: xrspatial/cost_distance.py
+File: kolibri/content/api.py
 
- 1201| @supports_dataset
- 1202| def cost_distance(
- 1203|     raster: xr.DataArray,
- 1204|     friction: xr.DataArray,
- 1205|     x: str = "x",
- 1206|     y: str = "y",
- 1207|     target_values: list = [],
- 1208|     max_cost: float = np.inf,
- 1209|     connectivity: int = 8,
- 1210| ) -> xr.DataArray:
+  238|     def filter_in_lesson(self, queryset, name, value):
+  239|         """
+  240|         Show only content associated with this lesson
+  241| 
+  242|         :param queryset: all content nodes
+  243|         :param value: id of target lesson
+  244|         :return: content nodes for this lesson
+  245|         """
+  246|         try:
+  247|             resources = Lesson.objects.get(id=value).resources
+  248|             contentnode_id_list = [node['contentnode_id'] for node in resources]
+  249|             # adapted from https://codybonney.com/creating-a-queryset-from-a-list-while-preserving-order-using-django/
+  250|             clauses = ' '.join(["WHEN {}.id='{}' THEN {}".format(models.ContentNode._meta.db_table,
+  251|                                                                  pk, i) for i, pk in enumerate(contentnode_id_list)])
+  252|             ordering = 'CASE {} END'.format(clauses)
+  253|             return queryset.filter(pk__in=contentnode_id_list) \
+  254|                            .extra(select={'ordering': ordering}, order_by=('ordering',))
+  255|         except (Lesson.DoesNotExist, ValueError):  # also handles invalid uuid
+  256|             queryset.none()
 
 Find the most significant bug in this code and report it. Respond with ONLY a JSON object in this exact shape, and nothing else:
 {"findings": [{"file": "<file path>", "line": <line number>, "description": "<1-2 sentence description of the issue>"}, ...]}

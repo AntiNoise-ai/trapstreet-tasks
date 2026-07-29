@@ -1,17 +1,23 @@
 {
   "id": "case_07",
-  "bug_category": "mutable_default_arg",
-  "file_path": "xrspatial/cost_distance.py",
-  "buggy_line": 1207,
-  "line_tolerance": 1,
+  "bug_category": "sql_injection",
+  "file_path": "kolibri/content/api.py",
+  "buggy_line": 250,
+  "line_tolerance": 2,
   "keywords": [
-    "mutable default argument",
-    "mutable default",
-    "shared list",
-    "default parameter",
-    "shared mutable state"
+    "sql injection",
+    "not parameterized",
+    "raw sql",
+    "unsanitized",
+    "string formatting into sql",
+    "break out of the string literal",
+    "user-controlled value",
+    "injectable",
+    "extra() with unsanitized",
+    "escape the quote",
+    "inject into the order by"
   ],
-  "bug_description": "cost_distance declares `target_values: list = []`, a mutable default argument \u2014 the same list object is reused as the default across every call that omits target_values, the classic shared-mutable-default anti-pattern.",
-  "source_commit_url": "https://github.com/xarray-contrib/xarray-spatial/commit/5103dc15c84f19c1c373a7b453634c28fbd75f15",
+  "bug_description": "clauses interpolates pk (a content-node id sourced from a lesson's resources field, editable by any coach/admin via the API) directly into a raw SQL fragment via .format(), which is passed to Django's .extra() -- a documented SQL-injection vector. A malicious id containing a single quote could break out of the string literal and inject arbitrary SQL into the resulting ORDER BY clause.",
+  "source_commit_url": "https://github.com/learningequality/kolibri/commit/520b0778568694b5cbb4961eaec5b1979b28dc5c",
   "license": "MIT"
 }

@@ -300,3 +300,49 @@ def test_case10_realworld_phrasing_discarding_all_subsecond_precision():
     }])
     r = judge.score_case(out, _expected_for("case_10"))
     assert r["score"] == 1.0
+
+
+# -- regression: the 3 cases replaced 2026-07-30 for being non-discriminating
+# (case_03/07 were "textbook famous" -- every solution incl. a bare model
+# solved them instantly; case_04 required niche async/event-loop intuition
+# few solutions actually had). Each replacement is a real historical bugfix
+# commit, same sourcing bar as the original 10 cases.
+
+def test_case03_new_elif_short_circuit_correct_answer_scores_one():
+    """Replacement for the old case_03 (a two-term != or or tautology,
+    solved instantly by every solution incl. baseline). New bug:
+    rsinger86/drf-access-policy's elif chain stops on the first matching
+    principal keyword even if that keyword's own check fails, never
+    falling through to check other principal types in the same list."""
+    out = _out([{
+        "file": "access_policy.py", "line": 102,
+        "description": "the elif chain stops evaluating as soon as one principal keyword matches, even if that keyword's own check fails, so it never falls through to check other principal types present in the same list -- wrongly denies access it should grant.",
+    }])
+    r = judge.score_case(out, _expected_for("case_03"))
+    assert r["score"] == 1.0
+
+
+def test_case04_new_stale_closure_correct_answer_scores_one():
+    """Replacement for the old case_04 (race_condition, required niche
+    async/event-loop intuition every solution missed). New bug:
+    litl/backoff's nonlocal reassignment permanently freezes max_tries
+    after the first call to the decorated function."""
+    out = _out([{
+        "file": "_sync.py", "line": 34,
+        "description": "max_tries is declared nonlocal and reassigned to the resolved value -- because of nonlocal this mutates the enclosing scope, so it's only resolved on the first call to the decorated function and every later call reuses that value.",
+    }])
+    r = judge.score_case(out, _expected_for("case_04"))
+    assert r["score"] == 1.0
+
+
+def test_case07_new_sql_injection_correct_answer_scores_one():
+    """Replacement for the old case_07 (mutable default argument -- the
+    single most textbook-famous Python gotcha, solved instantly by every
+    solution incl. baseline). New bug: kolibri's filter_in_lesson
+    interpolates a user-controlled id into raw SQL via .format()."""
+    out = _out([{
+        "file": "api.py", "line": 250,
+        "description": "pk is interpolated directly into a raw SQL fragment via string formatting rather than parameterized, and pk is user-controlled -- a classic SQL injection vector, since a value containing a quote could break out of the string literal.",
+    }])
+    r = judge.score_case(out, _expected_for("case_07"))
+    assert r["score"] == 1.0

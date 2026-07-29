@@ -1,18 +1,23 @@
 {
   "id": "case_04",
-  "bug_category": "race_condition",
-  "file_path": "bumble/device.py",
-  "buggy_line": 916,
+  "bug_category": "stale_closure_state",
+  "file_path": "backoff/_sync.py",
+  "buggy_line": 34,
   "line_tolerance": 2,
   "keywords": [
-    "race condition",
-    "state overwritten",
-    "lost update",
-    "concurrent access",
-    "concurrent modification",
-    "race window"
+    "frozen after the first call",
+    "resolved only once",
+    "permanently overwrites",
+    "reassigning the nonlocal",
+    "mutates the enclosing scope",
+    "never re-evaluated",
+    "silently frozen",
+    "stale after the first call",
+    "only resolved on the first",
+    "overwrites the outer",
+    "no longer callable"
   ],
-  "bug_description": "The `await self.device.send_async_command(...)` call yields control to the event loop; if the sync-established HCI event arrives and advances state to ESTABLISHED before this resumes, the unconditional `self.state = self.State.PENDING` clobbers the concurrent update.",
-  "source_commit_url": "https://github.com/google/bumble/commit/55d8171ad89a668a04aaab905efa320ac0e8b9b1",
-  "license": "Apache-2.0"
+  "bug_description": "retry() declares max_tries/max_time as nonlocal and reassigns them to the already-resolved value; because of nonlocal this mutates the enclosing retry_predicate scope permanently. max_tries/max_time can be passed as a callable specifically so it's re-evaluated on every call, but after the first invocation the reassignment replaces it with a plain value, so _maybe_call's callable(f) check is never true again -- every subsequent call to the decorated function silently reuses whatever the first call happened to resolve, forever.",
+  "source_commit_url": "https://github.com/litl/backoff/commit/732eaa34f782e31e891bbbd4aa524e42b27f3bc7",
+  "license": "MIT"
 }
