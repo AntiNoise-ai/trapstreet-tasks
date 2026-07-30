@@ -63,6 +63,21 @@ def validate_case(case: dict) -> None:
     if len(case["keywords"]) < 2:
         raise ValueError(f"{cid}: needs at least 2 keywords, got {len(case['keywords'])}")
 
+    groups = case.get("keyword_groups")
+    if groups is not None:
+        if not isinstance(groups, list) or not groups:
+            raise ValueError(f"{cid}: keyword_groups must be a non-empty list")
+        for gi, group in enumerate(groups):
+            if not isinstance(group, list) or not group:
+                raise ValueError(f"{cid}: keyword_groups[{gi}] must be a non-empty list")
+            for pattern in group:
+                if not isinstance(pattern, str) or not pattern:
+                    raise ValueError(f"{cid}: keyword_groups[{gi}] has a non-string/empty pattern")
+                try:
+                    re.compile(pattern)
+                except re.error as e:
+                    raise ValueError(f"{cid}: keyword_groups[{gi}] pattern {pattern!r} does not compile: {e}")
+
 
 def render_snippet(start_line: int, text: str) -> str:
     """Render `text` with real absolute line numbers, e.g. '  1276| <code>'."""
