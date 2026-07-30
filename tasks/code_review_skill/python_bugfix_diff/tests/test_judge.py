@@ -277,6 +277,22 @@ def test_case08_realworld_phrasing_should_be_narrowed():
     assert r["score"] == 1.0
 
 
+def test_case08_realworld_phrasing_broadest_hiding_real_defects():
+    """alireza's actual output split across 3 findings: the finding whose
+    file+line exactly matched the bug used 'broadest `Exception` type' and
+    'hiding real defects' -- neither literal phrase was in the original
+    keyword list, so the exact-line finding scored a keyword miss while a
+    different (wrong-line) finding scored a keyword hit, and no single
+    finding had all three signals -- a false negative despite the model
+    pinpointing the right file/line."""
+    out = _out([{
+        "file": "_vrt.py", "line": 359,
+        "description": "Catching the broadest `Exception` type where a specific I/O error is appropriate means unrelated bugs are silently downgraded to warnings and skipped, hiding real defects.",
+    }])
+    r = judge.score_case(out, _expected_for("case_08"))
+    assert r["score"] == 1.0
+
+
 def test_case09_realworld_phrasing_raises_a_keyerror():
     """alireza's/awesome's actual output: correctly described cache.pop()
     raising KeyError for an absent key, phrased as 'raises a KeyError'

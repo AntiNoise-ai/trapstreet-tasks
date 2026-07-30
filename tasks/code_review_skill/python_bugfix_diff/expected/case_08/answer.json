@@ -9,6 +9,8 @@
     "except exception",
     "too broad",
     "overly broad",
+    "broadest exception",
+    "broadest `exception`",
     "swallowing exceptions",
     "catches too much",
     "catches everything",
@@ -16,7 +18,12 @@
     "narrowed to",
     "can mask genuine",
     "mask genuine errors",
-    "masks genuine"
+    "masks genuine",
+    "masking genuine",
+    "hiding real defects",
+    "hiding genuine defects",
+    "hides real defects",
+    "hides genuine defects"
   ],
   "bug_description": "The windowed read of each VRT source tile is wrapped in `except Exception as e`, far broader than the I/O errors read_to_array actually raises, silently catching genuine unrelated bugs like RuntimeError or MemoryError.",
   "source_commit_url": "https://github.com/xarray-contrib/xarray-spatial/commit/c6daae54b8776b7c6ac67c77fcb9f9531cb56069",
