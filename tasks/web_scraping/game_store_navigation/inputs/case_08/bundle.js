@@ -5,7 +5,7 @@
 (function () {
   var buttonRow = document.getElementById("tier-buttons");
   var source = buttonRow.dataset.source || "bundle-data.json";
-  fetch(source)
+  nkFetch(source)
     .then(function (r) { return r.json(); })
     .then(function (data) {
       var detail = document.getElementById("tier-detail");

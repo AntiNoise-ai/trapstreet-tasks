@@ -66,7 +66,7 @@
   document.getElementById("prev-page").addEventListener("click", function () { page--; render(); });
   document.getElementById("next-page").addEventListener("click", function () { page++; render(); });
 
-  fetch("games.json")
+  nkFetch("games.json")
     .then(function (r) { return r.json(); })
     .then(function (data) {
       allGames = data;

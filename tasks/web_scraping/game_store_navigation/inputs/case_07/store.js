@@ -1,16 +1,21 @@
-// Flash-sale price is computed client-side from data attributes — never
-// present as a literal number in the page source. A scraper that only reads
-// raw HTML sees "computing…"; it has to execute this script.
+// Flash-sale base price + discount are fetched from the token-gated
+// flash-sale.json, not embedded as HTML data attributes -- an earlier
+// version put them in data-base-price/data-discount attributes, which
+// defeated the whole point (a bare curl of the raw HTML revealed both
+// numbers without executing any JS at all).
 (function () {
   var el = document.getElementById("flash-price");
   if (!el) return;
-  var base = parseFloat(el.dataset.basePrice);
-  var discount = parseFloat(el.dataset.discount);
-  var final = Math.round(base * (1 - discount / 100) * 100) / 100;
-  el.textContent = "$" + final.toFixed(2);
-  // Set the USD reference price so common.js's region conversion (which runs
-  // on DOMContentLoaded, after this) can override the display currency.
-  el.dataset.usdPrice = final.toFixed(2);
+  nkFetch("flash-sale.json")
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var final = Math.round(data.base_price * (1 - data.discount_pct / 100) * 100) / 100;
+      el.textContent = "$" + final.toFixed(2);
+      // Set the USD reference price so common.js's region conversion can
+      // override the display currency once regions.json has also loaded.
+      el.dataset.usdPrice = final.toFixed(2);
+      if (window.nkApplyRegionPricing) window.nkApplyRegionPricing();
+    });
 })();
 
 // Countdown is cosmetic (fixed, non-real-time) — just needs to look alive.

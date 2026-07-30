@@ -22,15 +22,53 @@ approach cannot see:
 
 | case | what a static-HTML-only fetch would miss |
 |---|---|
-| case_01 | (control case -- nothing; static HTML has the answer) |
-| case_02 | the sale price is computed by JS from data attributes, not printed in the HTML |
-| case_03 | the discount is pixels in a PNG banner, not text or alt text |
-| case_04, case_05 | tier prices/contents are fetched via JS only after a button click |
-| case_06 | needs correctly disambiguating two similarly-named bundles |
-| case_07 | needs cross-referencing a game's detail page (DLC) against a separately-listed edition |
-| case_08 | needs applying filter + sort controls that update the DOM without a page reload |
-| case_09 | catalog is paginated; the full answer requires paging through all of it |
-| case_10 | price depends on a region selector whose state persists via localStorage across page loads |
+| case_01 | catalog is rendered by JS from a token-gated `games.json` -- nothing renders, and the data endpoint 403s, without executing the page |
+| case_02 | the sale price is computed from a token-gated `flash-sale.json`, not printed in the HTML and not sitting in a data attribute either |
+| case_03 | the discount is pixels in a PNG banner, not text, alt text, or any fetchable data file |
+| case_04, case_05 | tier prices/contents come from a token-gated endpoint, fetched only after a button click |
+| case_06 | needs correctly disambiguating two similarly-named bundles, each behind its own token-gated endpoint |
+| case_07 | needs cross-referencing a game's detail page (DLC) against a separately-listed edition -- deliberately NOT token-gated; see "Why case_07 isn't gated" below |
+| case_08 | needs applying filter + sort controls against the token-gated catalog endpoint, updating the DOM without a page reload |
+| case_09 | catalog is paginated against the token-gated endpoint; the full answer requires paging through all of it |
+| case_10 | price depends on a token-gated `regions.json` + a region selector whose state persists via localStorage across page loads |
+
+### Why a naive scraper actually fails here (and why it didn't at first)
+
+The first version of this task looked JS-gated but wasn't: `games.json`,
+`bundle-data*.json`, and the region conversion table in `common.js` were
+all directly, unauthenticatedly fetchable static files sitting next to
+the HTML -- a scraper that never executed a line of JS could just `curl`
+them by their predictable filenames and answer 9 of 10 cases perfectly
+(verified empirically; only case_03's image stayed genuinely un-bypassable
+by text alone).
+
+The fix, `serve.py`: every HTML page gets a fresh, random session token
+injected into a `<script>` tag at serve time (regenerated each server
+run, never committed anywhere); the page's own JS sends that token back
+as an `X-Nk-Token` header on every fetch to the data endpoints
+(`games.json`, `bundle-data.json`, `bundle-data2.json`, `regions.json`,
+`flash-sale.json`); the server rejects any request to those paths
+without the matching header. A bare `curl <filename>` now gets a 403.
+
+This is deliberately *not* meant to be unbeatable -- it mirrors a real
+site's CSRF/session-token-gated internal API, which a sufficiently
+determined scraper can still defeat by reading the HTML/JS and replaying
+the token correctly (verified: extracting the token from `index.html`
+and replaying it via `curl -H "X-Nk-Token: ..."` still works). The point
+is to filter out the naive case (guess a filename, fetch it directly)
+while staying completely transparent to anything that actually executes
+the page (a real browser needs to do nothing extra to get the header
+right) -- the same gap that separates a thorough scraper from a naive
+one in the real world.
+
+### Why case_07 isn't gated
+
+Product prices on a real storefront's own page are ordinary, publicly
+visible information -- any visitor sees them without logging in or
+executing anything special. Gating them would be unrealistic (real sites
+don't hide their own prices from visitors) and wouldn't test anything
+useful; case_07's actual discriminator is correctly finding and combining
+three numbers spread across a page, not scraping architecture.
 
 ## Provenance
 

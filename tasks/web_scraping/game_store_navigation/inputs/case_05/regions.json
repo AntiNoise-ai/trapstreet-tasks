@@ -1,0 +1,5 @@
+{
+  "US": {"symbol": "$", "mult": 1.00},
+  "EU": {"symbol": "€", "mult": 0.93},
+  "BR": {"symbol": "R$", "mult": 5.35}
+}
