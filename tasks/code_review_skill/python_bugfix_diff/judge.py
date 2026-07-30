@@ -11,7 +11,7 @@ This is deterministic (no LLM judge): the ground truth is a real historical
 bugfix commit. Most cases use a flat "keywords" list (any literal phrase
 hits). A case can instead declare "keyword_groups": a list of concept
 groups, each a list of raw regexes (not literal-escaped, so they can use
-stems/inflections like r"overwrit\w*"); a finding's keyword_match requires
+stems/inflections like r"overwrit\\w*"); a finding's keyword_match requires
 at least one regex hit from EVERY group (AND across groups, OR within a
 group). Use groups for bugs whose correct description has a wide paraphrase
 space (control-flow/structural bugs) instead of trying to enumerate every
