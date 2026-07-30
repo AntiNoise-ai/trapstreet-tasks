@@ -59,21 +59,27 @@
       "snippet_start_line": 88,
       "snippet_text": "    def _get_statements_matching_principal(\n        self, request, statements: List[dict]\n    ) -> List[dict]:\n        user = request.user\n        user_roles = None\n        matched = []\n\n        for statement in statements:\n            principals = statement[\"principal\"]\n            found = False\n\n            if \"*\" in principals:\n                found = True\n            elif \"admin\" in principals:\n                found = user.is_superuser\n            elif \"staff\" in principals:\n                found = user.is_staff\n            elif \"authenticated\" in principals:\n                found = not user.is_anonymous\n            elif \"anonymous\" in principals:\n                found = user.is_anonymous\n            elif self.id_prefix + str(user.pk) in principals:\n                found = True\n            else:\n                if not user_roles:\n                    user_roles = self.get_user_group_values(user)\n\n                for user_role in user_roles:\n                    if self.group_prefix + user_role in principals:\n                        found = True\n                        break\n\n            if found:\n                matched.append(statement)\n\n        return matched",
       "buggy_line": 102,
-      "line_tolerance": 6,
+      "line_tolerance": 17,
       "keywords": [
         "elif chain stops",
         "stops evaluating",
         "doesn't fall through",
         "should fall through",
         "multiple principal types",
+        "multiple principals",
         "list of principals",
         "wrongly denies access",
+        "wrongly denied",
+        "incorrectly denying access",
+        "incorrectly denied",
         "terminates the check",
         "first matching keyword",
         "should continue checking",
         "prevents checking the remaining",
+        "never reached",
         "elif short-circuits",
-        "stops checking"
+        "stops checking",
+        "mutually exclusive"
       ],
       "bug_description": "principals is a list that can declare multiple principal types at once (e.g. ['admin', 'id:5']), but the elif chain only tests which keyword is present, not whether that keyword's own check actually passes. If a user matches the 'admin' keyword but isn't a superuser, found=False and the elif chain stops there -- it never falls through to check the id_prefix (or any other) keyword also present in the same list, wrongly denying access the statement should have granted."
     },
@@ -99,7 +105,13 @@
         "stale after the first call",
         "only resolved on the first",
         "overwrites the outer",
-        "no longer callable"
+        "no longer callable",
+        "overwritten with their called results",
+        "re-evaluated fresh each time",
+        "overwrites the closure variables",
+        "shared nonlocal state",
+        "receive the already-resolved",
+        "closure state shared"
       ],
       "bug_description": "retry() declares max_tries/max_time as nonlocal and reassigns them to the already-resolved value; because of nonlocal this mutates the enclosing retry_predicate scope permanently. max_tries/max_time can be passed as a callable specifically so it's re-evaluated on every call, but after the first invocation the reassignment replaces it with a plain value, so _maybe_call's callable(f) check is never true again -- every subsequent call to the decorated function silently reuses whatever the first call happened to resolve, forever."
     },

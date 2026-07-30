@@ -15,7 +15,13 @@
     "stale after the first call",
     "only resolved on the first",
     "overwrites the outer",
-    "no longer callable"
+    "no longer callable",
+    "overwritten with their called results",
+    "re-evaluated fresh each time",
+    "overwrites the closure variables",
+    "shared nonlocal state",
+    "receive the already-resolved",
+    "closure state shared"
   ],
   "bug_description": "retry() declares max_tries/max_time as nonlocal and reassigns them to the already-resolved value; because of nonlocal this mutates the enclosing retry_predicate scope permanently. max_tries/max_time can be passed as a callable specifically so it's re-evaluated on every call, but after the first invocation the reassignment replaces it with a plain value, so _maybe_call's callable(f) check is never true again -- every subsequent call to the decorated function silently reuses whatever the first call happened to resolve, forever.",
   "source_commit_url": "https://github.com/litl/backoff/commit/732eaa34f782e31e891bbbd4aa524e42b27f3bc7",

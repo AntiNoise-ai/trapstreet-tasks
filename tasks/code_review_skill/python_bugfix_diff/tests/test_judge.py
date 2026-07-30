@@ -362,3 +362,57 @@ def test_case07_new_sql_injection_correct_answer_scores_one():
     }])
     r = judge.score_case(out, _expected_for("case_07"))
     assert r["score"] == 1.0
+
+
+def test_case03_realworld_phrasing_line_outside_old_tolerance():
+    """baseline's actual output (2026-07-30 live run): named the exact
+    mechanism ('multiple principal types', exact keyword hit) but cited
+    line 109 (the id_prefix elif branch) -- 7 lines past the old buggy_line
+    102 +/- 6 window. The bug is a structural property of the whole elif
+    chain (lines ~99-118), so any branch's line is a valid citation;
+    tolerance widened from 6 to 17 to cover the full chain."""
+    out = _out([{
+        "file": "access_policy.py", "line": 109,
+        "description": "Using elif chains means principal matching is mutually exclusive; a statement listing multiple principal types only evaluates the first matching branch, so a user could be wrongly denied if they match a later branch but the earlier keyword branch evaluates False.",
+    }])
+    r = judge.score_case(out, _expected_for("case_03"))
+    assert r["score"] == 1.0
+
+
+def test_case03_realworld_phrasing_multiple_principals_never_reached():
+    """awesome's actual output: right line (101, within tolerance) but
+    phrased as 'multiple principals' / 'incorrectly denying access' /
+    'never reached' -- none of which were literal substrings of the
+    original keyword list despite being an exact description of the bug."""
+    out = _out([{
+        "file": "access_policy.py", "line": 101,
+        "description": "The elif chain checks principal categories in mutually exclusive order, so a statement listing multiple principals only evaluates the first matching branch; the role/user-id checks in later branches are never reached, incorrectly denying access.",
+    }])
+    r = judge.score_case(out, _expected_for("case_03"))
+    assert r["score"] == 1.0
+
+
+def test_case04_realworld_phrasing_overwritten_with_called_results():
+    """baseline's actual output: correctly described the nonlocal freeze
+    mechanism ('overwritten with their called results on the first
+    invocation', 'closure state ... rather than re-evaluated fresh each
+    time') without using any of the original list's literal phrases."""
+    out = _out([{
+        "file": "_sync.py", "line": 33,
+        "description": "The nonlocal declaration causes these values to be overwritten with their called results on the first invocation; the nonlocal mutation makes the closure state shared/corrupted across invocations rather than re-evaluated fresh each time.",
+    }])
+    r = judge.score_case(out, _expected_for("case_04"))
+    assert r["score"] == 1.0
+
+
+def test_case04_realworld_phrasing_shared_nonlocal_state():
+    """awesome's actual output: 'overwrites the closure variables on the
+    first call' / 'receive the already-resolved ... values' / 'mutating
+    the shared nonlocal state' -- again none of the original literal
+    phrases, despite pinpointing the exact right mechanism."""
+    out = _out([{
+        "file": "_sync.py", "line": 33,
+        "description": "The nonlocal reassignment overwrites the closure variables on the first call, so subsequent invocations receive the already-resolved values instead of re-calling the callables. Each call should use a local variable rather than mutating the shared nonlocal state.",
+    }])
+    r = judge.score_case(out, _expected_for("case_04"))
+    assert r["score"] == 1.0
