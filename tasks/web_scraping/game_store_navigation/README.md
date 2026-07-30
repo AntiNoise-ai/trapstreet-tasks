@@ -61,6 +61,13 @@ the page (a real browser needs to do nothing extra to get the header
 right) -- the same gap that separates a thorough scraper from a naive
 one in the real world.
 
+`serve.py` never prints the token to its own stdout/stderr (only "Serving
+NebulaKey Store at ..."). This matters because the solution process is
+usually the one that launches `serve.py` in the first place -- if the
+token appeared in the launcher's own console output, reading it back from
+the child process's stdout would be a lower-effort bypass than the
+HTML-parsing one above, undoing the point of gating it at all.
+
 ### Why case_07 isn't gated
 
 Product prices on a real storefront's own page are ordinary, publicly
@@ -125,6 +132,17 @@ This fails closed (never a false positive from a solver just echoing the
 question) at the cost of such cases being permanently unscoreable. The
 fix applied here was to avoid the collision at the question-authoring
 level (case_05, case_06) rather than rely on this behavior.
+
+**Fourth bug, specific to this task:** case_08 and case_09 are the first
+cases in this repo whose question wording itself contains a percent
+("rated 90% or higher"). `is_pct` was originally computed once for the
+whole prediction string; a solver restating that filter before its real
+dollar answer got the unrelated "90" misread as 0.9 and scored a false
+miss. Fixed by scoping `is_pct` to each matched number's own tail (same
+principle as the magnitude-scale check) and by having the confound set
+include the percent-scaled reading of any question-side number followed
+by '%', not just its literal value. See
+`tests/test_judge.py::test_restated_percent_from_question_does_not_get_misread_as_the_answer`.
 
 No `grader.py` customization beyond pointing its category breakdown at
 `mechanism` (the field `judge.py`'s `score_case()` emits) -- the

@@ -74,7 +74,17 @@ class NebulaKeyHandler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
-with socketserver.TCPServer(("", PORT), NebulaKeyHandler) as httpd:
+class NebulaKeyServer(socketserver.TCPServer):
+    allow_reuse_address = True  # back-to-back runs on the same port must not
+    # fail to bind just because the previous socket is still in TIME_WAIT
+
+
+try:
+    httpd = NebulaKeyServer(("", PORT), NebulaKeyHandler)
+except OSError:
+    httpd = NebulaKeyServer(("", 0), NebulaKeyHandler)  # port was genuinely
+    PORT = httpd.server_address[1]                      # taken -- let the OS pick one
+
+with httpd:
     print(f"Serving NebulaKey Store at http://localhost:{PORT}/index.html")
-    print(f"(session token: {SESSION_TOKEN})")
     httpd.serve_forever()

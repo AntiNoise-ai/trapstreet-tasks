@@ -18,6 +18,17 @@ number"):
      let a bare "3" collide with a scale suffix in financebench's "3M"
      case; the equivalent risk here is smaller (no ticker-style names) but
      the same guard costs nothing to keep.
+
+A fourth bug, new to this task (financebench never had a question mention
+a percent): is_pct must be scoped to the matched token's own tail, not
+checked against the whole string. case_08/case_09 ask about a "90%"
+rating filter; a solver restating that filter before its actual dollar
+answer was getting the unrelated "90" mis-divided by 100 into 0.9 because
+is_pct was computed once for the entire string. Confound exclusion also
+has to add the percent-scaled reading of any question-side number
+immediately followed by '%', or a restated "90%" slips through as if it
+were a fresh number. See tests/test_judge.py,
+test_restated_percent_from_question_does_not_get_misread_as_the_answer.
 """
 from __future__ import annotations
 
@@ -41,7 +52,10 @@ NUMBER_RE = re.compile(r"\(?-?[\$€]?\s*[\d,]+(?:\.\d+)?\)?")
 
 def _numbers_in(text: str) -> set[float]:
     """Every distinct number-like value in `text` -- used to compute which
-    numbers the question itself already primed (e.g. "Tier 3", "90%")."""
+    numbers the question itself already primed (e.g. "Tier 3", "90%"). A
+    token immediately followed by '%'/'percent' contributes BOTH its literal
+    value and its /100 reading, since a solver restating "90%" should be
+    excluded whether the matcher later reads that token as 90 or as 0.9."""
     out: set[float] = set()
     if not text:
         return out
@@ -52,19 +66,24 @@ def _numbers_in(text: str) -> set[float]:
             raw, sign = raw[1:-1], -1
         raw = raw.replace("$", "").replace("€", "").replace(",", "").replace(" ", "").strip()
         try:
-            out.add(float(raw) * sign)
+            value = float(raw) * sign
         except ValueError:
             continue
+        out.add(value)
+        tail = s[m.end():].lstrip()
+        if tail.startswith("%") or tail.startswith("percent"):
+            out.add(value / 100.0)
     return out
 
 
 def parse_number(text: str) -> float | None:
     """Single-value parse for the gold side -- no scale-vs-restated-unit
-    ambiguity to preserve there, gold strings never carry a magnitude word."""
+    ambiguity to preserve there, gold strings never carry a magnitude word.
+    is_pct is scoped to the matched token's own tail (not the whole string)
+    -- see parse_number_variants for why a whole-string check is wrong."""
     if not text:
         return None
     s = text.strip().lower()
-    is_pct = "%" in s or " percent" in s
     m = NUMBER_RE.search(s)
     if not m:
         return None
@@ -81,7 +100,7 @@ def parse_number(text: str) -> float | None:
         if re.match(rf"\b{unit}\b", tail):
             value *= mult
             break
-    if is_pct:
+    if tail.startswith("%") or tail.startswith("percent"):
         value /= 100.0
     return value
 
@@ -90,11 +109,16 @@ def parse_number_variants(text: str, exclude: frozenset[float] = frozenset()) ->
     """Numeric interpretation(s) of the first qualifying token in `text`.
     See module docstring for why both a raw and magnitude-scaled candidate
     are returned, and why a token is skipped entirely when its *literal*
-    value is a confound."""
+    value is a confound.
+
+    is_pct is checked against the token's own tail, not the whole string --
+    a whole-string check meant any unrelated '%' later in the answer (e.g.
+    restating a "rated 90%+" filter from the question) would incorrectly
+    divide by 100 a completely separate number found earlier in the same
+    string. Each candidate token's percent-ness is its own local fact."""
     if not text:
         return set()
     s = text.strip().lower()
-    is_pct = "%" in s or " percent" in s
     pos = 0
     while True:
         m = NUMBER_RE.search(s, pos)
@@ -109,13 +133,13 @@ def parse_number_variants(text: str, exclude: frozenset[float] = frozenset()) ->
         except ValueError:
             pos = m.end()
             continue
-        if is_pct:
+        tail = s[m.end():].lstrip()
+        if tail.startswith("%") or tail.startswith("percent"):
             value /= 100.0
         if value in exclude:
             pos = m.end()
             continue
         variants = {value}
-        tail = s[m.end():].lstrip()
         for unit, mult in SCALE:
             if re.match(rf"\b{unit}\b", tail):
                 variants.add(value * mult)

@@ -109,6 +109,29 @@ def test_magnitude_scaled_and_literal_reading_both_accepted():
     assert result["score"] == 1.0
 
 
+def test_restated_percent_from_question_does_not_get_misread_as_the_answer():
+    """A fourth real bug found after the other three: is_pct used to check
+    for '%' anywhere in the WHOLE prediction string, not just near the
+    matched number. case_08/case_09 are the first cases in this task whose
+    question wording itself contains a percent ("rated 90% or higher") --
+    a solver restating that filter before giving its actual dollar answer
+    produced pred=0.9 (90 wrongly read as a percent) instead of the real
+    price, and confound exclusion didn't catch it because _numbers_in only
+    ever added the literal 90.0, not the percent-scaled 0.9 a restatement
+    would actually parse to. Fixed by (a) scoping is_pct to each matched
+    token's own tail instead of the whole string, and (b) having
+    _numbers_in add both the literal and percent-scaled reading of any
+    confound token immediately followed by '%'."""
+    expected = {"id": "case_08", "mechanism": "filter_sort", "gold": "20.99"}
+    question = "Among Action-category games rated 90% or higher, what is the price of the cheapest one?"
+    result = judge.score_case(
+        "Among Action games rated 90%+, the cheapest is $20.99",
+        expected,
+        question=question,
+    )
+    assert result["score"] == 1.0
+
+
 def test_solution_exit_nonzero_short_circuits_to_zero():
     # main()'s exit-code handling is exercised via score_case's caller in
     # main(), not score_case itself -- covered by the manifest-level
