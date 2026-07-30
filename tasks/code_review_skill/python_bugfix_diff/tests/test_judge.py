@@ -497,3 +497,37 @@ def test_case04_wrong_bug_at_different_line_is_rejected():
     r = judge.score_case(out, _expected_for("case_04"))
     assert r["score"] == 0.0
     assert r["best_match_signals"]["line_match"] is False
+
+
+# -- 2026-07-30: case_09 moved to keyword_groups too. A submitted run showed
+# the identical failure mode as case_03/case_04 on a case that had already
+# been through one round of literal-keyword widening: "raises KeyError"
+# (no "a") missed the literal "raises a keyerror" keyword. The bug is
+# isolated to a single statement (cache.pop(...) at line 126, tolerance 2),
+# so there's no adjacent wrong-bug risk from loosening the text gate here.
+
+def test_case09_new_phrasing_isnt_cached_raises_keyerror():
+    """alireza's actual output (submitted run): 'a key that isn't cached
+    raises KeyError instead of being a safe no-op' -- hit none of the
+    literal keywords (missing the word 'a' before KeyError, 'isn't cached'
+    vs 'was never cached'/'key is not present')."""
+    out = _out([{
+        "file": "calc.py", "line": 126,
+        "description": "invalidate() calls cache.pop() without a default, so invalidating a key that isn't cached raises KeyError instead of being a safe no-op.",
+    }])
+    r = judge.score_case(out, _expected_for("case_09"))
+    assert r["score"] == 1.0
+
+
+def test_case09_wrong_bug_at_different_line_is_rejected():
+    """A real but different bug (operator-precedence in the key_func
+    lambda, line 106) mentioning KeyError-adjacent language must still be
+    rejected on line_match alone -- the bug is isolated to one statement,
+    not a wide structural pattern like case_03."""
+    out = _out([{
+        "file": "calc.py", "line": 106,
+        "description": "operator-precedence bug: a + (tuple(sorted(kw.items())) if kw else a), producing wrong cache keys with KeyError-like corruption.",
+    }])
+    r = judge.score_case(out, _expected_for("case_09"))
+    assert r["score"] == 0.0
+    assert r["best_match_signals"]["line_match"] is False

@@ -21,5 +21,25 @@
   ],
   "bug_description": "The invalidate() closure calls cache.pop(key_func(*args, **kwargs)) without a default value; if the key was already removed -- e.g. it expired via the timeout-based eviction on the next read, or a concurrent thread already invalidated it -- pop() raises KeyError. Because unit tests rarely hit this timing/race window, the code appears correct until it crashes in production.",
   "source_commit_url": "https://github.com/Suor/funcy/commit/a96b449ee08d7355805e4c6037e9782e74241ff7",
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "keyword_groups": [
+    [
+      "key\\s*error"
+    ],
+    [
+      "without\\s+a?\\s*default",
+      "isn'?t\\s+cached",
+      "is\\s+not\\s+cached",
+      "not\\s+present",
+      "not\\s+in\\s+the\\s+cache",
+      "no\\s+longer\\s+cached",
+      "was\\s+never\\s+cached",
+      "already\\s+(removed|expired|invalidated|evicted)",
+      "doesn'?t\\s+exist",
+      "does\\s+not\\s+exist",
+      "missing\\s+key",
+      "absent\\s+key",
+      "key\\s+is\\s*n'?t\\s+(present|found|cached)"
+    ]
+  ]
 }
