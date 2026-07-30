@@ -202,6 +202,28 @@
         "no secret required",
         "without the secret"
       ],
+      "keyword_groups": [
+        [
+          "unauthenticat\\w*",
+          "without\\s+(any\\s+)?auth\\w*",
+          "no\\s+auth\\w*",
+          "missing\\s+auth\\w*",
+          "auth\\w*\\s+bypass",
+          "bypass\\w*",
+          "not\\s+enforc\\w*",
+          "no\\s+secret",
+          "without\\s+(the\\s+)?secret"
+        ],
+        [
+          "expos\\w*",
+          "reachable",
+          "direct\\s+(lan\\s+)?access",
+          "publicly",
+          "root\\s+(prefix|path|mount)",
+          "empty\\s+prefix",
+          "bare\\s+root"
+        ]
+      ],
       "bug_description": "In add-on mode, the entire settings/backup/policy API is mounted at the bare root path via `_mount(\"\")` with zero authentication check, while the secret-path mount is the only place a secret is required; any client reaching the port directly can invoke these state-changing endpoints unauthenticated."
     },
     {

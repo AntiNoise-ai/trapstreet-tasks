@@ -265,6 +265,25 @@ def test_case06_realworld_phrasing_bypassing_secret_auth():
     assert r["score"] == 1.0
 
 
+# -- 2026-07-30: case_06 moved to keyword_groups too, for the same reason as
+# case_09 -- a submitted run described the exact intended bug but split the
+# concept across two words the literal list didn't anticipate ("unauthenticated
+# direct LAN access" instead of the listed "unauthenticated access", and
+# "authentication bypass" instead of the listed "authorization bypass").
+
+def test_case06_new_phrasing_unauthenticated_direct_lan_access():
+    """baseline's actual output (submitted run): 'unauthenticated direct LAN
+    access' -- the word 'direct LAN' breaks the literal 'unauthenticated
+    access' phrase; 'authentication bypass' vs the listed 'authorization
+    bypass' is also an inflection miss."""
+    out = _out([{
+        "file": "settings_ui.py", "line": 3044,
+        "description": "When is_addon is true, the routes are mounted at the empty/root prefix without any secret protection, exposing the settings UI to unauthenticated direct LAN access on port 9583, contradicting the secret-path auth model used for standalone clients.",
+    }])
+    r = judge.score_case(out, _expected_for("case_06"))
+    assert r["score"] == 1.0
+
+
 def test_case08_realworld_phrasing_should_be_narrowed():
     """jeffallan's actual output: correctly identified the except clause as
     needing narrowing (implying it's currently too broad) without using
