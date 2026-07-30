@@ -416,3 +416,84 @@ def test_case04_realworld_phrasing_shared_nonlocal_state():
     }])
     r = judge.score_case(out, _expected_for("case_04"))
     assert r["score"] == 1.0
+
+
+# -- 2026-07-30: case_03/case_04 moved from flat literal-phrase "keywords" to
+# "keyword_groups" (AND-of-OR concept groups, raw regex with stems/inflections)
+# after repeated live runs kept producing NEW correct-but-differently-worded
+# phrasings that a finite literal phrase list could never fully enumerate.
+# Also narrowed case_03's line_tolerance back from 17 to 8: at 17 the window
+# swallowed line 112 (a different real bug -- the `if not user_roles`
+# truthiness issue), leaving keyword_match as the ONLY thing standing between
+# a real hit and a false positive on an adjacent-but-wrong bug.
+
+def test_case03_new_phrasing_evaluated_only_against_earlier_keyword():
+    """awesome's actual output from a THIRD independent live run: yet another
+    new phrasing ('will be evaluated only against that earlier keyword,
+    potentially failing to match') that hit none of the literal keywords in
+    place at the time, motivating the switch to concept groups."""
+    out = _out([{
+        "file": "access_policy.py", "line": 109,
+        "description": "The principal matching uses elif chains, so a statement whose principal matches the user's pk (or a role) but which also lists an earlier-checked keyword like 'staff'/'admin' will be evaluated only against that earlier keyword, potentially failing to match a valid pk/role principal.",
+    }])
+    r = judge.score_case(out, _expected_for("case_03"))
+    assert r["score"] == 1.0
+
+
+def test_case03_wrong_bug_at_same_line_is_rejected():
+    """alireza's actual output (multiple independent runs): describes a
+    DIFFERENT real issue at the exact same line as the intended bug (the
+    `self.id_prefix + str(user.pk)` check misbehaving for anonymous users,
+    pk=None) -- never mentions the elif chain or any short-circuit/denial
+    concept at all. Must NOT score 1.0 despite file+line matching, or the
+    wide line_tolerance (needed because this bug spans the whole elif
+    chain) would make the case gameable by any finding touching this
+    function."""
+    out = _out([{
+        "file": "access_policy.py", "line": 109,
+        "description": "The `self.id_prefix + str(user.pk)` check can raise or misbehave for anonymous users whose `pk` is None, matching a principal like the prefix concatenated with 'None' or throwing depending on prefix type.",
+    }])
+    r = judge.score_case(out, _expected_for("case_03"))
+    assert r["score"] == 0.0
+    assert r["best_match_signals"]["line_match"] is True
+    assert r["best_match_signals"]["keyword_match"] is False
+
+
+def test_case03_wrong_bug_user_roles_truthiness_is_rejected():
+    """alireza's actual output: the `if not user_roles` truthiness/caching
+    bug at line 112 -- now just outside the narrowed tolerance (94-110),
+    and separately fails the concept-group text gate too (no elif-chain
+    mention). Guards against a tolerance regression back toward 17."""
+    out = _out([{
+        "file": "access_policy.py", "line": 112,
+        "description": "Using `if not user_roles` conflates an empty result with an unfetched value; if `get_user_group_values` returns an empty list, it will be re-fetched on every statement iteration.",
+    }])
+    r = judge.score_case(out, _expected_for("case_03"))
+    assert r["score"] == 0.0
+
+
+def test_case04_new_phrasing_only_evaluated_once_and_permanently_overwritten():
+    """awesome's actual output from a THIRD independent live run: yet
+    another new phrasing ('only evaluated once and permanently
+    overwritten') using different verb inflections than any literal
+    keyword in place at the time (evaluated vs resolved, overwritten vs
+    overwrites) -- motivating the switch to stem-tolerant concept groups."""
+    out = _out([{
+        "file": "_sync.py", "line": 33,
+        "description": "The `nonlocal max_tries, max_time` reassigns the closure variables on the first call, so `_maybe_call` is applied to the already-resolved values on subsequent calls; if `max_tries`/`max_time` were callables, they are only evaluated once and permanently overwritten, breaking per-invocation dynamic configuration.",
+    }])
+    r = judge.score_case(out, _expected_for("case_04"))
+    assert r["score"] == 1.0
+
+
+def test_case04_wrong_bug_at_different_line_is_rejected():
+    """alireza's actual output: a real but unrelated bug (equality vs >=
+    for max_tries_exceeded) at a line far outside case_04's tolerance
+    window -- must stay rejected on line_match alone."""
+    out = _out([{
+        "file": "_sync.py", "line": 53,
+        "description": "max_tries_exceeded uses equality (tries == max_tries) rather than tries >= max_tries; if max_tries is dynamically reduced the exceeded condition could be skipped, causing an unbounded retry loop.",
+    }])
+    r = judge.score_case(out, _expected_for("case_04"))
+    assert r["score"] == 0.0
+    assert r["best_match_signals"]["line_match"] is False

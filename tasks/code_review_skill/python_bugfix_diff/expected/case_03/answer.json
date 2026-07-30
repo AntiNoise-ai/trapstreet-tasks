@@ -3,7 +3,7 @@
   "bug_category": "elif_short_circuit_wrong_deny",
   "file_path": "rest_access_policy/access_policy.py",
   "buggy_line": 102,
-  "line_tolerance": 17,
+  "line_tolerance": 8,
   "keywords": [
     "elif chain stops",
     "stops evaluating",
@@ -27,5 +27,26 @@
   ],
   "bug_description": "principals is a list that can declare multiple principal types at once (e.g. ['admin', 'id:5']), but the elif chain only tests which keyword is present, not whether that keyword's own check actually passes. If a user matches the 'admin' keyword but isn't a superuser, found=False and the elif chain stops there -- it never falls through to check the id_prefix (or any other) keyword also present in the same list, wrongly denying access the statement should have granted.",
   "source_commit_url": "https://github.com/rsinger86/drf-access-policy/commit/fd628ad7cf0c30f039ca33f12881ac00d4c2d99d",
-  "license": "MIT"
+  "license": "MIT",
+  "keyword_groups": [
+    [
+      "elif\\s+chains?",
+      "elif\\s+branch(es)?",
+      "if\\s*/\\s*elif"
+    ],
+    [
+      "stop\\w*\\s+(evaluat\\w*|check\\w*)",
+      "mutually\\s+exclusive",
+      "never\\s+reached",
+      "only\\s+evaluat\\w*",
+      "evaluat\\w*\\s+only",
+      "fail\\w*\\s+to\\s+match",
+      "wrongly\\s+den\\w*",
+      "incorrectly\\s+den\\w*",
+      "short.?circuit\\w*",
+      "den(y|ies|ied)\\s+access",
+      "not\\s+(fall|fallen)\\s+through",
+      "should\\s+fall\\s+through"
+    ]
+  ]
 }

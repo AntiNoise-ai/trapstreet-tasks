@@ -8,8 +8,14 @@ the case's pre-declared keywords. Only the FIRST 5 findings are considered
 (anti-shotgun) -- a skill can't win by flagging every line.
 
 This is deterministic (no LLM judge): the ground truth is a real historical
-bugfix commit, and "keywords" are phrases a competent human reviewer of that
-exact bug would naturally use, curated per case in gold.cases.json.
+bugfix commit. Most cases use a flat "keywords" list (any literal phrase
+hits). A case can instead declare "keyword_groups": a list of concept
+groups, each a list of raw regexes (not literal-escaped, so they can use
+stems/inflections like r"overwrit\w*"); a finding's keyword_match requires
+at least one regex hit from EVERY group (AND across groups, OR within a
+group). Use groups for bugs whose correct description has a wide paraphrase
+space (control-flow/structural bugs) instead of trying to enumerate every
+literal phrasing -- require the co-occurrence of the core concepts instead.
 
 I/O contract: reads TRAPTASK_MANIFEST (trap-cli).
 """
@@ -61,10 +67,22 @@ def _finding_matches(finding: Any, expected: dict) -> dict[str, bool]:
     keyword_match = False
     desc = finding.get("description")
     if isinstance(desc, str) and desc:
-        keyword_match = any(
-            re.search(rf"\b{re.escape(kw)}\b", desc, re.IGNORECASE)
-            for kw in expected["keywords"]
-        )
+        groups = expected.get("keyword_groups")
+        if groups:
+            # Concept-group mode: the description must hit at least one
+            # pattern from EVERY group (AND across groups, OR within a
+            # group). Patterns are raw regexes (not literal-escaped) so
+            # they can use stems/inflections (e.g. r"overwrit\w*") instead
+            # of enumerating every literal phrasing of the same concept.
+            keyword_match = all(
+                any(re.search(pattern, desc, re.IGNORECASE) for pattern in group)
+                for group in groups
+            )
+        else:
+            keyword_match = any(
+                re.search(rf"\b{re.escape(kw)}\b", desc, re.IGNORECASE)
+                for kw in expected["keywords"]
+            )
 
     return {"file_match": file_match, "line_match": line_match, "keyword_match": keyword_match}
 

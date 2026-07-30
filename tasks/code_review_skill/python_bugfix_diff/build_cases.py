@@ -102,6 +102,8 @@ def build() -> None:
             "source_commit_url": case["source_commit_url"],
             "license": case["license"],
         }
+        if "keyword_groups" in case:
+            answer["keyword_groups"] = case["keyword_groups"]
         (exp_dir / "answer.json").write_text(json.dumps(answer, indent=2))
 
     print(f"Built {len(data['cases'])} cases.")
