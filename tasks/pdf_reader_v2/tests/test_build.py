@@ -129,12 +129,12 @@ def test_shipped_gold_builds_clean():
     seen: set[str] = set()
     for case in GOLD["cases"]:
         validate_case(case, seen)
-    assert len(seen) == 19
+    assert len(seen) == 20
 
 
 def test_every_case_id_is_opaque_and_sequential():
     ids = [c["id"] for c in GOLD["cases"]]
-    assert ids == [f"case_{i:02d}" for i in range(1, 20)]
+    assert ids == [f"case_{i:02d}" for i in range(1, 21)]
 
 
 def test_labels_are_unique():

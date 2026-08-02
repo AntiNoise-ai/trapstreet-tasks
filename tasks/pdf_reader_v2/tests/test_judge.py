@@ -66,6 +66,15 @@ GOLD_ANSWERS = {
     "case_18": "Void £2100 + fee £4078.80 + inventory £56.00 + admin £186.67 = £6421.47",
     "case_19": "No. Section 6 gives the outgoing tenant no refund or credit where the "
                "replacement pays more; the tenant only bears any shortfall.",
+    "case_20": (
+        "Section 6 lists five categories. First, rent payable under the agreement "
+        "until the new tenancy has started. Second, any difference in rental payments "
+        "where the replacement tenant pays a lower amount. Third, the Landlord's new "
+        "letting fee for the remainder of the term. Fourth, a share of the inventory "
+        "clerk's cost of checking the new tenants in. Fifth, a share of the Landlord's "
+        "cost of administering the new tenancy. The fourth and fifth are scaled by the "
+        "number of months surrendered early as a percentage of the current fixed term."
+    ),
 }
 
 
@@ -129,6 +138,30 @@ def test_case_18_partial_calculation_fails(tmp_path):
 
 def test_case_19_bare_yes_no_fails_min_words(tmp_path):
     m = run_judge("case_19", "No.", tmp_path)
+    assert m["score"] == 0.0
+
+
+def test_case_20_generic_list_without_the_scaling_basis_fails(tmp_path):
+    """The anti-shotgun guard. A model can list plausible early-surrender
+    charges from general UK tenancy knowledge and hit the five category
+    matchers. The scaling basis is document-specific, so it is what
+    distinguishes having read Section 6 from having guessed."""
+    m = run_judge("case_20", (
+        "The Landlord may charge: rent until the new tenancy has started; any "
+        "shortfall where the replacement pays a lower amount; the new letting fee; "
+        "the inventory check-in cost; and the administration cost of setting up the "
+        "new tenancy. These are all recoverable from the outgoing tenant."
+    ), tmp_path)
+    assert m["score"] == 0.0
+
+
+def test_case_20_missing_a_category_fails(tmp_path):
+    """Four of five is not a pass — every category matcher must hit."""
+    m = run_judge("case_20", (
+        "Rent until the new tenancy has started, the new letting fee, the inventory "
+        "check-in cost, and the administration cost, the last two scaled by the number "
+        "of months surrendered early as a percentage of the current fixed term."
+    ), tmp_path)
     assert m["score"] == 0.0
 
 

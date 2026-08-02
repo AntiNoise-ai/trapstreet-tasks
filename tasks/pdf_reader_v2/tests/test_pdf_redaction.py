@@ -31,7 +31,7 @@ import pytest
 fitz = pytest.importorskip("fitz", reason="pymupdf not installed")
 
 TASK = Path(__file__).parent.parent
-PDF = TASK / "AST_Issue_1_CanaryWharf.pdf"
+PDF = TASK / "AST_tenancy_redacted.pdf"
 SHIFT = 29
 
 

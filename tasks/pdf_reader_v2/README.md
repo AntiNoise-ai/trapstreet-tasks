@@ -1,8 +1,9 @@
 # Tenancy Agreement — PDF Reader v2
 
-A hardened fork of [`../pdf_reader`](../pdf_reader). Same document, same 19
-questions, same judge and grader. What changed is that the questions no longer
-give away what the judge scores on.
+A hardened fork of [`../pdf_reader`](../pdf_reader). Same document, same judge
+and grader, v1's 19 questions plus one new one. What changed is that the
+questions no longer give away what the judge scores on, and the source PDF is
+actually redacted.
 
 `pdf_reader` is left untouched — its leaderboard history stays valid and
 comparable against itself. This is a separate task, and results are **not**
@@ -55,7 +56,20 @@ next to the case it applies to. Summary:
   total; the numbers must come from Section 6.
 - **`case_02`**, **`case_13`** — incidental term-length and rent-structure
   hints removed.
-- **All cases** — ids are now opaque (`case_01`…`case_19`). A solution can read
+- **`case_20`** — new, no v1 equivalent. `case_18` names its four cost
+  components in the prompt, which buys gradeability against a single number but
+  hands over the "which charges apply" step. Section 6 in fact lists **five**;
+  `case_18` omits the rent-shortfall item because it is £0 in that scenario.
+  `case_20` tests the step `case_18` gives away — enumerate all five and state
+  the scaling basis for the two that are pro-rated. A list question grades
+  naturally on keywords where a single-number question cannot.
+  Anti-shotgun: the first five matchers are reachable by listing plausible
+  charges from general UK tenancy knowledge, so the sixth — the scaling basis,
+  "the number of months to be surrendered early as a percentage of the current
+  fixed term" — is the guard. It is specific to this document.
+  `tests/test_judge.py::test_case_20_generic_list_without_the_scaling_basis_fails`
+  pins it.
+- **All cases** — ids are now opaque (`case_01`…`case_20`). A solution can read
   its own `TRAP_MANIFEST["inputs_dir"]`, so ids like `pets_allowed` or
   `break_clause` handed over the topic for free. Real names live in `label`.
 
@@ -63,7 +77,7 @@ next to the case it applies to. Summary:
 
 Per case:
 - `inputs/<case_id>/question.txt` — one-line question
-- `inputs/<case_id>/document.pdf` — the AST PDF (~470 KB, identical across all 19)
+- `inputs/<case_id>/document.pdf` — the AST PDF (~470 KB, identical across all 20)
 
 ## Expected output
 
@@ -84,12 +98,12 @@ leak fails the build.
 
 ## Known limitations (inherited from v1, not fixed here)
 
-- **One document across all 19 cases.** Parse cost amortises to near-zero after
+- **One document across all 20 cases.** Parse cost amortises to near-zero after
   the first case, so the cost figure on the leaderboard understates what a
-  19-distinct-document run would cost. The task measures "can you read *this*
+  20-distinct-document run would cost. The task measures "can you read *this*
   contract", not "can you read contracts".
 - **Five cases are yes/no** (3 gold `yes`, 2 gold `no`). Answering `yes` to
-  everything scores 3/19 = 16%, far below the 80% threshold, so guessing is not
+  everything scores 3/20 = 15%, far below the 80% threshold, so guessing is not
   a route to passing — but treat the `clauses` category score as weaker
   evidence than `money` or `scenario`.
 - **`case_10`'s "extension" overlap** is acknowledged, not eliminated — see
@@ -103,6 +117,9 @@ leak fails the build.
 - **`case_18` uses the `numeric` matcher** ("any number in the answer counts"),
   which show-your-working requires but which is weak against a solution that
   enumerates candidate totals. No anti-shotgun cap is applied.
+- **`case_18` names its four cost components**, so it does not test which of
+  Section 6's five charges apply — that scope was traded away for a gradeable
+  single number. `case_20` covers the gap; neither case covers it alone.
 - **Never run end to end.** `build_cases.py`, the test suite and
   `validate_task.py` all pass, but no solution has executed against v2 and it
   is not registered on trapstreet.run, so nothing can submit against it yet.
@@ -129,7 +146,7 @@ and a postcode's two halves are separate word boxes. The cost is one cosmetic ov
 where clause 5.4c loses some trailing prose. No case asks about 5.4c.
 
 ```bash
-python3 tools/apply_redactions.py <unredacted>.pdf AST_Issue_1_CanaryWharf.pdf
+python3 tools/apply_redactions.py <unredacted>.pdf AST_tenancy_redacted.pdf
 ```
 
 `tests/test_pdf_redaction.py` is the standing guard: it deshifts the text layer

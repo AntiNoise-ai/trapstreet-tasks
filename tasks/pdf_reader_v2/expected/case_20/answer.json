@@ -1,0 +1,72 @@
+{
+  "id": "case_20",
+  "label": "section6_cost_categories",
+  "answer": "Five categories: rent under the agreement until the new tenancy starts; any shortfall where the replacement tenant pays a lower rent; the Landlord's new letting fee; a share of the inventory clerk's check-in cost; and a share of the Landlord's cost of administering the new tenancy. The last two are scaled by the number of months surrendered early as a percentage of the current fixed term.",
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "keywords_any",
+      "values": [
+        "until the new tenancy",
+        "rent until",
+        "rent payable until",
+        "new tenancy has started",
+        "until the replacement"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "lower amount",
+        "lower rent",
+        "difference in rent",
+        "rental difference",
+        "rent difference",
+        "shortfall",
+        "pays less",
+        "paying less"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "letting fee"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "inventory"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "administration",
+        "administrative",
+        "admin"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "months to be surrendered early",
+        "months surrendered early",
+        "surrendered early as a percentage",
+        "percentage of the current fixed term",
+        "proportion of the fixed term",
+        "months early",
+        "number of months surrendered"
+      ]
+    },
+    {
+      "kind": "min_words",
+      "value": 30
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "clauses",
+  "difficulty": "expert"
+}

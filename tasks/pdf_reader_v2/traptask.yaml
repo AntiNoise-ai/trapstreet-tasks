@@ -65,6 +65,9 @@ cases:
 - id: case_19
   description: "Reason about who benefits when a replacement pays higher rent"
   tags: [scenario_reasoning, expert]
+- id: case_20
+  description: "Enumerate the early-surrender cost categories and their scaling basis"
+  tags: [clauses, expert]
 
 judge:
   cmd: python3 judge.py
