@@ -24,7 +24,7 @@ HERE = Path(__file__).parent
 GOLD = HERE / "gold.cases.json"
 
 VALID_MATCHERS = {
-    "numeric", "leading_numeric", "regex_required", "leading_word",
+    "numeric", "leading_numeric", "currency_amount", "regex_required", "leading_word",
     "keywords_all", "keywords_any", "keywords_any_word", "no_hedge", "min_words",
 }
 
@@ -56,7 +56,7 @@ def _matcher_satisfied_by(m: dict, q: str) -> str | None:
     """If matcher `m` would pass on the question text alone, say how."""
     kind = m["kind"]
 
-    if kind in ("numeric", "leading_numeric"):
+    if kind in ("numeric", "leading_numeric", "currency_amount"):
         for form in _numeric_forms(m["value"]):
             if re.search(rf"(?<![\d.]){re.escape(form)}(?![\d.])", q):
                 return f"{kind}: value {m['value']} appears in the question as {form!r}"

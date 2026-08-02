@@ -165,6 +165,70 @@ def test_case_20_missing_a_category_fails(tmp_path):
     assert m["score"] == 0.0
 
 
+# ------------------------------------------------- currency_amount regression
+
+# Verbatim shapes recorded from four real solutions on 2026-08-02. Under the
+# original `leading_numeric` matcher the first three scored 0 while holding the
+# correct answer, because the first number in the string is a clause number or a
+# date. That single matcher choice moved mineru above pdf-inspector by exactly
+# one point on word order alone.
+CITATION_FIRST = {
+    "case_01": (
+        "Based on clause 1.9b, the rent for the period 05/09/2023 to 04/09/2024 "
+        "is £2,100.00 per calendar month. This corresponds to months 13-24."
+    ),
+    "case_02": (
+        "Based on clause 1.9b, the rent for the period 05/09/2024 to 04/09/2025 "
+        "(which covers months 25-36 of the 36-month tenancy) is £2,400.00 per "
+        "calendar month."
+    ),
+    "case_03": (
+        "Based on clauses 1.10 and the Prescribed Information section, the "
+        "deposit amount is £2,250.00."
+    ),
+}
+
+
+@pytest.mark.parametrize("case_id", sorted(CITATION_FIRST))
+def test_citing_the_source_first_still_passes(case_id, tmp_path):
+    """Answering correctly while citing the clause it came from must score 1.0.
+    Leading with 'clause 1.9b' or a date is good legal-review practice, not a
+    wrong answer."""
+    m = run_judge(case_id, CITATION_FIRST[case_id], tmp_path)
+    assert m["score"] == 1.0, m
+
+
+def test_walking_the_schedule_then_committing_passes(tmp_path):
+    """A model may quote the whole rent schedule while reasoning; the figure it
+    ends on is the one it is answering with."""
+    m = run_judge("case_02",
+                  "The schedule is £1,950.00, then £2,100.00, then £2,400.00. "
+                  "For months 25-36 the rent is £2,400.00.", tmp_path)
+    assert m["score"] == 1.0, m
+
+
+def test_committing_to_the_wrong_amount_still_fails(tmp_path):
+    """The anti-decoy property survives: naming the right figure in passing but
+    committing to another one is still wrong. This is the real error one
+    solution made on case_02."""
+    m = run_judge("case_02",
+                  "Rents run £1,950.00 and £2,400.00 across the term. For the "
+                  "period 05/09/2024 to 04/09/2025 the rent is £2100.00.", tmp_path)
+    assert m["score"] == 0.0, m
+
+
+def test_answer_with_no_currency_formatting_fails(tmp_path):
+    """The question asks for a GBP figure; a bare number is not a committed
+    amount, and accepting one would re-admit clause numbers and month counts."""
+    m = run_judge("case_03", "The deposit is 2250.", tmp_path)
+    assert m["score"] == 0.0, m
+
+
+def test_gbp_prefix_is_accepted_as_currency(tmp_path):
+    m = run_judge("case_03", "Per clause 1.10 the deposit is GBP 2,250.00.", tmp_path)
+    assert m["score"] == 1.0, m
+
+
 # ------------------------------------------------- malformed-output robustness
 
 # A judge that crashes on garbage reads as "task infrastructure is broken"

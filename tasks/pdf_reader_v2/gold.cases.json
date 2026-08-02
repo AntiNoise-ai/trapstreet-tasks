@@ -9,10 +9,15 @@
       "answer": "2100",
       "type": "numeric",
       "matchers": [
-        {"kind": "leading_numeric", "value": 2100.0, "tolerance": 0.01}
+        {
+          "kind": "currency_amount",
+          "value": 2100.0,
+          "tolerance": 0.01
+        }
       ],
       "category": "money",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "_matcher_fix": "v2 originally used leading_numeric here. Every solution that cited its source first — 'Based on clause 1.9b, the rent for 05/09/2023 to 04/09/2024 is GBP 2,100.00' — led with a clause number or a date and was scored wrong while holding the right answer. Measured: 3 of 5 money cases affected across 3 solutions, and mineru beat pdf-inspector by exactly one point purely on word order. currency_amount anchors on the last currency-formatted figure, which is the one being committed to."
     },
     {
       "id": "case_02",
@@ -21,11 +26,16 @@
       "answer": "2400",
       "type": "numeric",
       "matchers": [
-        {"kind": "leading_numeric", "value": 2400.0, "tolerance": 0.01}
+        {
+          "kind": "currency_amount",
+          "value": 2400.0,
+          "tolerance": 0.01
+        }
       ],
       "category": "money",
       "difficulty": "medium",
-      "_deleak": "v1 said \"Answer 'N/A' if the fixed term is shorter than 36 months\", which handed over the term length that case_13 and case_18 both require the model to find for itself."
+      "_deleak": "v1 said \"Answer 'N/A' if the fixed term is shorter than 36 months\", which handed over the term length that case_13 and case_18 both require the model to find for itself.",
+      "_matcher_fix": "v2 originally used leading_numeric here. Every solution that cited its source first — 'Based on clause 1.9b, the rent for 05/09/2023 to 04/09/2024 is GBP 2,100.00' — led with a clause number or a date and was scored wrong while holding the right answer. Measured: 3 of 5 money cases affected across 3 solutions, and mineru beat pdf-inspector by exactly one point purely on word order. currency_amount anchors on the last currency-formatted figure, which is the one being committed to."
     },
     {
       "id": "case_03",
@@ -34,10 +44,15 @@
       "answer": "2250",
       "type": "numeric",
       "matchers": [
-        {"kind": "leading_numeric", "value": 2250.0, "tolerance": 0.01}
+        {
+          "kind": "currency_amount",
+          "value": 2250.0,
+          "tolerance": 0.01
+        }
       ],
       "category": "money",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "_matcher_fix": "v2 originally used leading_numeric here. Every solution that cited its source first — 'Based on clause 1.9b, the rent for 05/09/2023 to 04/09/2024 is GBP 2,100.00' — led with a clause number or a date and was scored wrong while holding the right answer. Measured: 3 of 5 money cases affected across 3 solutions, and mineru beat pdf-inspector by exactly one point purely on word order. currency_amount anchors on the last currency-formatted figure, which is the one being committed to."
     },
     {
       "id": "case_04",
@@ -46,7 +61,10 @@
       "answer": "05/09/2022",
       "type": "date",
       "matchers": [
-        {"kind": "regex_required", "pattern": "\\b0?5[/\\-]0?9[/\\-]2022\\b"}
+        {
+          "kind": "regex_required",
+          "pattern": "\\b0?5[/\\-]0?9[/\\-]2022\\b"
+        }
       ],
       "category": "dates",
       "difficulty": "easy"
@@ -58,9 +76,22 @@
       "answer": "on or prior 5th of the month",
       "type": "text",
       "matchers": [
-        {"kind": "regex_required", "pattern": "\\b5(?:th)?\\b"},
-        {"kind": "keywords_any", "values": ["before", "prior", "on or", "by the"]},
-        {"kind": "no_hedge"}
+        {
+          "kind": "regex_required",
+          "pattern": "\\b5(?:th)?\\b"
+        },
+        {
+          "kind": "keywords_any",
+          "values": [
+            "before",
+            "prior",
+            "on or",
+            "by the"
+          ]
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "money",
       "difficulty": "medium"
@@ -72,7 +103,10 @@
       "answer": "no",
       "type": "boolean",
       "matchers": [
-        {"kind": "leading_word", "value": "no"}
+        {
+          "kind": "leading_word",
+          "value": "no"
+        }
       ],
       "category": "clauses",
       "difficulty": "medium"
@@ -84,7 +118,10 @@
       "answer": "yes",
       "type": "boolean",
       "matchers": [
-        {"kind": "leading_word", "value": "yes"}
+        {
+          "kind": "leading_word",
+          "value": "yes"
+        }
       ],
       "category": "clauses",
       "difficulty": "hard"
@@ -96,7 +133,10 @@
       "answer": "yes",
       "type": "boolean",
       "matchers": [
-        {"kind": "leading_word", "value": "yes"}
+        {
+          "kind": "leading_word",
+          "value": "yes"
+        }
       ],
       "category": "clauses",
       "difficulty": "hard"
@@ -108,8 +148,16 @@
       "answer": "the tenancy automatically extends for six months",
       "type": "text",
       "matchers": [
-        {"kind": "keywords_all", "values": ["six month", "extend"]},
-        {"kind": "no_hedge"}
+        {
+          "kind": "keywords_all",
+          "values": [
+            "six month",
+            "extend"
+          ]
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "clauses",
       "difficulty": "hard"
@@ -121,9 +169,26 @@
       "answer": "the automatic extension period only",
       "type": "text",
       "matchers": [
-        {"kind": "keywords_all", "values": ["extension"]},
-        {"kind": "keywords_any", "values": ["only", "solely", "just the", "not the original", "not during the fixed", "not the fixed"]},
-        {"kind": "no_hedge"}
+        {
+          "kind": "keywords_all",
+          "values": [
+            "extension"
+          ]
+        },
+        {
+          "kind": "keywords_any",
+          "values": [
+            "only",
+            "solely",
+            "just the",
+            "not the original",
+            "not during the fixed",
+            "not the fixed"
+          ]
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "money",
       "difficulty": "hard",
@@ -137,8 +202,17 @@
       "answer": "TDS",
       "type": "text",
       "matchers": [
-        {"kind": "keywords_any", "values": ["TDS", "Tenancy Deposit Scheme", "The Dispute Service"]},
-        {"kind": "no_hedge"}
+        {
+          "kind": "keywords_any",
+          "values": [
+            "TDS",
+            "Tenancy Deposit Scheme",
+            "The Dispute Service"
+          ]
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "clauses",
       "difficulty": "medium"
@@ -150,9 +224,23 @@
       "answer": "with landlord consent",
       "type": "text",
       "matchers": [
-        {"kind": "keywords_any", "values": ["consent", "permission", "approval"]},
-        {"kind": "keywords_any", "values": ["landlord"]},
-        {"kind": "no_hedge"}
+        {
+          "kind": "keywords_any",
+          "values": [
+            "consent",
+            "permission",
+            "approval"
+          ]
+        },
+        {
+          "kind": "keywords_any",
+          "values": [
+            "landlord"
+          ]
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "clauses",
       "difficulty": "medium",
@@ -165,7 +253,11 @@
       "answer": "77400",
       "type": "numeric",
       "matchers": [
-        {"kind": "numeric", "value": 77400.0, "tolerance": 0.01}
+        {
+          "kind": "numeric",
+          "value": 77400.0,
+          "tolerance": 0.01
+        }
       ],
       "category": "money",
       "difficulty": "hard",
@@ -178,9 +270,23 @@
       "answer": "3% per annum above Bank of England base rate",
       "type": "text",
       "matchers": [
-        {"kind": "keywords_all", "values": ["3%", "base rate"]},
-        {"kind": "keywords_any_word", "values": ["bank of england", "boe"]},
-        {"kind": "no_hedge"}
+        {
+          "kind": "keywords_all",
+          "values": [
+            "3%",
+            "base rate"
+          ]
+        },
+        {
+          "kind": "keywords_any_word",
+          "values": [
+            "bank of england",
+            "boe"
+          ]
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "money",
       "difficulty": "hard",
@@ -193,9 +299,22 @@
       "answer": "Housing Act 1988, Section 19A",
       "type": "text",
       "matchers": [
-        {"kind": "keywords_all", "values": ["housing act", "1988"]},
-        {"kind": "keywords_any_word", "values": ["19A"]},
-        {"kind": "no_hedge"}
+        {
+          "kind": "keywords_all",
+          "values": [
+            "housing act",
+            "1988"
+          ]
+        },
+        {
+          "kind": "keywords_any_word",
+          "values": [
+            "19A"
+          ]
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "clauses",
       "difficulty": "hard",
@@ -208,7 +327,10 @@
       "answer": "yes",
       "type": "boolean",
       "matchers": [
-        {"kind": "leading_word", "value": "yes"}
+        {
+          "kind": "leading_word",
+          "value": "yes"
+        }
       ],
       "category": "clauses",
       "difficulty": "hard"
@@ -220,8 +342,16 @@
       "answer": "The dispute may be submitted to the Independent Case Examiner (ICE) for adjudication.",
       "type": "text",
       "matchers": [
-        {"kind": "keywords_any_word", "values": ["Independent Case Examiner", "ICE"]},
-        {"kind": "no_hedge"}
+        {
+          "kind": "keywords_any_word",
+          "values": [
+            "Independent Case Examiner",
+            "ICE"
+          ]
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "deposit",
       "difficulty": "hard"
@@ -233,7 +363,11 @@
       "answer": "6421.47",
       "type": "numeric",
       "matchers": [
-        {"kind": "numeric", "value": 6421.47, "tolerance": 0.02}
+        {
+          "kind": "numeric",
+          "value": 6421.47,
+          "tolerance": 0.02
+        }
       ],
       "category": "scenario",
       "difficulty": "hard",
@@ -247,9 +381,17 @@
       "answer": "no",
       "type": "boolean",
       "matchers": [
-        {"kind": "leading_word", "value": "no"},
-        {"kind": "min_words", "value": 10},
-        {"kind": "no_hedge"}
+        {
+          "kind": "leading_word",
+          "value": "no"
+        },
+        {
+          "kind": "min_words",
+          "value": 10
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "scenario_reasoning",
       "difficulty": "expert"
@@ -261,14 +403,68 @@
       "answer": "Five categories: rent under the agreement until the new tenancy starts; any shortfall where the replacement tenant pays a lower rent; the Landlord's new letting fee; a share of the inventory clerk's check-in cost; and a share of the Landlord's cost of administering the new tenancy. The last two are scaled by the number of months surrendered early as a percentage of the current fixed term.",
       "type": "text",
       "matchers": [
-        {"kind": "keywords_any", "values": ["until the new tenancy", "rent until", "rent payable until", "new tenancy has started", "until the replacement"]},
-        {"kind": "keywords_any", "values": ["lower amount", "lower rent", "difference in rent", "rental difference", "rent difference", "shortfall", "pays less", "paying less"]},
-        {"kind": "keywords_any", "values": ["letting fee"]},
-        {"kind": "keywords_any", "values": ["inventory"]},
-        {"kind": "keywords_any", "values": ["administration", "administrative", "admin"]},
-        {"kind": "keywords_any", "values": ["months to be surrendered early", "months surrendered early", "surrendered early as a percentage", "percentage of the current fixed term", "proportion of the fixed term", "months early", "number of months surrendered"]},
-        {"kind": "min_words", "value": 30},
-        {"kind": "no_hedge"}
+        {
+          "kind": "keywords_any",
+          "values": [
+            "until the new tenancy",
+            "rent until",
+            "rent payable until",
+            "new tenancy has started",
+            "until the replacement"
+          ]
+        },
+        {
+          "kind": "keywords_any",
+          "values": [
+            "lower amount",
+            "lower rent",
+            "difference in rent",
+            "rental difference",
+            "rent difference",
+            "shortfall",
+            "pays less",
+            "paying less"
+          ]
+        },
+        {
+          "kind": "keywords_any",
+          "values": [
+            "letting fee"
+          ]
+        },
+        {
+          "kind": "keywords_any",
+          "values": [
+            "inventory"
+          ]
+        },
+        {
+          "kind": "keywords_any",
+          "values": [
+            "administration",
+            "administrative",
+            "admin"
+          ]
+        },
+        {
+          "kind": "keywords_any",
+          "values": [
+            "months to be surrendered early",
+            "months surrendered early",
+            "surrendered early as a percentage",
+            "percentage of the current fixed term",
+            "proportion of the fixed term",
+            "months early",
+            "number of months surrendered"
+          ]
+        },
+        {
+          "kind": "min_words",
+          "value": 30
+        },
+        {
+          "kind": "no_hedge"
+        }
       ],
       "category": "clauses",
       "difficulty": "expert",

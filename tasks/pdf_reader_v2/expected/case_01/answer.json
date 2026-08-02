@@ -5,7 +5,7 @@
   "type": "numeric",
   "matchers": [
     {
-      "kind": "leading_numeric",
+      "kind": "currency_amount",
       "value": 2100.0,
       "tolerance": 0.01
     }

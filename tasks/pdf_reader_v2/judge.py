@@ -12,9 +12,19 @@ Matcher kinds supported:
                      show-your-working questions where the model walks
                      through arithmetic before stating the total.
   - leading_numeric  {"kind":"leading_numeric","value":1234.5,"tolerance":0.01}
-                     The FIRST number in the answer must match. Use for
-                     simple extraction questions where listing decoy
-                     numbers should not count as a pass.
+                     The FIRST number in the answer must match. AVOID for
+                     money questions: any answer that cites its source first
+                     ("Based on clause 1.9b, the rent is GBP 2,100") leads with
+                     the clause number and fails despite being correct. Kept
+                     for cases where a bare number really is the required
+                     format. Use `currency_amount` instead.
+  - currency_amount  {"kind":"currency_amount","value":1234.5,"tolerance":0.01}
+                     The LAST currency-formatted amount in the answer must
+                     match. "Last" is the commitment: a model may quote the
+                     whole rent schedule while reasoning, but the figure it
+                     ends on is the one it is answering with. Ignores clause
+                     numbers, dates and month counts entirely, because those
+                     are never currency-formatted.
   - regex_required   {"kind":"regex_required","pattern":"...","flags":"i"}
                      Pattern must match (re.search). Default flags = i.
   - leading_word     {"kind":"leading_word","value":"yes"}
@@ -144,6 +154,34 @@ def m_numeric(answer: str, spec: dict) -> tuple[bool, str]:
     return False, f"numeric mismatch (numbers found={nums} target={target} tol={tol})"
 
 
+_CURRENCY_RE = re.compile(r"(?:£|GBP\s*)\s?(\d[\d,]*(?:\.\d+)?)", re.I)
+
+
+def m_currency_amount(answer: str, spec: dict) -> tuple[bool, str]:
+    """The LAST currency-formatted amount must match within tolerance.
+
+    `leading_numeric` cannot be used for the money questions in this task. Every
+    solution that cites its source ("Based on clause 1.9b, the rent for the
+    period 05/09/2023 to 04/09/2024 is GBP 2,100.00") leads with a clause number
+    or a date, and was scored wrong while holding the right answer — measured on
+    three of five money cases across three different solutions.
+
+    Anchoring on currency formatting sidesteps that: clause numbers, month
+    counts and dates are never currency-formatted, so only candidate *amounts*
+    are considered. Taking the last one preserves the anti-decoy property the
+    original matcher was for — a model may walk through the whole rent schedule,
+    but the amount it finishes on is the one it is committing to.
+    """
+    found = [float(m.replace(",", "")) for m in _CURRENCY_RE.findall(answer)]
+    if not found:
+        return False, "no currency-formatted amount found in answer"
+    target = float(spec["value"])
+    tol = float(spec.get("tolerance", 0.01))
+    if abs(found[-1] - target) <= tol:
+        return True, f"currency ok (committed {found[-1]} == target {target}; all amounts={found})"
+    return False, f"committed amount {found[-1]} != target {target} (all amounts={found})"
+
+
 def m_leading_numeric(answer: str, spec: dict) -> tuple[bool, str]:
     """First number in the answer must match within tolerance. Rejects
     decoy-number dumps like "rent 1950, deposit 2250, rent yr2 2100"
@@ -218,6 +256,7 @@ def m_min_words(answer: str, spec: dict) -> tuple[bool, str]:
 MATCHERS = {
     "numeric": m_numeric,
     "leading_numeric": m_leading_numeric,
+    "currency_amount": m_currency_amount,
     "regex_required": m_regex_required,
     "leading_word": m_leading_word,
     "keywords_all": m_keywords_all,
