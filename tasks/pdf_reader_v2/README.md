@@ -88,11 +88,25 @@ leak fails the build.
   the first case, so the cost figure on the leaderboard understates what a
   19-distinct-document run would cost. The task measures "can you read *this*
   contract", not "can you read contracts".
-- **Five cases are yes/no.** A solution answering `yes` to all of them scores
-  3/5 by construction. Binary cases are cheap to guess; treat the clause-category
-  score as weaker evidence than the money/scenario categories.
+- **Five cases are yes/no** (3 gold `yes`, 2 gold `no`). Answering `yes` to
+  everything scores 3/19 = 16%, far below the 80% threshold, so guessing is not
+  a route to passing — but treat the `clauses` category score as weaker
+  evidence than `money` or `scenario`.
 - **`case_10`'s "extension" overlap** is acknowledged, not eliminated — see
   `_leak_ack` in the gold.
+- **`expected/` is reachable from the solution's own `inputs_dir`.** trap hands
+  the solution an absolute `inputs_dir`, and `../../expected/<case_id>/answer.json`
+  resolves and is readable — and this repo is public besides. Nothing in the
+  task can prevent that; it's a property of the harness, shared by every task
+  here. Noted so scores are read with it in mind rather than mistaken for a
+  v2-specific hole.
+- **`case_18` uses the `numeric` matcher** ("any number in the answer counts"),
+  which show-your-working requires but which is weak against a solution that
+  enumerates candidate totals. No anti-shotgun cap is applied.
+- **Never run end to end.** `build_cases.py`, the test suite and
+  `validate_task.py` all pass, but no solution has executed against v2 and it
+  is not registered on trapstreet.run, so nothing can submit against it yet.
+  Difficulty and discrimination are untested empirically.
 
 ## Source document
 

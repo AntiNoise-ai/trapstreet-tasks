@@ -229,7 +229,7 @@
     {
       "id": "case_18",
       "label": "scenario_leave_22mo_replacement_1mo_gap",
-      "question": "The tenant is 22 months into the fixed term and wants to surrender the tenancy immediately. The Landlord agrees, and finds a replacement tenant 1 month later who pays, for each remaining month, the rent this agreement specifies for that month. Using the early-surrender terms in Section 6, calculate the total cost to the surrendering tenant. Include all four of: (a) rent for the 1-month void before the replacement moves in, (b) the Landlord's new letting fee for the remainder of the fixed term, (c) the inventory check-in charge, and (d) the Landlord's administration charge. Show your working and give the final GBP total.",
+      "question": "The tenant is 22 months into the fixed term and wants to surrender the tenancy immediately. The Landlord agrees, and finds a replacement tenant 1 month later who pays, for each remaining month, the rent this agreement specifies for that month. Using the early-surrender terms in Section 6, calculate the total cost to the surrendering tenant. Include all four of: (a) rent for the 1-month void before the replacement moves in, (b) the Landlord's new letting fee, charged on the replacement tenant's rent for the months the replacement occupies up to the end of the fixed term, (c) the inventory check-in charge, and (d) the Landlord's administration charge. Show your working and give the final GBP total.",
       "answer": "6421.47",
       "type": "numeric",
       "matchers": [
@@ -238,7 +238,7 @@
       "category": "scenario",
       "difficulty": "hard",
       "_deleak": "v1 spelled out 'letting fee 13.2%', 'inventory check-in (£144 x months_early / 36)' and 'administration charges (£480 x months_early / 36)' in the question. All four constants (11%+VAT=13.2%, £144, £480) and the 36-month term are stated in Section 6 / clause 1.8 of the PDF — with them in the prompt, the case tested arithmetic only. The four components (a)-(d) are still named so the case stays gradeable against a single total; only the numbers are gone.",
-      "_working": "Surrender at start of month 23; 14 months remain (23-36). Rent tiers: m1-12 £1950, m13-24 £2100, m25-36 £2400. (a) void = month 23 = £2100. (b) replacement covers m24-36: £2100 + 12x£2400 = £30900; x13.2% = £4078.80. (c) £144 x 14/36 = £56.00. (d) £480 x 14/36 = £186.67. Total = £6421.47."
+      "_ambiguity": "The fee BASIS must stay in the question. Section 6 words it as 'of the rent from the date of early surrender until the original end date', which reads as months 23-36 (14 months) and yields 6698.67 — a defensible answer that scores 0. v1 disambiguated with 'on the replacement's rent'; an early v2 draft dropped that qualifier along with the constants and made the case unanswerable-as-graded. The qualifier is a basis, not a constant, so it leaks nothing. Do not remove it again."
     },
     {
       "id": "case_19",
