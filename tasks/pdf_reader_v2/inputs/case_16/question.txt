@@ -1,0 +1,1 @@
+Has the tenant been told that an inventory or schedule of condition may be used to assess damage claims at the end of the tenancy? Answer yes or no.

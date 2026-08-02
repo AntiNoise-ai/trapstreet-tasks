@@ -1,0 +1,14 @@
+{
+  "id": "case_08",
+  "label": "fixed_term_departure_notice",
+  "answer": "yes",
+  "type": "boolean",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "yes"
+    }
+  ],
+  "category": "clauses",
+  "difficulty": "hard"
+}

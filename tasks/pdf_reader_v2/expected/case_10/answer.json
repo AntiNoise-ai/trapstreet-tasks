@@ -1,0 +1,30 @@
+{
+  "id": "case_10",
+  "label": "rent_increase_scope",
+  "answer": "the automatic extension period only",
+  "type": "text",
+  "matchers": [
+    {
+      "kind": "keywords_all",
+      "values": [
+        "extension"
+      ]
+    },
+    {
+      "kind": "keywords_any",
+      "values": [
+        "only",
+        "solely",
+        "just the",
+        "not the original",
+        "not during the fixed",
+        "not the fixed"
+      ]
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "money",
+  "difficulty": "hard"
+}

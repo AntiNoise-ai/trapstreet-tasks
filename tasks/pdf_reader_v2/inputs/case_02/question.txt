@@ -1,0 +1,1 @@
+What is the monthly rent in GBP for the third 12 months of the tenancy (months 25-36)? Answer 'N/A' if the fixed term does not extend that far.

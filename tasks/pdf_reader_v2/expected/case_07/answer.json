@@ -1,0 +1,14 @@
+{
+  "id": "case_07",
+  "label": "early_surrender",
+  "answer": "yes",
+  "type": "boolean",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "yes"
+    }
+  ],
+  "category": "clauses",
+  "difficulty": "hard"
+}

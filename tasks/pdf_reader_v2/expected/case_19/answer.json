@@ -1,0 +1,21 @@
+{
+  "id": "case_19",
+  "label": "early_surrender_economic_incentive",
+  "answer": "no",
+  "type": "boolean",
+  "matchers": [
+    {
+      "kind": "leading_word",
+      "value": "no"
+    },
+    {
+      "kind": "min_words",
+      "value": 10
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "scenario_reasoning",
+  "difficulty": "expert"
+}

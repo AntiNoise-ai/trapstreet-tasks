@@ -1,0 +1,15 @@
+{
+  "id": "case_01",
+  "label": "rent_year2",
+  "answer": "2100",
+  "type": "numeric",
+  "matchers": [
+    {
+      "kind": "leading_numeric",
+      "value": 2100.0,
+      "tolerance": 0.01
+    }
+  ],
+  "category": "money",
+  "difficulty": "medium"
+}
