@@ -26,6 +26,12 @@ tasks/aita_verdict/
 tasks/drug_interaction_check/
 # debugging_case: contains prior-employer production code (Fanatical/Fandom)
 tasks/debugging_case/
+# pdf_tables: ships a Vent-Axia / EPD Hub Environmental Product Declaration.
+# Free public download, but the PDF carries no redistribution licence and the
+# comparable programme operator (IBU) grants own-use only, expressly not
+# sublicensable. Unignore only once redistribution is confirmed in writing, or
+# the source is swapped for an OGL/CC-licensed document.
+tasks/pdf_tables/
 
 # ─── Local research / reference materials ───
 data/
@@ -38,3 +44,4 @@ krgpt-*.zip
 # ─── Loose PDFs at root (papers etc — commit specific ones explicitly if needed) ───
 /*.pdf
 
+.aider*
