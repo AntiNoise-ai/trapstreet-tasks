@@ -1,0 +1,31 @@
+{
+  "id": "case_18",
+  "label": "Which two rows sum to the exported-energy total",
+  "answer": "Exported energy - Electricity (7.78E+00 MJ) and Exported energy - Heat (1.07E+01 MJ); they sum to 1.85E+01 MJ",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 7.78,
+      "mode": "any"
+    },
+    {
+      "kind": "sci_value",
+      "value": 10.7,
+      "mode": "any"
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "electric"
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "heat"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "reasoning",
+  "difficulty": "expert"
+}

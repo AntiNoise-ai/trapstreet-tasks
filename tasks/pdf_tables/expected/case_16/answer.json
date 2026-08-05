@@ -1,0 +1,17 @@
+{
+  "id": "case_16",
+  "label": "ADP-fossil A1 under CML",
+  "answer": "4.29E+03 MJ",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 4290.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cross_table",
+  "difficulty": "expert"
+}

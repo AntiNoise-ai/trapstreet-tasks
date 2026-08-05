@@ -1,0 +1,17 @@
+{
+  "id": "case_12",
+  "label": "Human toxicity cancer at B6 (extreme exponent)",
+  "answer": "2.21E-15 CTUh",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 2.21e-15
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cell_lookup",
+  "difficulty": "hard"
+}

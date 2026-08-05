@@ -1,0 +1,75 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+# Case ids are opaque on purpose — the solution can read its own
+# TRAP_MANIFEST["inputs_dir"], so a descriptive id leaks the topic. The real
+# labels live in gold.cases.json and expected/<id>/answer.json.
+# Generated from gold.cases.json; do not hand-edit the case list.
+cases:
+- id: case_01
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, easy]
+- id: case_02
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, easy]
+- id: case_03
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, easy]
+- id: case_04
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, medium]
+- id: case_05
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, medium]
+- id: case_06
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, medium]
+- id: case_07
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, medium]
+- id: case_08
+  description: "Read a cell from the correct one of several similar tables"
+  tags: [table_disambiguation, medium]
+- id: case_09
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, hard]
+- id: case_10
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, hard]
+- id: case_11
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, hard]
+- id: case_12
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, hard]
+- id: case_13
+  description: "Read one cell at a row/column intersection"
+  tags: [cell_lookup, hard]
+- id: case_14
+  description: "Distinguish two tables reporting the same quantity under different standards"
+  tags: [cross_table, expert]
+- id: case_15
+  description: "Distinguish two tables reporting the same quantity under different standards"
+  tags: [cross_table, expert]
+- id: case_16
+  description: "Distinguish two tables reporting the same quantity under different standards"
+  tags: [cross_table, expert]
+- id: case_17
+  description: "Distinguish two tables reporting the same quantity under different standards"
+  tags: [cross_table, hard]
+- id: case_18
+  description: "Scan or combine cells rather than look one up"
+  tags: [reasoning, expert]
+- id: case_19
+  description: "Scan or combine cells rather than look one up"
+  tags: [reasoning, expert]
+- id: case_20
+  description: "Scan or combine cells rather than look one up"
+  tags: [reasoning, expert]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

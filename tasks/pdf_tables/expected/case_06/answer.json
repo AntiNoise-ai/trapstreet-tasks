@@ -1,0 +1,17 @@
+{
+  "id": "case_06",
+  "label": "EP-marine at A4 (near-identical neighbour)",
+  "answer": "3.60E-03 kg Ne",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 0.0036
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cell_lookup",
+  "difficulty": "medium"
+}

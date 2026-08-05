@@ -1,0 +1,17 @@
+{
+  "id": "case_01",
+  "label": "Hazardous waste at A1",
+  "answer": "2.81E+01 kg",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 28.1
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cell_lookup",
+  "difficulty": "easy"
+}

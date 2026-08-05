@@ -1,0 +1,17 @@
+{
+  "id": "case_03",
+  "label": "Renewable PER as material at A3",
+  "answer": "2.34E+02 MJ",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 234.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cell_lookup",
+  "difficulty": "easy"
+}

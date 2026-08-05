@@ -1,0 +1,21 @@
+{
+  "id": "case_09",
+  "label": "Acidification potential in the one populated B column",
+  "answer": "Column B6, 2.32E-08 mol H+e",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 2.32e-08
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "\\bB\\s*6\\b"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cell_lookup",
+  "difficulty": "hard"
+}

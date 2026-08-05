@@ -1,0 +1,1 @@
+In the table headed "End of life - output flows", the "Exported energy" row at stage A5 is the sum of two other rows in the same table at the same stage. Name those two rows and give the A5 figure for each.

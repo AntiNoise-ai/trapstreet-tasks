@@ -1,0 +1,17 @@
+{
+  "id": "case_02",
+  "label": "ADP-fossil resources at A1",
+  "answer": "4.66E+03 MJ",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 4660.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cell_lookup",
+  "difficulty": "easy"
+}

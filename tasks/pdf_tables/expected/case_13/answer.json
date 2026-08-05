@@ -1,0 +1,17 @@
+{
+  "id": "case_13",
+  "label": "POCP at C2 under CML",
+  "answer": "1.44E-04 kg C2H4e",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 0.000144
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cell_lookup",
+  "difficulty": "expert"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "case_10",
+  "label": "ADP-fossil resources under module D",
+  "answer": "-3.57E+02 MJ",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": -357.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "cell_lookup",
+  "difficulty": "hard"
+}
