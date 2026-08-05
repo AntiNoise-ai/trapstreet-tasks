@@ -1,0 +1,155 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "storage_upload_object",
+    "description": "Transfers a file from the caller's local filesystem into a destination folder in shared storage, creating a new object there. The source must be a path on the machine making the call, not a path that already exists inside storage. Uploads larger than one gigabyte are chunked automatically.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "local_path": {
+          "type": "string",
+          "description": "Path to the file on the caller's own machine."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Storage folder to upload into."
+        }
+      },
+      "required": [
+        "local_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "storage_archive_object",
+    "description": "Transitions an object into cold archival storage to reduce cost, after which retrieval takes several hours and the object cannot be edited in place. The object disappears from ordinary folder listings and is tracked in the archive index instead. Restoring it is a separate, chargeable operation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Path of the object to archive."
+        },
+        "retention_years": {
+          "type": "integer",
+          "description": "How long the archived copy must be retained."
+        }
+      },
+      "required": [
+        "source_path"
+      ]
+    }
+  },
+  {
+    "name": "storage_copy_object",
+    "description": "Creates an independent duplicate of a stored object in another folder. The source object remains in place and unchanged, and the two copies diverge from the moment the duplicate is made, so edits to one never affect the other. The duplicate receives its own identifier and its own permission set.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the object to duplicate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder that should receive the duplicate."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "storage_move_object",
+    "description": "Relocates a stored object to a different folder, keeping its identifier and version history. After the call the object exists only at the new location and any path referring to the old one stops resolving. Permissions inherited from the previous folder are re-evaluated against the new one.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Current full path of the object."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to relocate the object into."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "storage_create_shortcut",
+    "description": "Places a lightweight pointer to an existing object inside another folder. Only one copy of the content exists: opening the shortcut opens the original, and any edit made through it is written straight back to the source object. Deleting the shortcut leaves the original intact.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Path of the object to point at."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder in which to place the pointer."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "storage_share_object",
+    "description": "Extends access to an existing stored object to additional people or groups at a chosen permission level, without duplicating the content. Everyone granted access works on the same underlying file, so their changes are visible to the owner immediately. A shareable link is returned.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Path of the object to share."
+        },
+        "audience": {
+          "type": "string",
+          "description": "Person, group or folder to share with."
+        },
+        "permission": {
+          "type": "string",
+          "enum": [
+            "view",
+            "comment",
+            "edit"
+          ],
+          "description": "Permission level granted."
+        }
+      },
+      "required": [
+        "source_path",
+        "audience",
+        "permission"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+The Q3 forecast spreadsheet at /shared/planning/q3_forecast.xlsx needs to be in the Finance folder too. Finance must get their own editable copy, and the original has to stay exactly where it is and stay untouched for the audit trail.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

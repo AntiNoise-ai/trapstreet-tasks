@@ -1,0 +1,201 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "logs_count_by_level",
+    "description": "Aggregates stored log entries for a service over a time range and returns the number of entries at each severity, along with the bucket boundaries used. Useful for spotting when a spike began. The individual entries are not included in the response, only the per-severity totals.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service to aggregate."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the range."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the range."
+        },
+        "bucket": {
+          "type": "string",
+          "enum": [
+            "1m",
+            "5m",
+            "1h"
+          ],
+          "description": "Width of each aggregation bucket."
+        }
+      },
+      "required": [
+        "service",
+        "start_time",
+        "end_time"
+      ]
+    }
+  },
+  {
+    "name": "payments_refund_invoice_line",
+    "description": "Issues a credit note against a specific line item on a finalized invoice and returns the corresponding funds. Requires the invoice identifier and the line number; it cannot be used for standalone charges that were never attached to an invoice. The invoice is re-issued with the credit note applied.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "invoice_id": {
+          "type": "string",
+          "description": "Identifier of the finalized invoice, e.g. `in_4471`."
+        },
+        "line_number": {
+          "type": "integer",
+          "description": "One-based index of the line item to credit."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount to credit against the line item."
+        }
+      },
+      "required": [
+        "invoice_id",
+        "line_number",
+        "amount"
+      ]
+    }
+  },
+  {
+    "name": "permissions_grant_resource_access",
+    "description": "Assigns a role on one specific resource to one principal who already exists in the workspace, taking effect on their next request. The grant is scoped to that resource alone and does not alter the principal's access to anything else or change who else can see the resource. Existing grants for the same principal are replaced.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "principal": {
+          "type": "string",
+          "description": "Existing user's name, address or identifier."
+        },
+        "resource_id": {
+          "type": "string",
+          "description": "Identifier of the resource to grant access on, e.g. `res_9f12`."
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "reader",
+            "commenter",
+            "editor",
+            "owner"
+          ],
+          "description": "Role to assign on that resource."
+        }
+      },
+      "required": [
+        "principal",
+        "resource_id",
+        "role"
+      ]
+    }
+  },
+  {
+    "name": "storage_move_object",
+    "description": "Relocates a stored object to a different folder, keeping its identifier and version history. After the call the object exists only at the new location and any path referring to the old one stops resolving. Permissions inherited from the previous folder are re-evaluated against the new one.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Current full path of the object."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to relocate the object into."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "analytics_compare_periods",
+    "description": "Computes the value of a metric across two separate date ranges and returns both figures together with the absolute and percentage change between them. Two complete ranges must be supplied, and the response is framed as a comparison rather than as a single total. Useful for week-on-week reporting.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "event_name": {
+          "type": "string",
+          "description": "Event type to measure."
+        },
+        "period_a_start": {
+          "type": "string",
+          "description": "Inclusive start of the first period."
+        },
+        "period_a_end": {
+          "type": "string",
+          "description": "Inclusive end of the first period."
+        },
+        "period_b_start": {
+          "type": "string",
+          "description": "Inclusive start of the second period."
+        },
+        "period_b_end": {
+          "type": "string",
+          "description": "Inclusive end of the second period."
+        }
+      },
+      "required": [
+        "event_name",
+        "period_a_start",
+        "period_a_end",
+        "period_b_start",
+        "period_b_end"
+      ]
+    }
+  },
+  {
+    "name": "deploy_scale_service",
+    "description": "Adjusts the number of running replicas for a service in an environment, adding or removing capacity within the configured minimum and maximum. The deployed version is untouched, so scaling relieves load but cannot undo a bad release. Changes are applied gradually to avoid dropping in-flight requests.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Service whose replica count should change."
+        },
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment to scale."
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Desired number of replicas."
+        }
+      },
+      "required": [
+        "service",
+        "environment",
+        "replicas"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Dana already has an account here but she can't open the analytics dashboard, resource res_9f12. Give her read access to it.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

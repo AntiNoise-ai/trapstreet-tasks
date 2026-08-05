@@ -1,0 +1,184 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "payments_void_authorization",
+    "description": "Cancels an authorization that has not yet been captured, releasing the hold on the cardholder's funds. Voids apply to the whole authorization only and are unavailable once funds have settled, at which point the money must be returned by a different mechanism. Typically completes within one business day.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "charge_id": {
+          "type": "string",
+          "description": "Identifier of the uncaptured authorization to cancel."
+        },
+        "note": {
+          "type": "string",
+          "description": "Free-text note stored on the voided authorization."
+        }
+      },
+      "required": [
+        "charge_id"
+      ]
+    }
+  },
+  {
+    "name": "deploy_cancel_in_progress",
+    "description": "Halts a deployment that is still running and leaves the environment on whatever mix of versions it had reached at the moment of cancellation. Has no effect once a rollout has finished, and returns an error if no deployment is currently active for the environment. Partially-migrated state is not automatically reconciled.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment whose active deployment should be halted."
+        }
+      },
+      "required": [
+        "environment"
+      ]
+    }
+  },
+  {
+    "name": "analytics_count_events",
+    "description": "Returns a single total: the number of events of one named type recorded in a date range, restricted to one acquisition channel. Only the count is returned, not the underlying records. Counts are deduplicated per event id and are final once the range has closed.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "event_name": {
+          "type": "string",
+          "description": "Event type to count, e.g. `signup`."
+        },
+        "channel": {
+          "type": "string",
+          "enum": [
+            "organic_search",
+            "paid_search",
+            "email",
+            "social",
+            "direct",
+            "referral"
+          ],
+          "description": "Acquisition channel the events must be attributed to."
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Inclusive first day of the range, ISO-8601."
+        },
+        "end_date": {
+          "type": "string",
+          "description": "Inclusive last day of the range, ISO-8601."
+        }
+      },
+      "required": [
+        "event_name",
+        "channel",
+        "start_date",
+        "end_date"
+      ]
+    }
+  },
+  {
+    "name": "email_schedule_send",
+    "description": "Queues a fully-composed message for automatic delivery at a specified future timestamp. No further confirmation is sought at the scheduled moment, so the message goes out unreviewed unless it is cancelled beforehand. A delivery timestamp is mandatory.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipient addresses."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        },
+        "send_at": {
+          "type": "string",
+          "description": "ISO-8601 timestamp at which delivery begins."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body",
+        "send_at"
+      ]
+    }
+  },
+  {
+    "name": "calendar_check_availability",
+    "description": "Reports whether each listed attendee is free or busy across one specific window that the caller supplies, together with the titles of any conflicting events. The window must be given up front; the tool evaluates it rather than searching for alternatives. Intended for validating a time that has already been proposed.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to check."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Start of the window being evaluated."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "End of the window being evaluated."
+        }
+      },
+      "required": [
+        "attendees",
+        "start_time",
+        "end_time"
+      ]
+    }
+  },
+  {
+    "name": "storage_upload_object",
+    "description": "Transfers a file from the caller's local filesystem into a destination folder in shared storage, creating a new object there. The source must be a path on the machine making the call, not a path that already exists inside storage. Uploads larger than one gigabyte are chunked automatically.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "local_path": {
+          "type": "string",
+          "description": "Path to the file on the caller's own machine."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Storage folder to upload into."
+        }
+      },
+      "required": [
+        "local_path",
+        "destination_folder"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+How many signups came in from the paid-search channel between 2025-03-03 and 2025-03-09? I just want the number.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

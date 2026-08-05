@@ -1,0 +1,331 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "set_language",
+    "description": "Sets the assistant's response language.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "The language."
+        }
+      },
+      "required": [
+        "language"
+      ]
+    }
+  },
+  {
+    "name": "get_directions",
+    "description": "Gets directions between two locations.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        }
+      },
+      "required": [
+        "origin",
+        "destination"
+      ]
+    }
+  },
+  {
+    "name": "get_exchange_rate",
+    "description": "Gets the exchange rate between two currencies.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "currency_pair": {
+          "type": "string",
+          "description": "The currency pair."
+        }
+      },
+      "required": [
+        "currency_pair"
+      ]
+    }
+  },
+  {
+    "name": "get_battery_status",
+    "description": "Gets battery status for a device.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "type": "string",
+          "description": "The device."
+        }
+      },
+      "required": [
+        "device"
+      ]
+    }
+  },
+  {
+    "name": "send_email",
+    "description": "Sends an email.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "string",
+          "description": "The to."
+        },
+        "subject": {
+          "type": "string",
+          "description": "The subject."
+        },
+        "body": {
+          "type": "string",
+          "description": "The body."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "calculate_tip",
+    "description": "Calculates a tip for a bill amount.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "bill_amount": {
+          "type": "number",
+          "description": "The bill amount."
+        },
+        "tip_percent": {
+          "type": "number",
+          "description": "The tip percent."
+        }
+      },
+      "required": [
+        "bill_amount",
+        "tip_percent"
+      ]
+    }
+  },
+  {
+    "name": "convert_distance",
+    "description": "Converts a distance value between units (km, mi, m, ft).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The distance value to convert."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "Source unit, e.g. km, mi, m, ft."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "Target unit, e.g. km, mi, m, ft."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "set_reminder",
+    "description": "Sets a reminder with text and a time.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text."
+        },
+        "time": {
+          "type": "string",
+          "description": "The time."
+        }
+      },
+      "required": [
+        "text",
+        "time"
+      ]
+    }
+  },
+  {
+    "name": "calculate_percentage",
+    "description": "Calculates a percentage of a given amount.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The base amount."
+        },
+        "percent": {
+          "type": "number",
+          "description": "The percentage to apply."
+        }
+      },
+      "required": [
+        "amount",
+        "percent"
+      ]
+    }
+  },
+  {
+    "name": "add_calendar_event",
+    "description": "Adds an event to the calendar.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title."
+        },
+        "datetime": {
+          "type": "string",
+          "description": "The datetime."
+        }
+      },
+      "required": [
+        "title",
+        "datetime"
+      ]
+    }
+  },
+  {
+    "name": "get_stock_price",
+    "description": "Gets the current stock price for a ticker.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ticker": {
+          "type": "string",
+          "description": "The ticker."
+        }
+      },
+      "required": [
+        "ticker"
+      ]
+    }
+  },
+  {
+    "name": "get_timezone_offset",
+    "description": "Gets the UTC offset for a location.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The location."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "convert_currency",
+    "description": "Converts an amount between currencies.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The amount."
+        },
+        "from_currency": {
+          "type": "string",
+          "description": "The from currency."
+        },
+        "to_currency": {
+          "type": "string",
+          "description": "The to currency."
+        }
+      },
+      "required": [
+        "amount",
+        "from_currency",
+        "to_currency"
+      ]
+    }
+  },
+  {
+    "name": "get_local_time",
+    "description": "Returns the current local time for a given city or timezone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "City or IANA timezone name."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "set_timer",
+    "description": "Sets a countdown timer.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "duration_seconds": {
+          "type": "number",
+          "description": "The duration seconds."
+        }
+      },
+      "required": [
+        "duration_seconds"
+      ]
+    }
+  },
+  {
+    "name": "get_flight_status",
+    "description": "Gets the status of a flight.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "flight_number": {
+          "type": "string",
+          "description": "The flight number."
+        }
+      },
+      "required": [
+        "flight_number"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What's 15% of $84.50?
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

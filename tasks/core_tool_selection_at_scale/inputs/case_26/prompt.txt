@@ -1,0 +1,186 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "deploy_cancel_in_progress",
+    "description": "Halts a deployment that is still running and leaves the environment on whatever mix of versions it had reached at the moment of cancellation. Has no effect once a rollout has finished, and returns an error if no deployment is currently active for the environment. Partially-migrated state is not automatically reconciled.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment whose active deployment should be halted."
+        }
+      },
+      "required": [
+        "environment"
+      ]
+    }
+  },
+  {
+    "name": "deploy_promote_build",
+    "description": "Copies a build artifact that has been verified in one environment into another, carrying the same build number forward. The source environment must currently be running the named build, and promotion always moves in the configured direction from lower to higher environments. Approval gates on the destination still apply.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "build_id": {
+          "type": "string",
+          "description": "Build to promote."
+        },
+        "from_environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment the build is currently running in."
+        },
+        "to_environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment to promote into."
+        }
+      },
+      "required": [
+        "build_id",
+        "from_environment",
+        "to_environment"
+      ]
+    }
+  },
+  {
+    "name": "deploy_rollback_to_build",
+    "description": "Returns an environment to a specific build that was previously deployed to it, by redeploying that build's existing artifact. The target build must appear in the environment's deployment history. No new build is produced, so the rollout completes in roughly the time a normal deployment takes. Works on completed deployments only.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment to roll back."
+        },
+        "build_id": {
+          "type": "string",
+          "description": "Identifier of the previously-deployed build to return to, e.g. `4468`."
+        }
+      },
+      "required": [
+        "environment",
+        "build_id"
+      ]
+    }
+  },
+  {
+    "name": "deploy_trigger_pipeline",
+    "description": "Starts a new pipeline run that compiles, tests and deploys the code at a given git reference into the target environment. A fresh build artifact is produced and receives a new build number, so this does not restore any previously deployed artifact. Full runs typically take fifteen to twenty minutes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment to deploy into."
+        },
+        "ref": {
+          "type": "string",
+          "description": "Git branch, tag or commit SHA to build from."
+        }
+      },
+      "required": [
+        "environment",
+        "ref"
+      ]
+    }
+  },
+  {
+    "name": "deploy_scale_service",
+    "description": "Adjusts the number of running replicas for a service in an environment, adding or removing capacity within the configured minimum and maximum. The deployed version is untouched, so scaling relieves load but cannot undo a bad release. Changes are applied gradually to avoid dropping in-flight requests.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Service whose replica count should change."
+        },
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment to scale."
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Desired number of replicas."
+        }
+      },
+      "required": [
+        "service",
+        "environment",
+        "replicas"
+      ]
+    }
+  },
+  {
+    "name": "feature_flag_disable",
+    "description": "Switches a named feature flag off in one environment, taking effect for new requests within a few seconds without redeploying. Only behaviour guarded by that specific flag is affected; code shipped outside a flag continues to run. The previous flag state is recorded in the audit log.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "flag_key": {
+          "type": "string",
+          "description": "Key of the feature flag to disable."
+        },
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment in which to disable the flag."
+        }
+      },
+      "required": [
+        "flag_key",
+        "environment"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Build 4471 finished rolling out to production forty minutes ago and it's throwing 500s. Put production back on build 4468.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

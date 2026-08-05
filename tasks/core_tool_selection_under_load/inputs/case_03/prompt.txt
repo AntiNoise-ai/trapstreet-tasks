@@ -1,0 +1,99 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "convert_temperature",
+    "description": "Converts a temperature between units.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The value."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "The from unit."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "The to unit."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "add_shopping_item",
+    "description": "Adds an item to the shopping list.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "string",
+          "description": "The item."
+        }
+      },
+      "required": [
+        "item"
+      ]
+    }
+  },
+  {
+    "name": "mute_notifications",
+    "description": "Mutes notifications for a duration.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "string",
+          "description": "The duration."
+        }
+      },
+      "required": [
+        "duration"
+      ]
+    }
+  },
+  {
+    "name": "calculate_percentage",
+    "description": "Calculates a percentage of a given amount.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The base amount."
+        },
+        "percent": {
+          "type": "number",
+          "description": "The percentage to apply."
+        }
+      },
+      "required": [
+        "amount",
+        "percent"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What's 15% of $84.50?
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

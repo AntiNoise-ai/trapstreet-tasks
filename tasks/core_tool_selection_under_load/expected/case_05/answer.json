@@ -1,0 +1,22 @@
+{
+  "id": "case_05",
+  "correct_tool_name": "calculate_percentage",
+  "expected_args": {
+    "amount": [
+      84.5,
+      "84.5",
+      "$84.50",
+      "84.50"
+    ],
+    "percent": [
+      15,
+      "15",
+      "15%"
+    ]
+  },
+  "n_tools": 16,
+  "position": "mid",
+  "position_index": 8,
+  "intent": "percentage",
+  "category": "tier2_n16_mid"
+}

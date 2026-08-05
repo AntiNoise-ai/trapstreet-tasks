@@ -1,0 +1,89 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "get_local_time",
+    "description": "Returns the current local time for a given city or timezone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "City or IANA timezone name."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "lock_door",
+    "description": "Locks a smart door.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "door_id": {
+          "type": "string",
+          "description": "The door id."
+        }
+      },
+      "required": [
+        "door_id"
+      ]
+    }
+  },
+  {
+    "name": "find_nearby_restaurants",
+    "description": "Finds nearby restaurants by cuisine.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The location."
+        },
+        "cuisine": {
+          "type": "string",
+          "description": "The cuisine."
+        }
+      },
+      "required": [
+        "location",
+        "cuisine"
+      ]
+    }
+  },
+  {
+    "name": "get_calendar_events",
+    "description": "Lists calendar events for a date.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "The date."
+        }
+      },
+      "required": [
+        "date"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What time is it right now in Tokyo?
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

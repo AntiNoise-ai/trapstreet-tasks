@@ -1,0 +1,175 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "permissions_list_resource_access",
+    "description": "Returns every principal that currently holds a role on a resource, together with the role and whether it was granted directly or inherited from a group or from the organization-wide baseline. The response is informational and no access is added or removed by calling it. Results are paginated for widely-shared resources.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "resource_id": {
+          "type": "string",
+          "description": "Resource whose access list should be read."
+        },
+        "include_inherited": {
+          "type": "boolean",
+          "description": "Whether to include grants inherited from groups and baselines."
+        }
+      },
+      "required": [
+        "resource_id"
+      ]
+    }
+  },
+  {
+    "name": "users_invite_to_workspace",
+    "description": "Sends a sign-up invitation to an address that does not yet correspond to a workspace member, and assigns the workspace-wide role they will hold once they accept. Addresses that already belong to a member are rejected. The invitation expires after seven days if unused.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Address of the person to invite."
+        },
+        "workspace_role": {
+          "type": "string",
+          "enum": [
+            "guest",
+            "member",
+            "admin"
+          ],
+          "description": "Role held across the workspace once the invitation is accepted."
+        }
+      },
+      "required": [
+        "email",
+        "workspace_role"
+      ]
+    }
+  },
+  {
+    "name": "permissions_grant_resource_access",
+    "description": "Assigns a role on one specific resource to one principal who already exists in the workspace, taking effect on their next request. The grant is scoped to that resource alone and does not alter the principal's access to anything else or change who else can see the resource. Existing grants for the same principal are replaced.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "principal": {
+          "type": "string",
+          "description": "Existing user's name, address or identifier."
+        },
+        "resource_id": {
+          "type": "string",
+          "description": "Identifier of the resource to grant access on, e.g. `res_9f12`."
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "reader",
+            "commenter",
+            "editor",
+            "owner"
+          ],
+          "description": "Role to assign on that resource."
+        }
+      },
+      "required": [
+        "principal",
+        "resource_id",
+        "role"
+      ]
+    }
+  },
+  {
+    "name": "groups_add_member",
+    "description": "Adds an existing user to a security group, after which every grant already held by that group applies to them as well. Requires the group identifier, and confers whatever access the group happens to carry rather than access to any single named resource. Membership changes propagate within a few minutes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "group_id": {
+          "type": "string",
+          "description": "Identifier of the group to add the user to."
+        },
+        "user_id": {
+          "type": "string",
+          "description": "Identifier of the existing user."
+        }
+      },
+      "required": [
+        "group_id",
+        "user_id"
+      ]
+    }
+  },
+  {
+    "name": "permissions_request_access",
+    "description": "Submits a request for the calling principal to be granted access to a resource, routed to that resource's owner for approval. Access is not granted until the owner approves, and the request can only ever be made on the caller's own behalf. Pending requests expire after fourteen days.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "resource_id": {
+          "type": "string",
+          "description": "Resource the caller wants access to."
+        },
+        "justification": {
+          "type": "string",
+          "description": "Business reason shown to the approver."
+        }
+      },
+      "required": [
+        "resource_id",
+        "justification"
+      ]
+    }
+  },
+  {
+    "name": "permissions_set_resource_visibility",
+    "description": "Sets the baseline visibility of a resource across the whole organization, choosing between private, organization-wide and public. Widening visibility grants the chosen role to every member at once rather than to any named individual. Individual grants continue to apply on top of the baseline.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "resource_id": {
+          "type": "string",
+          "description": "Resource whose baseline visibility changes."
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "private",
+            "organization",
+            "public"
+          ],
+          "description": "New baseline visibility."
+        },
+        "default_role": {
+          "type": "string",
+          "enum": [
+            "reader",
+            "commenter",
+            "editor"
+          ],
+          "description": "Role everyone in scope receives."
+        }
+      },
+      "required": [
+        "resource_id",
+        "visibility"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Dana already has an account here but she can't open the analytics dashboard, resource res_9f12. Give her read access to it.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

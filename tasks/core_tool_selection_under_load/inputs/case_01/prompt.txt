@@ -1,0 +1,89 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "calculate_percentage",
+    "description": "Calculates a percentage of a given amount.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The base amount."
+        },
+        "percent": {
+          "type": "number",
+          "description": "The percentage to apply."
+        }
+      },
+      "required": [
+        "amount",
+        "percent"
+      ]
+    }
+  },
+  {
+    "name": "lock_door",
+    "description": "Locks a smart door.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "door_id": {
+          "type": "string",
+          "description": "The door id."
+        }
+      },
+      "required": [
+        "door_id"
+      ]
+    }
+  },
+  {
+    "name": "create_todo",
+    "description": "Creates a to-do item.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "set_volume",
+    "description": "Sets the playback volume.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "number",
+          "description": "The level."
+        }
+      },
+      "required": [
+        "level"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What's 15% of $84.50?
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

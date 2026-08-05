@@ -1,0 +1,517 @@
+{
+  "_doc": "Source of truth for core_tool_selection_at_scale. Declares the case grid; the tool catalogs themselves are composed deterministically by build_cases.py from families.json + filler_pool.json (inlining 64 catalogs of up to 300 verbose schemas would be ~30MB of unreviewable JSON). inputs/ and expected/ are GENERATED -- edit here, never there.",
+  "cases": [
+    {
+      "id": "case_01",
+      "intent": "refund_settled_charge",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n6_mid"
+    },
+    {
+      "id": "case_02",
+      "intent": "refund_settled_charge",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n6_mid"
+    },
+    {
+      "id": "case_03",
+      "intent": "refund_settled_charge",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n60_mid"
+    },
+    {
+      "id": "case_04",
+      "intent": "refund_settled_charge",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n60_mid"
+    },
+    {
+      "id": "case_05",
+      "intent": "refund_settled_charge",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n300_mid"
+    },
+    {
+      "id": "case_06",
+      "intent": "refund_settled_charge",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_mid"
+    },
+    {
+      "id": "case_07",
+      "intent": "refund_settled_charge",
+      "n_tools": 300,
+      "position": "early",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_early"
+    },
+    {
+      "id": "case_08",
+      "intent": "refund_settled_charge",
+      "n_tools": 300,
+      "position": "late",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_late"
+    },
+    {
+      "id": "case_09",
+      "intent": "read_historical_error_logs",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n6_mid"
+    },
+    {
+      "id": "case_10",
+      "intent": "read_historical_error_logs",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n6_mid"
+    },
+    {
+      "id": "case_11",
+      "intent": "read_historical_error_logs",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n60_mid"
+    },
+    {
+      "id": "case_12",
+      "intent": "read_historical_error_logs",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n60_mid"
+    },
+    {
+      "id": "case_13",
+      "intent": "read_historical_error_logs",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n300_mid"
+    },
+    {
+      "id": "case_14",
+      "intent": "read_historical_error_logs",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_mid"
+    },
+    {
+      "id": "case_15",
+      "intent": "read_historical_error_logs",
+      "n_tools": 300,
+      "position": "early",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_early"
+    },
+    {
+      "id": "case_16",
+      "intent": "read_historical_error_logs",
+      "n_tools": 300,
+      "position": "late",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_late"
+    },
+    {
+      "id": "case_17",
+      "intent": "find_mutual_free_slots",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n6_mid"
+    },
+    {
+      "id": "case_18",
+      "intent": "find_mutual_free_slots",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n6_mid"
+    },
+    {
+      "id": "case_19",
+      "intent": "find_mutual_free_slots",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n60_mid"
+    },
+    {
+      "id": "case_20",
+      "intent": "find_mutual_free_slots",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n60_mid"
+    },
+    {
+      "id": "case_21",
+      "intent": "find_mutual_free_slots",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n300_mid"
+    },
+    {
+      "id": "case_22",
+      "intent": "find_mutual_free_slots",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_mid"
+    },
+    {
+      "id": "case_23",
+      "intent": "find_mutual_free_slots",
+      "n_tools": 300,
+      "position": "early",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_early"
+    },
+    {
+      "id": "case_24",
+      "intent": "find_mutual_free_slots",
+      "n_tools": 300,
+      "position": "late",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_late"
+    },
+    {
+      "id": "case_25",
+      "intent": "rollback_to_named_build",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n6_mid"
+    },
+    {
+      "id": "case_26",
+      "intent": "rollback_to_named_build",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n6_mid"
+    },
+    {
+      "id": "case_27",
+      "intent": "rollback_to_named_build",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n60_mid"
+    },
+    {
+      "id": "case_28",
+      "intent": "rollback_to_named_build",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n60_mid"
+    },
+    {
+      "id": "case_29",
+      "intent": "rollback_to_named_build",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n300_mid"
+    },
+    {
+      "id": "case_30",
+      "intent": "rollback_to_named_build",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_mid"
+    },
+    {
+      "id": "case_31",
+      "intent": "rollback_to_named_build",
+      "n_tools": 300,
+      "position": "early",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_early"
+    },
+    {
+      "id": "case_32",
+      "intent": "rollback_to_named_build",
+      "n_tools": 300,
+      "position": "late",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_late"
+    },
+    {
+      "id": "case_33",
+      "intent": "grant_existing_user_access",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n6_mid"
+    },
+    {
+      "id": "case_34",
+      "intent": "grant_existing_user_access",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n6_mid"
+    },
+    {
+      "id": "case_35",
+      "intent": "grant_existing_user_access",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n60_mid"
+    },
+    {
+      "id": "case_36",
+      "intent": "grant_existing_user_access",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n60_mid"
+    },
+    {
+      "id": "case_37",
+      "intent": "grant_existing_user_access",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n300_mid"
+    },
+    {
+      "id": "case_38",
+      "intent": "grant_existing_user_access",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_mid"
+    },
+    {
+      "id": "case_39",
+      "intent": "grant_existing_user_access",
+      "n_tools": 300,
+      "position": "early",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_early"
+    },
+    {
+      "id": "case_40",
+      "intent": "grant_existing_user_access",
+      "n_tools": 300,
+      "position": "late",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_late"
+    },
+    {
+      "id": "case_41",
+      "intent": "compose_but_do_not_send",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n6_mid"
+    },
+    {
+      "id": "case_42",
+      "intent": "compose_but_do_not_send",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n6_mid"
+    },
+    {
+      "id": "case_43",
+      "intent": "compose_but_do_not_send",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n60_mid"
+    },
+    {
+      "id": "case_44",
+      "intent": "compose_but_do_not_send",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n60_mid"
+    },
+    {
+      "id": "case_45",
+      "intent": "compose_but_do_not_send",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n300_mid"
+    },
+    {
+      "id": "case_46",
+      "intent": "compose_but_do_not_send",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_mid"
+    },
+    {
+      "id": "case_47",
+      "intent": "compose_but_do_not_send",
+      "n_tools": 300,
+      "position": "early",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_early"
+    },
+    {
+      "id": "case_48",
+      "intent": "compose_but_do_not_send",
+      "n_tools": 300,
+      "position": "late",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_late"
+    },
+    {
+      "id": "case_49",
+      "intent": "count_filtered_events",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n6_mid"
+    },
+    {
+      "id": "case_50",
+      "intent": "count_filtered_events",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n6_mid"
+    },
+    {
+      "id": "case_51",
+      "intent": "count_filtered_events",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n60_mid"
+    },
+    {
+      "id": "case_52",
+      "intent": "count_filtered_events",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n60_mid"
+    },
+    {
+      "id": "case_53",
+      "intent": "count_filtered_events",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n300_mid"
+    },
+    {
+      "id": "case_54",
+      "intent": "count_filtered_events",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_mid"
+    },
+    {
+      "id": "case_55",
+      "intent": "count_filtered_events",
+      "n_tools": 300,
+      "position": "early",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_early"
+    },
+    {
+      "id": "case_56",
+      "intent": "count_filtered_events",
+      "n_tools": 300,
+      "position": "late",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_late"
+    },
+    {
+      "id": "case_57",
+      "intent": "duplicate_file_to_folder",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n6_mid"
+    },
+    {
+      "id": "case_58",
+      "intent": "duplicate_file_to_folder",
+      "n_tools": 6,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n6_mid"
+    },
+    {
+      "id": "case_59",
+      "intent": "duplicate_file_to_folder",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n60_mid"
+    },
+    {
+      "id": "case_60",
+      "intent": "duplicate_file_to_folder",
+      "n_tools": 60,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n60_mid"
+    },
+    {
+      "id": "case_61",
+      "intent": "duplicate_file_to_folder",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "clean",
+      "category": "clean_n300_mid"
+    },
+    {
+      "id": "case_62",
+      "intent": "duplicate_file_to_folder",
+      "n_tools": 300,
+      "position": "mid",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_mid"
+    },
+    {
+      "id": "case_63",
+      "intent": "duplicate_file_to_folder",
+      "n_tools": 300,
+      "position": "early",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_early"
+    },
+    {
+      "id": "case_64",
+      "intent": "duplicate_file_to_folder",
+      "n_tools": 300,
+      "position": "late",
+      "ambiguity": "adversarial",
+      "category": "adv_n300_late"
+    }
+  ]
+}

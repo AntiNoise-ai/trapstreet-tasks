@@ -1,0 +1,25 @@
+{
+  "id": "case_46",
+  "correct_tool_name": "email_create_draft",
+  "expected_args": {
+    "to": [
+      [
+        "design-team@corp.example"
+      ],
+      "design-team@corp.example"
+    ]
+  },
+  "n_tools": 300,
+  "position": "mid",
+  "position_index": 150,
+  "ambiguity": "adversarial",
+  "intent": "compose_but_do_not_send",
+  "category": "adv_n300_mid",
+  "near_miss_names": [
+    "email_send_message",
+    "email_schedule_send",
+    "email_create_template",
+    "chat_post_message",
+    "announcements_publish"
+  ]
+}

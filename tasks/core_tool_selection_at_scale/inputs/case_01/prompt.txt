@@ -1,0 +1,179 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "calendar_find_free_slots",
+    "description": "Returns the open windows of a given length on a given day for a single calendar, skipping over existing events and time marked as busy. Accepts exactly one attendee per call and does not combine calendars. Results are ordered from earliest to latest within the attendee's working hours.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "attendee": {
+          "type": "string",
+          "description": "The single attendee whose calendar should be scanned."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the windows to look for, in minutes."
+        },
+        "date": {
+          "type": "string",
+          "description": "Day to search."
+        }
+      },
+      "required": [
+        "attendee",
+        "duration_minutes",
+        "date"
+      ]
+    }
+  },
+  {
+    "name": "storage_archive_object",
+    "description": "Transitions an object into cold archival storage to reduce cost, after which retrieval takes several hours and the object cannot be edited in place. The object disappears from ordinary folder listings and is tracked in the archive index instead. Restoring it is a separate, chargeable operation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Path of the object to archive."
+        },
+        "retention_years": {
+          "type": "integer",
+          "description": "How long the archived copy must be retained."
+        }
+      },
+      "required": [
+        "source_path"
+      ]
+    }
+  },
+  {
+    "name": "payments_refund_charge",
+    "description": "Returns funds to the original payment method for a charge that has already settled. Supports full or partial amounts, and multiple partial refunds against the same charge up to its original total. Only charges in the `settled` state are eligible; a charge that is authorized but not yet captured must be voided instead. Refunds cannot be reversed once issued.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "charge_id": {
+          "type": "string",
+          "description": "Identifier of the settled charge to refund, e.g. `ch_8812`."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount to return to the cardholder, expressed in the charge's original currency. Must not exceed the charge total less any refunds already issued."
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "requested_by_customer",
+            "duplicate",
+            "fraudulent",
+            "other"
+          ],
+          "description": "Reason code recorded against the refund for reporting."
+        }
+      },
+      "required": [
+        "charge_id",
+        "amount"
+      ]
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "description": "Publishes a message into a chat channel, where it becomes visible to every member of that channel as soon as the call returns. Channel members with notifications enabled are alerted right away. Messages can be edited afterwards but the original is retained in the edit history.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "description": "Channel to post into."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message text."
+        }
+      },
+      "required": [
+        "channel",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "traces_search_spans",
+    "description": "Finds distributed-tracing spans for a service within a time range, ordered by duration, and returns their identifiers and timings so a slow request can be followed across services. Spans carry latency and parent-child structure but not the free-text messages written to the logging pipeline. Sampling means not every request is represented.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service that produced the spans."
+        },
+        "min_duration_ms": {
+          "type": "integer",
+          "description": "Return only spans at least this many milliseconds long."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the range."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the range."
+        }
+      },
+      "required": [
+        "service",
+        "start_time",
+        "end_time"
+      ]
+    }
+  },
+  {
+    "name": "deploy_scale_service",
+    "description": "Adjusts the number of running replicas for a service in an environment, adding or removing capacity within the configured minimum and maximum. The deployed version is untouched, so scaling relieves load but cannot undo a bad release. Changes are applied gradually to avoid dropping in-flight requests.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Service whose replica count should change."
+        },
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment to scale."
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Desired number of replicas."
+        }
+      },
+      "required": [
+        "service",
+        "environment",
+        "replicas"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Charge ch_8812 for $129.00 settled three days ago. The customer returned half the items, so put $64.50 back on the card they paid with.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

@@ -1,0 +1,209 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "crm_count_contacts",
+    "description": "Returns how many contact records in the CRM match a filter expression, evaluated against the current state of each record. Because it counts records as they stand today, it reflects later merges, deletions and edits rather than what happened on any particular day. Date fields can be filtered on but are taken from the record, not from an event stream.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "type": "object",
+          "description": "Filter expression evaluated against contact records."
+        }
+      },
+      "required": [
+        "filters"
+      ]
+    }
+  },
+  {
+    "name": "analytics_export_report",
+    "description": "Renders a previously saved report definition to a file in the requested format and returns a download URL. The report must already exist and be referenced by its identifier; ad-hoc questions cannot be expressed through this tool. Large exports are generated asynchronously.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "description": "Identifier of the saved report."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "csv",
+            "xlsx",
+            "pdf"
+          ],
+          "description": "Output file format."
+        }
+      },
+      "required": [
+        "report_id",
+        "format"
+      ]
+    }
+  },
+  {
+    "name": "analytics_count_events",
+    "description": "Returns a single total: the number of events of one named type recorded in a date range, restricted to one acquisition channel. Only the count is returned, not the underlying records. Counts are deduplicated per event id and are final once the range has closed.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "event_name": {
+          "type": "string",
+          "description": "Event type to count, e.g. `signup`."
+        },
+        "channel": {
+          "type": "string",
+          "enum": [
+            "organic_search",
+            "paid_search",
+            "email",
+            "social",
+            "direct",
+            "referral"
+          ],
+          "description": "Acquisition channel the events must be attributed to."
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Inclusive first day of the range, ISO-8601."
+        },
+        "end_date": {
+          "type": "string",
+          "description": "Inclusive last day of the range, ISO-8601."
+        }
+      },
+      "required": [
+        "event_name",
+        "channel",
+        "start_date",
+        "end_date"
+      ]
+    }
+  },
+  {
+    "name": "analytics_list_events",
+    "description": "Returns individual event records matching a type, an acquisition channel and a date range, ordered by timestamp and delivered in pages. Each record carries its full property bag, so responses are large. The total number of matches is not included in the response and would have to be derived by paging through everything.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "event_name": {
+          "type": "string",
+          "description": "Event type to list."
+        },
+        "channel": {
+          "type": "string",
+          "enum": [
+            "organic_search",
+            "paid_search",
+            "email",
+            "social",
+            "direct",
+            "referral"
+          ],
+          "description": "Acquisition channel the events must be attributed to."
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Inclusive first day of the range."
+        },
+        "end_date": {
+          "type": "string",
+          "description": "Inclusive last day of the range."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum records per page."
+        }
+      },
+      "required": [
+        "event_name",
+        "start_date",
+        "end_date"
+      ]
+    }
+  },
+  {
+    "name": "analytics_compare_periods",
+    "description": "Computes the value of a metric across two separate date ranges and returns both figures together with the absolute and percentage change between them. Two complete ranges must be supplied, and the response is framed as a comparison rather than as a single total. Useful for week-on-week reporting.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "event_name": {
+          "type": "string",
+          "description": "Event type to measure."
+        },
+        "period_a_start": {
+          "type": "string",
+          "description": "Inclusive start of the first period."
+        },
+        "period_a_end": {
+          "type": "string",
+          "description": "Inclusive end of the first period."
+        },
+        "period_b_start": {
+          "type": "string",
+          "description": "Inclusive start of the second period."
+        },
+        "period_b_end": {
+          "type": "string",
+          "description": "Inclusive end of the second period."
+        }
+      },
+      "required": [
+        "event_name",
+        "period_a_start",
+        "period_a_end",
+        "period_b_start",
+        "period_b_end"
+      ]
+    }
+  },
+  {
+    "name": "analytics_get_channel_breakdown",
+    "description": "Returns the number of sessions attributed to each acquisition channel over a date range, as a table of channel and session count. The measure is always sessions; conversion events such as signups are not available through this breakdown. Every channel is included and the set cannot be narrowed to one.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "start_date": {
+          "type": "string",
+          "description": "Inclusive first day of the range."
+        },
+        "end_date": {
+          "type": "string",
+          "description": "Inclusive last day of the range."
+        },
+        "attribution_model": {
+          "type": "string",
+          "enum": [
+            "first_touch",
+            "last_touch",
+            "linear"
+          ],
+          "description": "Attribution model used to assign sessions to channels."
+        }
+      },
+      "required": [
+        "start_date",
+        "end_date"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+How many signups came in from the paid-search channel between 2025-03-03 and 2025-03-09? I just want the number.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

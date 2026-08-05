@@ -1,0 +1,203 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: case_01
+  description: "refund_settled_charge intent, 6 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n6_mid, n6, mid, clean, refund_settled_charge]
+- id: case_02
+  description: "refund_settled_charge intent, 6 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n6_mid, n6, mid, adversarial, refund_settled_charge]
+- id: case_03
+  description: "refund_settled_charge intent, 60 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n60_mid, n60, mid, clean, refund_settled_charge]
+- id: case_04
+  description: "refund_settled_charge intent, 60 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n60_mid, n60, mid, adversarial, refund_settled_charge]
+- id: case_05
+  description: "refund_settled_charge intent, 300 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n300_mid, n300, mid, clean, refund_settled_charge]
+- id: case_06
+  description: "refund_settled_charge intent, 300 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n300_mid, n300, mid, adversarial, refund_settled_charge]
+- id: case_07
+  description: "refund_settled_charge intent, 300 tools, adversarial catalog, correct tool at early position"
+  tags: [adv_n300_early, n300, early, adversarial, refund_settled_charge]
+- id: case_08
+  description: "refund_settled_charge intent, 300 tools, adversarial catalog, correct tool at late position"
+  tags: [adv_n300_late, n300, late, adversarial, refund_settled_charge]
+- id: case_09
+  description: "read_historical_error_logs intent, 6 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n6_mid, n6, mid, clean, read_historical_error_logs]
+- id: case_10
+  description: "read_historical_error_logs intent, 6 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n6_mid, n6, mid, adversarial, read_historical_error_logs]
+- id: case_11
+  description: "read_historical_error_logs intent, 60 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n60_mid, n60, mid, clean, read_historical_error_logs]
+- id: case_12
+  description: "read_historical_error_logs intent, 60 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n60_mid, n60, mid, adversarial, read_historical_error_logs]
+- id: case_13
+  description: "read_historical_error_logs intent, 300 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n300_mid, n300, mid, clean, read_historical_error_logs]
+- id: case_14
+  description: "read_historical_error_logs intent, 300 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n300_mid, n300, mid, adversarial, read_historical_error_logs]
+- id: case_15
+  description: "read_historical_error_logs intent, 300 tools, adversarial catalog, correct tool at early position"
+  tags: [adv_n300_early, n300, early, adversarial, read_historical_error_logs]
+- id: case_16
+  description: "read_historical_error_logs intent, 300 tools, adversarial catalog, correct tool at late position"
+  tags: [adv_n300_late, n300, late, adversarial, read_historical_error_logs]
+- id: case_17
+  description: "find_mutual_free_slots intent, 6 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n6_mid, n6, mid, clean, find_mutual_free_slots]
+- id: case_18
+  description: "find_mutual_free_slots intent, 6 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n6_mid, n6, mid, adversarial, find_mutual_free_slots]
+- id: case_19
+  description: "find_mutual_free_slots intent, 60 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n60_mid, n60, mid, clean, find_mutual_free_slots]
+- id: case_20
+  description: "find_mutual_free_slots intent, 60 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n60_mid, n60, mid, adversarial, find_mutual_free_slots]
+- id: case_21
+  description: "find_mutual_free_slots intent, 300 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n300_mid, n300, mid, clean, find_mutual_free_slots]
+- id: case_22
+  description: "find_mutual_free_slots intent, 300 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n300_mid, n300, mid, adversarial, find_mutual_free_slots]
+- id: case_23
+  description: "find_mutual_free_slots intent, 300 tools, adversarial catalog, correct tool at early position"
+  tags: [adv_n300_early, n300, early, adversarial, find_mutual_free_slots]
+- id: case_24
+  description: "find_mutual_free_slots intent, 300 tools, adversarial catalog, correct tool at late position"
+  tags: [adv_n300_late, n300, late, adversarial, find_mutual_free_slots]
+- id: case_25
+  description: "rollback_to_named_build intent, 6 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n6_mid, n6, mid, clean, rollback_to_named_build]
+- id: case_26
+  description: "rollback_to_named_build intent, 6 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n6_mid, n6, mid, adversarial, rollback_to_named_build]
+- id: case_27
+  description: "rollback_to_named_build intent, 60 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n60_mid, n60, mid, clean, rollback_to_named_build]
+- id: case_28
+  description: "rollback_to_named_build intent, 60 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n60_mid, n60, mid, adversarial, rollback_to_named_build]
+- id: case_29
+  description: "rollback_to_named_build intent, 300 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n300_mid, n300, mid, clean, rollback_to_named_build]
+- id: case_30
+  description: "rollback_to_named_build intent, 300 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n300_mid, n300, mid, adversarial, rollback_to_named_build]
+- id: case_31
+  description: "rollback_to_named_build intent, 300 tools, adversarial catalog, correct tool at early position"
+  tags: [adv_n300_early, n300, early, adversarial, rollback_to_named_build]
+- id: case_32
+  description: "rollback_to_named_build intent, 300 tools, adversarial catalog, correct tool at late position"
+  tags: [adv_n300_late, n300, late, adversarial, rollback_to_named_build]
+- id: case_33
+  description: "grant_existing_user_access intent, 6 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n6_mid, n6, mid, clean, grant_existing_user_access]
+- id: case_34
+  description: "grant_existing_user_access intent, 6 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n6_mid, n6, mid, adversarial, grant_existing_user_access]
+- id: case_35
+  description: "grant_existing_user_access intent, 60 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n60_mid, n60, mid, clean, grant_existing_user_access]
+- id: case_36
+  description: "grant_existing_user_access intent, 60 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n60_mid, n60, mid, adversarial, grant_existing_user_access]
+- id: case_37
+  description: "grant_existing_user_access intent, 300 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n300_mid, n300, mid, clean, grant_existing_user_access]
+- id: case_38
+  description: "grant_existing_user_access intent, 300 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n300_mid, n300, mid, adversarial, grant_existing_user_access]
+- id: case_39
+  description: "grant_existing_user_access intent, 300 tools, adversarial catalog, correct tool at early position"
+  tags: [adv_n300_early, n300, early, adversarial, grant_existing_user_access]
+- id: case_40
+  description: "grant_existing_user_access intent, 300 tools, adversarial catalog, correct tool at late position"
+  tags: [adv_n300_late, n300, late, adversarial, grant_existing_user_access]
+- id: case_41
+  description: "compose_but_do_not_send intent, 6 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n6_mid, n6, mid, clean, compose_but_do_not_send]
+- id: case_42
+  description: "compose_but_do_not_send intent, 6 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n6_mid, n6, mid, adversarial, compose_but_do_not_send]
+- id: case_43
+  description: "compose_but_do_not_send intent, 60 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n60_mid, n60, mid, clean, compose_but_do_not_send]
+- id: case_44
+  description: "compose_but_do_not_send intent, 60 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n60_mid, n60, mid, adversarial, compose_but_do_not_send]
+- id: case_45
+  description: "compose_but_do_not_send intent, 300 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n300_mid, n300, mid, clean, compose_but_do_not_send]
+- id: case_46
+  description: "compose_but_do_not_send intent, 300 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n300_mid, n300, mid, adversarial, compose_but_do_not_send]
+- id: case_47
+  description: "compose_but_do_not_send intent, 300 tools, adversarial catalog, correct tool at early position"
+  tags: [adv_n300_early, n300, early, adversarial, compose_but_do_not_send]
+- id: case_48
+  description: "compose_but_do_not_send intent, 300 tools, adversarial catalog, correct tool at late position"
+  tags: [adv_n300_late, n300, late, adversarial, compose_but_do_not_send]
+- id: case_49
+  description: "count_filtered_events intent, 6 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n6_mid, n6, mid, clean, count_filtered_events]
+- id: case_50
+  description: "count_filtered_events intent, 6 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n6_mid, n6, mid, adversarial, count_filtered_events]
+- id: case_51
+  description: "count_filtered_events intent, 60 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n60_mid, n60, mid, clean, count_filtered_events]
+- id: case_52
+  description: "count_filtered_events intent, 60 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n60_mid, n60, mid, adversarial, count_filtered_events]
+- id: case_53
+  description: "count_filtered_events intent, 300 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n300_mid, n300, mid, clean, count_filtered_events]
+- id: case_54
+  description: "count_filtered_events intent, 300 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n300_mid, n300, mid, adversarial, count_filtered_events]
+- id: case_55
+  description: "count_filtered_events intent, 300 tools, adversarial catalog, correct tool at early position"
+  tags: [adv_n300_early, n300, early, adversarial, count_filtered_events]
+- id: case_56
+  description: "count_filtered_events intent, 300 tools, adversarial catalog, correct tool at late position"
+  tags: [adv_n300_late, n300, late, adversarial, count_filtered_events]
+- id: case_57
+  description: "duplicate_file_to_folder intent, 6 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n6_mid, n6, mid, clean, duplicate_file_to_folder]
+- id: case_58
+  description: "duplicate_file_to_folder intent, 6 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n6_mid, n6, mid, adversarial, duplicate_file_to_folder]
+- id: case_59
+  description: "duplicate_file_to_folder intent, 60 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n60_mid, n60, mid, clean, duplicate_file_to_folder]
+- id: case_60
+  description: "duplicate_file_to_folder intent, 60 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n60_mid, n60, mid, adversarial, duplicate_file_to_folder]
+- id: case_61
+  description: "duplicate_file_to_folder intent, 300 tools, clean-control catalog, correct tool at mid position"
+  tags: [clean_n300_mid, n300, mid, clean, duplicate_file_to_folder]
+- id: case_62
+  description: "duplicate_file_to_folder intent, 300 tools, adversarial catalog, correct tool at mid position"
+  tags: [adv_n300_mid, n300, mid, adversarial, duplicate_file_to_folder]
+- id: case_63
+  description: "duplicate_file_to_folder intent, 300 tools, adversarial catalog, correct tool at early position"
+  tags: [adv_n300_early, n300, early, adversarial, duplicate_file_to_folder]
+- id: case_64
+  description: "duplicate_file_to_folder intent, 300 tools, adversarial catalog, correct tool at late position"
+  tags: [adv_n300_late, n300, late, adversarial, duplicate_file_to_folder]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

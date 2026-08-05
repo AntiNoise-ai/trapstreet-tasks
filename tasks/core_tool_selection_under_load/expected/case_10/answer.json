@@ -1,0 +1,27 @@
+{
+  "id": "case_10",
+  "correct_tool_name": "convert_distance",
+  "expected_args": {
+    "value": [
+      10,
+      "10"
+    ],
+    "from_unit": [
+      "km",
+      "kilometers",
+      "kilometer",
+      "kilometres",
+      "kilometre"
+    ],
+    "to_unit": [
+      "mi",
+      "miles",
+      "mile"
+    ]
+  },
+  "n_tools": 4,
+  "position": "early",
+  "position_index": 0,
+  "intent": "distance",
+  "category": "tier1_n4_early"
+}

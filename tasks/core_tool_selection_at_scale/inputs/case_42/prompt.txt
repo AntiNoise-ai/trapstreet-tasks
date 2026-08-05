@@ -1,0 +1,185 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "announcements_publish",
+    "description": "Pushes an announcement to every member of a named audience across email and in-product banners at once. Publication is immediate and the announcement cannot be unpublished, only superseded. Intended for organization-wide notices that have already been approved.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "audience": {
+          "type": "string",
+          "description": "Named audience to publish to."
+        },
+        "title": {
+          "type": "string",
+          "description": "Announcement headline."
+        },
+        "body": {
+          "type": "string",
+          "description": "Announcement body."
+        }
+      },
+      "required": [
+        "audience",
+        "title",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "email_send_message",
+    "description": "Transmits a message to the listed addressees straight away and files a copy in the sender's sent folder. Delivery begins as soon as the call is accepted and cannot be recalled afterwards. Bounces are reported asynchronously to the sender.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipient addresses."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "email_create_draft",
+    "description": "Composes a message and saves it to the sender's drafts folder without transmitting it. The draft can be reopened, edited and sent later by the author. Nothing is delivered to the addressees and no notification of any kind is generated at the time of the call.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Intended recipient addresses, stored on the draft."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line of the message."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text of the message."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "description": "Publishes a message into a chat channel, where it becomes visible to every member of that channel as soon as the call returns. Channel members with notifications enabled are alerted right away. Messages can be edited afterwards but the original is retained in the edit history.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "description": "Channel to post into."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message text."
+        }
+      },
+      "required": [
+        "channel",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "email_schedule_send",
+    "description": "Queues a fully-composed message for automatic delivery at a specified future timestamp. No further confirmation is sought at the scheduled moment, so the message goes out unreviewed unless it is cancelled beforehand. A delivery timestamp is mandatory.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipient addresses."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        },
+        "send_at": {
+          "type": "string",
+          "description": "ISO-8601 timestamp at which delivery begins."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body",
+        "send_at"
+      ]
+    }
+  },
+  {
+    "name": "email_create_template",
+    "description": "Stores a reusable message template in the shared template library, optionally with placeholder variables that are substituted at send time. Templates carry no addressees and are never delivered on their own; they exist to be selected later when composing. Template names must be unique within the library.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name for the template."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line, which may contain placeholders."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text, which may contain placeholders."
+        }
+      },
+      "required": [
+        "name",
+        "subject",
+        "body"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Write up a note to design-team@corp.example about Friday's code freeze — put it somewhere I can look it over first, I don't want it going out yet.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

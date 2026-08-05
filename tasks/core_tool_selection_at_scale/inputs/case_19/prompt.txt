@@ -1,0 +1,1357 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "dns_record_add_note",
+    "description": "Appends a timestamped note to one DNS record's activity trail. Records managed by an external controller are read-only here. Notes are append-only and cannot be edited or removed once written.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "dns_record_id": {
+          "type": "string",
+          "description": "Identifier of the DNS record to act on."
+        },
+        "note": {
+          "type": "string",
+          "description": "Text of the note to append."
+        },
+        "visibility": {
+          "type": "string",
+          "description": "Who may read the note.",
+          "enum": [
+            "internal",
+            "shared",
+            "public"
+          ]
+        }
+      },
+      "required": [
+        "dns_record_id",
+        "note"
+      ]
+    }
+  },
+  {
+    "name": "survey_definition_create",
+    "description": "Creates a new survey record from the supplied field values and returns its identifier. Questions cannot be changed once responses have been recorded against them. Required fields missing from the payload cause the call to fail without creating anything.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "description": "Field values for the new record, keyed by field name."
+        }
+      },
+      "required": [
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "supplier_bulk_import",
+    "description": "Imports many supplier records at once from a delimited file in object storage. Suppliers are deduplicated on tax identifier rather than on trading name. The call returns a job identifier; rows are validated individually and bad rows are reported at the end.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_uri": {
+          "type": "string",
+          "description": "Location of the file to import."
+        },
+        "on_conflict": {
+          "type": "string",
+          "description": "How to treat rows matching an existing record.",
+          "enum": [
+            "skip",
+            "overwrite",
+            "fail"
+          ]
+        }
+      },
+      "required": [
+        "source_uri",
+        "on_conflict"
+      ]
+    }
+  },
+  {
+    "name": "firewall_rule_update",
+    "description": "Writes new values into selected fields of an existing firewall rule record. Changes are staged and take effect only when the ruleset is committed. Fields omitted from the payload are left as they are rather than being cleared.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "firewall_rule_id": {
+          "type": "string",
+          "description": "Identifier of the firewall rule to act on."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Field values to overwrite, keyed by field name."
+        }
+      },
+      "required": [
+        "firewall_rule_id",
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "training_course_get",
+    "description": "Fetches a single training course by its identifier and returns its current field values. Completion credit is awarded only when every module has been finished. An identifier that does not resolve returns an empty result rather than an error.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "training_course_id": {
+          "type": "string",
+          "description": "Identifier of the training course to act on."
+        },
+        "include_related": {
+          "type": "boolean",
+          "description": "Whether to expand linked records inline in the response."
+        }
+      },
+      "required": [
+        "training_course_id"
+      ]
+    }
+  },
+  {
+    "name": "payroll_run_update",
+    "description": "Applies a partial update to one payroll run, changing only the fields supplied. A run cannot be altered after it has been committed to the payment file. Fields omitted from the payload are left as they are rather than being cleared.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "payroll_run_id": {
+          "type": "string",
+          "description": "Identifier of the payroll run to act on."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Field values to overwrite, keyed by field name."
+        }
+      },
+      "required": [
+        "payroll_run_id",
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "warehouse_location_update",
+    "description": "Writes new values into selected fields of an existing warehouse location record. Temperature-controlled locations carry an additional compliance attribute. Fields omitted from the payload are left as they are rather than being cleared.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "warehouse_location_id": {
+          "type": "string",
+          "description": "Identifier of the warehouse location to act on."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Field values to overwrite, keyed by field name."
+        }
+      },
+      "required": [
+        "warehouse_location_id",
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "dns_record_assign_owner",
+    "description": "Transfers ownership of one DNS record to the principal supplied by the caller. Changes propagate according to the record's time-to-live, not instantly. The previous owner is notified and retains read access unless it is revoked separately.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "dns_record_id": {
+          "type": "string",
+          "description": "Identifier of the DNS record to act on."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Principal to make responsible for the record."
+        }
+      },
+      "required": [
+        "dns_record_id",
+        "owner"
+      ]
+    }
+  },
+  {
+    "name": "onboarding_task_list_history",
+    "description": "Lists the recorded revisions of a single onboarding task record. Overdue tasks escalate to the assignee's manager after two working days. History entries are retained for the configured audit window and cannot be amended.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "onboarding_task_id": {
+          "type": "string",
+          "description": "Identifier of the onboarding task to act on."
+        },
+        "since": {
+          "type": "string",
+          "description": "Only return revisions recorded after this ISO-8601 timestamp."
+        }
+      },
+      "required": [
+        "onboarding_task_id"
+      ]
+    }
+  },
+  {
+    "name": "payments_open_chargeback_dispute",
+    "description": "Registers a dispute raised by the cardholder's issuing bank against a settled charge and opens the evidence-submission window. This records a contested transaction rather than voluntarily returning funds, and carries a scheme fee regardless of outcome. Evidence must be supplied before the deadline or the dispute is lost by default.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "charge_id": {
+          "type": "string",
+          "description": "Identifier of the charge being disputed."
+        },
+        "dispute_reason": {
+          "type": "string",
+          "enum": [
+            "product_not_received",
+            "product_unacceptable",
+            "unrecognized",
+            "subscription_canceled"
+          ],
+          "description": "Scheme reason code supplied by the issuing bank."
+        }
+      },
+      "required": [
+        "charge_id",
+        "dispute_reason"
+      ]
+    }
+  },
+  {
+    "name": "warehouse_location_bulk_import",
+    "description": "Ingests warehouse location records in bulk from a file reference supplied by the caller. Temperature-controlled locations carry an additional compliance attribute. The call returns a job identifier; rows are validated individually and bad rows are reported at the end.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_uri": {
+          "type": "string",
+          "description": "Location of the file to import."
+        },
+        "on_conflict": {
+          "type": "string",
+          "description": "How to treat rows matching an existing record.",
+          "enum": [
+            "skip",
+            "overwrite",
+            "fail"
+          ]
+        }
+      },
+      "required": [
+        "source_uri",
+        "on_conflict"
+      ]
+    }
+  },
+  {
+    "name": "analytics_export_report",
+    "description": "Renders a previously saved report definition to a file in the requested format and returns a download URL. The report must already exist and be referenced by its identifier; ad-hoc questions cannot be expressed through this tool. Large exports are generated asynchronously.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "description": "Identifier of the saved report."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "csv",
+            "xlsx",
+            "pdf"
+          ],
+          "description": "Output file format."
+        }
+      },
+      "required": [
+        "report_id",
+        "format"
+      ]
+    }
+  },
+  {
+    "name": "warehouse_location_create",
+    "description": "Opens a new warehouse location record, populated with the field values provided by the caller. Temperature-controlled locations carry an additional compliance attribute. Required fields missing from the payload cause the call to fail without creating anything.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "description": "Field values for the new record, keyed by field name."
+        }
+      },
+      "required": [
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "job_requisition_archive",
+    "description": "Archives a job requisition, removing it from active views while retaining it for audit. Requisitions are tied to a cost centre, which determines the approval chain. Archiving is reversible; the record is never destroyed by this call.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "job_requisition_id": {
+          "type": "string",
+          "description": "Identifier of the job requisition to act on."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason recorded on the archived record."
+        }
+      },
+      "required": [
+        "job_requisition_id"
+      ]
+    }
+  },
+  {
+    "name": "dns_record_list",
+    "description": "Returns DNS record records matching the supplied filter, one page at a time. Records managed by an external controller are read-only here. Paging is cursor-based; the cursor from the previous response must be passed to advance.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "description": "Field-level filter applied before paging."
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "Maximum records to return in one page."
+        }
+      },
+      "required": [
+        "filter"
+      ]
+    }
+  },
+  {
+    "name": "survey_definition_list",
+    "description": "Lists survey records narrowed by the given filter and ordered by last update. Anonymous surveys discard respondent identity at the point of submission. Paging is cursor-based; the cursor from the previous response must be passed to advance.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "description": "Field-level filter applied before paging."
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "Maximum records to return in one page."
+        }
+      },
+      "required": [
+        "filter"
+      ]
+    }
+  },
+  {
+    "name": "survey_definition_update",
+    "description": "Applies a partial update to one survey, changing only the fields supplied. Questions cannot be changed once responses have been recorded against them. Fields omitted from the payload are left as they are rather than being cleared.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "survey_definition_id": {
+          "type": "string",
+          "description": "Identifier of the survey to act on."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Field values to overwrite, keyed by field name."
+        }
+      },
+      "required": [
+        "survey_definition_id",
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "job_requisition_assign_owner",
+    "description": "Assigns responsibility for one job requisition to a named principal. Requisitions are tied to a cost centre, which determines the approval chain. The previous owner is notified and retains read access unless it is revoked separately.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "job_requisition_id": {
+          "type": "string",
+          "description": "Identifier of the job requisition to act on."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Principal to make responsible for the record."
+        }
+      },
+      "required": [
+        "job_requisition_id",
+        "owner"
+      ]
+    }
+  },
+  {
+    "name": "training_dataset_export_csv",
+    "description": "Renders training dataset records matching the filter into a downloadable delimited file. Datasets are content-addressed, so identical contents resolve to one record. Large exports are produced asynchronously and the link becomes valid once the job completes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "description": "Field-level filter selecting which records to export."
+        },
+        "delimiter": {
+          "type": "string",
+          "description": "Column separator to use.",
+          "enum": [
+            ",",
+            ";",
+            "\t"
+          ]
+        }
+      },
+      "required": [
+        "filter"
+      ]
+    }
+  },
+  {
+    "name": "logs_export_to_bucket",
+    "description": "Schedules an asynchronous export of matching log entries to an object-storage prefix for offline analysis. The call returns an export job identifier, not the log lines; results become available in the destination bucket once the job finishes, typically within several minutes. A writable destination URI must be supplied by the caller.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service whose logs should be exported."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the export range."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the export range."
+        },
+        "destination_uri": {
+          "type": "string",
+          "description": "Object-storage prefix to write to, e.g. `s3://bucket/prefix/`."
+        }
+      },
+      "required": [
+        "service",
+        "start_time",
+        "end_time",
+        "destination_uri"
+      ]
+    }
+  },
+  {
+    "name": "inventory_item_get",
+    "description": "Reads one stock item record, returning every field the caller is entitled to see. Serial-tracked items cannot be adjusted in bulk and must be handled individually. An identifier that does not resolve returns an empty result rather than an error.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "inventory_item_id": {
+          "type": "string",
+          "description": "Identifier of the stock item to act on."
+        },
+        "include_related": {
+          "type": "boolean",
+          "description": "Whether to expand linked records inline in the response."
+        }
+      },
+      "required": [
+        "inventory_item_id"
+      ]
+    }
+  },
+  {
+    "name": "expense_report_create",
+    "description": "Opens a new expense report record, populated with the field values provided by the caller. Foreign-currency lines are converted at the rate on the transaction date. Required fields missing from the payload cause the call to fail without creating anything.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "description": "Field values for the new record, keyed by field name."
+        }
+      },
+      "required": [
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "dns_record_search",
+    "description": "Performs a full-text search across DNS record records and returns ranked matches. Records managed by an external controller are read-only here. The index refreshes asynchronously, so very recent writes may not appear immediately.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Free-text query string."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of ranked matches to return."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "insurance_policy_update",
+    "description": "Applies a partial update to one insurance policy, changing only the fields supplied. Coverage changes take effect at the next renewal unless endorsed mid-term. Fields omitted from the payload are left as they are rather than being cleared.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "insurance_policy_id": {
+          "type": "string",
+          "description": "Identifier of the insurance policy to act on."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Field values to overwrite, keyed by field name."
+        }
+      },
+      "required": [
+        "insurance_policy_id",
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "inventory_item_list_history",
+    "description": "Returns the change history of one stock item, oldest first. Quantities are tracked per warehouse bin, so the same item may show different counts in different locations. History entries are retained for the configured audit window and cannot be amended.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "inventory_item_id": {
+          "type": "string",
+          "description": "Identifier of the stock item to act on."
+        },
+        "since": {
+          "type": "string",
+          "description": "Only return revisions recorded after this ISO-8601 timestamp."
+        }
+      },
+      "required": [
+        "inventory_item_id"
+      ]
+    }
+  },
+  {
+    "name": "insurance_policy_list_history",
+    "description": "Returns the change history of one insurance policy, oldest first. Coverage changes take effect at the next renewal unless endorsed mid-term. History entries are retained for the configured audit window and cannot be amended.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "insurance_policy_id": {
+          "type": "string",
+          "description": "Identifier of the insurance policy to act on."
+        },
+        "since": {
+          "type": "string",
+          "description": "Only return revisions recorded after this ISO-8601 timestamp."
+        }
+      },
+      "required": [
+        "insurance_policy_id"
+      ]
+    }
+  },
+  {
+    "name": "knowledge_article_export_csv",
+    "description": "Writes matching knowledge-base article records to a delimited file and returns a download link. Localised variants are linked to the source article and track its version. Large exports are produced asynchronously and the link becomes valid once the job completes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "description": "Field-level filter selecting which records to export."
+        },
+        "delimiter": {
+          "type": "string",
+          "description": "Column separator to use.",
+          "enum": [
+            ",",
+            ";",
+            "\t"
+          ]
+        }
+      },
+      "required": [
+        "filter"
+      ]
+    }
+  },
+  {
+    "name": "dns_record_set_status",
+    "description": "Moves a single DNS record into a different status if the transition is permitted. Apex records are restricted to types the zone's provider supports. Transitions that the workflow does not allow are rejected and leave the record unchanged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "dns_record_id": {
+          "type": "string",
+          "description": "Identifier of the DNS record to act on."
+        },
+        "status": {
+          "type": "string",
+          "description": "Target status.",
+          "enum": [
+            "open",
+            "in_progress",
+            "blocked",
+            "closed",
+            "cancelled"
+          ]
+        }
+      },
+      "required": [
+        "dns_record_id",
+        "status"
+      ]
+    }
+  },
+  {
+    "name": "purchase_order_create",
+    "description": "Registers a purchase order in the system and assigns it a newly generated identifier. Line totals are recomputed from unit price and quantity and cannot be set directly. Required fields missing from the payload cause the call to fail without creating anything.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "description": "Field values for the new record, keyed by field name."
+        }
+      },
+      "required": [
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "legal_matter_add_note",
+    "description": "Records a free-text note against a single legal matter. Matters under litigation hold cannot have documents removed from them. Notes are append-only and cannot be edited or removed once written.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "legal_matter_id": {
+          "type": "string",
+          "description": "Identifier of the legal matter to act on."
+        },
+        "note": {
+          "type": "string",
+          "description": "Text of the note to append."
+        },
+        "visibility": {
+          "type": "string",
+          "description": "Who may read the note.",
+          "enum": [
+            "internal",
+            "shared",
+            "public"
+          ]
+        }
+      },
+      "required": [
+        "legal_matter_id",
+        "note"
+      ]
+    }
+  },
+  {
+    "name": "calendar_find_common_free_slots",
+    "description": "Computes the windows of a given length on a given day during which every listed attendee is simultaneously free, by intersecting all of their calendars. Returns the candidate windows to the caller without booking anything or notifying the attendees. Working hours and declined events are respected when computing availability.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Two or more attendee names or addresses whose calendars should be intersected."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the windows to look for, in minutes."
+        },
+        "date": {
+          "type": "string",
+          "description": "Day to search, as a date or weekday name, e.g. `Thursday`."
+        }
+      },
+      "required": [
+        "attendees",
+        "duration_minutes",
+        "date"
+      ]
+    }
+  },
+  {
+    "name": "feature_flag_disable",
+    "description": "Switches a named feature flag off in one environment, taking effect for new requests within a few seconds without redeploying. Only behaviour guarded by that specific flag is affected; code shipped outside a flag continues to run. The previous flag state is recorded in the audit log.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "flag_key": {
+          "type": "string",
+          "description": "Key of the feature flag to disable."
+        },
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment in which to disable the flag."
+        }
+      },
+      "required": [
+        "flag_key",
+        "environment"
+      ]
+    }
+  },
+  {
+    "name": "expense_report_validate",
+    "description": "Runs validation rules over a single expense report and returns the problems detected. Reports are locked once submitted and must be recalled before further edits. Validation is read-only: nothing is corrected, and the record is returned unchanged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "expense_report_id": {
+          "type": "string",
+          "description": "Identifier of the expense report to act on."
+        },
+        "ruleset": {
+          "type": "string",
+          "description": "Name of the ruleset to evaluate against."
+        }
+      },
+      "required": [
+        "expense_report_id",
+        "ruleset"
+      ]
+    }
+  },
+  {
+    "name": "support_ticket_update",
+    "description": "Modifies the named fields on a single support ticket and leaves the rest untouched. The first-response clock stops only when an agent replies publicly. Fields omitted from the payload are left as they are rather than being cleared.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "support_ticket_id": {
+          "type": "string",
+          "description": "Identifier of the support ticket to act on."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Field values to overwrite, keyed by field name."
+        }
+      },
+      "required": [
+        "support_ticket_id",
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "survey_definition_assign_owner",
+    "description": "Sets the owning principal of a single survey record. Branching logic is validated as a directed acyclic graph before publication. The previous owner is notified and retains read access unless it is revoked separately.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "survey_definition_id": {
+          "type": "string",
+          "description": "Identifier of the survey to act on."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Principal to make responsible for the record."
+        }
+      },
+      "required": [
+        "survey_definition_id",
+        "owner"
+      ]
+    }
+  },
+  {
+    "name": "sla_policy_add_note",
+    "description": "Adds an annotation to the activity history of one service-level policy record. Business-hours calendars are attached per region and affect elapsed-time maths. Notes are append-only and cannot be edited or removed once written.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sla_policy_id": {
+          "type": "string",
+          "description": "Identifier of the service-level policy to act on."
+        },
+        "note": {
+          "type": "string",
+          "description": "Text of the note to append."
+        },
+        "visibility": {
+          "type": "string",
+          "description": "Who may read the note.",
+          "enum": [
+            "internal",
+            "shared",
+            "public"
+          ]
+        }
+      },
+      "required": [
+        "sla_policy_id",
+        "note"
+      ]
+    }
+  },
+  {
+    "name": "purchase_order_list",
+    "description": "Returns purchase order records matching the supplied filter, one page at a time. Partially received orders remain open until every line is reconciled. Paging is cursor-based; the cursor from the previous response must be passed to advance.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "description": "Field-level filter applied before paging."
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "Maximum records to return in one page."
+        }
+      },
+      "required": [
+        "filter"
+      ]
+    }
+  },
+  {
+    "name": "tls_certificate_archive",
+    "description": "Marks one TLS certificate as archived so it no longer appears in day-to-day listings. Wildcard certificates cannot be issued for public suffix domains. Archiving is reversible; the record is never destroyed by this call.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "tls_certificate_id": {
+          "type": "string",
+          "description": "Identifier of the TLS certificate to act on."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason recorded on the archived record."
+        }
+      },
+      "required": [
+        "tls_certificate_id"
+      ]
+    }
+  },
+  {
+    "name": "legal_matter_search",
+    "description": "Searches the text fields of legal matter records for the caller's query terms. Matters under litigation hold cannot have documents removed from them. The index refreshes asynchronously, so very recent writes may not appear immediately.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Free-text query string."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of ranked matches to return."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "knowledge_article_validate",
+    "description": "Runs validation rules over a single knowledge-base article and returns the problems detected. Articles move through draft, review and published states in that order. Validation is read-only: nothing is corrected, and the record is returned unchanged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "knowledge_article_id": {
+          "type": "string",
+          "description": "Identifier of the knowledge-base article to act on."
+        },
+        "ruleset": {
+          "type": "string",
+          "description": "Name of the ruleset to evaluate against."
+        }
+      },
+      "required": [
+        "knowledge_article_id",
+        "ruleset"
+      ]
+    }
+  },
+  {
+    "name": "legal_matter_list",
+    "description": "Enumerates legal matter records the caller can see, newest first, in pages. Matters under litigation hold cannot have documents removed from them. Paging is cursor-based; the cursor from the previous response must be passed to advance.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "description": "Field-level filter applied before paging."
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "Maximum records to return in one page."
+        }
+      },
+      "required": [
+        "filter"
+      ]
+    }
+  },
+  {
+    "name": "ml_model_version_validate",
+    "description": "Evaluates one model version record for rule violations without altering it. Evaluation metrics are attached by the evaluation job and cannot be edited. Validation is read-only: nothing is corrected, and the record is returned unchanged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ml_model_version_id": {
+          "type": "string",
+          "description": "Identifier of the model version to act on."
+        },
+        "ruleset": {
+          "type": "string",
+          "description": "Name of the ruleset to evaluate against."
+        }
+      },
+      "required": [
+        "ml_model_version_id",
+        "ruleset"
+      ]
+    }
+  },
+  {
+    "name": "sla_policy_get",
+    "description": "Reads one service-level policy record, returning every field the caller is entitled to see. A policy in use by an active contract cannot be deleted. An identifier that does not resolve returns an empty result rather than an error.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sla_policy_id": {
+          "type": "string",
+          "description": "Identifier of the service-level policy to act on."
+        },
+        "include_related": {
+          "type": "boolean",
+          "description": "Whether to expand linked records inline in the response."
+        }
+      },
+      "required": [
+        "sla_policy_id"
+      ]
+    }
+  },
+  {
+    "name": "legal_matter_archive",
+    "description": "Archives a legal matter, removing it from active views while retaining it for audit. External counsel access is granted per matter and expires with the engagement. Archiving is reversible; the record is never destroyed by this call.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "legal_matter_id": {
+          "type": "string",
+          "description": "Identifier of the legal matter to act on."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason recorded on the archived record."
+        }
+      },
+      "required": [
+        "legal_matter_id"
+      ]
+    }
+  },
+  {
+    "name": "purchase_order_export_csv",
+    "description": "Renders purchase order records matching the filter into a downloadable delimited file. Orders past the approval threshold require a second approver before they can be issued. Large exports are produced asynchronously and the link becomes valid once the job completes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "description": "Field-level filter selecting which records to export."
+        },
+        "delimiter": {
+          "type": "string",
+          "description": "Column separator to use.",
+          "enum": [
+            ",",
+            ";",
+            "\t"
+          ]
+        }
+      },
+      "required": [
+        "filter"
+      ]
+    }
+  },
+  {
+    "name": "knowledge_article_update",
+    "description": "Writes new values into selected fields of an existing knowledge-base article record. Unpublished articles are excluded from customer-facing search. Fields omitted from the payload are left as they are rather than being cleared.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "knowledge_article_id": {
+          "type": "string",
+          "description": "Identifier of the knowledge-base article to act on."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Field values to overwrite, keyed by field name."
+        }
+      },
+      "required": [
+        "knowledge_article_id",
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "hardware_asset_list",
+    "description": "Returns hardware asset records matching the supplied filter, one page at a time. Assets pending disposal are excluded from ordinary inventory counts. Paging is cursor-based; the cursor from the previous response must be passed to advance.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "description": "Field-level filter applied before paging."
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "Maximum records to return in one page."
+        }
+      },
+      "required": [
+        "filter"
+      ]
+    }
+  },
+  {
+    "name": "device_enrollment_validate",
+    "description": "Runs validation rules over a single device enrollment and returns the problems detected. Enrollment binds a device to exactly one owner at a time. Validation is read-only: nothing is corrected, and the record is returned unchanged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "device_enrollment_id": {
+          "type": "string",
+          "description": "Identifier of the device enrollment to act on."
+        },
+        "ruleset": {
+          "type": "string",
+          "description": "Name of the ruleset to evaluate against."
+        }
+      },
+      "required": [
+        "device_enrollment_id",
+        "ruleset"
+      ]
+    }
+  },
+  {
+    "name": "expense_report_archive",
+    "description": "Archives a expense report, removing it from active views while retaining it for audit. Receipts above the documentation threshold must be attached or the report is rejected. Archiving is reversible; the record is never destroyed by this call.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "expense_report_id": {
+          "type": "string",
+          "description": "Identifier of the expense report to act on."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason recorded on the archived record."
+        }
+      },
+      "required": [
+        "expense_report_id"
+      ]
+    }
+  },
+  {
+    "name": "contract_record_validate",
+    "description": "Checks one contract against a named ruleset and reports any violations found. Counterparty entities are resolved against the legal-entity register. Validation is read-only: nothing is corrected, and the record is returned unchanged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contract_record_id": {
+          "type": "string",
+          "description": "Identifier of the contract to act on."
+        },
+        "ruleset": {
+          "type": "string",
+          "description": "Name of the ruleset to evaluate against."
+        }
+      },
+      "required": [
+        "contract_record_id",
+        "ruleset"
+      ]
+    }
+  },
+  {
+    "name": "inventory_item_bulk_import",
+    "description": "Imports many stock item records at once from a delimited file in object storage. Quantities are tracked per warehouse bin, so the same item may show different counts in different locations. The call returns a job identifier; rows are validated individually and bad rows are reported at the end.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_uri": {
+          "type": "string",
+          "description": "Location of the file to import."
+        },
+        "on_conflict": {
+          "type": "string",
+          "description": "How to treat rows matching an existing record.",
+          "enum": [
+            "skip",
+            "overwrite",
+            "fail"
+          ]
+        }
+      },
+      "required": [
+        "source_uri",
+        "on_conflict"
+      ]
+    }
+  },
+  {
+    "name": "onboarding_task_get",
+    "description": "Retrieves the onboarding task identified by the caller, including its computed fields. Tasks are sequenced by dependency, so a blocked task cannot be started early. An identifier that does not resolve returns an empty result rather than an error.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "onboarding_task_id": {
+          "type": "string",
+          "description": "Identifier of the onboarding task to act on."
+        },
+        "include_related": {
+          "type": "boolean",
+          "description": "Whether to expand linked records inline in the response."
+        }
+      },
+      "required": [
+        "onboarding_task_id"
+      ]
+    }
+  },
+  {
+    "name": "training_dataset_set_status",
+    "description": "Moves a single training dataset into a different status if the transition is permitted. Splits are recorded as manifests rather than as copies of the underlying rows. Transitions that the workflow does not allow are rejected and leave the record unchanged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "training_dataset_id": {
+          "type": "string",
+          "description": "Identifier of the training dataset to act on."
+        },
+        "status": {
+          "type": "string",
+          "description": "Target status.",
+          "enum": [
+            "open",
+            "in_progress",
+            "blocked",
+            "closed",
+            "cancelled"
+          ]
+        }
+      },
+      "required": [
+        "training_dataset_id",
+        "status"
+      ]
+    }
+  },
+  {
+    "name": "purchase_order_set_status",
+    "description": "Moves a single purchase order into a different status if the transition is permitted. Line totals are recomputed from unit price and quantity and cannot be set directly. Transitions that the workflow does not allow are rejected and leave the record unchanged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "purchase_order_id": {
+          "type": "string",
+          "description": "Identifier of the purchase order to act on."
+        },
+        "status": {
+          "type": "string",
+          "description": "Target status.",
+          "enum": [
+            "open",
+            "in_progress",
+            "blocked",
+            "closed",
+            "cancelled"
+          ]
+        }
+      },
+      "required": [
+        "purchase_order_id",
+        "status"
+      ]
+    }
+  },
+  {
+    "name": "training_course_bulk_import",
+    "description": "Ingests training course records in bulk from a file reference supplied by the caller. Certification-bearing courses carry an expiry after which retraining is required. The call returns a job identifier; rows are validated individually and bad rows are reported at the end.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_uri": {
+          "type": "string",
+          "description": "Location of the file to import."
+        },
+        "on_conflict": {
+          "type": "string",
+          "description": "How to treat rows matching an existing record.",
+          "enum": [
+            "skip",
+            "overwrite",
+            "fail"
+          ]
+        }
+      },
+      "required": [
+        "source_uri",
+        "on_conflict"
+      ]
+    }
+  },
+  {
+    "name": "legal_matter_create",
+    "description": "Opens a new legal matter record, populated with the field values provided by the caller. Budget forecasts are tracked separately from actual invoiced fees. Required fields missing from the payload cause the call to fail without creating anything.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "description": "Field values for the new record, keyed by field name."
+        }
+      },
+      "required": [
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "ml_model_version_get",
+    "description": "Reads one model version record, returning every field the caller is entitled to see. A version serving live traffic cannot be deregistered. An identifier that does not resolve returns an empty result rather than an error.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ml_model_version_id": {
+          "type": "string",
+          "description": "Identifier of the model version to act on."
+        },
+        "include_related": {
+          "type": "boolean",
+          "description": "Whether to expand linked records inline in the response."
+        }
+      },
+      "required": [
+        "ml_model_version_id"
+      ]
+    }
+  },
+  {
+    "name": "ml_model_version_list_history",
+    "description": "Returns the change history of one model version, oldest first. Versions are immutable once registered; retraining produces a new version. History entries are retained for the configured audit window and cannot be amended.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ml_model_version_id": {
+          "type": "string",
+          "description": "Identifier of the model version to act on."
+        },
+        "since": {
+          "type": "string",
+          "description": "Only return revisions recorded after this ISO-8601 timestamp."
+        }
+      },
+      "required": [
+        "ml_model_version_id"
+      ]
+    }
+  },
+  {
+    "name": "ml_model_version_add_note",
+    "description": "Adds an annotation to the activity history of one model version record. Evaluation metrics are attached by the evaluation job and cannot be edited. Notes are append-only and cannot be edited or removed once written.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ml_model_version_id": {
+          "type": "string",
+          "description": "Identifier of the model version to act on."
+        },
+        "note": {
+          "type": "string",
+          "description": "Text of the note to append."
+        },
+        "visibility": {
+          "type": "string",
+          "description": "Who may read the note.",
+          "enum": [
+            "internal",
+            "shared",
+            "public"
+          ]
+        }
+      },
+      "required": [
+        "ml_model_version_id",
+        "note"
+      ]
+    }
+  },
+  {
+    "name": "storage_archive_object",
+    "description": "Transitions an object into cold archival storage to reduce cost, after which retrieval takes several hours and the object cannot be edited in place. The object disappears from ordinary folder listings and is tracked in the archive index instead. Restoring it is a separate, chargeable operation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Path of the object to archive."
+        },
+        "retention_years": {
+          "type": "integer",
+          "description": "How long the archived copy must be retained."
+        }
+      },
+      "required": [
+        "source_path"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Before I propose anything, I need to see which 30-minute windows Priya and Marco are both free in on Thursday.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

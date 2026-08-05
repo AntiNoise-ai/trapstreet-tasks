@@ -1,0 +1,175 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "storage_upload_object",
+    "description": "Transfers a file from the caller's local filesystem into a destination folder in shared storage, creating a new object there. The source must be a path on the machine making the call, not a path that already exists inside storage. Uploads larger than one gigabyte are chunked automatically.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "local_path": {
+          "type": "string",
+          "description": "Path to the file on the caller's own machine."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Storage folder to upload into."
+        }
+      },
+      "required": [
+        "local_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "email_create_template",
+    "description": "Stores a reusable message template in the shared template library, optionally with placeholder variables that are substituted at send time. Templates carry no addressees and are never delivered on their own; they exist to be selected later when composing. Template names must be unique within the library.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name for the template."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line, which may contain placeholders."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text, which may contain placeholders."
+        }
+      },
+      "required": [
+        "name",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "logs_query_range",
+    "description": "Returns stored log entries for one service over a closed historical time range, newest first, optionally narrowed to a minimum severity. Entries are returned inline to the caller, subject to a per-call line cap. Retention is thirty days; ranges older than that come back empty rather than erroring.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service whose logs should be read, e.g. `checkout`."
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error",
+            "fatal"
+          ],
+          "description": "Minimum severity to include. Omit for all severities."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the range, as a time or ISO-8601 timestamp, e.g. `09:00`."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the range, as a time or ISO-8601 timestamp, e.g. `09:30`."
+        }
+      },
+      "required": [
+        "service",
+        "level",
+        "start_time",
+        "end_time"
+      ]
+    }
+  },
+  {
+    "name": "payments_issue_store_credit",
+    "description": "Adds a credit to a customer's account balance that can be spent on future orders. Funds are not returned to the customer's original payment method and the credit may carry an expiry date. Commonly used for goodwill gestures and for returns outside the standard refund window.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "description": "Identifier of the customer receiving the credit."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Credit value in the account's settlement currency."
+        },
+        "expires_at": {
+          "type": "string",
+          "description": "ISO-8601 date after which the credit is no longer redeemable."
+        }
+      },
+      "required": [
+        "customer_id",
+        "amount"
+      ]
+    }
+  },
+  {
+    "name": "groups_add_member",
+    "description": "Adds an existing user to a security group, after which every grant already held by that group applies to them as well. Requires the group identifier, and confers whatever access the group happens to carry rather than access to any single named resource. Membership changes propagate within a few minutes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "group_id": {
+          "type": "string",
+          "description": "Identifier of the group to add the user to."
+        },
+        "user_id": {
+          "type": "string",
+          "description": "Identifier of the existing user."
+        }
+      },
+      "required": [
+        "group_id",
+        "user_id"
+      ]
+    }
+  },
+  {
+    "name": "scheduling_send_booking_link",
+    "description": "Emails the recipients a self-service link on which they can pick a slot of the stated length from the organizer's open calendar. The chosen time is confirmed directly with the recipient; the caller receives only a link identifier and is not shown the underlying availability. Sending happens as soon as the call succeeds.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "recipients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Addresses that should receive the booking link."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the bookable slots."
+        }
+      },
+      "required": [
+        "recipients",
+        "duration_minutes"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Something broke in the checkout service at about 09:15 this morning. Show me the error-level log lines from that service between 09:00 and 09:30 so I can read through them.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

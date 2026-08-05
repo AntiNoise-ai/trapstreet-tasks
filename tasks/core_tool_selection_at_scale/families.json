@@ -1,0 +1,839 @@
+{
+  "_doc": "Hand-authored intent families for core_tool_selection_at_scale. Each family = one user request + exactly one correct tool + five near-miss tools that are PLAUSIBLE but individually disqualified by something stated in their own description or parameter list. The `disqualifier` string on each near-miss records WHY it is wrong; it is never shown to the solution, it exists so a reader can audit that the case is hard-but-fair rather than a coin flip. Every tool here is written in the same verbose, constraint-carrying voice as the generated filler pool so the correct tool is not stylistically identifiable. See README.md.",
+
+  "families": [
+    {
+      "intent": "refund_settled_charge",
+      "domain": "payments",
+      "query": "Charge ch_8812 for $129.00 settled three days ago. The customer returned half the items, so put $64.50 back on the card they paid with.",
+      "correct_tool": {
+        "name": "payments_refund_charge",
+        "description": "Returns funds to the original payment method for a charge that has already settled. Supports full or partial amounts, and multiple partial refunds against the same charge up to its original total. Only charges in the `settled` state are eligible; a charge that is authorized but not yet captured must be voided instead. Refunds cannot be reversed once issued.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "charge_id": {"type": "string", "description": "Identifier of the settled charge to refund, e.g. `ch_8812`."},
+            "amount": {"type": "number", "description": "Amount to return to the cardholder, expressed in the charge's original currency. Must not exceed the charge total less any refunds already issued."},
+            "reason": {"type": "string", "enum": ["requested_by_customer", "duplicate", "fraudulent", "other"], "description": "Reason code recorded against the refund for reporting."}
+          },
+          "required": ["charge_id", "amount"]
+        }
+      },
+      "expected_args": {
+        "charge_id": ["ch_8812"],
+        "amount": [64.5, "64.50", "$64.50", "64.5"]
+      },
+      "near_misses": [
+        {
+          "disqualifier": "Only applies to authorized-but-uncaptured charges; this charge settled three days ago, and it cannot do partial amounts.",
+          "tool": {
+            "name": "payments_void_authorization",
+            "description": "Cancels an authorization that has not yet been captured, releasing the hold on the cardholder's funds. Voids apply to the whole authorization only and are unavailable once funds have settled, at which point the money must be returned by a different mechanism. Typically completes within one business day.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "charge_id": {"type": "string", "description": "Identifier of the uncaptured authorization to cancel."},
+                "note": {"type": "string", "description": "Free-text note stored on the voided authorization."}
+              },
+              "required": ["charge_id"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Credits an internal account balance; the request explicitly asks for money back on the card the customer paid with.",
+          "tool": {
+            "name": "payments_issue_store_credit",
+            "description": "Adds a credit to a customer's account balance that can be spent on future orders. Funds are not returned to the customer's original payment method and the credit may carry an expiry date. Commonly used for goodwill gestures and for returns outside the standard refund window.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "customer_id": {"type": "string", "description": "Identifier of the customer receiving the credit."},
+                "amount": {"type": "number", "description": "Credit value in the account's settlement currency."},
+                "expires_at": {"type": "string", "description": "ISO-8601 date after which the credit is no longer redeemable."}
+              },
+              "required": ["customer_id", "amount"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Represents a cardholder-initiated bank dispute, not a merchant-initiated return of funds.",
+          "tool": {
+            "name": "payments_open_chargeback_dispute",
+            "description": "Registers a dispute raised by the cardholder's issuing bank against a settled charge and opens the evidence-submission window. This records a contested transaction rather than voluntarily returning funds, and carries a scheme fee regardless of outcome. Evidence must be supplied before the deadline or the dispute is lost by default.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "charge_id": {"type": "string", "description": "Identifier of the charge being disputed."},
+                "dispute_reason": {"type": "string", "enum": ["product_not_received", "product_unacceptable", "unrecognized", "subscription_canceled"], "description": "Scheme reason code supplied by the issuing bank."}
+              },
+              "required": ["charge_id", "dispute_reason"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Keyed on an invoice identifier; the request supplies a standalone charge id and mentions no invoice.",
+          "tool": {
+            "name": "payments_refund_invoice_line",
+            "description": "Issues a credit note against a specific line item on a finalized invoice and returns the corresponding funds. Requires the invoice identifier and the line number; it cannot be used for standalone charges that were never attached to an invoice. The invoice is re-issued with the credit note applied.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "invoice_id": {"type": "string", "description": "Identifier of the finalized invoice, e.g. `in_4471`."},
+                "line_number": {"type": "integer", "description": "One-based index of the line item to credit."},
+                "amount": {"type": "number", "description": "Amount to credit against the line item."}
+              },
+              "required": ["invoice_id", "line_number", "amount"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Acts on a recurring subscription object; the request concerns a one-off charge for returned goods.",
+          "tool": {
+            "name": "payments_cancel_subscription",
+            "description": "Ends a recurring subscription either immediately or at the close of the current billing period, and optionally returns the unused portion of the period already paid for. Operates on the subscription object rather than on any individual charge. Cancellation does not affect charges that have already settled.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "subscription_id": {"type": "string", "description": "Identifier of the subscription to end."},
+                "at_period_end": {"type": "boolean", "description": "If true, remain active until the current period closes."},
+                "prorate": {"type": "boolean", "description": "Whether to credit the unused remainder of the paid period."}
+              },
+              "required": ["subscription_id"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "intent": "read_historical_error_logs",
+      "domain": "observability",
+      "query": "Something broke in the checkout service at about 09:15 this morning. Show me the error-level log lines from that service between 09:00 and 09:30 so I can read through them.",
+      "correct_tool": {
+        "name": "logs_query_range",
+        "description": "Returns stored log entries for one service over a closed historical time range, newest first, optionally narrowed to a minimum severity. Entries are returned inline to the caller, subject to a per-call line cap. Retention is thirty days; ranges older than that come back empty rather than erroring.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "service": {"type": "string", "description": "Name of the service whose logs should be read, e.g. `checkout`."},
+            "level": {"type": "string", "enum": ["debug", "info", "warn", "error", "fatal"], "description": "Minimum severity to include. Omit for all severities."},
+            "start_time": {"type": "string", "description": "Inclusive start of the range, as a time or ISO-8601 timestamp, e.g. `09:00`."},
+            "end_time": {"type": "string", "description": "Exclusive end of the range, as a time or ISO-8601 timestamp, e.g. `09:30`."}
+          },
+          "required": ["service", "level", "start_time", "end_time"]
+        }
+      },
+      "expected_args": {
+        "service": ["checkout", "checkout service", "checkout-service", "checkout_service"],
+        "level": ["error"],
+        "start_time": ["09:00", "9:00", "0900", "09:00:00"],
+        "end_time": ["09:30", "9:30", "0930", "09:30:00"]
+      },
+      "near_misses": [
+        {
+          "disqualifier": "Streams only entries that arrive after the call; it cannot reach back to a window that has already passed.",
+          "tool": {
+            "name": "logs_tail_stream",
+            "description": "Opens a live stream of log entries for a service as they are written, optionally filtered by minimum severity. Only entries produced after the stream is opened are delivered; historical entries already in storage are never replayed. The stream closes automatically after fifteen minutes of inactivity.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "service": {"type": "string", "description": "Name of the service to follow."},
+                "level": {"type": "string", "enum": ["debug", "info", "warn", "error", "fatal"], "description": "Minimum severity to deliver."}
+              },
+              "required": ["service"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Writes results to object storage and returns a job id rather than the entries themselves; also requires a destination URI the request does not supply.",
+          "tool": {
+            "name": "logs_export_to_bucket",
+            "description": "Schedules an asynchronous export of matching log entries to an object-storage prefix for offline analysis. The call returns an export job identifier, not the log lines; results become available in the destination bucket once the job finishes, typically within several minutes. A writable destination URI must be supplied by the caller.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "service": {"type": "string", "description": "Name of the service whose logs should be exported."},
+                "start_time": {"type": "string", "description": "Inclusive start of the export range."},
+                "end_time": {"type": "string", "description": "Exclusive end of the export range."},
+                "destination_uri": {"type": "string", "description": "Object-storage prefix to write to, e.g. `s3://bucket/prefix/`."}
+              },
+              "required": ["service", "start_time", "end_time", "destination_uri"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Returns counts grouped by severity, not the log lines the request asks to read.",
+          "tool": {
+            "name": "logs_count_by_level",
+            "description": "Aggregates stored log entries for a service over a time range and returns the number of entries at each severity, along with the bucket boundaries used. Useful for spotting when a spike began. The individual entries are not included in the response, only the per-severity totals.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "service": {"type": "string", "description": "Name of the service to aggregate."},
+                "start_time": {"type": "string", "description": "Inclusive start of the range."},
+                "end_time": {"type": "string", "description": "Exclusive end of the range."},
+                "bucket": {"type": "string", "enum": ["1m", "5m", "1h"], "description": "Width of each aggregation bucket."}
+              },
+              "required": ["service", "start_time", "end_time"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Queries numeric time-series metrics; the request asks for log lines, and a metric name is neither given nor implied.",
+          "tool": {
+            "name": "metrics_query_range",
+            "description": "Evaluates a named numeric time series for a service across a time range and returns the sampled data points at a fixed step. Operates on the metrics store rather than on log text, so free-form messages and stack traces are not available through it. Supports rate, sum and percentile aggregations.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "service": {"type": "string", "description": "Name of the service that emits the metric."},
+                "metric_name": {"type": "string", "description": "Fully-qualified metric name, e.g. `http.requests.5xx`."},
+                "start_time": {"type": "string", "description": "Inclusive start of the range."},
+                "end_time": {"type": "string", "description": "Exclusive end of the range."}
+              },
+              "required": ["service", "metric_name", "start_time", "end_time"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Searches distributed traces and spans rather than log entries; selection is by latency, not severity.",
+          "tool": {
+            "name": "traces_search_spans",
+            "description": "Finds distributed-tracing spans for a service within a time range, ordered by duration, and returns their identifiers and timings so a slow request can be followed across services. Spans carry latency and parent-child structure but not the free-text messages written to the logging pipeline. Sampling means not every request is represented.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "service": {"type": "string", "description": "Name of the service that produced the spans."},
+                "min_duration_ms": {"type": "integer", "description": "Return only spans at least this many milliseconds long."},
+                "start_time": {"type": "string", "description": "Inclusive start of the range."},
+                "end_time": {"type": "string", "description": "Exclusive end of the range."}
+              },
+              "required": ["service", "start_time", "end_time"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "intent": "find_mutual_free_slots",
+      "domain": "calendar",
+      "query": "Before I propose anything, I need to see which 30-minute windows Priya and Marco are both free in on Thursday.",
+      "correct_tool": {
+        "name": "calendar_find_common_free_slots",
+        "description": "Computes the windows of a given length on a given day during which every listed attendee is simultaneously free, by intersecting all of their calendars. Returns the candidate windows to the caller without booking anything or notifying the attendees. Working hours and declined events are respected when computing availability.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "attendees": {"type": "array", "items": {"type": "string"}, "description": "Two or more attendee names or addresses whose calendars should be intersected."},
+            "duration_minutes": {"type": "integer", "description": "Length of the windows to look for, in minutes."},
+            "date": {"type": "string", "description": "Day to search, as a date or weekday name, e.g. `Thursday`."}
+          },
+          "required": ["attendees", "duration_minutes", "date"]
+        }
+      },
+      "expected_args": {
+        "attendees": [["Priya", "Marco"], ["priya", "marco"], ["Marco", "Priya"], "Priya, Marco", "Priya,Marco"],
+        "duration_minutes": [30, "30"],
+        "date": ["Thursday", "thursday", "Thu"]
+      },
+      "near_misses": [
+        {
+          "disqualifier": "Handles one calendar at a time; the request needs the intersection of two people's availability, which this cannot express.",
+          "tool": {
+            "name": "calendar_find_free_slots",
+            "description": "Returns the open windows of a given length on a given day for a single calendar, skipping over existing events and time marked as busy. Accepts exactly one attendee per call and does not combine calendars. Results are ordered from earliest to latest within the attendee's working hours.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "attendee": {"type": "string", "description": "The single attendee whose calendar should be scanned."},
+                "duration_minutes": {"type": "integer", "description": "Length of the windows to look for, in minutes."},
+                "date": {"type": "string", "description": "Day to search."}
+              },
+              "required": ["attendee", "duration_minutes", "date"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Books a meeting and requires a specific start time; the request is explicitly for the step before any time is chosen.",
+          "tool": {
+            "name": "calendar_create_event",
+            "description": "Creates a calendar event at a specific start time, invites the listed attendees and sends them notifications immediately. A concrete start time is mandatory; the tool does not search for or suggest available windows. Conflicting attendees are still invited and simply show as double-booked.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "attendees": {"type": "array", "items": {"type": "string"}, "description": "People to invite."},
+                "start_time": {"type": "string", "description": "Exact start of the event as an ISO-8601 timestamp."},
+                "duration_minutes": {"type": "integer", "description": "Length of the event in minutes."},
+                "title": {"type": "string", "description": "Event title shown in the invitation."}
+              },
+              "required": ["attendees", "start_time", "duration_minutes", "title"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Answers free-or-busy for a window the caller already has in mind; it does not enumerate candidate windows.",
+          "tool": {
+            "name": "calendar_check_availability",
+            "description": "Reports whether each listed attendee is free or busy across one specific window that the caller supplies, together with the titles of any conflicting events. The window must be given up front; the tool evaluates it rather than searching for alternatives. Intended for validating a time that has already been proposed.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "attendees": {"type": "array", "items": {"type": "string"}, "description": "People to check."},
+                "start_time": {"type": "string", "description": "Start of the window being evaluated."},
+                "end_time": {"type": "string", "description": "End of the window being evaluated."}
+              },
+              "required": ["attendees", "start_time", "end_time"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Lists existing events on one calendar; it returns busy blocks for a single person rather than computing shared free windows.",
+          "tool": {
+            "name": "calendar_list_events",
+            "description": "Returns the events already on a single calendar for a given day, including titles, times and attendee lists. The response describes what is booked rather than what is open, and covers only the one calendar identified by the caller. Declined and tentative events are included and flagged as such.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "calendar_id": {"type": "string", "description": "Identifier of the single calendar to read."},
+                "date": {"type": "string", "description": "Day whose events should be listed."}
+              },
+              "required": ["calendar_id", "date"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Delegates the choice to the recipients via a self-service link; the availability is never returned to the caller, who asked to see it.",
+          "tool": {
+            "name": "scheduling_send_booking_link",
+            "description": "Emails the recipients a self-service link on which they can pick a slot of the stated length from the organizer's open calendar. The chosen time is confirmed directly with the recipient; the caller receives only a link identifier and is not shown the underlying availability. Sending happens as soon as the call succeeds.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "recipients": {"type": "array", "items": {"type": "string"}, "description": "Addresses that should receive the booking link."},
+                "duration_minutes": {"type": "integer", "description": "Length of the bookable slots."}
+              },
+              "required": ["recipients", "duration_minutes"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "intent": "rollback_to_named_build",
+      "domain": "deployment",
+      "query": "Build 4471 finished rolling out to production forty minutes ago and it's throwing 500s. Put production back on build 4468.",
+      "correct_tool": {
+        "name": "deploy_rollback_to_build",
+        "description": "Returns an environment to a specific build that was previously deployed to it, by redeploying that build's existing artifact. The target build must appear in the environment's deployment history. No new build is produced, so the rollout completes in roughly the time a normal deployment takes. Works on completed deployments only.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "environment": {"type": "string", "enum": ["development", "staging", "production"], "description": "Environment to roll back."},
+            "build_id": {"type": "string", "description": "Identifier of the previously-deployed build to return to, e.g. `4468`."}
+          },
+          "required": ["environment", "build_id"]
+        }
+      },
+      "expected_args": {
+        "environment": ["production", "prod"],
+        "build_id": ["4468", 4468, "build 4468", "build-4468"]
+      },
+      "near_misses": [
+        {
+          "disqualifier": "Starts a fresh build from a git ref; the request names an existing build id and needs the artifact that already exists.",
+          "tool": {
+            "name": "deploy_trigger_pipeline",
+            "description": "Starts a new pipeline run that compiles, tests and deploys the code at a given git reference into the target environment. A fresh build artifact is produced and receives a new build number, so this does not restore any previously deployed artifact. Full runs typically take fifteen to twenty minutes.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "environment": {"type": "string", "enum": ["development", "staging", "production"], "description": "Environment to deploy into."},
+                "ref": {"type": "string", "description": "Git branch, tag or commit SHA to build from."}
+              },
+              "required": ["environment", "ref"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Only affects a rollout that is still in flight; this deployment finished forty minutes ago.",
+          "tool": {
+            "name": "deploy_cancel_in_progress",
+            "description": "Halts a deployment that is still running and leaves the environment on whatever mix of versions it had reached at the moment of cancellation. Has no effect once a rollout has finished, and returns an error if no deployment is currently active for the environment. Partially-migrated state is not automatically reconciled.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "environment": {"type": "string", "enum": ["development", "staging", "production"], "description": "Environment whose active deployment should be halted."}
+              },
+              "required": ["environment"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Requires a source environment to promote from; the target build is already in production's own history, and no source is given.",
+          "tool": {
+            "name": "deploy_promote_build",
+            "description": "Copies a build artifact that has been verified in one environment into another, carrying the same build number forward. The source environment must currently be running the named build, and promotion always moves in the configured direction from lower to higher environments. Approval gates on the destination still apply.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "build_id": {"type": "string", "description": "Build to promote."},
+                "from_environment": {"type": "string", "enum": ["development", "staging", "production"], "description": "Environment the build is currently running in."},
+                "to_environment": {"type": "string", "enum": ["development", "staging", "production"], "description": "Environment to promote into."}
+              },
+              "required": ["build_id", "from_environment", "to_environment"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Turns off a named feature flag; the request identifies a whole build as the problem and names no flag.",
+          "tool": {
+            "name": "feature_flag_disable",
+            "description": "Switches a named feature flag off in one environment, taking effect for new requests within a few seconds without redeploying. Only behaviour guarded by that specific flag is affected; code shipped outside a flag continues to run. The previous flag state is recorded in the audit log.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "flag_key": {"type": "string", "description": "Key of the feature flag to disable."},
+                "environment": {"type": "string", "enum": ["development", "staging", "production"], "description": "Environment in which to disable the flag."}
+              },
+              "required": ["flag_key", "environment"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Changes replica counts; it cannot change which version of the code is running.",
+          "tool": {
+            "name": "deploy_scale_service",
+            "description": "Adjusts the number of running replicas for a service in an environment, adding or removing capacity within the configured minimum and maximum. The deployed version is untouched, so scaling relieves load but cannot undo a bad release. Changes are applied gradually to avoid dropping in-flight requests.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "service": {"type": "string", "description": "Service whose replica count should change."},
+                "environment": {"type": "string", "enum": ["development", "staging", "production"], "description": "Environment to scale."},
+                "replicas": {"type": "integer", "description": "Desired number of replicas."}
+              },
+              "required": ["service", "environment", "replicas"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "intent": "grant_existing_user_access",
+      "domain": "access_control",
+      "query": "Dana already has an account here but she can't open the analytics dashboard, resource res_9f12. Give her read access to it.",
+      "correct_tool": {
+        "name": "permissions_grant_resource_access",
+        "description": "Assigns a role on one specific resource to one principal who already exists in the workspace, taking effect on their next request. The grant is scoped to that resource alone and does not alter the principal's access to anything else or change who else can see the resource. Existing grants for the same principal are replaced.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "principal": {"type": "string", "description": "Existing user's name, address or identifier."},
+            "resource_id": {"type": "string", "description": "Identifier of the resource to grant access on, e.g. `res_9f12`."},
+            "role": {"type": "string", "enum": ["reader", "commenter", "editor", "owner"], "description": "Role to assign on that resource."}
+          },
+          "required": ["principal", "resource_id", "role"]
+        }
+      },
+      "expected_args": {
+        "principal": ["Dana", "dana"],
+        "resource_id": ["res_9f12"],
+        "role": ["reader", "read", "viewer"]
+      },
+      "near_misses": [
+        {
+          "disqualifier": "Onboards someone who has no account yet; the request states Dana already has one.",
+          "tool": {
+            "name": "users_invite_to_workspace",
+            "description": "Sends a sign-up invitation to an address that does not yet correspond to a workspace member, and assigns the workspace-wide role they will hold once they accept. Addresses that already belong to a member are rejected. The invitation expires after seven days if unused.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "email": {"type": "string", "description": "Address of the person to invite."},
+                "workspace_role": {"type": "string", "enum": ["guest", "member", "admin"], "description": "Role held across the workspace once the invitation is accepted."}
+              },
+              "required": ["email", "workspace_role"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Files a request for the caller's own access and waits on an approver; the caller here already has the authority and is acting for someone else.",
+          "tool": {
+            "name": "permissions_request_access",
+            "description": "Submits a request for the calling principal to be granted access to a resource, routed to that resource's owner for approval. Access is not granted until the owner approves, and the request can only ever be made on the caller's own behalf. Pending requests expire after fourteen days.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "resource_id": {"type": "string", "description": "Resource the caller wants access to."},
+                "justification": {"type": "string", "description": "Business reason shown to the approver."}
+              },
+              "required": ["resource_id", "justification"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Changes org-wide visibility of the resource, which would expose it far beyond the one person named.",
+          "tool": {
+            "name": "permissions_set_resource_visibility",
+            "description": "Sets the baseline visibility of a resource across the whole organization, choosing between private, organization-wide and public. Widening visibility grants the chosen role to every member at once rather than to any named individual. Individual grants continue to apply on top of the baseline.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "resource_id": {"type": "string", "description": "Resource whose baseline visibility changes."},
+                "visibility": {"type": "string", "enum": ["private", "organization", "public"], "description": "New baseline visibility."},
+                "default_role": {"type": "string", "enum": ["reader", "commenter", "editor"], "description": "Role everyone in scope receives."}
+              },
+              "required": ["resource_id", "visibility"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Works through group membership and needs a group id; no group is named, and it would also carry that group's other grants.",
+          "tool": {
+            "name": "groups_add_member",
+            "description": "Adds an existing user to a security group, after which every grant already held by that group applies to them as well. Requires the group identifier, and confers whatever access the group happens to carry rather than access to any single named resource. Membership changes propagate within a few minutes.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "group_id": {"type": "string", "description": "Identifier of the group to add the user to."},
+                "user_id": {"type": "string", "description": "Identifier of the existing user."}
+              },
+              "required": ["group_id", "user_id"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Read-only; it reports who currently has access and changes nothing.",
+          "tool": {
+            "name": "permissions_list_resource_access",
+            "description": "Returns every principal that currently holds a role on a resource, together with the role and whether it was granted directly or inherited from a group or from the organization-wide baseline. The response is informational and no access is added or removed by calling it. Results are paginated for widely-shared resources.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "resource_id": {"type": "string", "description": "Resource whose access list should be read."},
+                "include_inherited": {"type": "boolean", "description": "Whether to include grants inherited from groups and baselines."}
+              },
+              "required": ["resource_id"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "intent": "compose_but_do_not_send",
+      "domain": "messaging",
+      "query": "Write up a note to design-team@corp.example about Friday's code freeze — put it somewhere I can look it over first, I don't want it going out yet.",
+      "correct_tool": {
+        "name": "email_create_draft",
+        "description": "Composes a message and saves it to the sender's drafts folder without transmitting it. The draft can be reopened, edited and sent later by the author. Nothing is delivered to the addressees and no notification of any kind is generated at the time of the call.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "to": {"type": "array", "items": {"type": "string"}, "description": "Intended recipient addresses, stored on the draft."},
+            "subject": {"type": "string", "description": "Subject line of the message."},
+            "body": {"type": "string", "description": "Body text of the message."}
+          },
+          "required": ["to", "subject", "body"]
+        }
+      },
+      "expected_args": {
+        "to": [["design-team@corp.example"], "design-team@corp.example"]
+      },
+      "near_misses": [
+        {
+          "disqualifier": "Delivers immediately; the request explicitly asks for it not to go out yet.",
+          "tool": {
+            "name": "email_send_message",
+            "description": "Transmits a message to the listed addressees straight away and files a copy in the sender's sent folder. Delivery begins as soon as the call is accepted and cannot be recalled afterwards. Bounces are reported asynchronously to the sender.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "to": {"type": "array", "items": {"type": "string"}, "description": "Recipient addresses."},
+                "subject": {"type": "string", "description": "Subject line."},
+                "body": {"type": "string", "description": "Body text."}
+              },
+              "required": ["to", "subject", "body"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Still sends without any review step, and requires a send time the request does not give.",
+          "tool": {
+            "name": "email_schedule_send",
+            "description": "Queues a fully-composed message for automatic delivery at a specified future timestamp. No further confirmation is sought at the scheduled moment, so the message goes out unreviewed unless it is cancelled beforehand. A delivery timestamp is mandatory.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "to": {"type": "array", "items": {"type": "string"}, "description": "Recipient addresses."},
+                "subject": {"type": "string", "description": "Subject line."},
+                "body": {"type": "string", "description": "Body text."},
+                "send_at": {"type": "string", "description": "ISO-8601 timestamp at which delivery begins."}
+              },
+              "required": ["to", "subject", "body", "send_at"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Creates a reusable boilerplate template with no addressees; the request is one specific note to one specific group.",
+          "tool": {
+            "name": "email_create_template",
+            "description": "Stores a reusable message template in the shared template library, optionally with placeholder variables that are substituted at send time. Templates carry no addressees and are never delivered on their own; they exist to be selected later when composing. Template names must be unique within the library.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "name": {"type": "string", "description": "Unique name for the template."},
+                "subject": {"type": "string", "description": "Subject line, which may contain placeholders."},
+                "body": {"type": "string", "description": "Body text, which may contain placeholders."}
+              },
+              "required": ["name", "subject", "body"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Posts to a chat channel immediately, which is both the wrong medium and the wrong timing.",
+          "tool": {
+            "name": "chat_post_message",
+            "description": "Publishes a message into a chat channel, where it becomes visible to every member of that channel as soon as the call returns. Channel members with notifications enabled are alerted right away. Messages can be edited afterwards but the original is retained in the edit history.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "channel": {"type": "string", "description": "Channel to post into."},
+                "text": {"type": "string", "description": "Message text."}
+              },
+              "required": ["channel", "text"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Publishes an announcement to an audience on the spot; nothing is held back for the author to review.",
+          "tool": {
+            "name": "announcements_publish",
+            "description": "Pushes an announcement to every member of a named audience across email and in-product banners at once. Publication is immediate and the announcement cannot be unpublished, only superseded. Intended for organization-wide notices that have already been approved.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "audience": {"type": "string", "description": "Named audience to publish to."},
+                "title": {"type": "string", "description": "Announcement headline."},
+                "body": {"type": "string", "description": "Announcement body."}
+              },
+              "required": ["audience", "title", "body"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "intent": "count_filtered_events",
+      "domain": "analytics",
+      "query": "How many signups came in from the paid-search channel between 2025-03-03 and 2025-03-09? I just want the number.",
+      "correct_tool": {
+        "name": "analytics_count_events",
+        "description": "Returns a single total: the number of events of one named type recorded in a date range, restricted to one acquisition channel. Only the count is returned, not the underlying records. Counts are deduplicated per event id and are final once the range has closed.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "event_name": {"type": "string", "description": "Event type to count, e.g. `signup`."},
+            "channel": {"type": "string", "enum": ["organic_search", "paid_search", "email", "social", "direct", "referral"], "description": "Acquisition channel the events must be attributed to."},
+            "start_date": {"type": "string", "description": "Inclusive first day of the range, ISO-8601."},
+            "end_date": {"type": "string", "description": "Inclusive last day of the range, ISO-8601."}
+          },
+          "required": ["event_name", "channel", "start_date", "end_date"]
+        }
+      },
+      "expected_args": {
+        "event_name": ["signup", "signups", "sign_up", "sign-up"],
+        "channel": ["paid_search", "paid search", "paid-search"],
+        "start_date": ["2025-03-03", "03/03/2025"],
+        "end_date": ["2025-03-09", "03/09/2025"]
+      },
+      "near_misses": [
+        {
+          "disqualifier": "Returns the individual event records page by page; the request asks only for the number.",
+          "tool": {
+            "name": "analytics_list_events",
+            "description": "Returns individual event records matching a type, an acquisition channel and a date range, ordered by timestamp and delivered in pages. Each record carries its full property bag, so responses are large. The total number of matches is not included in the response and would have to be derived by paging through everything.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "event_name": {"type": "string", "description": "Event type to list."},
+                "channel": {"type": "string", "enum": ["organic_search", "paid_search", "email", "social", "direct", "referral"], "description": "Acquisition channel the events must be attributed to."},
+                "start_date": {"type": "string", "description": "Inclusive first day of the range."},
+                "end_date": {"type": "string", "description": "Inclusive last day of the range."},
+                "limit": {"type": "integer", "description": "Maximum records per page."}
+              },
+              "required": ["event_name", "start_date", "end_date"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Reports sessions rather than signups, and splits across every channel rather than answering for the one asked about.",
+          "tool": {
+            "name": "analytics_get_channel_breakdown",
+            "description": "Returns the number of sessions attributed to each acquisition channel over a date range, as a table of channel and session count. The measure is always sessions; conversion events such as signups are not available through this breakdown. Every channel is included and the set cannot be narrowed to one.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "start_date": {"type": "string", "description": "Inclusive first day of the range."},
+                "end_date": {"type": "string", "description": "Inclusive last day of the range."},
+                "attribution_model": {"type": "string", "enum": ["first_touch", "last_touch", "linear"], "description": "Attribution model used to assign sessions to channels."}
+              },
+              "required": ["start_date", "end_date"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Counts stored CRM contact records, which are not the same population as recorded signup events.",
+          "tool": {
+            "name": "crm_count_contacts",
+            "description": "Returns how many contact records in the CRM match a filter expression, evaluated against the current state of each record. Because it counts records as they stand today, it reflects later merges, deletions and edits rather than what happened on any particular day. Date fields can be filtered on but are taken from the record, not from an event stream.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "filters": {"type": "object", "description": "Filter expression evaluated against contact records."}
+              },
+              "required": ["filters"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Produces a two-period comparison; only one period is asked about.",
+          "tool": {
+            "name": "analytics_compare_periods",
+            "description": "Computes the value of a metric across two separate date ranges and returns both figures together with the absolute and percentage change between them. Two complete ranges must be supplied, and the response is framed as a comparison rather than as a single total. Useful for week-on-week reporting.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "event_name": {"type": "string", "description": "Event type to measure."},
+                "period_a_start": {"type": "string", "description": "Inclusive start of the first period."},
+                "period_a_end": {"type": "string", "description": "Inclusive end of the first period."},
+                "period_b_start": {"type": "string", "description": "Inclusive start of the second period."},
+                "period_b_end": {"type": "string", "description": "Inclusive end of the second period."}
+              },
+              "required": ["event_name", "period_a_start", "period_a_end", "period_b_start", "period_b_end"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Renders a saved report and requires a report identifier the request does not supply.",
+          "tool": {
+            "name": "analytics_export_report",
+            "description": "Renders a previously saved report definition to a file in the requested format and returns a download URL. The report must already exist and be referenced by its identifier; ad-hoc questions cannot be expressed through this tool. Large exports are generated asynchronously.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "report_id": {"type": "string", "description": "Identifier of the saved report."},
+                "format": {"type": "string", "enum": ["csv", "xlsx", "pdf"], "description": "Output file format."}
+              },
+              "required": ["report_id", "format"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "intent": "duplicate_file_to_folder",
+      "domain": "storage",
+      "query": "The Q3 forecast spreadsheet at /shared/planning/q3_forecast.xlsx needs to be in the Finance folder too. Finance must get their own editable copy, and the original has to stay exactly where it is and stay untouched for the audit trail.",
+      "correct_tool": {
+        "name": "storage_copy_object",
+        "description": "Creates an independent duplicate of a stored object in another folder. The source object remains in place and unchanged, and the two copies diverge from the moment the duplicate is made, so edits to one never affect the other. The duplicate receives its own identifier and its own permission set.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "source_path": {"type": "string", "description": "Full path of the object to duplicate."},
+            "destination_folder": {"type": "string", "description": "Folder that should receive the duplicate."}
+          },
+          "required": ["source_path", "destination_folder"]
+        }
+      },
+      "expected_args": {
+        "source_path": ["/shared/planning/q3_forecast.xlsx", "shared/planning/q3_forecast.xlsx"],
+        "destination_folder": ["Finance", "/Finance", "finance", "/shared/finance", "Finance folder"]
+      },
+      "near_misses": [
+        {
+          "disqualifier": "Removes the object from its current location; the request requires the original to stay exactly where it is.",
+          "tool": {
+            "name": "storage_move_object",
+            "description": "Relocates a stored object to a different folder, keeping its identifier and version history. After the call the object exists only at the new location and any path referring to the old one stops resolving. Permissions inherited from the previous folder are re-evaluated against the new one.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "source_path": {"type": "string", "description": "Current full path of the object."},
+                "destination_folder": {"type": "string", "description": "Folder to relocate the object into."}
+              },
+              "required": ["source_path", "destination_folder"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Creates a pointer to the same underlying object, so edits by Finance would change the original the request says must stay untouched.",
+          "tool": {
+            "name": "storage_create_shortcut",
+            "description": "Places a lightweight pointer to an existing object inside another folder. Only one copy of the content exists: opening the shortcut opens the original, and any edit made through it is written straight back to the source object. Deleting the shortcut leaves the original intact.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "source_path": {"type": "string", "description": "Path of the object to point at."},
+                "destination_folder": {"type": "string", "description": "Folder in which to place the pointer."}
+              },
+              "required": ["source_path", "destination_folder"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Grants access to the single existing object rather than producing a second copy, so edits still land on the original.",
+          "tool": {
+            "name": "storage_share_object",
+            "description": "Extends access to an existing stored object to additional people or groups at a chosen permission level, without duplicating the content. Everyone granted access works on the same underlying file, so their changes are visible to the owner immediately. A shareable link is returned.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "source_path": {"type": "string", "description": "Path of the object to share."},
+                "audience": {"type": "string", "description": "Person, group or folder to share with."},
+                "permission": {"type": "string", "enum": ["view", "comment", "edit"], "description": "Permission level granted."}
+              },
+              "required": ["source_path", "audience", "permission"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Uploads content from the caller's local disk; the file is already in storage and no local path exists.",
+          "tool": {
+            "name": "storage_upload_object",
+            "description": "Transfers a file from the caller's local filesystem into a destination folder in shared storage, creating a new object there. The source must be a path on the machine making the call, not a path that already exists inside storage. Uploads larger than one gigabyte are chunked automatically.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "local_path": {"type": "string", "description": "Path to the file on the caller's own machine."},
+                "destination_folder": {"type": "string", "description": "Storage folder to upload into."}
+              },
+              "required": ["local_path", "destination_folder"]
+            }
+          }
+        },
+        {
+          "disqualifier": "Moves the object into cold archival storage, which neither places it in Finance nor leaves it readily editable.",
+          "tool": {
+            "name": "storage_archive_object",
+            "description": "Transitions an object into cold archival storage to reduce cost, after which retrieval takes several hours and the object cannot be edited in place. The object disappears from ordinary folder listings and is tracked in the archive index instead. Restoring it is a separate, chargeable operation.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "source_path": {"type": "string", "description": "Path of the object to archive."},
+                "retention_years": {"type": "integer", "description": "How long the archived copy must be retained."}
+              },
+              "required": ["source_path"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

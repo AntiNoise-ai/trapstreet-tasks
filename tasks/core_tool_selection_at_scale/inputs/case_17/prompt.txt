@@ -1,0 +1,179 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "feature_flag_disable",
+    "description": "Switches a named feature flag off in one environment, taking effect for new requests within a few seconds without redeploying. Only behaviour guarded by that specific flag is affected; code shipped outside a flag continues to run. The previous flag state is recorded in the audit log.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "flag_key": {
+          "type": "string",
+          "description": "Key of the feature flag to disable."
+        },
+        "environment": {
+          "type": "string",
+          "enum": [
+            "development",
+            "staging",
+            "production"
+          ],
+          "description": "Environment in which to disable the flag."
+        }
+      },
+      "required": [
+        "flag_key",
+        "environment"
+      ]
+    }
+  },
+  {
+    "name": "analytics_export_report",
+    "description": "Renders a previously saved report definition to a file in the requested format and returns a download URL. The report must already exist and be referenced by its identifier; ad-hoc questions cannot be expressed through this tool. Large exports are generated asynchronously.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "description": "Identifier of the saved report."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "csv",
+            "xlsx",
+            "pdf"
+          ],
+          "description": "Output file format."
+        }
+      },
+      "required": [
+        "report_id",
+        "format"
+      ]
+    }
+  },
+  {
+    "name": "calendar_find_common_free_slots",
+    "description": "Computes the windows of a given length on a given day during which every listed attendee is simultaneously free, by intersecting all of their calendars. Returns the candidate windows to the caller without booking anything or notifying the attendees. Working hours and declined events are respected when computing availability.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Two or more attendee names or addresses whose calendars should be intersected."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the windows to look for, in minutes."
+        },
+        "date": {
+          "type": "string",
+          "description": "Day to search, as a date or weekday name, e.g. `Thursday`."
+        }
+      },
+      "required": [
+        "attendees",
+        "duration_minutes",
+        "date"
+      ]
+    }
+  },
+  {
+    "name": "logs_export_to_bucket",
+    "description": "Schedules an asynchronous export of matching log entries to an object-storage prefix for offline analysis. The call returns an export job identifier, not the log lines; results become available in the destination bucket once the job finishes, typically within several minutes. A writable destination URI must be supplied by the caller.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service whose logs should be exported."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the export range."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the export range."
+        },
+        "destination_uri": {
+          "type": "string",
+          "description": "Object-storage prefix to write to, e.g. `s3://bucket/prefix/`."
+        }
+      },
+      "required": [
+        "service",
+        "start_time",
+        "end_time",
+        "destination_uri"
+      ]
+    }
+  },
+  {
+    "name": "payments_open_chargeback_dispute",
+    "description": "Registers a dispute raised by the cardholder's issuing bank against a settled charge and opens the evidence-submission window. This records a contested transaction rather than voluntarily returning funds, and carries a scheme fee regardless of outcome. Evidence must be supplied before the deadline or the dispute is lost by default.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "charge_id": {
+          "type": "string",
+          "description": "Identifier of the charge being disputed."
+        },
+        "dispute_reason": {
+          "type": "string",
+          "enum": [
+            "product_not_received",
+            "product_unacceptable",
+            "unrecognized",
+            "subscription_canceled"
+          ],
+          "description": "Scheme reason code supplied by the issuing bank."
+        }
+      },
+      "required": [
+        "charge_id",
+        "dispute_reason"
+      ]
+    }
+  },
+  {
+    "name": "storage_archive_object",
+    "description": "Transitions an object into cold archival storage to reduce cost, after which retrieval takes several hours and the object cannot be edited in place. The object disappears from ordinary folder listings and is tracked in the archive index instead. Restoring it is a separate, chargeable operation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Path of the object to archive."
+        },
+        "retention_years": {
+          "type": "integer",
+          "description": "How long the archived copy must be retained."
+        }
+      },
+      "required": [
+        "source_path"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Before I propose anything, I need to see which 30-minute windows Priya and Marco are both free in on Thursday.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

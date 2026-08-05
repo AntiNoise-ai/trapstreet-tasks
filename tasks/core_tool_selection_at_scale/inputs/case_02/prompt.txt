@@ -1,0 +1,173 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "payments_refund_invoice_line",
+    "description": "Issues a credit note against a specific line item on a finalized invoice and returns the corresponding funds. Requires the invoice identifier and the line number; it cannot be used for standalone charges that were never attached to an invoice. The invoice is re-issued with the credit note applied.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "invoice_id": {
+          "type": "string",
+          "description": "Identifier of the finalized invoice, e.g. `in_4471`."
+        },
+        "line_number": {
+          "type": "integer",
+          "description": "One-based index of the line item to credit."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount to credit against the line item."
+        }
+      },
+      "required": [
+        "invoice_id",
+        "line_number",
+        "amount"
+      ]
+    }
+  },
+  {
+    "name": "payments_issue_store_credit",
+    "description": "Adds a credit to a customer's account balance that can be spent on future orders. Funds are not returned to the customer's original payment method and the credit may carry an expiry date. Commonly used for goodwill gestures and for returns outside the standard refund window.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "description": "Identifier of the customer receiving the credit."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Credit value in the account's settlement currency."
+        },
+        "expires_at": {
+          "type": "string",
+          "description": "ISO-8601 date after which the credit is no longer redeemable."
+        }
+      },
+      "required": [
+        "customer_id",
+        "amount"
+      ]
+    }
+  },
+  {
+    "name": "payments_refund_charge",
+    "description": "Returns funds to the original payment method for a charge that has already settled. Supports full or partial amounts, and multiple partial refunds against the same charge up to its original total. Only charges in the `settled` state are eligible; a charge that is authorized but not yet captured must be voided instead. Refunds cannot be reversed once issued.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "charge_id": {
+          "type": "string",
+          "description": "Identifier of the settled charge to refund, e.g. `ch_8812`."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount to return to the cardholder, expressed in the charge's original currency. Must not exceed the charge total less any refunds already issued."
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "requested_by_customer",
+            "duplicate",
+            "fraudulent",
+            "other"
+          ],
+          "description": "Reason code recorded against the refund for reporting."
+        }
+      },
+      "required": [
+        "charge_id",
+        "amount"
+      ]
+    }
+  },
+  {
+    "name": "payments_cancel_subscription",
+    "description": "Ends a recurring subscription either immediately or at the close of the current billing period, and optionally returns the unused portion of the period already paid for. Operates on the subscription object rather than on any individual charge. Cancellation does not affect charges that have already settled.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "subscription_id": {
+          "type": "string",
+          "description": "Identifier of the subscription to end."
+        },
+        "at_period_end": {
+          "type": "boolean",
+          "description": "If true, remain active until the current period closes."
+        },
+        "prorate": {
+          "type": "boolean",
+          "description": "Whether to credit the unused remainder of the paid period."
+        }
+      },
+      "required": [
+        "subscription_id"
+      ]
+    }
+  },
+  {
+    "name": "payments_open_chargeback_dispute",
+    "description": "Registers a dispute raised by the cardholder's issuing bank against a settled charge and opens the evidence-submission window. This records a contested transaction rather than voluntarily returning funds, and carries a scheme fee regardless of outcome. Evidence must be supplied before the deadline or the dispute is lost by default.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "charge_id": {
+          "type": "string",
+          "description": "Identifier of the charge being disputed."
+        },
+        "dispute_reason": {
+          "type": "string",
+          "enum": [
+            "product_not_received",
+            "product_unacceptable",
+            "unrecognized",
+            "subscription_canceled"
+          ],
+          "description": "Scheme reason code supplied by the issuing bank."
+        }
+      },
+      "required": [
+        "charge_id",
+        "dispute_reason"
+      ]
+    }
+  },
+  {
+    "name": "payments_void_authorization",
+    "description": "Cancels an authorization that has not yet been captured, releasing the hold on the cardholder's funds. Voids apply to the whole authorization only and are unavailable once funds have settled, at which point the money must be returned by a different mechanism. Typically completes within one business day.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "charge_id": {
+          "type": "string",
+          "description": "Identifier of the uncaptured authorization to cancel."
+        },
+        "note": {
+          "type": "string",
+          "description": "Free-text note stored on the voided authorization."
+        }
+      },
+      "required": [
+        "charge_id"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Charge ch_8812 for $129.00 settled three days ago. The customer returned half the items, so put $64.50 back on the card they paid with.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

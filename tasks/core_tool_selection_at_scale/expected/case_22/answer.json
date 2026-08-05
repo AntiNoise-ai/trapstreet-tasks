@@ -1,0 +1,44 @@
+{
+  "id": "case_22",
+  "correct_tool_name": "calendar_find_common_free_slots",
+  "expected_args": {
+    "attendees": [
+      [
+        "Priya",
+        "Marco"
+      ],
+      [
+        "priya",
+        "marco"
+      ],
+      [
+        "Marco",
+        "Priya"
+      ],
+      "Priya, Marco",
+      "Priya,Marco"
+    ],
+    "duration_minutes": [
+      30,
+      "30"
+    ],
+    "date": [
+      "Thursday",
+      "thursday",
+      "Thu"
+    ]
+  },
+  "n_tools": 300,
+  "position": "mid",
+  "position_index": 150,
+  "ambiguity": "adversarial",
+  "intent": "find_mutual_free_slots",
+  "category": "adv_n300_mid",
+  "near_miss_names": [
+    "calendar_find_free_slots",
+    "calendar_create_event",
+    "calendar_check_availability",
+    "calendar_list_events",
+    "scheduling_send_booking_link"
+  ]
+}

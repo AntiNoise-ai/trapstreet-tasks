@@ -1,0 +1,30 @@
+{
+  "id": "case_58",
+  "correct_tool_name": "storage_copy_object",
+  "expected_args": {
+    "source_path": [
+      "/shared/planning/q3_forecast.xlsx",
+      "shared/planning/q3_forecast.xlsx"
+    ],
+    "destination_folder": [
+      "Finance",
+      "/Finance",
+      "finance",
+      "/shared/finance",
+      "Finance folder"
+    ]
+  },
+  "n_tools": 6,
+  "position": "mid",
+  "position_index": 2,
+  "ambiguity": "adversarial",
+  "intent": "duplicate_file_to_folder",
+  "category": "adv_n6_mid",
+  "near_miss_names": [
+    "storage_move_object",
+    "storage_create_shortcut",
+    "storage_share_object",
+    "storage_upload_object",
+    "storage_archive_object"
+  ]
+}

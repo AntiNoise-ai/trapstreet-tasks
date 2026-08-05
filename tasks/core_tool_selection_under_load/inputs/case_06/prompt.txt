@@ -1,0 +1,321 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "turn_on_light",
+    "description": "Turns on the light in a room.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "type": "string",
+          "description": "The room."
+        }
+      },
+      "required": [
+        "room"
+      ]
+    }
+  },
+  {
+    "name": "create_todo",
+    "description": "Creates a to-do item.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "get_public_transit",
+    "description": "Gets public transit options between locations.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        }
+      },
+      "required": [
+        "origin",
+        "destination"
+      ]
+    }
+  },
+  {
+    "name": "play_podcast",
+    "description": "Plays a podcast episode.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "lock_door",
+    "description": "Locks a smart door.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "door_id": {
+          "type": "string",
+          "description": "The door id."
+        }
+      },
+      "required": [
+        "door_id"
+      ]
+    }
+  },
+  {
+    "name": "add_calendar_event",
+    "description": "Adds an event to the calendar.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title."
+        },
+        "datetime": {
+          "type": "string",
+          "description": "The datetime."
+        }
+      },
+      "required": [
+        "title",
+        "datetime"
+      ]
+    }
+  },
+  {
+    "name": "schedule_meeting",
+    "description": "Schedules a meeting with participants.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "participants": {
+          "type": "string",
+          "description": "The participants."
+        },
+        "datetime": {
+          "type": "string",
+          "description": "The datetime."
+        }
+      },
+      "required": [
+        "participants",
+        "datetime"
+      ]
+    }
+  },
+  {
+    "name": "get_directions",
+    "description": "Gets directions between two locations.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        }
+      },
+      "required": [
+        "origin",
+        "destination"
+      ]
+    }
+  },
+  {
+    "name": "convert_temperature",
+    "description": "Converts a temperature between units.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The value."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "The from unit."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "The to unit."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "add_shopping_item",
+    "description": "Adds an item to the shopping list.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "string",
+          "description": "The item."
+        }
+      },
+      "required": [
+        "item"
+      ]
+    }
+  },
+  {
+    "name": "start_workout",
+    "description": "Starts a workout session.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type."
+        },
+        "duration": {
+          "type": "number",
+          "description": "The duration."
+        }
+      },
+      "required": [
+        "type",
+        "duration"
+      ]
+    }
+  },
+  {
+    "name": "get_calendar_events",
+    "description": "Lists calendar events for a date.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "The date."
+        }
+      },
+      "required": [
+        "date"
+      ]
+    }
+  },
+  {
+    "name": "log_water_intake",
+    "description": "Logs water intake in milliliters.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount_ml": {
+          "type": "number",
+          "description": "The amount ml."
+        }
+      },
+      "required": [
+        "amount_ml"
+      ]
+    }
+  },
+  {
+    "name": "get_recipe",
+    "description": "Gets a recipe for a dish.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "dish_name": {
+          "type": "string",
+          "description": "The dish name."
+        }
+      },
+      "required": [
+        "dish_name"
+      ]
+    }
+  },
+  {
+    "name": "calculate_tip",
+    "description": "Calculates a tip for a bill amount.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "bill_amount": {
+          "type": "number",
+          "description": "The bill amount."
+        },
+        "tip_percent": {
+          "type": "number",
+          "description": "The tip percent."
+        }
+      },
+      "required": [
+        "bill_amount",
+        "tip_percent"
+      ]
+    }
+  },
+  {
+    "name": "calculate_percentage",
+    "description": "Calculates a percentage of a given amount.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The base amount."
+        },
+        "percent": {
+          "type": "number",
+          "description": "The percentage to apply."
+        }
+      },
+      "required": [
+        "amount",
+        "percent"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What's 15% of $84.50?
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

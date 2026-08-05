@@ -1,0 +1,212 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "traces_search_spans",
+    "description": "Finds distributed-tracing spans for a service within a time range, ordered by duration, and returns their identifiers and timings so a slow request can be followed across services. Spans carry latency and parent-child structure but not the free-text messages written to the logging pipeline. Sampling means not every request is represented.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service that produced the spans."
+        },
+        "min_duration_ms": {
+          "type": "integer",
+          "description": "Return only spans at least this many milliseconds long."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the range."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the range."
+        }
+      },
+      "required": [
+        "service",
+        "start_time",
+        "end_time"
+      ]
+    }
+  },
+  {
+    "name": "metrics_query_range",
+    "description": "Evaluates a named numeric time series for a service across a time range and returns the sampled data points at a fixed step. Operates on the metrics store rather than on log text, so free-form messages and stack traces are not available through it. Supports rate, sum and percentile aggregations.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service that emits the metric."
+        },
+        "metric_name": {
+          "type": "string",
+          "description": "Fully-qualified metric name, e.g. `http.requests.5xx`."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the range."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the range."
+        }
+      },
+      "required": [
+        "service",
+        "metric_name",
+        "start_time",
+        "end_time"
+      ]
+    }
+  },
+  {
+    "name": "logs_query_range",
+    "description": "Returns stored log entries for one service over a closed historical time range, newest first, optionally narrowed to a minimum severity. Entries are returned inline to the caller, subject to a per-call line cap. Retention is thirty days; ranges older than that come back empty rather than erroring.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service whose logs should be read, e.g. `checkout`."
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error",
+            "fatal"
+          ],
+          "description": "Minimum severity to include. Omit for all severities."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the range, as a time or ISO-8601 timestamp, e.g. `09:00`."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the range, as a time or ISO-8601 timestamp, e.g. `09:30`."
+        }
+      },
+      "required": [
+        "service",
+        "level",
+        "start_time",
+        "end_time"
+      ]
+    }
+  },
+  {
+    "name": "logs_export_to_bucket",
+    "description": "Schedules an asynchronous export of matching log entries to an object-storage prefix for offline analysis. The call returns an export job identifier, not the log lines; results become available in the destination bucket once the job finishes, typically within several minutes. A writable destination URI must be supplied by the caller.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service whose logs should be exported."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the export range."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the export range."
+        },
+        "destination_uri": {
+          "type": "string",
+          "description": "Object-storage prefix to write to, e.g. `s3://bucket/prefix/`."
+        }
+      },
+      "required": [
+        "service",
+        "start_time",
+        "end_time",
+        "destination_uri"
+      ]
+    }
+  },
+  {
+    "name": "logs_tail_stream",
+    "description": "Opens a live stream of log entries for a service as they are written, optionally filtered by minimum severity. Only entries produced after the stream is opened are delivered; historical entries already in storage are never replayed. The stream closes automatically after fifteen minutes of inactivity.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service to follow."
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error",
+            "fatal"
+          ],
+          "description": "Minimum severity to deliver."
+        }
+      },
+      "required": [
+        "service"
+      ]
+    }
+  },
+  {
+    "name": "logs_count_by_level",
+    "description": "Aggregates stored log entries for a service over a time range and returns the number of entries at each severity, along with the bucket boundaries used. Useful for spotting when a spike began. The individual entries are not included in the response, only the per-severity totals.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "description": "Name of the service to aggregate."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Inclusive start of the range."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "Exclusive end of the range."
+        },
+        "bucket": {
+          "type": "string",
+          "enum": [
+            "1m",
+            "5m",
+            "1h"
+          ],
+          "description": "Width of each aggregation bucket."
+        }
+      },
+      "required": [
+        "service",
+        "start_time",
+        "end_time"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Something broke in the checkout service at about 09:15 this morning. Show me the error-level log lines from that service between 09:00 and 09:30 so I can read through them.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

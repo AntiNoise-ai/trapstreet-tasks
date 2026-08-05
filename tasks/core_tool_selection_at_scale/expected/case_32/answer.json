@@ -1,0 +1,29 @@
+{
+  "id": "case_32",
+  "correct_tool_name": "deploy_rollback_to_build",
+  "expected_args": {
+    "environment": [
+      "production",
+      "prod"
+    ],
+    "build_id": [
+      "4468",
+      4468,
+      "build 4468",
+      "build-4468"
+    ]
+  },
+  "n_tools": 300,
+  "position": "late",
+  "position_index": 293,
+  "ambiguity": "adversarial",
+  "intent": "rollback_to_named_build",
+  "category": "adv_n300_late",
+  "near_miss_names": [
+    "deploy_trigger_pipeline",
+    "deploy_cancel_in_progress",
+    "deploy_promote_build",
+    "feature_flag_disable",
+    "deploy_scale_service"
+  ]
+}

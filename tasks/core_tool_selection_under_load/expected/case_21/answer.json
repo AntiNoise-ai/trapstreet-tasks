@@ -1,0 +1,17 @@
+{
+  "id": "case_21",
+  "correct_tool_name": "get_local_time",
+  "expected_args": {
+    "location": [
+      "Tokyo",
+      "tokyo",
+      "Asia/Tokyo",
+      "Japan"
+    ]
+  },
+  "n_tools": 4,
+  "position": "late",
+  "position_index": 3,
+  "intent": "time",
+  "category": "tier1_n4_late"
+}

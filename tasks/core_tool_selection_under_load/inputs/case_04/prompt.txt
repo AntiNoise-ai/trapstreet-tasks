@@ -1,0 +1,311 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "delete_reminder",
+    "description": "Deletes a reminder by id.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id."
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "calculate_percentage",
+    "description": "Calculates a percentage of a given amount.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The base amount."
+        },
+        "percent": {
+          "type": "number",
+          "description": "The percentage to apply."
+        }
+      },
+      "required": [
+        "amount",
+        "percent"
+      ]
+    }
+  },
+  {
+    "name": "adjust_thermostat",
+    "description": "Adjusts the thermostat temperature.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "The temperature."
+        }
+      },
+      "required": [
+        "temperature"
+      ]
+    }
+  },
+  {
+    "name": "get_local_time",
+    "description": "Returns the current local time for a given city or timezone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "City or IANA timezone name."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "set_alarm",
+    "description": "Sets an alarm for a given time.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "description": "The time."
+        }
+      },
+      "required": [
+        "time"
+      ]
+    }
+  },
+  {
+    "name": "check_traffic",
+    "description": "Checks current traffic for a route.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "route": {
+          "type": "string",
+          "description": "The route."
+        }
+      },
+      "required": [
+        "route"
+      ]
+    }
+  },
+  {
+    "name": "get_stock_price",
+    "description": "Gets the current stock price for a ticker.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ticker": {
+          "type": "string",
+          "description": "The ticker."
+        }
+      },
+      "required": [
+        "ticker"
+      ]
+    }
+  },
+  {
+    "name": "get_directions",
+    "description": "Gets directions between two locations.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        }
+      },
+      "required": [
+        "origin",
+        "destination"
+      ]
+    }
+  },
+  {
+    "name": "get_public_transit",
+    "description": "Gets public transit options between locations.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        }
+      },
+      "required": [
+        "origin",
+        "destination"
+      ]
+    }
+  },
+  {
+    "name": "get_weather",
+    "description": "Gets the current weather for a location.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The location."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "calculate_bmi",
+    "description": "Calculates BMI from weight and height.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "weight_kg": {
+          "type": "number",
+          "description": "The weight kg."
+        },
+        "height_cm": {
+          "type": "number",
+          "description": "The height cm."
+        }
+      },
+      "required": [
+        "weight_kg",
+        "height_cm"
+      ]
+    }
+  },
+  {
+    "name": "play_podcast",
+    "description": "Plays a podcast episode.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "take_note",
+    "description": "Saves a freeform note.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "convert_volume",
+    "description": "Converts a volume value between units.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The value."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "The from unit."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "The to unit."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "set_timer",
+    "description": "Sets a countdown timer.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "duration_seconds": {
+          "type": "number",
+          "description": "The duration seconds."
+        }
+      },
+      "required": [
+        "duration_seconds"
+      ]
+    }
+  },
+  {
+    "name": "set_reminder",
+    "description": "Sets a reminder with text and a time.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text."
+        },
+        "time": {
+          "type": "string",
+          "description": "The time."
+        }
+      },
+      "required": [
+        "text",
+        "time"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What's 15% of $84.50?
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

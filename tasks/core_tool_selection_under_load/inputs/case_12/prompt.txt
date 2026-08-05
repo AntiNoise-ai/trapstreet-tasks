@@ -1,0 +1,94 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "turn_on_light",
+    "description": "Turns on the light in a room.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "type": "string",
+          "description": "The room."
+        }
+      },
+      "required": [
+        "room"
+      ]
+    }
+  },
+  {
+    "name": "get_stock_price",
+    "description": "Gets the current stock price for a ticker.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ticker": {
+          "type": "string",
+          "description": "The ticker."
+        }
+      },
+      "required": [
+        "ticker"
+      ]
+    }
+  },
+  {
+    "name": "get_battery_status",
+    "description": "Gets battery status for a device.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "type": "string",
+          "description": "The device."
+        }
+      },
+      "required": [
+        "device"
+      ]
+    }
+  },
+  {
+    "name": "convert_distance",
+    "description": "Converts a distance value between units (km, mi, m, ft).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The distance value to convert."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "Source unit, e.g. km, mi, m, ft."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "Target unit, e.g. km, mi, m, ft."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Convert 10 kilometers to miles.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

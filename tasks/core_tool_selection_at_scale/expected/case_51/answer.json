@@ -1,0 +1,38 @@
+{
+  "id": "case_51",
+  "correct_tool_name": "analytics_count_events",
+  "expected_args": {
+    "event_name": [
+      "signup",
+      "signups",
+      "sign_up",
+      "sign-up"
+    ],
+    "channel": [
+      "paid_search",
+      "paid search",
+      "paid-search"
+    ],
+    "start_date": [
+      "2025-03-03",
+      "03/03/2025"
+    ],
+    "end_date": [
+      "2025-03-09",
+      "03/09/2025"
+    ]
+  },
+  "n_tools": 60,
+  "position": "mid",
+  "position_index": 30,
+  "ambiguity": "clean",
+  "intent": "count_filtered_events",
+  "category": "clean_n60_mid",
+  "near_miss_names": [
+    "analytics_list_events",
+    "analytics_get_channel_breakdown",
+    "crm_count_contacts",
+    "analytics_compare_periods",
+    "analytics_export_report"
+  ]
+}

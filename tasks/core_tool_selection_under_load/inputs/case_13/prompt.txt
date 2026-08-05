@@ -1,0 +1,341 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "calculate_bmi",
+    "description": "Calculates BMI from weight and height.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "weight_kg": {
+          "type": "number",
+          "description": "The weight kg."
+        },
+        "height_cm": {
+          "type": "number",
+          "description": "The height cm."
+        }
+      },
+      "required": [
+        "weight_kg",
+        "height_cm"
+      ]
+    }
+  },
+  {
+    "name": "convert_distance",
+    "description": "Converts a distance value between units (km, mi, m, ft).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The distance value to convert."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "Source unit, e.g. km, mi, m, ft."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "Target unit, e.g. km, mi, m, ft."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "set_alarm",
+    "description": "Sets an alarm for a given time.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "description": "The time."
+        }
+      },
+      "required": [
+        "time"
+      ]
+    }
+  },
+  {
+    "name": "convert_weight",
+    "description": "Converts a weight value between units.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The value."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "The from unit."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "The to unit."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "get_directions",
+    "description": "Gets directions between two locations.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        }
+      },
+      "required": [
+        "origin",
+        "destination"
+      ]
+    }
+  },
+  {
+    "name": "order_food",
+    "description": "Orders food from a restaurant.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "restaurant": {
+          "type": "string",
+          "description": "The restaurant."
+        },
+        "items": {
+          "type": "string",
+          "description": "The items."
+        }
+      },
+      "required": [
+        "restaurant",
+        "items"
+      ]
+    }
+  },
+  {
+    "name": "schedule_meeting",
+    "description": "Schedules a meeting with participants.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "participants": {
+          "type": "string",
+          "description": "The participants."
+        },
+        "datetime": {
+          "type": "string",
+          "description": "The datetime."
+        }
+      },
+      "required": [
+        "participants",
+        "datetime"
+      ]
+    }
+  },
+  {
+    "name": "log_water_intake",
+    "description": "Logs water intake in milliliters.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount_ml": {
+          "type": "number",
+          "description": "The amount ml."
+        }
+      },
+      "required": [
+        "amount_ml"
+      ]
+    }
+  },
+  {
+    "name": "get_calendar_events",
+    "description": "Lists calendar events for a date.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "The date."
+        }
+      },
+      "required": [
+        "date"
+      ]
+    }
+  },
+  {
+    "name": "convert_temperature",
+    "description": "Converts a temperature between units.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The value."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "The from unit."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "The to unit."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "get_stock_price",
+    "description": "Gets the current stock price for a ticker.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ticker": {
+          "type": "string",
+          "description": "The ticker."
+        }
+      },
+      "required": [
+        "ticker"
+      ]
+    }
+  },
+  {
+    "name": "check_traffic",
+    "description": "Checks current traffic for a route.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "route": {
+          "type": "string",
+          "description": "The route."
+        }
+      },
+      "required": [
+        "route"
+      ]
+    }
+  },
+  {
+    "name": "get_public_transit",
+    "description": "Gets public transit options between locations.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        }
+      },
+      "required": [
+        "origin",
+        "destination"
+      ]
+    }
+  },
+  {
+    "name": "mute_notifications",
+    "description": "Mutes notifications for a duration.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "string",
+          "description": "The duration."
+        }
+      },
+      "required": [
+        "duration"
+      ]
+    }
+  },
+  {
+    "name": "play_podcast",
+    "description": "Plays a podcast episode.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "book_flight",
+    "description": "Books a flight.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        },
+        "date": {
+          "type": "string",
+          "description": "The date."
+        }
+      },
+      "required": [
+        "origin",
+        "destination",
+        "date"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Convert 10 kilometers to miles.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

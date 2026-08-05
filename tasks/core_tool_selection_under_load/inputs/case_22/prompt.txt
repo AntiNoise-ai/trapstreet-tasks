@@ -1,0 +1,316 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "get_weather",
+    "description": "Gets the current weather for a location.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The location."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "get_local_time",
+    "description": "Returns the current local time for a given city or timezone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "City or IANA timezone name."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "delete_reminder",
+    "description": "Deletes a reminder by id.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id."
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "search_web",
+    "description": "Searches the web for a query.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The query."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "schedule_meeting",
+    "description": "Schedules a meeting with participants.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "participants": {
+          "type": "string",
+          "description": "The participants."
+        },
+        "datetime": {
+          "type": "string",
+          "description": "The datetime."
+        }
+      },
+      "required": [
+        "participants",
+        "datetime"
+      ]
+    }
+  },
+  {
+    "name": "turn_on_light",
+    "description": "Turns on the light in a room.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "type": "string",
+          "description": "The room."
+        }
+      },
+      "required": [
+        "room"
+      ]
+    }
+  },
+  {
+    "name": "order_food",
+    "description": "Orders food from a restaurant.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "restaurant": {
+          "type": "string",
+          "description": "The restaurant."
+        },
+        "items": {
+          "type": "string",
+          "description": "The items."
+        }
+      },
+      "required": [
+        "restaurant",
+        "items"
+      ]
+    }
+  },
+  {
+    "name": "calculate_age",
+    "description": "Calculates age from a birthdate.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "birthdate": {
+          "type": "string",
+          "description": "The birthdate."
+        }
+      },
+      "required": [
+        "birthdate"
+      ]
+    }
+  },
+  {
+    "name": "set_volume",
+    "description": "Sets the playback volume.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "number",
+          "description": "The level."
+        }
+      },
+      "required": [
+        "level"
+      ]
+    }
+  },
+  {
+    "name": "play_podcast",
+    "description": "Plays a podcast episode.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "convert_distance",
+    "description": "Converts a distance value between units (km, mi, m, ft).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The distance value to convert."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "Source unit, e.g. km, mi, m, ft."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "Target unit, e.g. km, mi, m, ft."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "set_language",
+    "description": "Sets the assistant's response language.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "The language."
+        }
+      },
+      "required": [
+        "language"
+      ]
+    }
+  },
+  {
+    "name": "add_shopping_item",
+    "description": "Adds an item to the shopping list.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "string",
+          "description": "The item."
+        }
+      },
+      "required": [
+        "item"
+      ]
+    }
+  },
+  {
+    "name": "convert_weight",
+    "description": "Converts a weight value between units.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The value."
+        },
+        "from_unit": {
+          "type": "string",
+          "description": "The from unit."
+        },
+        "to_unit": {
+          "type": "string",
+          "description": "The to unit."
+        }
+      },
+      "required": [
+        "value",
+        "from_unit",
+        "to_unit"
+      ]
+    }
+  },
+  {
+    "name": "calculate_percentage",
+    "description": "Calculates a percentage of a given amount.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The base amount."
+        },
+        "percent": {
+          "type": "number",
+          "description": "The percentage to apply."
+        }
+      },
+      "required": [
+        "amount",
+        "percent"
+      ]
+    }
+  },
+  {
+    "name": "add_calendar_event",
+    "description": "Adds an event to the calendar.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title."
+        },
+        "datetime": {
+          "type": "string",
+          "description": "The datetime."
+        }
+      },
+      "required": [
+        "title",
+        "datetime"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What time is it right now in Tokyo?
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

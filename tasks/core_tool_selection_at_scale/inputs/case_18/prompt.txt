@@ -1,0 +1,183 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "calendar_create_event",
+    "description": "Creates a calendar event at a specific start time, invites the listed attendees and sends them notifications immediately. A concrete start time is mandatory; the tool does not search for or suggest available windows. Conflicting attendees are still invited and simply show as double-booked.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to invite."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Exact start of the event as an ISO-8601 timestamp."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the event in minutes."
+        },
+        "title": {
+          "type": "string",
+          "description": "Event title shown in the invitation."
+        }
+      },
+      "required": [
+        "attendees",
+        "start_time",
+        "duration_minutes",
+        "title"
+      ]
+    }
+  },
+  {
+    "name": "calendar_check_availability",
+    "description": "Reports whether each listed attendee is free or busy across one specific window that the caller supplies, together with the titles of any conflicting events. The window must be given up front; the tool evaluates it rather than searching for alternatives. Intended for validating a time that has already been proposed.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to check."
+        },
+        "start_time": {
+          "type": "string",
+          "description": "Start of the window being evaluated."
+        },
+        "end_time": {
+          "type": "string",
+          "description": "End of the window being evaluated."
+        }
+      },
+      "required": [
+        "attendees",
+        "start_time",
+        "end_time"
+      ]
+    }
+  },
+  {
+    "name": "calendar_find_common_free_slots",
+    "description": "Computes the windows of a given length on a given day during which every listed attendee is simultaneously free, by intersecting all of their calendars. Returns the candidate windows to the caller without booking anything or notifying the attendees. Working hours and declined events are respected when computing availability.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Two or more attendee names or addresses whose calendars should be intersected."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the windows to look for, in minutes."
+        },
+        "date": {
+          "type": "string",
+          "description": "Day to search, as a date or weekday name, e.g. `Thursday`."
+        }
+      },
+      "required": [
+        "attendees",
+        "duration_minutes",
+        "date"
+      ]
+    }
+  },
+  {
+    "name": "scheduling_send_booking_link",
+    "description": "Emails the recipients a self-service link on which they can pick a slot of the stated length from the organizer's open calendar. The chosen time is confirmed directly with the recipient; the caller receives only a link identifier and is not shown the underlying availability. Sending happens as soon as the call succeeds.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "recipients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Addresses that should receive the booking link."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the bookable slots."
+        }
+      },
+      "required": [
+        "recipients",
+        "duration_minutes"
+      ]
+    }
+  },
+  {
+    "name": "calendar_find_free_slots",
+    "description": "Returns the open windows of a given length on a given day for a single calendar, skipping over existing events and time marked as busy. Accepts exactly one attendee per call and does not combine calendars. Results are ordered from earliest to latest within the attendee's working hours.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "attendee": {
+          "type": "string",
+          "description": "The single attendee whose calendar should be scanned."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the windows to look for, in minutes."
+        },
+        "date": {
+          "type": "string",
+          "description": "Day to search."
+        }
+      },
+      "required": [
+        "attendee",
+        "duration_minutes",
+        "date"
+      ]
+    }
+  },
+  {
+    "name": "calendar_list_events",
+    "description": "Returns the events already on a single calendar for a given day, including titles, times and attendee lists. The response describes what is booked rather than what is open, and covers only the one calendar identified by the caller. Declined and tentative events are included and flagged as such.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "calendar_id": {
+          "type": "string",
+          "description": "Identifier of the single calendar to read."
+        },
+        "date": {
+          "type": "string",
+          "description": "Day whose events should be listed."
+        }
+      },
+      "required": [
+        "calendar_id",
+        "date"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+Before I propose anything, I need to see which 30-minute windows Priya and Marco are both free in on Thursday.
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

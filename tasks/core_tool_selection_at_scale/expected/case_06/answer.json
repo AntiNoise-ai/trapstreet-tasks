@@ -1,0 +1,28 @@
+{
+  "id": "case_06",
+  "correct_tool_name": "payments_refund_charge",
+  "expected_args": {
+    "charge_id": [
+      "ch_8812"
+    ],
+    "amount": [
+      64.5,
+      "64.50",
+      "$64.50",
+      "64.5"
+    ]
+  },
+  "n_tools": 300,
+  "position": "mid",
+  "position_index": 150,
+  "ambiguity": "adversarial",
+  "intent": "refund_settled_charge",
+  "category": "adv_n300_mid",
+  "near_miss_names": [
+    "payments_void_authorization",
+    "payments_issue_store_credit",
+    "payments_open_chargeback_dispute",
+    "payments_refund_invoice_line",
+    "payments_cancel_subscription"
+  ]
+}

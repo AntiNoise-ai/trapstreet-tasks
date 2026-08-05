@@ -1,0 +1,235 @@
+[
+  {
+    "id": "case_02",
+    "intent": "refund_settled_charge",
+    "n_tools": 6,
+    "position": "mid",
+    "ambiguity": "adversarial",
+    "category": "adv_n6_mid",
+    "score": 1.0,
+    "reason": "correct tool + arguments",
+    "called_tool": "payments_refund_charge",
+    "failure_mode": null,
+    "arg_results": {
+      "charge_id": {
+        "got": "ch_8812",
+        "ok": true
+      },
+      "amount": {
+        "got": 64.5,
+        "ok": true
+      }
+    },
+    "usage": {
+      "input_tokens": 2055,
+      "output_tokens": 101
+    }
+  },
+  {
+    "id": "case_10",
+    "intent": "read_historical_error_logs",
+    "n_tools": 6,
+    "position": "mid",
+    "ambiguity": "adversarial",
+    "category": "adv_n6_mid",
+    "score": 1.0,
+    "reason": "correct tool + arguments",
+    "called_tool": "logs_query_range",
+    "failure_mode": null,
+    "arg_results": {
+      "service": {
+        "got": "checkout",
+        "ok": true
+      },
+      "level": {
+        "got": "error",
+        "ok": true
+      },
+      "start_time": {
+        "got": "09:00",
+        "ok": true
+      },
+      "end_time": {
+        "got": "09:30",
+        "ok": true
+      }
+    },
+    "usage": {
+      "input_tokens": 2200,
+      "output_tokens": 113
+    }
+  },
+  {
+    "id": "case_18",
+    "intent": "find_mutual_free_slots",
+    "n_tools": 6,
+    "position": "mid",
+    "ambiguity": "adversarial",
+    "category": "adv_n6_mid",
+    "score": 1.0,
+    "reason": "correct tool + arguments",
+    "called_tool": "calendar_find_common_free_slots",
+    "failure_mode": null,
+    "arg_results": {
+      "attendees": {
+        "got": [
+          "Priya",
+          "Marco"
+        ],
+        "ok": true
+      },
+      "duration_minutes": {
+        "got": 30,
+        "ok": true
+      },
+      "date": {
+        "got": "Thursday",
+        "ok": true
+      }
+    },
+    "usage": {
+      "input_tokens": 1958,
+      "output_tokens": 108
+    }
+  },
+  {
+    "id": "case_26",
+    "intent": "rollback_to_named_build",
+    "n_tools": 6,
+    "position": "mid",
+    "ambiguity": "adversarial",
+    "category": "adv_n6_mid",
+    "score": 1.0,
+    "reason": "correct tool + arguments",
+    "called_tool": "deploy_rollback_to_build",
+    "failure_mode": null,
+    "arg_results": {
+      "environment": {
+        "got": "production",
+        "ok": true
+      },
+      "build_id": {
+        "got": "4468",
+        "ok": true
+      }
+    },
+    "usage": {
+      "input_tokens": 1859,
+      "output_tokens": 70
+    }
+  },
+  {
+    "id": "case_34",
+    "intent": "grant_existing_user_access",
+    "n_tools": 6,
+    "position": "mid",
+    "ambiguity": "adversarial",
+    "category": "adv_n6_mid",
+    "score": 1.0,
+    "reason": "correct tool + arguments",
+    "called_tool": "permissions_grant_resource_access",
+    "failure_mode": null,
+    "arg_results": {
+      "principal": {
+        "got": "Dana",
+        "ok": true
+      },
+      "resource_id": {
+        "got": "res_9f12",
+        "ok": true
+      },
+      "role": {
+        "got": "reader",
+        "ok": true
+      }
+    },
+    "usage": {
+      "input_tokens": 1840,
+      "output_tokens": 98
+    }
+  },
+  {
+    "id": "case_42",
+    "intent": "compose_but_do_not_send",
+    "n_tools": 6,
+    "position": "mid",
+    "ambiguity": "adversarial",
+    "category": "adv_n6_mid",
+    "score": 1.0,
+    "reason": "correct tool + arguments",
+    "called_tool": "email_create_draft",
+    "failure_mode": null,
+    "arg_results": {
+      "to": {
+        "got": [
+          "design-team@corp.example"
+        ],
+        "ok": true
+      }
+    },
+    "usage": {
+      "input_tokens": 1778,
+      "output_tokens": 279
+    }
+  },
+  {
+    "id": "case_50",
+    "intent": "count_filtered_events",
+    "n_tools": 6,
+    "position": "mid",
+    "ambiguity": "adversarial",
+    "category": "adv_n6_mid",
+    "score": 1.0,
+    "reason": "correct tool + arguments",
+    "called_tool": "analytics_count_events",
+    "failure_mode": null,
+    "arg_results": {
+      "event_name": {
+        "got": "signup",
+        "ok": true
+      },
+      "channel": {
+        "got": "paid_search",
+        "ok": true
+      },
+      "start_date": {
+        "got": "2025-03-03",
+        "ok": true
+      },
+      "end_date": {
+        "got": "2025-03-09",
+        "ok": true
+      }
+    },
+    "usage": {
+      "input_tokens": 2068,
+      "output_tokens": 125
+    }
+  },
+  {
+    "id": "case_58",
+    "intent": "duplicate_file_to_folder",
+    "n_tools": 6,
+    "position": "mid",
+    "ambiguity": "adversarial",
+    "category": "adv_n6_mid",
+    "score": 1.0,
+    "reason": "correct tool + arguments",
+    "called_tool": "storage_copy_object",
+    "failure_mode": null,
+    "arg_results": {
+      "source_path": {
+        "got": "/shared/planning/q3_forecast.xlsx",
+        "ok": true
+      },
+      "destination_folder": {
+        "got": "/shared/finance",
+        "ok": true
+      }
+    },
+    "usage": {
+      "input_tokens": 1752,
+      "output_tokens": 90
+    }
+  }
+]

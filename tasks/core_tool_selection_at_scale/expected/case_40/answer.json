@@ -1,0 +1,31 @@
+{
+  "id": "case_40",
+  "correct_tool_name": "permissions_grant_resource_access",
+  "expected_args": {
+    "principal": [
+      "Dana",
+      "dana"
+    ],
+    "resource_id": [
+      "res_9f12"
+    ],
+    "role": [
+      "reader",
+      "read",
+      "viewer"
+    ]
+  },
+  "n_tools": 300,
+  "position": "late",
+  "position_index": 293,
+  "ambiguity": "adversarial",
+  "intent": "grant_existing_user_access",
+  "category": "adv_n300_late",
+  "near_miss_names": [
+    "users_invite_to_workspace",
+    "permissions_request_access",
+    "permissions_set_resource_visibility",
+    "groups_add_member",
+    "permissions_list_resource_access"
+  ]
+}

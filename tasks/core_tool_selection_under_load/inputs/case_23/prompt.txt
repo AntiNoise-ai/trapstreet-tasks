@@ -1,0 +1,311 @@
+You are an AI agent that selects exactly one tool to call to satisfy a user request.
+
+# Available tools
+
+```json
+[
+  {
+    "name": "order_food",
+    "description": "Orders food from a restaurant.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "restaurant": {
+          "type": "string",
+          "description": "The restaurant."
+        },
+        "items": {
+          "type": "string",
+          "description": "The items."
+        }
+      },
+      "required": [
+        "restaurant",
+        "items"
+      ]
+    }
+  },
+  {
+    "name": "log_water_intake",
+    "description": "Logs water intake in milliliters.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount_ml": {
+          "type": "number",
+          "description": "The amount ml."
+        }
+      },
+      "required": [
+        "amount_ml"
+      ]
+    }
+  },
+  {
+    "name": "set_reminder",
+    "description": "Sets a reminder with text and a time.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text."
+        },
+        "time": {
+          "type": "string",
+          "description": "The time."
+        }
+      },
+      "required": [
+        "text",
+        "time"
+      ]
+    }
+  },
+  {
+    "name": "calculate_bmi",
+    "description": "Calculates BMI from weight and height.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "weight_kg": {
+          "type": "number",
+          "description": "The weight kg."
+        },
+        "height_cm": {
+          "type": "number",
+          "description": "The height cm."
+        }
+      },
+      "required": [
+        "weight_kg",
+        "height_cm"
+      ]
+    }
+  },
+  {
+    "name": "get_weather",
+    "description": "Gets the current weather for a location.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The location."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "set_timer",
+    "description": "Sets a countdown timer.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "duration_seconds": {
+          "type": "number",
+          "description": "The duration seconds."
+        }
+      },
+      "required": [
+        "duration_seconds"
+      ]
+    }
+  },
+  {
+    "name": "delete_reminder",
+    "description": "Deletes a reminder by id.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id."
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "translate_text",
+    "description": "Translates text to a target language.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text."
+        },
+        "target_language": {
+          "type": "string",
+          "description": "The target language."
+        }
+      },
+      "required": [
+        "text",
+        "target_language"
+      ]
+    }
+  },
+  {
+    "name": "get_local_time",
+    "description": "Returns the current local time for a given city or timezone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "City or IANA timezone name."
+        }
+      },
+      "required": [
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "play_podcast",
+    "description": "Plays a podcast episode.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "book_flight",
+    "description": "Books a flight.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "description": "The origin."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The destination."
+        },
+        "date": {
+          "type": "string",
+          "description": "The date."
+        }
+      },
+      "required": [
+        "origin",
+        "destination",
+        "date"
+      ]
+    }
+  },
+  {
+    "name": "get_recipe",
+    "description": "Gets a recipe for a dish.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "dish_name": {
+          "type": "string",
+          "description": "The dish name."
+        }
+      },
+      "required": [
+        "dish_name"
+      ]
+    }
+  },
+  {
+    "name": "play_music",
+    "description": "Plays music by an artist for a duration.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "artist": {
+          "type": "string",
+          "description": "The artist."
+        },
+        "duration": {
+          "type": "number",
+          "description": "The duration."
+        }
+      },
+      "required": [
+        "artist",
+        "duration"
+      ]
+    }
+  },
+  {
+    "name": "set_volume",
+    "description": "Sets the playback volume.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "number",
+          "description": "The level."
+        }
+      },
+      "required": [
+        "level"
+      ]
+    }
+  },
+  {
+    "name": "set_alarm",
+    "description": "Sets an alarm for a given time.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "description": "The time."
+        }
+      },
+      "required": [
+        "time"
+      ]
+    }
+  },
+  {
+    "name": "calculate_age",
+    "description": "Calculates age from a birthdate.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "birthdate": {
+          "type": "string",
+          "description": "The birthdate."
+        }
+      },
+      "required": [
+        "birthdate"
+      ]
+    }
+  }
+]
+```
+
+# User request
+
+What time is it right now in Tokyo?
+
+# Your task
+
+Output ONLY a single JSON object of the form:
+{"name": "<tool_name>", "arguments": {"<arg>": <value>, ...}}
+
+Call exactly one tool -- the one that correctly satisfies the request. Output
+ONLY the JSON object. No explanation, no markdown fences, no array.

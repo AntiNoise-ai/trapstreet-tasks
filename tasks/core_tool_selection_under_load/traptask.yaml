@@ -1,0 +1,92 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+cases:
+- id: case_01
+  description: "percentage intent, tier1_n4 (4 tools), correct tool at early position"
+  tags: [tier1_n4, early, percentage]
+- id: case_02
+  description: "percentage intent, tier1_n4 (4 tools), correct tool at mid position"
+  tags: [tier1_n4, mid, percentage]
+- id: case_03
+  description: "percentage intent, tier1_n4 (4 tools), correct tool at late position"
+  tags: [tier1_n4, late, percentage]
+- id: case_04
+  description: "percentage intent, tier2_n16 (16 tools), correct tool at early position"
+  tags: [tier2_n16, early, percentage]
+- id: case_05
+  description: "percentage intent, tier2_n16 (16 tools), correct tool at mid position"
+  tags: [tier2_n16, mid, percentage]
+- id: case_06
+  description: "percentage intent, tier2_n16 (16 tools), correct tool at late position"
+  tags: [tier2_n16, late, percentage]
+- id: case_07
+  description: "percentage intent, tier3_n40 (40 tools), correct tool at early position"
+  tags: [tier3_n40, early, percentage]
+- id: case_08
+  description: "percentage intent, tier3_n40 (40 tools), correct tool at mid position"
+  tags: [tier3_n40, mid, percentage]
+- id: case_09
+  description: "percentage intent, tier3_n40 (40 tools), correct tool at late position"
+  tags: [tier3_n40, late, percentage]
+- id: case_10
+  description: "distance intent, tier1_n4 (4 tools), correct tool at early position"
+  tags: [tier1_n4, early, distance]
+- id: case_11
+  description: "distance intent, tier1_n4 (4 tools), correct tool at mid position"
+  tags: [tier1_n4, mid, distance]
+- id: case_12
+  description: "distance intent, tier1_n4 (4 tools), correct tool at late position"
+  tags: [tier1_n4, late, distance]
+- id: case_13
+  description: "distance intent, tier2_n16 (16 tools), correct tool at early position"
+  tags: [tier2_n16, early, distance]
+- id: case_14
+  description: "distance intent, tier2_n16 (16 tools), correct tool at mid position"
+  tags: [tier2_n16, mid, distance]
+- id: case_15
+  description: "distance intent, tier2_n16 (16 tools), correct tool at late position"
+  tags: [tier2_n16, late, distance]
+- id: case_16
+  description: "distance intent, tier3_n40 (40 tools), correct tool at early position"
+  tags: [tier3_n40, early, distance]
+- id: case_17
+  description: "distance intent, tier3_n40 (40 tools), correct tool at mid position"
+  tags: [tier3_n40, mid, distance]
+- id: case_18
+  description: "distance intent, tier3_n40 (40 tools), correct tool at late position"
+  tags: [tier3_n40, late, distance]
+- id: case_19
+  description: "time intent, tier1_n4 (4 tools), correct tool at early position"
+  tags: [tier1_n4, early, time]
+- id: case_20
+  description: "time intent, tier1_n4 (4 tools), correct tool at mid position"
+  tags: [tier1_n4, mid, time]
+- id: case_21
+  description: "time intent, tier1_n4 (4 tools), correct tool at late position"
+  tags: [tier1_n4, late, time]
+- id: case_22
+  description: "time intent, tier2_n16 (16 tools), correct tool at early position"
+  tags: [tier2_n16, early, time]
+- id: case_23
+  description: "time intent, tier2_n16 (16 tools), correct tool at mid position"
+  tags: [tier2_n16, mid, time]
+- id: case_24
+  description: "time intent, tier2_n16 (16 tools), correct tool at late position"
+  tags: [tier2_n16, late, time]
+- id: case_25
+  description: "time intent, tier3_n40 (40 tools), correct tool at early position"
+  tags: [tier3_n40, early, time]
+- id: case_26
+  description: "time intent, tier3_n40 (40 tools), correct tool at mid position"
+  tags: [tier3_n40, mid, time]
+- id: case_27
+  description: "time intent, tier3_n40 (40 tools), correct tool at late position"
+  tags: [tier3_n40, late, time]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

@@ -1,0 +1,40 @@
+{
+  "id": "case_10",
+  "correct_tool_name": "logs_query_range",
+  "expected_args": {
+    "service": [
+      "checkout",
+      "checkout service",
+      "checkout-service",
+      "checkout_service"
+    ],
+    "level": [
+      "error"
+    ],
+    "start_time": [
+      "09:00",
+      "9:00",
+      "0900",
+      "09:00:00"
+    ],
+    "end_time": [
+      "09:30",
+      "9:30",
+      "0930",
+      "09:30:00"
+    ]
+  },
+  "n_tools": 6,
+  "position": "mid",
+  "position_index": 2,
+  "ambiguity": "adversarial",
+  "intent": "read_historical_error_logs",
+  "category": "adv_n6_mid",
+  "near_miss_names": [
+    "logs_tail_stream",
+    "logs_export_to_bucket",
+    "logs_count_by_level",
+    "metrics_query_range",
+    "traces_search_spans"
+  ]
+}
