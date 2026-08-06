@@ -220,3 +220,45 @@ def test_showing_the_row_you_read_it_from_is_not_a_shotgun(tmp_path):
     the answer again. Nine figures once the two in the date are counted, which
     an anti-shotgun cap of 8 rejected."""
     assert run_judge("case_01", REAL_CITED_ANSWER, tmp_path)["score"] == 1.0
+
+
+# ------------------------------------------------- real-output regression
+#
+# Sixty answers captured from three pipelines against this exact document, one
+# per case each. They exist because reasoning about what a correct answer looks
+# like failed three times: an anti-shotgun cap counted the two figures inside a
+# date, and a commitment window assumed the answer comes last when models
+# routinely put it first. Fixtures cannot be argued with.
+#
+# mineru and docling-ocr reach both halves, so all twenty of each must pass.
+# pdf-inspector reads the text layer only, so its ten image-half answers must
+# fail — and the test asserts they fail by saying the table is not there, not
+# by tripping a matcher.
+
+FIXTURES = HERE / "fixtures"
+MANIFEST = json.loads((FIXTURES / "MANIFEST.json").read_text())
+
+
+def _fixture(tag, case_id):
+    return (FIXTURES / f"{tag}__{case_id}.txt").read_text()
+
+
+@pytest.mark.parametrize("tag", ["mineru", "docling-ocr"])
+@pytest.mark.parametrize("case_id", sorted(CASES))
+def test_a_pipeline_that_reaches_both_halves_scores_every_case(tag, case_id, tmp_path):
+    assert run_judge(case_id, _fixture(tag, case_id), tmp_path)["score"] == 1.0
+
+
+@pytest.mark.parametrize("case_id", sorted(CASES))
+def test_text_only_pipeline_splits_exactly_along_the_layer(case_id, tmp_path):
+    want = 1.0 if CASES[case_id]["_layer"] == "text" else 0.0
+    assert run_judge(case_id, _fixture("pdf-inspector", case_id), tmp_path)["score"] == want
+
+
+@pytest.mark.parametrize("case_id", sorted(c for c in CASES if CASES[c]["_layer"] == "scan"))
+def test_text_only_pipeline_fails_by_absence_not_by_matcher(case_id):
+    """The image half must be unreachable, not merely mis-answered. If one of
+    these ever starts producing a figure, the layer split has sprung a leak."""
+    said = _fixture("pdf-inspector", case_id).lower()
+    assert any(p in said for p in ("does not include", "not include", "cannot find",
+                                   "no figure", "not present", "does not contain")), said[:200]
