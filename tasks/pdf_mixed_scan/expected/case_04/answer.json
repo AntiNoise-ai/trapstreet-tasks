@@ -1,0 +1,17 @@
+{
+  "id": "case_04",
+  "label": "Treasury General Account, Wednesday column",
+  "answer": "970,442 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 970442
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "medium"
+}

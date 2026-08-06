@@ -1,0 +1,73 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+# Case ids are opaque on purpose — the solution reads its own inputs_dir.
+# Generated from gold.cases.json; do not hand-edit the case list.
+cases:
+- id: case_01
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, easy]
+- id: case_02
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, medium]
+- id: case_03
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, medium]
+- id: case_04
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, medium]
+- id: case_05
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, hard]
+- id: case_06
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, medium]
+- id: case_07
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, medium]
+- id: case_08
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, medium]
+- id: case_09
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, easy]
+- id: case_10
+  description: "Read one cell of a wide statistical table on a digital text page"
+  tags: [text_layer, hard]
+- id: case_11
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, easy]
+- id: case_12
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, medium]
+- id: case_13
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, medium]
+- id: case_14
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, hard]
+- id: case_15
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, hard]
+- id: case_16
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, medium]
+- id: case_17
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, hard]
+- id: case_18
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, hard]
+- id: case_19
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, medium]
+- id: case_20
+  description: "Read one cell of a wide statistical table on a image-only page (no text layer)"
+  tags: [image_only, medium]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

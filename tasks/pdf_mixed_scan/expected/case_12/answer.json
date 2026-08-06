@@ -1,0 +1,17 @@
+{
+  "id": "case_12",
+  "label": "Deposits, Chicago",
+  "answer": "289,170 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 289170
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "medium"
+}

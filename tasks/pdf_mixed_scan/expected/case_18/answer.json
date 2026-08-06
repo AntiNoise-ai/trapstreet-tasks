@@ -1,0 +1,17 @@
+{
+  "id": "case_18",
+  "label": "Surplus, Richmond",
+  "answer": "1,488 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 1488.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "hard"
+}

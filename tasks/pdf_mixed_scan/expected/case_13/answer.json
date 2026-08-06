@@ -1,0 +1,17 @@
+{
+  "id": "case_13",
+  "label": "Earnings remittances, Richmond",
+  "answer": "-40,560 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": -40560
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "medium"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "case_07",
+  "label": "Total absorbing reserve funds",
+  "answer": "3,813,030 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 3813030
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "medium"
+}

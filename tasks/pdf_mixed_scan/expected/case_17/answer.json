@@ -1,0 +1,17 @@
+{
+  "id": "case_17",
+  "label": "Capital paid in, Cleveland",
+  "answer": "4,818 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 4818.0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "hard"
+}

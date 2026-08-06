@@ -1,0 +1,435 @@
+{
+  "document": "H41_mixed.pdf",
+  "_source": {
+    "title": "Factors Affecting Reserve Balances of Depository Institutions and Condition Statement of Federal Reserve Banks (H.4.1)",
+    "issuer": "Board of Governors of the Federal Reserve System",
+    "release": "July 30, 2026",
+    "downloaded_from": "https://www.federalreserve.gov/releases/h41/current/h41.pdf",
+    "_licence": "A work of the United States federal government. Not subject to copyright in the US; freely redistributable."
+  },
+  "_construction": "H41_mixed.pdf is the released PDF with pages 6-11 replaced by 200 dpi greyscale JPEG images of themselves, so those pages carry NO text layer. Pages 1-5 are untouched. Nothing else is altered: no content is added, removed or reordered, and every figure in the gold is the Federal Reserve's own. This is disclosed rather than hidden — it is the instrument the task needs, because a parser that cannot reach an image-only page scores zero on it rather than merely misreading it.",
+  "_why_this_design": "Earlier versions of this task measured whether parsers preserve row/column association in digital tables. Measured across three document families, they largely do: four parsers scored 17-20/20 on an EPD, and agreed on five of six cells of this same H.4.1 table. Disorder is recoverable — a capable model reconstructs the answer from a garbled row. Absence is not. Splitting the document into a text half and an image-only half makes the difference binary per case instead of marginal.",
+  "_gold_provenance": "Every figure was read by eye off the page rendered at 2.4x, never from a parser's extraction. Each case records the _page it came from and whether that page is text or image (_layer).",
+  "cases": [
+    {
+      "id": "case_01",
+      "label": "Currency in circulation, weekly change",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Currency in circulation\" in the \"Change from week ended Jul 22, 2026\" column?",
+      "answer": "+69 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "easy",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "The + sign sits in its own column, separate from the digits. A parser that drops the sign column still returns 69, so this one passes either way — it is the floor of the ladder.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 69
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_02",
+      "label": "Reverse repurchase agreements, yearly change",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Reverse repurchase agreements\" in the \"Change from week ended Jul 30, 2025\" column? Include the sign.",
+      "answer": "-181,761 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "medium",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "The minus lives in a separate column from the digits. Losing that column flips the sign of the answer without corrupting the number.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": -181761
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_03",
+      "label": "Others under reverse repos, yearly change",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", the \"Reverse repurchase agreements\" line is broken into two indented sub-lines. What figure does the second of them, \"Others\", show in the \"Change from week ended Jul 30, 2025\" column? Include the sign.",
+      "answer": "-153,238 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "medium",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "Indentation is the only thing marking these as sub-lines of the row above. A parser that flattens the hierarchy loses which 'Others' this is.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": -153238
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_04",
+      "label": "Treasury General Account, Wednesday column",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"U.S. Treasury, General Account\" in the \"Wednesday Jul 29, 2026\" column?",
+      "answer": "970,442 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "medium",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "The Wednesday column is the last of five and sits past a multi-level header spanning three sub-columns. pdfplumber answered the wrong column here during screening.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 970442
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_05",
+      "label": "Other liabilities and capital, weekly average",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Other liabilities and capital\" in the \"Week ended Jul 29, 2026\" column? Include the sign.",
+      "answer": "-179,225 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "hard",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "This row writes its minus attached to the digits, while other rows put the sign in a separate column. Both conventions appear in the same table.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": -179225
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_06",
+      "label": "Reserve balances, weekly change",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Reserve balances with Federal Reserve Banks\" in the \"Change from week ended Jul 22, 2026\" column? Include the sign.",
+      "answer": "-77,579 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "medium",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "Last row of the table, below a blank separator line.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": -77579
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_07",
+      "label": "Total absorbing reserve funds",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Total factors, other than reserve balances, absorbing reserve funds\" in the \"Week ended Jul 29, 2026\" column?",
+      "answer": "3,813,030 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "medium",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "The row label wraps onto two lines; a parser that treats each visual line as its own row cannot match the label.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 3813030
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_08",
+      "label": "Deposits with F.R. Banks, yearly change",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Deposits with F.R. Banks, other than reserve balances\" in the \"Change from week ended Jul 30, 2025\" column? Include the sign.",
+      "answer": "+571,430 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "medium",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "Parent row of four indented sub-lines; the sub-lines carry similar magnitudes.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 571430
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_09",
+      "label": "Treasury cash holdings, Wednesday",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Treasury cash holdings\" in the \"Wednesday Jul 29, 2026\" column?",
+      "answer": "323 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "easy",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "Three digits in a table of seven-digit numbers — a column drift here produces something visibly different.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 323
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_10",
+      "label": "Foreign official deposits, weekly change",
+      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", under \"Deposits with F.R. Banks, other than reserve balances\", what figure does the indented \"Foreign official\" line show in the \"Change from week ended Jul 22, 2026\" column? Include the sign.",
+      "answer": "-582 million dollars",
+      "type": "extraction",
+      "category": "text_layer",
+      "difficulty": "hard",
+      "_page": 2,
+      "_layer": "text",
+      "_why": "A three-digit value with its sign in a separate column, on an indented sub-line, eleven columns from the page edge.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": -582
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_11",
+      "label": "FR notes net, New York",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Federal Reserve notes, net\" in the \"New York\" column?",
+      "answer": "748,255 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "easy",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "First data row of the liabilities block, third column. Reachable only by OCR: this page carries no text layer.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 748255
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_12",
+      "label": "Deposits, Chicago",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for the \"Deposits\" row in the \"Chicago\" column?",
+      "answer": "289,170 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "medium",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "Eighth of fourteen columns, and the row has four indented sub-lines beneath it carrying similar magnitudes.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 289170
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_13",
+      "label": "Earnings remittances, Richmond",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Earnings remittances due to the U.S. Treasury\" in the \"Richmond\" column? Include the sign.",
+      "answer": "-40,560 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "medium",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "The row label wraps onto two lines and most of its values are negative.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": -40560
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_14",
+      "label": "Earnings remittances, Atlanta (sign flips mid-row)",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Earnings remittances due to the U.S. Treasury\" in the \"Atlanta\" column? Include the sign.",
+      "answer": "+154 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "hard",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "Ten of the thirteen values on this row are negative; Atlanta, St. Louis and Dallas are positive. A parser or model that carries the row's sign across cannot get this one right.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 154
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_15",
+      "label": "Other deposits, Chicago",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", under the \"Deposits\" row, what figure does the indented \"Other\" line show in the \"Chicago\" column?",
+      "answer": "164,338 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "hard",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "Chicago's value on this line is four orders of magnitude larger than its neighbours (St. Louis 2, Minneapolis 104), so a column drift is catastrophic rather than plausible.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 164338
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_16",
+      "label": "Total liabilities, San Francisco",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Total liabilities\" in the \"San Francisco\" column?",
+      "answer": "694,042 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "medium",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "Last column of fourteen, on a bold total row separated by blank space.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 694042
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_17",
+      "label": "Capital paid in, Cleveland",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Capital paid in\" in the \"Cleveland\" column?",
+      "answer": "4,818 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "hard",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "Fifth of fourteen columns, in the Capital block below the liabilities totals. Originally set to Minneapolis (245), but the absence check found '245' occurring as a substring inside a larger number on the text-layer pages, which would let a text-only solution stumble onto it.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 4818.0
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_18",
+      "label": "Surplus, Richmond",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Surplus\" in the \"Richmond\" column?",
+      "answer": "1,488 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "hard",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "Sixth of fourteen columns, on the Surplus row. Originally Kansas City (89), which is too short for the absence check to verify — any two-digit gold could be hit by chance from the text-layer pages.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 1488.0
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_19",
+      "label": "Total liabilities and capital, Philadelphia",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Total liabilities and capital\" in the \"Philadelphia\" column?",
+      "answer": "115,772 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "medium",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "Final row of the table; the Philadelphia header is the widest and its column the narrowest.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 115772
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    },
+    {
+      "id": "case_20",
+      "label": "Depository institutions, New York",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", under \"Deposits\", what figure does the indented \"Depository institutions\" line show in the \"New York\" column?",
+      "answer": "1,719,915 million dollars",
+      "type": "extraction",
+      "category": "image_only",
+      "difficulty": "medium",
+      "_page": 9,
+      "_layer": "scan",
+      "_why": "Seven digits on an indented sub-line; the parent Deposits row shows 2,768,498 in the same column.",
+      "matchers": [
+        {
+          "kind": "sci_value",
+          "value": 1719915
+        },
+        {
+          "kind": "no_hedge"
+        }
+      ]
+    }
+  ]
+}

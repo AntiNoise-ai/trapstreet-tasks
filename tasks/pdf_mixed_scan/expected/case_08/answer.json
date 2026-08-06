@@ -1,0 +1,17 @@
+{
+  "id": "case_08",
+  "label": "Deposits with F.R. Banks, yearly change",
+  "answer": "+571,430 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 571430
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "medium"
+}

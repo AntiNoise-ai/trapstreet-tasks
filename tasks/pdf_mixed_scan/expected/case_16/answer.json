@@ -1,0 +1,17 @@
+{
+  "id": "case_16",
+  "label": "Total liabilities, San Francisco",
+  "answer": "694,042 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 694042
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "medium"
+}

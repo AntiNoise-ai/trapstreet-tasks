@@ -1,0 +1,17 @@
+{
+  "id": "case_10",
+  "label": "Foreign official deposits, weekly change",
+  "answer": "-582 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": -582
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "hard"
+}

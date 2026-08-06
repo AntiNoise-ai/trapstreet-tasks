@@ -1,0 +1,17 @@
+{
+  "id": "case_11",
+  "label": "FR notes net, New York",
+  "answer": "748,255 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 748255
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "easy"
+}

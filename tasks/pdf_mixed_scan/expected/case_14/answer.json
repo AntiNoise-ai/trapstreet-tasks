@@ -1,0 +1,17 @@
+{
+  "id": "case_14",
+  "label": "Earnings remittances, Atlanta (sign flips mid-row)",
+  "answer": "+154 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 154
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "hard"
+}

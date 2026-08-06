@@ -1,0 +1,17 @@
+{
+  "id": "case_19",
+  "label": "Total liabilities and capital, Philadelphia",
+  "answer": "115,772 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 115772
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "medium"
+}

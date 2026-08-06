@@ -1,0 +1,17 @@
+{
+  "id": "case_02",
+  "label": "Reverse repurchase agreements, yearly change",
+  "answer": "-181,761 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": -181761
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "medium"
+}

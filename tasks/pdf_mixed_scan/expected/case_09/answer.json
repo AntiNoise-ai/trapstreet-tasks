@@ -1,0 +1,17 @@
+{
+  "id": "case_09",
+  "label": "Treasury cash holdings, Wednesday",
+  "answer": "323 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 323
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "easy"
+}

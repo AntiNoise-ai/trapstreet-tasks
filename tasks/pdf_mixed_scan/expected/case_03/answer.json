@@ -1,0 +1,17 @@
+{
+  "id": "case_03",
+  "label": "Others under reverse repos, yearly change",
+  "answer": "-153,238 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": -153238
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "medium"
+}

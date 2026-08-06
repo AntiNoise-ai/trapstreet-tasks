@@ -1,0 +1,17 @@
+{
+  "id": "case_15",
+  "label": "Other deposits, Chicago",
+  "answer": "164,338 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 164338
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "hard"
+}

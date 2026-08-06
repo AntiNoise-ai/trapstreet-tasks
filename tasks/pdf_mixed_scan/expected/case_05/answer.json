@@ -1,0 +1,17 @@
+{
+  "id": "case_05",
+  "label": "Other liabilities and capital, weekly average",
+  "answer": "-179,225 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": -179225
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "hard"
+}

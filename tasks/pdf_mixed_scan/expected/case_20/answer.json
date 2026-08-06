@@ -1,0 +1,17 @@
+{
+  "id": "case_20",
+  "label": "Depository institutions, New York",
+  "answer": "1,719,915 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 1719915
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "image_only",
+  "difficulty": "medium"
+}

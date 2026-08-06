@@ -1,0 +1,17 @@
+{
+  "id": "case_06",
+  "label": "Reserve balances, weekly change",
+  "answer": "-77,579 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": -77579
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "medium"
+}

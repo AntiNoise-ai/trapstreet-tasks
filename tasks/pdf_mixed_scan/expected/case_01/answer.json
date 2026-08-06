@@ -1,0 +1,17 @@
+{
+  "id": "case_01",
+  "label": "Currency in circulation, weekly change",
+  "answer": "+69 million dollars",
+  "type": "extraction",
+  "matchers": [
+    {
+      "kind": "sci_value",
+      "value": 69
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ],
+  "category": "text_layer",
+  "difficulty": "easy"
+}
