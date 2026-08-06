@@ -1,1 +1,8 @@
-According to Table 6, the "Surplus" figure for the Richmond Federal Reserve Bank is **1,488** million dollars.
+**Richmond holds more.**
+
+From Table 6, the "Depository institutions" deposit balances are:
+
+- **Richmond:** $343,724 million
+- **Chicago:** $124,830 million
+
+**Ratio (larger ÷ smaller):** 343,724 / 124,830 ≈ **2.75**, meaning Richmond's depository‑institution deposits are roughly 2.75 times larger than Chicago's.

@@ -1,1 +1,3 @@
-The document provided does not include Table 6 ("Statement of Condition of Each Federal Reserve Bank") or any figures for the San Francisco column, so I cannot answer this question from the given text.
+On Wednesday, July 29, 2026, reverse repurchase agreements totaled $337,051 million, of which $334,475 million was held for foreign official and international accounts.
+
+This means foreign official and international accounts made up about **99.2%** ($334,475 ÷ $337,051 million) of the total reverse repurchase agreements outstanding that day, with the remaining ~0.8% ($2,576 million) attributable to "Others."

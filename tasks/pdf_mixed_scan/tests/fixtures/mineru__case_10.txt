@@ -1,1 +1,7 @@
--582 (i.e., a decrease of 582 million dollars)
+Based on the H.4.1 report (Table 7), Federal Reserve notes outstanding totaled **$2,827,302 million**, of which **$406,743 million** was held by F.R. Banks and not subject to collateralization.
+
+This gives a proportion of:
+
+**406,743 / 2,827,302 ≈ 14.4%**
+
+So approximately **14.4%** of Federal Reserve notes outstanding were not subject to collateralization as of Wednesday, July 29, 2026.

@@ -1,1 +1,6 @@
--582 (i.e., a decrease of 582 million dollars)
+Based on the data in Table 7 (Collateral Held against Federal Reserve Notes):
+
+- Federal Reserve notes outstanding: **$2,827,302 million**
+- Less: Notes held by F.R. Banks not subject to collateralization: **$406,743 million**
+
+**Proportion not subject to collateralization = 406,743 / 2,827,302 ≈ 14.4%**

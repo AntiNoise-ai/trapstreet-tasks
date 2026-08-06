@@ -1,1 +1,1 @@
-In table 1, "Factors Affecting Reserve Balances of Depository Institutions", the "Reverse repurchase agreements" line is broken into two indented sub-lines. What figure does the second of them, "Others", show in the "Change from week ended Jul 30, 2025" column? Include the sign.
+table 1A, "Memorandum Items" reports securities lent to dealers twice: as an average of daily figures for the week and as a Wednesday level. Which is larger, and by how much?

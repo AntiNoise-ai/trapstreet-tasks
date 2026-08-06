@@ -1,17 +1,23 @@
 {
   "id": "case_12",
-  "label": "Deposits, Chicago",
-  "answer": "289,170 million dollars",
-  "type": "extraction",
+  "label": "An anomalous concentration",
+  "answer": "Chicago, 70.2% (164,338 of 234,208)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 289170
+      "value": 70.1675,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "chicago"
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "image_only",
-  "difficulty": "medium"
+  "category": "compute",
+  "difficulty": "hard"
 }

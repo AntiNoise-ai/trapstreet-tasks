@@ -1,1 +1,9 @@
-According to Table 1, the "U.S. Treasury, General Account" figure for Wednesday, Jul 29, 2026 is **970,442** million dollars.
+Based on the memorandum items table (Table 1A) for the week ended July 29, 2026:
+
+- **Total securities held in custody for foreign official and international accounts:** $2,917,756 million
+- **Marketable U.S. Treasury securities:** $2,638,757 million
+- **Non-Treasury securities (Federal agency debt/MBS + Other securities):** $204,531 million + $74,468 million = $278,999 million
+
+**Proportion that is *not* marketable U.S. Treasury securities:**
+
+$278,999 / 2,917,756 ≈ 0.0956$, or about **9.6%**

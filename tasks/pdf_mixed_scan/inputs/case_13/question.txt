@@ -1,1 +1,1 @@
-In table 6, "Statement of Condition of Each Federal Reserve Bank", what figure is shown for "Earnings remittances due to the U.S. Treasury" in the "Richmond" column? Include the sign.
+The securities figures in table 7, "Collateral Held against Federal Reserve Notes" carry a footnote saying they include securities lent to dealers under the overnight securities lending facility, and pointing to another table for that amount. Find it, and express it as a share of the total U.S. Treasury, agency debt, and mortgage-backed securities reported in that memo.

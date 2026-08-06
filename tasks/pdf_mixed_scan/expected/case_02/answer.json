@@ -1,17 +1,22 @@
 {
   "id": "case_02",
-  "label": "Reverse repurchase agreements, yearly change",
-  "answer": "-181,761 million dollars",
-  "type": "extraction",
+  "label": "Identify the dominant driver of the weekly change",
+  "answer": "The U.S. Treasury, General Account, up 81,153",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": -181761
+      "value": 81153,
+      "rel_tolerance": 0.01
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "treasury|tga|general account"
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "text_layer",
-  "difficulty": "medium"
+  "category": "locate",
+  "difficulty": "hard"
 }

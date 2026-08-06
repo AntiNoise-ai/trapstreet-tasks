@@ -1,1 +1,5 @@
-According to Table 1, the "Reverse repurchase agreements" line shows a change of **-181,761** million dollars from the week ended July 30, 2025.
+Looking at Table 1 (Factors Affecting Reserve Balances of Depository Institutions), the item that moved the most on the "absorbing" side of the ledger for the week ended July 29, 2026 was:
+
+**Deposits with F.R. Banks, other than reserve balances** — up **+$89,880 million** for the week.
+
+Within that category, the dominant driver was the **U.S. Treasury, General Account**, which rose by **+$81,153 million** (from about $829.6 billion to $910.8 billion average for the week). This single increase in Treasury's cash balance at the Fed accounts for the bulk of the total rise in factors absorbing reserve funds (+$78,780 million overall) and is the primary reason reserve balances fell by $77,579 million over the week (to a weekly average of $2,984,570 million).

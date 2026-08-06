@@ -1,1 +1,1 @@
-In table 6, "Statement of Condition of Each Federal Reserve Bank", what figure is shown for "Total liabilities and capital" in the "Philadelphia" column?
+Table 1, "Factors Affecting Reserve Balances of Depository Institutions", reports deposits held at Federal Reserve Banks other than reserve balances. Table 6, "Statement of Condition of Each Federal Reserve Bank", reports the system total for deposits on the same date. What proportion of that total does table 1’s figure represent?

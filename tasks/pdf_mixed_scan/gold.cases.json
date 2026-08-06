@@ -13,19 +13,23 @@
   "cases": [
     {
       "id": "case_01",
-      "label": "Currency in circulation, weekly change",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Currency in circulation\" in the \"Change from week ended Jul 22, 2026\" column?",
-      "answer": "+69 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
-      "difficulty": "easy",
-      "_page": 2,
+      "label": "Reconstruct a year-ago share from the change column",
+      "question": "In table 1A, \"Memorandum Items\", marketable U.S. Treasury securities are one component of the securities held in custody for foreign official and international accounts. Using the week-ended figures and the change from a year earlier, what share of that custody total did marketable Treasuries represent a year ago?",
+      "answer": "89.49% (2,889,153 of 3,228,400)",
+      "type": "analysis",
+      "category": "reconstruct",
+      "difficulty": "hard",
+      "_pages": [
+        3
+      ],
       "_layer": "text",
-      "_why": "The + sign sits in its own column, separate from the digits. A parser that drops the sign column still returns 69, so this one passes either way — it is the floor of the ladder.",
+      "_why": "The year-ago level is not printed anywhere. It has to be rebuilt by undoing the change column on both the component and the total, then divided. A solution that reads the current share off the page answers 90.44% and is wrong.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 69
+          "value": 89.4918,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -34,19 +38,26 @@
     },
     {
       "id": "case_02",
-      "label": "Reverse repurchase agreements, yearly change",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Reverse repurchase agreements\" in the \"Change from week ended Jul 30, 2025\" column? Include the sign.",
-      "answer": "-181,761 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
-      "difficulty": "medium",
-      "_page": 2,
+      "label": "Identify the dominant driver of the weekly change",
+      "question": "Reserve balances at Federal Reserve Banks fell over the week ended Jul 29, 2026. Looking at table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", which single factor absorbing reserve funds moved the most over that week, and by how much?",
+      "answer": "The U.S. Treasury, General Account, up 81,153",
+      "type": "analysis",
+      "category": "locate",
+      "difficulty": "hard",
+      "_pages": [
+        2
+      ],
       "_layer": "text",
-      "_why": "The minus lives in a separate column from the digits. Losing that column flips the sign of the answer without corrupting the number.",
+      "_why": "Nothing names the row. The whole change-from-last-week column has to be scanned and the largest absolute move picked out, then attributed to its label.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": -181761
+          "value": 81153,
+          "rel_tolerance": 0.01
+        },
+        {
+          "kind": "regex_required",
+          "pattern": "treasury|tga|general account"
         },
         {
           "kind": "no_hedge"
@@ -55,19 +66,22 @@
     },
     {
       "id": "case_03",
-      "label": "Others under reverse repos, yearly change",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", the \"Reverse repurchase agreements\" line is broken into two indented sub-lines. What figure does the second of them, \"Others\", show in the \"Change from week ended Jul 30, 2025\" column? Include the sign.",
-      "answer": "-153,238 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
+      "label": "Average versus point-in-time on the same row",
+      "question": "table 1A, \"Memorandum Items\" reports securities lent to dealers twice: as an average of daily figures for the week and as a Wednesday level. Which is larger, and by how much?",
+      "answer": "The weekly average, by 2,899 (42,679 vs 39,780)",
+      "type": "analysis",
+      "category": "compare",
       "difficulty": "medium",
-      "_page": 2,
+      "_pages": [
+        3
+      ],
       "_layer": "text",
-      "_why": "Indentation is the only thing marking these as sub-lines of the row above. A parser that flattens the hierarchy loses which 'Others' this is.",
+      "_why": "Two figures on one row under different column groups. A solution that does not distinguish the average from the Wednesday level cannot form the difference.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": -153238
+          "value": 2899,
+          "rel_tolerance": 0.01
         },
         {
           "kind": "no_hedge"
@@ -76,19 +90,23 @@
     },
     {
       "id": "case_04",
-      "label": "Treasury General Account, Wednesday column",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"U.S. Treasury, General Account\" in the \"Wednesday Jul 29, 2026\" column?",
-      "answer": "970,442 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
+      "label": "Complement of a share",
+      "question": "What proportion of the securities held in custody for foreign official and international accounts is made up of something other than marketable U.S. Treasury securities?",
+      "answer": "9.56%",
+      "type": "analysis",
+      "category": "compute",
       "difficulty": "medium",
-      "_page": 2,
+      "_pages": [
+        3
+      ],
       "_layer": "text",
-      "_why": "The Wednesday column is the last of five and sits past a multi-level header spanning three sub-columns. pdfplumber answered the wrong column here during screening.",
+      "_why": "Requires recognising that the custody total has three components and that the question asks for the two that are not named.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 970442
+          "value": 9.5621,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -97,19 +115,23 @@
     },
     {
       "id": "case_05",
-      "label": "Other liabilities and capital, weekly average",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Other liabilities and capital\" in the \"Week ended Jul 29, 2026\" column? Include the sign.",
-      "answer": "-179,225 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
+      "label": "Attribute a yearly decline to a sub-line",
+      "question": "Reverse repurchase agreements in table 1, \"Factors Affecting Reserve Balances of Depository Institutions\" fell over the year. What share of that decline came from the \"Others\" sub-line rather than from foreign official and international accounts?",
+      "answer": "84.3% (153,238 of 181,761)",
+      "type": "analysis",
+      "category": "compute",
       "difficulty": "hard",
-      "_page": 2,
+      "_pages": [
+        2
+      ],
       "_layer": "text",
-      "_why": "This row writes its minus attached to the digits, while other rows put the sign in a separate column. Both conventions appear in the same table.",
+      "_why": "Both figures sit in the change-from-a-year-ago column, one on the parent row and one on an indented sub-line. The ratio is of two negative changes.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": -179225
+          "value": 84.3074,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -118,19 +140,23 @@
     },
     {
       "id": "case_06",
-      "label": "Reserve balances, weekly change",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Reserve balances with Federal Reserve Banks\" in the \"Change from week ended Jul 22, 2026\" column? Include the sign.",
-      "answer": "-77,579 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
-      "difficulty": "medium",
-      "_page": 2,
+      "label": "Percentage growth off a reconstructed base",
+      "question": "By what percentage did the U.S. Treasury General Account grow over the year, measured on the week-ended figures in table 1, \"Factors Affecting Reserve Balances of Depository Institutions\"?",
+      "answer": "145.8% (from 370,507 to 910,776)",
+      "type": "analysis",
+      "category": "reconstruct",
+      "difficulty": "hard",
+      "_pages": [
+        2
+      ],
       "_layer": "text",
-      "_why": "Last row of the table, below a blank separator line.",
+      "_why": "The base is not printed: it is the current level minus the year change. Dividing the change by the current level instead gives 59.3%, which is the trap.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": -77579
+          "value": 145.8188,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -139,19 +165,23 @@
     },
     {
       "id": "case_07",
-      "label": "Total absorbing reserve funds",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Total factors, other than reserve balances, absorbing reserve funds\" in the \"Week ended Jul 29, 2026\" column?",
-      "answer": "3,813,030 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
+      "label": "Composition of pledged collateral",
+      "question": "In table 7, \"Collateral Held against Federal Reserve Notes\", what share of the Federal Reserve notes to be collateralized is covered by pledged securities rather than by the gold and SDR certificate accounts?",
+      "answer": "98.92% (2,394,322 of 2,420,559)",
+      "type": "analysis",
+      "category": "compute",
       "difficulty": "medium",
-      "_page": 2,
-      "_layer": "text",
-      "_why": "The row label wraps onto two lines; a parser that treats each visual line as its own row cannot match the label.",
+      "_pages": [
+        11
+      ],
+      "_layer": "scan",
+      "_why": "Requires reading which of the four collateral lines are certificates and which are securities, then relating to the amount to be collateralized rather than to the collateral total.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 3813030
+          "value": 98.9161,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -160,19 +190,22 @@
     },
     {
       "id": "case_08",
-      "label": "Deposits with F.R. Banks, yearly change",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Deposits with F.R. Banks, other than reserve balances\" in the \"Change from week ended Jul 30, 2025\" column? Include the sign.",
-      "answer": "+571,430 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
-      "difficulty": "medium",
-      "_page": 2,
-      "_layer": "text",
-      "_why": "Parent row of four indented sub-lines; the sub-lines carry similar magnitudes.",
+      "label": "Headroom, not a printed figure",
+      "question": "How much more collateral could the Federal Reserve pledge against its notes without acquiring any additional securities?",
+      "answer": "3,670,283 (6,064,605 eligible less 2,394,322 already pledged)",
+      "type": "analysis",
+      "category": "compute",
+      "difficulty": "hard",
+      "_pages": [
+        11
+      ],
+      "_layer": "scan",
+      "_why": "The question names no line. Answering it means understanding that 'eligible to be pledged' in the memo is the ceiling and 'pledged' in the collateral block is the current draw.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 571430
+          "value": 3670283,
+          "rel_tolerance": 0.01
         },
         {
           "kind": "no_hedge"
@@ -181,19 +214,27 @@
     },
     {
       "id": "case_09",
-      "label": "Treasury cash holdings, Wednesday",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", what figure is shown for \"Treasury cash holdings\" in the \"Wednesday Jul 29, 2026\" column?",
-      "answer": "323 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
-      "difficulty": "easy",
-      "_page": 2,
-      "_layer": "text",
-      "_why": "Three digits in a table of seven-digit numbers — a column drift here produces something visibly different.",
+      "label": "Concentration across districts",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", which Federal Reserve District holds the largest share of the system total for Deposits, and what share is that?",
+      "answer": "New York, 66.57% (2,768,498 of 4,158,647)",
+      "type": "analysis",
+      "category": "locate",
+      "difficulty": "medium",
+      "_pages": [
+        9
+      ],
+      "_layer": "scan",
+      "_why": "Thirteen columns have to be compared before the ratio can be formed.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 323
+          "value": 66.5721,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
+        },
+        {
+          "kind": "regex_required",
+          "pattern": "new\\s*york"
         },
         {
           "kind": "no_hedge"
@@ -202,19 +243,23 @@
     },
     {
       "id": "case_10",
-      "label": "Foreign official deposits, weekly change",
-      "question": "In table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", under \"Deposits with F.R. Banks, other than reserve balances\", what figure does the indented \"Foreign official\" line show in the \"Change from week ended Jul 22, 2026\" column? Include the sign.",
-      "answer": "-582 million dollars",
-      "type": "extraction",
-      "category": "text_layer",
-      "difficulty": "hard",
-      "_page": 2,
-      "_layer": "text",
-      "_why": "A three-digit value with its sign in a separate column, on an indented sub-line, eleven columns from the page edge.",
+      "label": "Share excluded from a requirement",
+      "question": "What proportion of Federal Reserve notes outstanding is not subject to collateralization?",
+      "answer": "14.39% (406,743 of 2,827,302)",
+      "type": "analysis",
+      "category": "compute",
+      "difficulty": "medium",
+      "_pages": [
+        11
+      ],
+      "_layer": "scan",
+      "_why": "Two adjacent lines, but the denominator is the outstanding figure rather than the to-be-collateralized figure below it.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": -582
+          "value": 14.3863,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -223,19 +268,26 @@
     },
     {
       "id": "case_11",
-      "label": "FR notes net, New York",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Federal Reserve notes, net\" in the \"New York\" column?",
-      "answer": "748,255 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "easy",
-      "_page": 9,
+      "label": "Find the exception in a row",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", earnings remittances due to the U.S. Treasury are negative for most Federal Reserve Districts. Which district shows the largest positive figure, and what is it?",
+      "answer": "Atlanta, 154",
+      "type": "analysis",
+      "category": "locate",
+      "difficulty": "hard",
+      "_pages": [
+        9
+      ],
       "_layer": "scan",
-      "_why": "First data row of the liabilities block, third column. Reachable only by OCR: this page carries no text layer.",
+      "_why": "Three of the thirteen columns are positive. The row has to be read across, signs kept, and the largest positive picked — not the largest by magnitude, which is negative.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 748255
+          "value": 154,
+          "rel_tolerance": 0.01
+        },
+        {
+          "kind": "regex_required",
+          "pattern": "atlanta"
         },
         {
           "kind": "no_hedge"
@@ -244,19 +296,27 @@
     },
     {
       "id": "case_12",
-      "label": "Deposits, Chicago",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for the \"Deposits\" row in the \"Chicago\" column?",
-      "answer": "289,170 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "medium",
-      "_page": 9,
+      "label": "An anomalous concentration",
+      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", one district accounts for most of the system total on the indented \"Other\" line under Deposits. Which district, and what share does it hold?",
+      "answer": "Chicago, 70.2% (164,338 of 234,208)",
+      "type": "analysis",
+      "category": "compute",
+      "difficulty": "hard",
+      "_pages": [
+        9
+      ],
       "_layer": "scan",
-      "_why": "Eighth of fourteen columns, and the row has four indented sub-lines beneath it carrying similar magnitudes.",
+      "_why": "Chicago's figure is four orders of magnitude above its neighbours on that line, so the row must be read across before the share can be computed.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 289170
+          "value": 70.1675,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
+        },
+        {
+          "kind": "regex_required",
+          "pattern": "chicago"
         },
         {
           "kind": "no_hedge"
@@ -265,19 +325,24 @@
     },
     {
       "id": "case_13",
-      "label": "Earnings remittances, Richmond",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Earnings remittances due to the U.S. Treasury\" in the \"Richmond\" column? Include the sign.",
-      "answer": "-40,560 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "medium",
-      "_page": 9,
-      "_layer": "scan",
-      "_why": "The row label wraps onto two lines and most of its values are negative.",
+      "label": "Follow the document's own cross-reference",
+      "question": "The securities figures in table 7, \"Collateral Held against Federal Reserve Notes\" carry a footnote saying they include securities lent to dealers under the overnight securities lending facility, and pointing to another table for that amount. Find it, and express it as a share of the total U.S. Treasury, agency debt, and mortgage-backed securities reported in that memo.",
+      "answer": "0.62% (39,780 of 6,452,859)",
+      "type": "analysis",
+      "category": "cross_reference",
+      "difficulty": "expert",
+      "_pages": [
+        3,
+        11
+      ],
+      "_layer": "both",
+      "_why": "The document itself directs the reader from one table to another, and the two tables sit on opposite sides of the text/image split. The Wednesday column must be chosen in table 1A to match table 7's dating.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": -40560
+          "value": 0.6165,
+          "rel_tolerance": 0.01,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -286,19 +351,23 @@
     },
     {
       "id": "case_14",
-      "label": "Earnings remittances, Atlanta (sign flips mid-row)",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Earnings remittances due to the U.S. Treasury\" in the \"Atlanta\" column? Include the sign.",
-      "answer": "+154 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "hard",
-      "_page": 9,
-      "_layer": "scan",
-      "_why": "Ten of the thirteen values on this row are negative; Atlanta, St. Louis and Dallas are positive. A parser or model that carries the row's sign across cannot get this one right.",
+      "label": "Two similar-sounding measures",
+      "question": "Currency in circulation and Federal Reserve notes outstanding are different measures reported in different tables. On Wednesday Jul 29, 2026, by how much do they differ?",
+      "answer": "355,125 (2,827,302 less 2,472,177)",
+      "type": "analysis",
+      "category": "cross_reference",
+      "difficulty": "expert",
+      "_pages": [
+        2,
+        11
+      ],
+      "_layer": "both",
+      "_why": "Neither table names the other. The solution has to know these are distinct quantities and locate each, one on a digital page and one on an image page.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 154
+          "value": 355125,
+          "rel_tolerance": 0.01
         },
         {
           "kind": "no_hedge"
@@ -307,19 +376,27 @@
     },
     {
       "id": "case_15",
-      "label": "Other deposits, Chicago",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", under the \"Deposits\" row, what figure does the indented \"Other\" line show in the \"Chicago\" column?",
-      "answer": "164,338 million dollars",
-      "type": "extraction",
-      "category": "image_only",
+      "label": "Locate a system total inside a district table",
+      "question": "table 1, \"Factors Affecting Reserve Balances of Depository Institutions\" reports the U.S. Treasury General Account on Wednesday. Looking at table 6, \"Statement of Condition of Each Federal Reserve Bank\", which single district carries essentially all of it, and what figure does that district show?",
+      "answer": "New York, 970,442",
+      "type": "analysis",
+      "category": "cross_reference",
       "difficulty": "hard",
-      "_page": 9,
-      "_layer": "scan",
-      "_why": "Chicago's value on this line is four orders of magnitude larger than its neighbours (St. Louis 2, Minneapolis 104), so a column drift is catastrophic rather than plausible.",
+      "_pages": [
+        2,
+        9
+      ],
+      "_layer": "both",
+      "_why": "The system figure is on a digital page and the district breakdown is on an image page; the two agree exactly, which is the check.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 164338
+          "value": 970442,
+          "rel_tolerance": 0.01
+        },
+        {
+          "kind": "regex_required",
+          "pattern": "new\\s*york"
         },
         {
           "kind": "no_hedge"
@@ -328,19 +405,23 @@
     },
     {
       "id": "case_16",
-      "label": "Total liabilities, San Francisco",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Total liabilities\" in the \"San Francisco\" column?",
-      "answer": "694,042 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "medium",
-      "_page": 9,
-      "_layer": "scan",
-      "_why": "Last column of fourteen, on a bold total row separated by blank space.",
+      "label": "Composition on one side, total on the other",
+      "question": "On Wednesday, what share of the system total for reverse repurchase agreements is held for foreign official and international accounts?",
+      "answer": "99.24% (334,475 of 337,051)",
+      "type": "analysis",
+      "category": "cross_reference",
+      "difficulty": "hard",
+      "_pages": [
+        2
+      ],
+      "_layer": "text",
+      "_why": "The split into foreign official and others appears only in table 1 on a digital page; the system total is confirmed in table 6 on an image page. Relabelled from 'both' to 'text': the split into foreign official and others and the system total both sit in table 1, so table 6 adds nothing. A text-only pipeline answered it correctly, which is what exposed the mislabelling.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 694042
+          "value": 99.2357,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -349,19 +430,23 @@
     },
     {
       "id": "case_17",
-      "label": "Capital paid in, Cleveland",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Capital paid in\" in the \"Cleveland\" column?",
-      "answer": "4,818 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "hard",
-      "_page": 9,
-      "_layer": "scan",
-      "_why": "Fifth of fourteen columns, in the Capital block below the liabilities totals. Originally set to Minneapolis (245), but the absence check found '245' occurring as a substring inside a larger number on the text-layer pages, which would let a text-only solution stumble onto it.",
+      "label": "Apply a footnote across the split",
+      "question": "table 7, \"Collateral Held against Federal Reserve Notes\" reports securities pledged against Federal Reserve notes, and its footnote says that figure includes securities lent to dealers. If those lent securities were excluded, what would the pledged figure be?",
+      "answer": "2,354,542 (2,394,322 less 39,780)",
+      "type": "analysis",
+      "category": "cross_reference",
+      "difficulty": "expert",
+      "_pages": [
+        3,
+        11
+      ],
+      "_layer": "both",
+      "_why": "Requires reading the footnote on an image page, following it to a digital page for the amount, and subtracting.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 4818.0
+          "value": 2354542,
+          "rel_tolerance": 0.01
         },
         {
           "kind": "no_hedge"
@@ -370,19 +455,22 @@
     },
     {
       "id": "case_18",
-      "label": "Surplus, Richmond",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Surplus\" in the \"Richmond\" column?",
-      "answer": "1,488 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "hard",
-      "_page": 9,
+      "label": "Reconstruct a district's year-ago share",
+      "question": "Table 6, \"Statement of Condition of Each Federal Reserve Bank\", splits depository institution deposits across the twelve Districts. Chicago and Richmond both hold substantial balances. Which of the two holds more, and what is the ratio of the larger to the smaller?",
+      "answer": "Richmond holds more; 343,724 / 124,830 = 2.75",
+      "type": "analysis",
+      "category": "cross_reference",
+      "difficulty": "medium",
+      "_pages": [
+        9
+      ],
       "_layer": "scan",
-      "_why": "Sixth of fourteen columns, on the Surplus row. Originally Kansas City (89), which is too short for the absence check to verify — any two-digit gold could be hit by chance from the text-layer pages.",
+      "_why": "Replaced the original question, which asked which District holds foreign official deposits. The closed-book probe answered that correctly with no document — that the New York Fed keeps the foreign official accounts is textbook, not something the release tells you. Chicago against Richmond is not: their relative size on this particular line has to be read. The name requirement was dropped because the question has to name both candidates; the ratio carries the case, and reversing it gives 0.363.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 1488.0
+          "value": 2.7535,
+          "rel_tolerance": 0.01
         },
         {
           "kind": "no_hedge"
@@ -391,19 +479,24 @@
     },
     {
       "id": "case_19",
-      "label": "Total liabilities and capital, Philadelphia",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", what figure is shown for \"Total liabilities and capital\" in the \"Philadelphia\" column?",
-      "answer": "115,772 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "medium",
-      "_page": 9,
-      "_layer": "scan",
-      "_why": "Final row of the table; the Philadelphia header is the widest and its column the narrowest.",
+      "label": "Reconcile two different deposit totals",
+      "question": "Table 1, \"Factors Affecting Reserve Balances of Depository Institutions\", reports deposits held at Federal Reserve Banks other than reserve balances. Table 6, \"Statement of Condition of Each Federal Reserve Bank\", reports the system total for deposits on the same date. What proportion of that total does table 1’s figure represent?",
+      "answer": "29.20% (1,214,102 of 4,158,647)",
+      "type": "analysis",
+      "category": "reconcile",
+      "difficulty": "expert",
+      "_pages": [
+        2,
+        9
+      ],
+      "_layer": "both",
+      "_why": "Needs one figure from each half and neither table states the other's. The earlier version asked what the smaller figure leaves out; a text-only pipeline answered it, because table 1 reports reserve balances itself and its 2,944,541 fell inside the tolerance around table 6's 2,944,544.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 115772
+          "value": 29.1947,
+          "rel_tolerance": 0.004,
+          "accept_percent_forms": true
         },
         {
           "kind": "no_hedge"
@@ -412,24 +505,37 @@
     },
     {
       "id": "case_20",
-      "label": "Depository institutions, New York",
-      "question": "In table 6, \"Statement of Condition of Each Federal Reserve Bank\", under \"Deposits\", what figure does the indented \"Depository institutions\" line show in the \"New York\" column?",
-      "answer": "1,719,915 million dollars",
-      "type": "extraction",
-      "category": "image_only",
-      "difficulty": "medium",
-      "_page": 9,
-      "_layer": "scan",
-      "_why": "Seven digits on an indented sub-line; the parent Deposits row shows 2,768,498 in the same column.",
+      "label": "Two conventions for the same instrument",
+      "question": "table 1, \"Factors Affecting Reserve Balances of Depository Institutions\" reports reverse repurchase agreements on Wednesday, while table 7, \"Collateral Held against Federal Reserve Notes\" deducts an amount for securities under reverse repurchase agreements. The two figures differ. By how much, and why?",
+      "answer": "51,203 — table 1 reports cash value, table 7 face value (388,254 less 337,051)",
+      "type": "analysis",
+      "category": "reconcile",
+      "difficulty": "expert",
+      "_pages": [
+        2,
+        11
+      ],
+      "_layer": "both",
+      "_why": "The reason is in the footnotes, one on each side of the split: table 1 note 12 says cash value, table 7's memo line says face value.",
       "matchers": [
         {
           "kind": "sci_value",
-          "value": 1719915
+          "value": 51203,
+          "rel_tolerance": 0.01
+        },
+        {
+          "kind": "regex_required",
+          "pattern": "face\\s*value"
+        },
+        {
+          "kind": "regex_required",
+          "pattern": "cash\\s*value"
         },
         {
           "kind": "no_hedge"
         }
       ]
     }
-  ]
+  ],
+  "_design": "Questions are the kind an analyst actually asks of this release: they name no cell, often no table, and answering them means working out which figures matter and what to do with them. Six need only the digital pages, six only the image pages, and eight need both — those eight cannot be answered at all by a pipeline that reads one half."
 }

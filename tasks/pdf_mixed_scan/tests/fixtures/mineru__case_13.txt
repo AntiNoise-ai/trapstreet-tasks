@@ -1,1 +1,10 @@
-The figure shown for "Earnings remittances due to the U.S. Treasury" in the Richmond column is **-40,560** (million dollars).
+**Securities lent to dealers (overnight securities lending facility) – Table 1A:**
+- Wednesday, July 29, 2026 value: **$39,780 million**
+
+**Total U.S. Treasury, agency debt, and mortgage-backed securities (Table 7 memo item):**
+- **$6,452,859 million**
+
+**Share:**
+$39,780 million ÷ $6,452,859 million ≈ **0.62%**
+
+So the securities lent to dealers under the overnight securities lending facility represent about 0.6% of the total U.S. Treasury, agency debt, and mortgage-backed securities reported in Table 7.

@@ -1,17 +1,18 @@
 {
   "id": "case_17",
-  "label": "Capital paid in, Cleveland",
-  "answer": "4,818 million dollars",
-  "type": "extraction",
+  "label": "Apply a footnote across the split",
+  "answer": "2,354,542 (2,394,322 less 39,780)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 4818.0
+      "value": 2354542,
+      "rel_tolerance": 0.01
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "image_only",
-  "difficulty": "hard"
+  "category": "cross_reference",
+  "difficulty": "expert"
 }

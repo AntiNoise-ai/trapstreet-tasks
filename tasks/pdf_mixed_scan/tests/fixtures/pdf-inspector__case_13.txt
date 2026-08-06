@@ -1,1 +1,20 @@
-The document does not contain Table 6 ("Statement of Condition of Each Federal Reserve Bank"), so this information is not available in the provided text.
+**Finding the referenced figure**
+
+Table 7’s footnote points to the “securities lent to dealers under the overnight securities lending facility” figure, which appears in **Table 1A (Memorandum Items)**.
+
+- Securities lent to dealers, Wednesday July 29, 2026: **$39,780 million**
+
+**Computing the share**
+
+Table 1A also reports the components of securities held in custody for foreign official and international accounts (as of Wednesday, July 29, 2026):
+
+- Marketable U.S. Treasury securities: $2,656,633 million
+- Federal agency debt and mortgage‑backed securities: $204,218 million
+
+Total (Treasury + agency debt + MBS) = $2,656,633 + $204,218 = **$2,860,851 million**
+
+**Share calculation:**
+
+$39,780 million ÷ $2,860,851 million ≈ **1.4%**
+
+So the securities lent to dealers under the overnight securities lending facility (the amount embedded in Table 7’s collateral totals) represent roughly **1.4%** of the total U.S. Treasury, agency debt, and mortgage‑backed securities held in custody for foreign official and international accounts, as reported in Table 1A.

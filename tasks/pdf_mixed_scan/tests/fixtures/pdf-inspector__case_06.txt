@@ -1,1 +1,9 @@
-The figure shown for "Reserve balances with Federal Reserve Banks" in the column showing change from the week ended Jul 22, 2026 is **-77,579**.
+Based on Table 1, the U.S. Treasury General Account stood at **$910,776 million** for the week ended July 29, 2026, reflecting a year‑over‑year change of **+$540,269 million**.
+
+This means the balance a year earlier (week ended July 30, 2025) was:
+910,776 − 540,269 = **370,507 million**
+
+Percentage growth over the year:
+(540,269 / 370,507) × 100 ≈ **145.8%**
+
+So the U.S. Treasury General Account grew by approximately **146%** year-over-year.

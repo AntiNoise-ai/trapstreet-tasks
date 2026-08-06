@@ -1,1 +1,11 @@
-Based on Table 1 (continued), the "Currency in circulation" figure for the "Change from week ended Jul 22, 2026" column is **+69** million dollars.
+**Calculation:**
+
+- Marketable U.S. Treasury securities (week ended Jul 29, 2026): $2,638,757 million; change from a year earlier: –$250,396 million → year‑ago value = 2,638,757 + 250,396 = **$2,889,153 million**
+
+- Total securities held in custody for foreign official and international accounts (week ended Jul 29, 2026): $2,917,756 million; change from a year earlier: –$310,644 million → year‑ago total = 2,917,756 + 310,644 = **$3,228,400 million**
+
+**Share a year ago:**
+
+2,889,153 ÷ 3,228,400 ≈ **89.5%**
+
+So marketable U.S. Treasury securities represented roughly 89.5% of the total custody holdings for foreign official and international accounts a year earlier (around July 30, 2025), compared with about 90.4% currently (2,638,757/2,917,756).

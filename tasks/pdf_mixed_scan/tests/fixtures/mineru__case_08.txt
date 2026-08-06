@@ -1,1 +1,8 @@
-Based on Table 1, the "Change from week ended Jul 30, 2025" figure for "Deposits with F.R. Banks, other than reserve balances" is **+571,430** (million dollars).
+Based on Table 7 (Collateral Held against Federal Reserve Notes), as of Wednesday, July 29, 2026:
+
+- **U.S. Treasury, agency debt, and mortgage-backed securities eligible to be pledged:** $6,064,605 million
+- **U.S. Treasury, agency debt, and mortgage-backed securities currently pledged:** $2,394,322 million
+
+**Additional collateral available to pledge = $6,064,605M − $2,394,322M = $3,670,283 million**
+
+So, without acquiring any additional securities, the Federal Reserve could pledge approximately **$3.67 trillion** more in collateral against its outstanding notes, since it already holds far more eligible securities than are currently required to be pledged.

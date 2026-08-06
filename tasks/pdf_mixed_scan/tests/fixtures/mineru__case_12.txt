@@ -1,1 +1,6 @@
-According to Table 6, the "Deposits" figure for the Chicago Federal Reserve Bank is **289,170** million dollars.
+**Chicago** holds by far the largest share of the system‑wide "Other" deposits line under Deposits in Table 6.
+
+- Chicago: **$164,338 million**
+- System total ("Other" line): **$234,208 million**
+
+This gives Chicago roughly **70%** (164,338 ÷ 234,208 ≈ 70.2%) of the total "Other" deposits reported across all twelve Reserve Banks—far more than any other district (the next largest, New York, holds about $68,716 million, or ~29%).

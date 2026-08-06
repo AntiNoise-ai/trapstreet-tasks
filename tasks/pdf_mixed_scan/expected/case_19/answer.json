@@ -1,17 +1,19 @@
 {
   "id": "case_19",
-  "label": "Total liabilities and capital, Philadelphia",
-  "answer": "115,772 million dollars",
-  "type": "extraction",
+  "label": "Reconcile two different deposit totals",
+  "answer": "29.20% (1,214,102 of 4,158,647)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 115772
+      "value": 29.1947,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "image_only",
-  "difficulty": "medium"
+  "category": "reconcile",
+  "difficulty": "expert"
 }

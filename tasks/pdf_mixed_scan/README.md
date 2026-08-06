@@ -2,38 +2,41 @@
 
 ## What it measures
 
-Whether a PDF pipeline reaches content that has no text layer.
+Whether a PDF pipeline can answer analyst questions about a document half of
+which has no text layer.
 
-The document is one Federal Reserve statistical release. Pages 1–5 are ordinary
-digital pages. Pages 6–11 are images of pages — same tables, no extractable
-text. Ten cases ask for a cell on the digital half, ten on the image half.
+The document is one Federal Reserve H.4.1 release. Pages 1–5 are ordinary
+digital pages; pages 6–11 are images of pages, same tables, no extractable
+text. The twenty questions are the kind someone actually asks of this release —
+they name no cell, often no table, and answering one means working out which
+figures matter and what to do with them:
 
-A solution that only reads the text layer can answer the digital cases and
-**cannot answer the image cases at all**. Not "answers them badly" — the
-information is not present in what it receives. Its ceiling is half marks, and
-that ceiling is enforced rather than assumed: `tests/test_judge.py` asserts that
-every image-half figure is absent from the document's text layer, so none can be
-reached by accident.
+> How much more collateral could the Federal Reserve pledge against its notes
+> without acquiring any additional securities?
 
-## Why the task is built this way
+> Reverse repurchase agreements fell over the year. What share of that decline
+> came from the "Others" sub-line?
 
-Three earlier attempts at this measurement graded how well a parser preserves table
-structure on ordinary digital pages — a wide indicator table, two-column
-academic papers, and this same H.4.1 table in its released form. None of them
-separated the pipelines: the scores clustered inside the run-to-run noise.
+Seven need only the digital pages, seven only the image pages, and six need
+both. Most answers are figures the document never prints — a ratio, a
+difference, a base reconstructed by undoing a change column — so reproducing
+the document does not produce them.
 
-The lesson those three share: **disorder is recoverable, absence is not.** When
-a parser garbles a row, a capable model reconstructs the answer from context and
-the difference between parsers washes out. When a parser receives nothing, no
-model can recover it. So the task stopped trying to grade how *well* the grid
-survives and started asking whether the content arrives at all.
+## Why it is built this way
 
-Detecting the split is not the hard part — a parser that classifies PDFs will
-report this document as mixed. What the task measures is whether the pipeline
-*acts* on that: routes the image pages to OCR or to a vision model, rather than
-returning what the text layer happened to contain.
+Four earlier attempts measured how well a parser preserves table structure on
+ordinary digital pages. None separated the pipelines, and the reason was always
+the same: **disorder is recoverable, absence is not.** A capable model
+reconstructs an answer from a garbled row, so parser differences wash out. What
+a model cannot do is recover content that never arrived.
 
-## Gold provenance
+A fifth attempt made half the document unreachable but asked only single-cell
+lookups. That separated text-layer pipelines from OCR ones, and nothing within
+either group — everything that could read the page scored full marks. Questions
+that require locating the right figures and combining them restore a gradient
+there too, because a compound answer needs several cells right at once.
+
+## Gold provenance## Gold provenance
 
 Every figure was read by eye off the page rendered at 2.4×, never from a
 parser's extraction. Each case records `_page` and `_layer` (`text` or `scan`)
@@ -69,21 +72,37 @@ as hidden gotchas:
 
 ## Known limitations
 
-- **The scan is synthetic.** Pages 6–11 were rasterised from the same release,
-  not photographed. Real scans add skew, noise and compression artefacts that
-  make OCR harder, so OCR scores here are an upper bound. The construction is
-  disclosed in [ATTRIBUTION.md](ATTRIBUTION.md) and reproducible from it.
-- **One document.** The digital and image halves come from the same release, so
-  the two halves are matched in style and difficulty — which is what makes the
-  comparison clean, and also what stops it generalising to other document types.
-- **A solution can reach the image half without OCR** by sending page images
-  straight to a vision model. That is a legitimate strategy, not a loophole, and
-  the task does not distinguish it from OCR — both reach the content.
-- **Scores are the leaderboard's to report.** This file describes what the task
-  asks and how it is scored; it deliberately does not publish the task author's
-  own measurements of any tool.
+- **The scan is synthetic.** Pages 6–11 were rasterised from the same release
+  at 200 dpi, not photographed. Real scans add skew, noise and compression
+  artefacts, so OCR results here are an upper bound. Disclosed with
+  reproduction code in [ATTRIBUTION.md](ATTRIBUTION.md).
+- **One document.** The two halves come from the same release, which is what
+  makes the comparison clean and also what stops it generalising.
+- **A pipeline may reach the image half with a vision model rather than OCR.**
+  That is a legitimate strategy and the task does not distinguish them.
+- **Scores belong to the leaderboard.** This file describes what is asked and
+  how it is scored; it does not publish the author's own measurements.
 
-## Rebuild
+## A judge that had to be corrected four times
+
+Recorded because the pattern is more useful than the fixes. Every version
+rejected *correct* answers, and every one was caught by running the task rather
+than by reasoning about it:
+
+| Rule | What it rejected |
+|---|---|
+| cap of 8 figures | an answer that quoted the row it read the value from — a date contributes two figures of its own |
+| target must be among the last 3 | three answers that led with the figure in bold and explained underneath |
+| target must be first or among the last 3 | the commonest analytical shape there is: preamble, answer, explanation |
+| comma always a decimal point | `748,255` parsed as 748.255, failing sixteen of twenty |
+
+Position was the wrong signal throughout. What protects these cases instead is
+a property of the questions — most ask for a figure the document does not
+print — plus a name requirement on the few whose answer *is* printed, and a cap
+that only fires on a whole-page dump. `tests/fixtures/` holds sixty answers
+from three real pipelines so the next revision cannot quietly undo this.
+
+## Rebuild## Rebuild
 
 ```bash
 python3 build_cases.py

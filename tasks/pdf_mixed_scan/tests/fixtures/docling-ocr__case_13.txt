@@ -1,1 +1,6 @@
-The figure shown for "Earnings remittances due to the U.S. Treasury" in the Richmond column is **-40,560** (millions of dollars).
+**The securities-lending figure:** Table 1A shows "Securities lent to dealers" (overnight facility, fully collateralized by U.S. Treasury securities) at **$42,679 million** (weekly average; $39,780 million on the Wednesday, July 29, 2026 figure).
+
+**The memo total in Table 7:** "Total U.S. Treasury, agency debt, and mortgage-backed securities" = **$6,452,859 million** (Wednesday, July 29, 2026).
+
+**Share:**
+42,679 / 6,452,859 ≈ **0.66%** of the total U.S. Treasury, agency debt, and mortgage-backed securities reported in that memo item.

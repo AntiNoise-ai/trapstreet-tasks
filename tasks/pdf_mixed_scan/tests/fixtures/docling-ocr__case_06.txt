@@ -1,1 +1,9 @@
--77,579 (a decrease of $77,579 million)
+**U.S. Treasury General Account growth over the year (week-ended figures, Table 1):**
+
+- Current (week ended Jul 29, 2026): **$910,776 million**
+- Year-ago value = current − yearly change = $910,776M − $540,269M = **$370,507 million** (implied week-ended Jul 30, 2025 level)
+- Yearly change: **+$540,269 million**
+
+**Percentage growth = $540,269M / $370,507M ≈ 145.8%**
+
+So the U.S. Treasury General Account grew by approximately **146%** year-over-year.

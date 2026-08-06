@@ -1,1 +1,9 @@
-According to Table 6, the "Capital paid in" figure for the Cleveland Federal Reserve Bank is **4,818 million dollars**.
+**Calculation:**
+
+- Table 7 reports "U.S. Treasury, agency debt, and mortgage-backed securities pledged" = **$2,394,322 million**
+- Footnote 2 states this figure includes securities lent to dealers under the overnight securities lending facility (per Table 1A)
+- Table 1A shows "Securities lent to dealers" (Overnight facility) = **$42,679 million** (all U.S. Treasury securities; Federal agency debt securities lent = $0)
+
+**If securities lent to dealers were excluded from the pledged collateral figure:**
+
+$2,394,322 million − $42,679 million = **$2,351,643 million**

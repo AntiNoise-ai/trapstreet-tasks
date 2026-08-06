@@ -1,1 +1,8 @@
-The figure shown is **+571,430** (millions of dollars).
+According to Table 7 (Collateral Held against Federal Reserve Notes), as of July 29, 2026:
+
+- **U.S. Treasury, agency debt, and mortgage-backed securities eligible to be pledged:** $6,064,605 million
+- **Securities currently pledged as collateral against notes:** $2,394,322 million (part of the $2,420,559 million total collateral, which also includes the gold certificate account of $11,037 million and the SDR certificate account of $15,200 million)
+
+**Additional collateral capacity = $6,064,605 million − $2,394,322 million = $3,670,283 million**
+
+So, without acquiring any new securities, the Federal Reserve could pledge roughly **$3.67 trillion** more in eligible Treasury, agency debt, and mortgage-backed securities as collateral against its outstanding notes.

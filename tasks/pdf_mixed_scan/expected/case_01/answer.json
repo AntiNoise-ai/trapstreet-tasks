@@ -1,17 +1,19 @@
 {
   "id": "case_01",
-  "label": "Currency in circulation, weekly change",
-  "answer": "+69 million dollars",
-  "type": "extraction",
+  "label": "Reconstruct a year-ago share from the change column",
+  "answer": "89.49% (2,889,153 of 3,228,400)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 69
+      "value": 89.4918,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "text_layer",
-  "difficulty": "easy"
+  "category": "reconstruct",
+  "difficulty": "hard"
 }

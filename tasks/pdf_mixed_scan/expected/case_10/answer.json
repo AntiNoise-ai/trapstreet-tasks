@@ -1,17 +1,19 @@
 {
   "id": "case_10",
-  "label": "Foreign official deposits, weekly change",
-  "answer": "-582 million dollars",
-  "type": "extraction",
+  "label": "Share excluded from a requirement",
+  "answer": "14.39% (406,743 of 2,827,302)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": -582
+      "value": 14.3863,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "text_layer",
-  "difficulty": "hard"
+  "category": "compute",
+  "difficulty": "medium"
 }

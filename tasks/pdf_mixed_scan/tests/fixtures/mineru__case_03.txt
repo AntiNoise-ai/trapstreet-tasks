@@ -1,1 +1,6 @@
-According to Table 1, the "Others" sub-line under Reverse repurchase agreements shows a change of **-153,238** in the "Change from week ended Jul 30, 2025" column.
+Based on Table 1A ("Memorandum Items"), for "Securities lent to dealers" (and its "Overnight facility" / "U.S. Treasury securities" breakdown):
+
+- **Week-ended (average of daily figures) for Jul 29, 2026: $42,679 million**
+- **Wednesday level for Jul 29, 2026: $39,780 million**
+
+The **weekly average is larger**, exceeding the Wednesday level by **$2,899 million** (42,679 − 39,780 = 2,899).

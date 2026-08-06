@@ -1,1 +1,3 @@
-According to Table 6, "Statement of Condition of Each Federal Reserve Bank, July 29, 2026," the **Total liabilities** figure for the **San Francisco** Reserve Bank is **694,042** million dollars.
+On Wednesday, July 29, 2026, total reverse repurchase agreements were **$337,051 million**, of which **$334,475 million** were held for foreign official and international accounts.
+
+This means foreign official and international accounts accounted for approximately **99.2%** ($334,475M ÷ $337,051M) of the total reverse repurchase agreements outstanding, with the remaining ~0.8% ($2,576 million) attributable to "Others."

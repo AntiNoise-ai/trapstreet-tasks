@@ -1,1 +1,6 @@
-Based on Table 1, the figure shown for "Other liabilities and capital" in the "Week ended Jul 29, 2026" column is **-179,225** (million dollars).
+From the year‑over‑year change in Table 1, total reverse repurchase agreements fell $181,761 million (from $524,812 million a year earlier to $343,947 million). Of this decline:
+
+- Foreign official and international accounts fell $28,523 million
+- "Others" fell $153,238 million
+
+So the "Others" sub‑line accounted for **$153,238 million of the $181,761 million total decline, or about 84.3%** of the year‑over‑year drop in reverse repos.

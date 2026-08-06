@@ -1,1 +1,10 @@
-The figure shown for "U.S. Treasury, General Account" in the "Wednesday Jul 29, 2026" column of Table 1 is **970,442** million dollars.
+Based on the table of "Securities held in custody for foreign official and international accounts" (as of the week ended July 29, 2026):
+
+- **Total securities held in custody:** $2,917,756 million
+- **Marketable U.S. Treasury securities:** $2,638,757 million
+- **Non-Treasury securities** (Federal agency debt and mortgage-backed securities: $204,531 million + Other securities: $74,468 million) = **$278,999 million**
+
+**Proportion that is *not* marketable U.S. Treasury securities:**
+$278,999 million ÷ $2,917,756 million ≈ **9.6%**
+
+So roughly 9.6% of the securities held in custody for foreign official and international accounts consists of assets other than marketable U.S. Treasury securities (mainly federal agency debt/MBS and other securities such as non-marketable Treasuries, supranationals, corporate bonds, asset-backed securities, and commercial paper).

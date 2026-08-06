@@ -1,1 +1,6 @@
-According to Table 1, the "Others" sub-line under Reverse repurchase agreements shows a change of **-153,238** in the "Change from week ended Jul 30, 2025" column.
+The weekly average of daily figures is larger.
+
+- Average of daily figures (week ended Jul 29, 2026): **$42,679 million**
+- Wednesday level (Jul 29, 2026): **$39,780 million**
+
+Difference: **$2,899 million** (the weekly average exceeds the Wednesday figure by this amount).

@@ -1,1 +1,5 @@
-The figure shown for "Total factors, other than reserve balances, absorbing reserve funds" in the "Week ended Jul 29, 2026" column is **3,813,030** million dollars.
+In Table 7, the Federal Reserve notes to be collateralized total **$2,420,559 million**. Of this, the gold certificate account ($11,037 million) and the special drawing rights certificate account ($15,200 million) together cover $26,237 million, while the remaining **$2,394,322 million** is covered by pledged securities.
+
+This means pledged securities cover:
+
+**$2,394,322 million ÷ $2,420,559 million ≈ 98.9%** of the Federal Reserve notes to be collateralized — with the gold and SDR certificate accounts covering the remaining roughly 1.1%.

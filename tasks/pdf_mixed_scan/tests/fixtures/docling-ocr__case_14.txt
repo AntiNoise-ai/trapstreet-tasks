@@ -1,1 +1,8 @@
-The figure shown for Atlanta under "Earnings remittances due to the U.S. Treasury" is **154** (positive, no negative sign).
+On Wednesday, July 29, 2026:
+
+- **Currency in circulation** (Table 1): $2,472,177 million
+- **Federal Reserve notes outstanding** (Table 7): $2,827,302 million
+
+**Difference: $355,125 million** (Federal Reserve notes outstanding is higher)
+
+This difference largely reflects that "Federal Reserve notes outstanding" is a gross figure, while "currency in circulation" nets out currency held in the vaults of Federal Reserve Banks. Table 7 shows this explicitly — $406,743 million in notes are held by F.R. Banks and are not subject to collateralization, which accounts for most of the gap between the two measures.

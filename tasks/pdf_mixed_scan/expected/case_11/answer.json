@@ -1,17 +1,22 @@
 {
   "id": "case_11",
-  "label": "FR notes net, New York",
-  "answer": "748,255 million dollars",
-  "type": "extraction",
+  "label": "Find the exception in a row",
+  "answer": "Atlanta, 154",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 748255
+      "value": 154,
+      "rel_tolerance": 0.01
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "atlanta"
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "image_only",
-  "difficulty": "easy"
+  "category": "locate",
+  "difficulty": "hard"
 }

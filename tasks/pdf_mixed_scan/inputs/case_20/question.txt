@@ -1,1 +1,1 @@
-In table 6, "Statement of Condition of Each Federal Reserve Bank", under "Deposits", what figure does the indented "Depository institutions" line show in the "New York" column?
+table 1, "Factors Affecting Reserve Balances of Depository Institutions" reports reverse repurchase agreements on Wednesday, while table 7, "Collateral Held against Federal Reserve Notes" deducts an amount for securities under reverse repurchase agreements. The two figures differ. By how much, and why?

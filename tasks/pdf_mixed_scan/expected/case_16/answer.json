@@ -1,17 +1,19 @@
 {
   "id": "case_16",
-  "label": "Total liabilities, San Francisco",
-  "answer": "694,042 million dollars",
-  "type": "extraction",
+  "label": "Composition on one side, total on the other",
+  "answer": "99.24% (334,475 of 337,051)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 694042
+      "value": 99.2357,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "image_only",
-  "difficulty": "medium"
+  "category": "cross_reference",
+  "difficulty": "hard"
 }

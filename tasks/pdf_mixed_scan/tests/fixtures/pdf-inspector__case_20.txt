@@ -1,1 +1,3 @@
-The document provided does not include Table 6, "Statement of Condition of Each Federal Reserve Bank," so I cannot find the figure for the "Depository institutions" line under "Deposits" in the "New York" column.
+I can't answer this—the document provided does not include a "Table 7, Collateral Held against Federal Reserve Notes." Only Tables 1, 1A, 2, 3, and 4 are present in the text given to me. Without Table 7's figures for securities deducted under reverse repurchase agreements, I cannot calculate the difference or explain the reason for any discrepancy with the reverse repurchase agreements figure ($337,051 million) reported in Table 1 for Wednesday, July 29, 2026.
+
+If you can provide the text of Table 7 from this release, I'd be happy to compare the figures and explain the difference.

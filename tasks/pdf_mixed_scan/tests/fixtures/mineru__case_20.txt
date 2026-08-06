@@ -1,1 +1,9 @@
-In Table 6, under "Deposits" → "Depository institutions" for the New York Federal Reserve Bank, the figure is **1,719,915** (millions of dollars).
+**The two figures differ by $51,203 million** (388,254 − 337,051 = 51,203).
+
+**Reason for the difference:** The two tables are measuring different things related to the same reverse repos.
+
+- In **Table 1**, the reverse repurchase agreements figure of **$337,051 million** (Wednesday, Jul 29, 2026) represents the **cash value** of the agreements — i.e., the dollar amount of cash the Federal Reserve received in the reverse repo transactions (as noted in footnote 12: "Cash value of agreements, which are collateralized by U.S. Treasury securities, federal agency debt securities, and mortgage-backed securities").
+
+- In **Table 7**, the deduction of **$388,254 million** ("Less: Face value of securities under reverse repurchase agreements") represents the **face value** of the underlying securities that were pledged out under those reverse repo agreements — not the cash value of the transactions themselves.
+
+Since reverse repos are collateralized by securities whose market/face value does not necessarily equal the cash amount lent (due to overcollateralization, pricing, and haircuts applied in reverse repo transactions), the face value of the pledged securities exceeds the cash value of the agreements — accounting for the $51,203 million discrepancy between the two tables.

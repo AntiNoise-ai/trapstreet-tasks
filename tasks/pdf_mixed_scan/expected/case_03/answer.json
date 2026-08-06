@@ -1,17 +1,18 @@
 {
   "id": "case_03",
-  "label": "Others under reverse repos, yearly change",
-  "answer": "-153,238 million dollars",
-  "type": "extraction",
+  "label": "Average versus point-in-time on the same row",
+  "answer": "The weekly average, by 2,899 (42,679 vs 39,780)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": -153238
+      "value": 2899,
+      "rel_tolerance": 0.01
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "text_layer",
+  "category": "compare",
   "difficulty": "medium"
 }

@@ -1,1 +1,9 @@
-According to Table 6, "Statement of Condition of Each Federal Reserve Bank, July 29, 2026," the "Capital paid in" figure for the **Cleveland** Federal Reserve Bank is **4,818** million dollars.
+Based on Table 7, the line **"U.S. Treasury, agency debt, and mortgage‑backed securities eligible to be pledged"** is reported as **$6,064,605 million**, and footnote 2 states that this figure (like the "Total U.S. Treasury, agency debt, and mortgage-backed securities" line) includes securities lent to dealers under the overnight securities lending facility.
+
+From Table 1A, the Wednesday (Jul 29, 2026) value for **"Securities lent to dealers"** (overnight facility) is **$39,780 million**.
+
+If these lent securities were excluded from the pledged total:
+
+**$6,064,605 million − $39,780 million = $6,024,825 million**
+
+So the adjusted "eligible to be pledged" figure, excluding securities lent to dealers, would be approximately **$6,024,825 million**.

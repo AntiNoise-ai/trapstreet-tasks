@@ -1,17 +1,19 @@
 {
   "id": "case_06",
-  "label": "Reserve balances, weekly change",
-  "answer": "-77,579 million dollars",
-  "type": "extraction",
+  "label": "Percentage growth off a reconstructed base",
+  "answer": "145.8% (from 370,507 to 910,776)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": -77579
+      "value": 145.8188,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "text_layer",
-  "difficulty": "medium"
+  "category": "reconstruct",
+  "difficulty": "hard"
 }

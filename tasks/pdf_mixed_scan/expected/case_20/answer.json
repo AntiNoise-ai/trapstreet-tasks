@@ -1,17 +1,26 @@
 {
   "id": "case_20",
-  "label": "Depository institutions, New York",
-  "answer": "1,719,915 million dollars",
-  "type": "extraction",
+  "label": "Two conventions for the same instrument",
+  "answer": "51,203 \u2014 table 1 reports cash value, table 7 face value (388,254 less 337,051)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 1719915
+      "value": 51203,
+      "rel_tolerance": 0.01
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "face\\s*value"
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "cash\\s*value"
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "image_only",
-  "difficulty": "medium"
+  "category": "reconcile",
+  "difficulty": "expert"
 }

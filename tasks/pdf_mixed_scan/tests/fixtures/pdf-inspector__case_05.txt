@@ -1,1 +1,8 @@
-The figure shown for "Other liabilities and capital" in the "Week ended Jul 29, 2026" column is **-179,225** million dollars.
+**Share from "Others": ≈ 84.3%**
+
+Details (change from week ended Jul 30, 2025, averages of daily figures):
+- Total reverse repurchase agreements: **–181,761** million
+- Foreign official and international accounts: –28,523 million
+- Others: **–153,238** million
+
+153,238 / 181,761 ≈ 0.843, so about 84.3% of the year-over-year decline in total reverse repurchase agreements came from the "Others" category, while the remaining ~15.7% came from foreign official and international accounts.

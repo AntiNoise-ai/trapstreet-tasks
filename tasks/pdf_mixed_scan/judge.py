@@ -310,8 +310,15 @@ def m_sci_value(answer: str, spec: dict) -> tuple[bool, str]:
     rel = float(spec.get("rel_tolerance", 0.005))
     abs_tol = float(spec.get("abs_tolerance", 1e-18))
 
+    # A ratio is written either way: "0.62%" or "0.0062". Both are the same
+    # answer, and which one a model picks is formatting. Cases that ask for a
+    # share set accept_percent_forms so neither is punished.
+    targets = [target]
+    if spec.get("accept_percent_forms"):
+        targets += [target / 100.0, target * 100.0]
+
     def close(x: float) -> bool:
-        return abs(x - target) <= max(abs(target) * rel, abs_tol)
+        return any(abs(x - t) <= max(abs(t) * rel, abs_tol) for t in targets)
 
     sci = [v for tok in _SCI_RE.findall(answer) if (v := _to_float(tok)) is not None]
 
@@ -338,38 +345,41 @@ def m_sci_value(answer: str, spec: dict) -> tuple[bool, str]:
     if not plain:
         return False, "no numeric value found in answer"
 
-    # Anti-shotgun. Without this the matcher is trivially defeated: dumping a
-    # whole table row — thirteen figures, one of which is the answer — scored
-    # 1.0 on every case tested, so a solution that echoed the parser's text
-    # near the row label would pass without extracting anything.
+    # Anti-shotgun, fourth revision. The three before it all rejected correct
+    # answers, each time in a shape I had not anticipated: a figure cap that
+    # counted the two numbers inside a date; a closing window that assumed the
+    # answer comes last; a first-or-last window that broke on the commonest
+    # analytical shape of all —
     #
-    # A committed answer puts the figure either FIRST ("**-77,579**", then the
-    # explanation) or LAST (walking to it, then stating it). Which one a model
-    # picks is style. A dumped row commits to nothing and its target sits in
-    # the middle, so the rule is: the target must be the opening figure or
-    # among the closing few.
+    #   "On Wednesday, July 29, 2026: ... **Difference: $355,125 million** ...
+    #    This makes sense conceptually because ..."
     #
-    # Two earlier versions of this rule were wrong in opposite directions, and
-    # real runs caught both — reasoning about it did not:
-    #   · a cap of 8 figures rejected an answer that quoted the row it read the
-    #     value from, because a date contributes two figures of its own;
-    #   · a closing-window-only rule rejected three answers that led with the
-    #     figure in bold and explained afterwards. Their prose restatements
-    #     also drop the sign ("a decrease of 77,579"), so the tail cannot be
-    #     relied on to carry it even when the figure is there.
-    # The cap survives only as a backstop against dumping a whole page.
+    # preamble, answer, explanation. The figure is in the middle by design.
+    #
+    # Position turns out to be the wrong signal. What protects these cases is a
+    # property of the questions: most ask for a figure the document does not
+    # print — a ratio, a difference, a reconstructed base — so reproducing the
+    # document cannot produce the answer. The few whose gold IS printed carry a
+    # name requirement (the district, the account) that a bare list of numbers
+    # cannot satisfy. The cap survives only against dumping a whole page.
+    #
+    # `require_commitment` restores positional scoring for a case that needs it.
     cap = int(spec.get("max_figures", 25))
-    tail = int(spec.get("commit_window", 3))
     if len(plain) > cap:
         return False, (f"answer lists {len(plain)} figures (cap {cap}) — treated as a "
                        f"shotgun, not a committed answer")
-    for v in plain[:1] + plain[-tail:]:
+    if spec.get("require_commitment"):
+        tail = int(spec.get("commit_window", 3))
+        cand = plain[:1] + plain[-tail:]
+        for v in cand:
+            if close(v):
+                return True, f"plain-decimal ok ({v:g} == target {target:g}; committed)"
+        return False, (f"target {target:g} is neither the opening figure nor among the "
+                       f"last {tail}; all={[f'{v:g}' for v in plain]}")
+    for v in plain:
         if close(v):
-            return True, (f"plain-decimal ok ({v:g} == target {target:g}; committed "
-                          f"first or within last {tail} of {len(plain)})")
-    return False, (f"target {target:g} is neither the opening figure ({plain[0]:g}) nor "
-                   f"among the last {tail} ({[f'{v:g}' for v in plain[-tail:]]}); "
-                   f"all={[f'{v:g}' for v in plain]}")
+            return True, f"plain-decimal ok ({v:g} == target {target:g}; of {len(plain)} figures)"
+    return False, f"target {target:g} absent (found={[f'{v:g}' for v in plain]})"
 
 
 def m_leading_word(answer: str, spec: dict) -> tuple[bool, str]:

@@ -1,1 +1,10 @@
-According to Table 6, the "Total liabilities and capital" figure for the **Philadelphia** Federal Reserve Bank is **115,772** million dollars.
+**Table 1 figure (Wednesday, July 29, 2026):** Deposits with F.R. Banks, other than reserve balances = **$1,214,102 million**
+
+**Table 6 figure (Wednesday, July 29, 2026):** Total Deposits (all Federal Reserve Banks) = **$4,158,647 million**
+
+**Proportion:**
+$$
+\frac{1,214,102}{4,158,647} \approx 0.2921 \text{, or about } 29.2\%
+$$
+
+So Table 1's "deposits other than reserve balances" figure represents roughly **29%** of the total deposits reported in Table 6 for that date.

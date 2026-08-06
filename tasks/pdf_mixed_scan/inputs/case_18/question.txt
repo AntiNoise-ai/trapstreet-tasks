@@ -1,1 +1,1 @@
-In table 6, "Statement of Condition of Each Federal Reserve Bank", what figure is shown for "Surplus" in the "Richmond" column?
+Table 6, "Statement of Condition of Each Federal Reserve Bank", splits depository institution deposits across the twelve Districts. Chicago and Richmond both hold substantial balances. Which of the two holds more, and what is the ratio of the larger to the smaller?

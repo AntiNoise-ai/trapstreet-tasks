@@ -1,17 +1,18 @@
 {
   "id": "case_18",
-  "label": "Surplus, Richmond",
-  "answer": "1,488 million dollars",
-  "type": "extraction",
+  "label": "Reconstruct a district's year-ago share",
+  "answer": "Richmond holds more; 343,724 / 124,830 = 2.75",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 1488.0
+      "value": 2.7535,
+      "rel_tolerance": 0.01
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "image_only",
-  "difficulty": "hard"
+  "category": "cross_reference",
+  "difficulty": "medium"
 }

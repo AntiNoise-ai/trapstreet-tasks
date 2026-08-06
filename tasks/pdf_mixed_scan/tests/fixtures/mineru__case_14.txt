@@ -1,1 +1,8 @@
-Based on Table 6, the figure shown for "Earnings remittances due to the U.S. Treasury" in the Atlanta column is **154** (positive, no negative sign shown, unlike most other columns which show negative values).
+On Wednesday, July 29, 2026:
+
+- **Federal Reserve notes outstanding** (Table 7): $2,827,302 million
+- **Currency in circulation** (Table 1): $2,472,177 million
+
+**Difference: $355,125 million** (Federal Reserve notes outstanding exceeds currency in circulation by this amount)
+
+This makes sense because "Federal Reserve notes outstanding" represents the gross amount of currency printed and issued, while "currency in circulation" nets out notes held by Federal Reserve Banks themselves (i.e., notes not yet in public circulation) — reflected in Table 7's line "Less: Notes held by F.R. Banks not subject to collateralization" of $406,743 million, plus other minor adjustments/timing differences between the two series.

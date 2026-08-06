@@ -1,1 +1,1 @@
-In table 6, "Statement of Condition of Each Federal Reserve Bank", what figure is shown for "Capital paid in" in the "Cleveland" column?
+table 7, "Collateral Held against Federal Reserve Notes" reports securities pledged against Federal Reserve notes, and its footnote says that figure includes securities lent to dealers. If those lent securities were excluded, what would the pledged figure be?

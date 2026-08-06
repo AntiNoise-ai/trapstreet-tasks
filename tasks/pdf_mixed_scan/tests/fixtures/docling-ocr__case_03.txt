@@ -1,1 +1,6 @@
-According to Table 1, under "Reverse repurchase agreements," the "Others" sub-line shows a change of **-153,238** (million dollars) for the "Change from week ended Jul 30, 2025" column.
+According to Table 1A, "Securities lent to dealers" (Overnight facility) was:
+
+- Weekly average (week ended Jul 29, 2026): **$42,679 million**
+- Wednesday level (Jul 29, 2026): **$39,780 million**
+
+The **weekly average figure is larger**, exceeding the Wednesday level by **$2,899 million** ($42,679M − $39,780M).

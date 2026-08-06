@@ -1,17 +1,19 @@
 {
   "id": "case_07",
-  "label": "Total absorbing reserve funds",
-  "answer": "3,813,030 million dollars",
-  "type": "extraction",
+  "label": "Composition of pledged collateral",
+  "answer": "98.92% (2,394,322 of 2,420,559)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 3813030
+      "value": 98.9161,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "text_layer",
+  "category": "compute",
   "difficulty": "medium"
 }

@@ -1,17 +1,22 @@
 {
   "id": "case_15",
-  "label": "Other deposits, Chicago",
-  "answer": "164,338 million dollars",
-  "type": "extraction",
+  "label": "Locate a system total inside a district table",
+  "answer": "New York, 970,442",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 164338
+      "value": 970442,
+      "rel_tolerance": 0.01
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "new\\s*york"
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "image_only",
+  "category": "cross_reference",
   "difficulty": "hard"
 }

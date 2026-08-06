@@ -1,1 +1,10 @@
-According to Table 1, the "Reserve balances with Federal Reserve Banks" change from week ended Jul 22, 2026 is **-77,579** (a decrease of $77,579 million).
+Based on Table 1 (Factors Affecting Reserve Balances of Depository Institutions), the U.S. Treasury General Account (week-ended average figures) grew as follows:
+
+- **Current value (week ended Jul 29, 2026):** $910,776 million
+- **Change from Jul 30, 2025:** +$540,269 million
+- **Value one year ago (Jul 30, 2025):** $910,776M − $540,269M = **$370,507 million**
+
+**Percentage growth over the year:**
+$540,269 / $370,507 × 100 ≈ **145.8%**
+
+The U.S. Treasury General Account grew by approximately **145.8%** year-over-year on this measure.

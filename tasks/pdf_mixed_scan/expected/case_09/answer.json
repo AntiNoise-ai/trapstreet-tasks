@@ -1,17 +1,23 @@
 {
   "id": "case_09",
-  "label": "Treasury cash holdings, Wednesday",
-  "answer": "323 million dollars",
-  "type": "extraction",
+  "label": "Concentration across districts",
+  "answer": "New York, 66.57% (2,768,498 of 4,158,647)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": 323
+      "value": 66.5721,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "new\\s*york"
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "text_layer",
-  "difficulty": "easy"
+  "category": "locate",
+  "difficulty": "medium"
 }

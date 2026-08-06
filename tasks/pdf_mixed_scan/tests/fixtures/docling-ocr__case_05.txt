@@ -1,1 +1,7 @@
--179,225
+From the weekly release table (Factors Affecting Reserve Balances), the year‑over‑year change in total reverse repurchase agreements was **–$181,761 million** (a decline of about $181.8 billion).
+
+This decline breaks down as:
+- Foreign official and international accounts: –$28,523 million
+- Others: –$153,238 million
+
+So the "Others" sub‑line accounted for **$153,238 million** of the **$181,761 million** total decline, which is about **84.3%** of the year‑over‑year drop in reverse repos.

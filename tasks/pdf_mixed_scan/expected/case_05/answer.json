@@ -1,17 +1,19 @@
 {
   "id": "case_05",
-  "label": "Other liabilities and capital, weekly average",
-  "answer": "-179,225 million dollars",
-  "type": "extraction",
+  "label": "Attribute a yearly decline to a sub-line",
+  "answer": "84.3% (153,238 of 181,761)",
+  "type": "analysis",
   "matchers": [
     {
       "kind": "sci_value",
-      "value": -179225
+      "value": 84.3074,
+      "rel_tolerance": 0.004,
+      "accept_percent_forms": true
     },
     {
       "kind": "no_hedge"
     }
   ],
-  "category": "text_layer",
+  "category": "compute",
   "difficulty": "hard"
 }
