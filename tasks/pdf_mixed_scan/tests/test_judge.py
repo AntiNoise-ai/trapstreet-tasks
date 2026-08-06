@@ -181,3 +181,19 @@ def test_thousands_separator_is_not_a_decimal_point(tmp_path):
     conversion factor as '3,07' — failed sixteen of these twenty cases."""
     assert run_judge("case_11", "748,255", tmp_path)["score"] == 1.0
     assert run_judge("case_11", "748.255", tmp_path)["score"] == 0.0
+
+
+REAL_CITED_ANSWER = '''**+69** (million dollars)
+
+In the continued Table 1, the "Currency in circulation" row reads: 2,470,970 | \
+**+ 69** | + 71,550 | 2,472,177 — so the change from the week ended Jul 22, \
+2026 is **+69**.'''
+
+
+def test_showing_the_row_you_read_it_from_is_not_a_shotgun(tmp_path):
+    """Verbatim from the first real solution run. It leads with the answer,
+    quotes the row it came from, and restates the answer — nine figures once
+    the two in the date are counted. The first anti-shotgun cap was 8 and
+    scored this zero, which is the same mistake the previous task made with a
+    forbidden pattern: penalising an answer for being well-evidenced."""
+    assert run_judge("case_01", REAL_CITED_ANSWER, tmp_path)["score"] == 1.0

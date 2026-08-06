@@ -349,7 +349,7 @@ def m_sci_value(answer: str, spec: dict) -> tuple[bool, str]:
     # lives. Citing a source ("748,255, see table 6, page 9") or contrasting
     # one cell with another ("Richmond is -40,560 but Atlanta is 154") both
     # stay inside the window; listing a row does not.
-    cap = int(spec.get("max_figures", 8))
+    cap = int(spec.get("max_figures", 25))
     tail = int(spec.get("commit_window", 3))
     if len(plain) > cap:
         return False, (f"answer lists {len(plain)} figures (cap {cap}) — treated as a "
