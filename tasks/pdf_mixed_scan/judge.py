@@ -343,24 +343,33 @@ def m_sci_value(answer: str, spec: dict) -> tuple[bool, str]:
     # 1.0 on every case tested, so a solution that echoed the parser's text
     # near the row label would pass without extracting anything.
     #
-    # Two rules, because a single one is either exploitable or too harsh.
-    # A hard cap rejects a dump outright, and within that cap the target must
-    # be among the figures the answer *ends* on, which is where a commitment
-    # lives. Citing a source ("748,255, see table 6, page 9") or contrasting
-    # one cell with another ("Richmond is -40,560 but Atlanta is 154") both
-    # stay inside the window; listing a row does not.
+    # A committed answer puts the figure either FIRST ("**-77,579**", then the
+    # explanation) or LAST (walking to it, then stating it). Which one a model
+    # picks is style. A dumped row commits to nothing and its target sits in
+    # the middle, so the rule is: the target must be the opening figure or
+    # among the closing few.
+    #
+    # Two earlier versions of this rule were wrong in opposite directions, and
+    # real runs caught both — reasoning about it did not:
+    #   · a cap of 8 figures rejected an answer that quoted the row it read the
+    #     value from, because a date contributes two figures of its own;
+    #   · a closing-window-only rule rejected three answers that led with the
+    #     figure in bold and explained afterwards. Their prose restatements
+    #     also drop the sign ("a decrease of 77,579"), so the tail cannot be
+    #     relied on to carry it even when the figure is there.
+    # The cap survives only as a backstop against dumping a whole page.
     cap = int(spec.get("max_figures", 25))
     tail = int(spec.get("commit_window", 3))
     if len(plain) > cap:
         return False, (f"answer lists {len(plain)} figures (cap {cap}) — treated as a "
                        f"shotgun, not a committed answer")
-    window = plain[-tail:]
-    for v in window:
+    for v in plain[:1] + plain[-tail:]:
         if close(v):
-            return True, (f"plain-decimal ok ({v:g} == target {target:g}; "
-                          f"committed within last {tail} of {len(plain)})")
-    return False, (f"target {target:g} not among the last {tail} figures "
-                   f"(answer ends on {[f'{v:g}' for v in window]}; all={[f'{v:g}' for v in plain]})")
+            return True, (f"plain-decimal ok ({v:g} == target {target:g}; committed "
+                          f"first or within last {tail} of {len(plain)})")
+    return False, (f"target {target:g} is neither the opening figure ({plain[0]:g}) nor "
+                   f"among the last {tail} ({[f'{v:g}' for v in plain[-tail:]]}); "
+                   f"all={[f'{v:g}' for v in plain]}")
 
 
 def m_leading_word(answer: str, spec: dict) -> tuple[bool, str]:

@@ -190,10 +190,33 @@ In the continued Table 1, the "Currency in circulation" row reads: 2,470,970 | \
 2026 is **+69**.'''
 
 
+# Verbatim from real solution runs. Every one leads with the figure and
+# explains afterwards, which is the natural shape for a direct question and the
+# shape two versions of the anti-shotgun rule rejected. Note R2: its closing
+# prose says "a decrease of 77,579" — the sign is gone — so a rule that only
+# inspects the end of the answer cannot score it, even though the answer opens
+# with **-77,579**.
+REAL_ANSWER_FIRST = {
+    "case_01": '**+69** (million dollars)\n\nThis is the "Change from week ended '
+               'Jul 22, 2026" figure for Currency in circulation, as shown in Table 1: '
+               'Currency in circulation \u2014 2,470,970 (week ended Jul 29, 2026), '
+               '**+69**, +71,550, 2,472,177 (Wednesday Jul 29, 2026).',
+    "case_06": '**-77,579**\n\nThis is the "Change from week ended Jul 22, 2026" '
+               'figure for "Reserve balances with Federal Reserve Banks" (2,984,570 for '
+               'the week ended Jul 29, 2026, a decrease of 77,579 from the prior week).',
+    "case_10": '**-582**\n\nIn the "Foreign official" row the figures are: 9,469 '
+               '(week ended Jul 29, 2026) | **-582** | +31 | 9,452 (Wednesday Jul 29, '
+               '2026).',
+}
+
+
+@pytest.mark.parametrize("case_id", sorted(REAL_ANSWER_FIRST))
+def test_leading_with_the_figure_then_explaining_passes(case_id, tmp_path):
+    assert run_judge(case_id, REAL_ANSWER_FIRST[case_id], tmp_path)["score"] == 1.0
+
+
 def test_showing_the_row_you_read_it_from_is_not_a_shotgun(tmp_path):
-    """Verbatim from the first real solution run. It leads with the answer,
-    quotes the row it came from, and restates the answer — nine figures once
-    the two in the date are counted. The first anti-shotgun cap was 8 and
-    scored this zero, which is the same mistake the previous task made with a
-    forbidden pattern: penalising an answer for being well-evidenced."""
+    """Also verbatim from a real run: answer, then the row it came from, then
+    the answer again. Nine figures once the two in the date are counted, which
+    an anti-shotgun cap of 8 rejected."""
     assert run_judge("case_01", REAL_CITED_ANSWER, tmp_path)["score"] == 1.0
