@@ -1,272 +1,206 @@
 # TrapStreet Tasks
 
-Standardized eval cases for the TrapStreet platform. Each case defines a clear **input** (what gets sent to the model) and **output** (what the correct answer looks like).
+Evaluation tasks for [trapstreet.run](https://trapstreet.run). Each task defines an
+**input** (what the solution sees), an **expected** answer (which it never sees), and a
+**judge** that scores one against the other. Any solution — an agent, a skill, a raw model
+call — can be run against a task without hooks or instrumentation.
 
-## Layout
+This repo holds **37 tasks**. **14 are registered on trapstreet.run** and accept
+submissions. The other 23 run locally but will not submit yet — see
+[Not yet on the platform](#not-yet-on-the-platform).
 
+---
+
+## The one rule for submitting
+
+**A task's identity on the platform is `(repo_url, commit_sha, repo_path)`.** When you
+`tp submit`, the server matches the provenance recorded by `tp run` against published task
+versions. No match → `404`.
+
+That means **cloning this repo at `main` and submitting will not work.** `main` moves; the
+published task versions are pinned to specific commits. Your `trap.yaml` must point at the
+**exact commit** the task was registered with:
+
+```yaml
+tasks:
+  pdf-tables:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@f17b9b41456031b187bd57d8234047bd92e65b84#subdirectory=tasks/pdf_tables
 ```
-tasks/        ← active tasks
-  pdf_reader/   ← UK Assured Shorthold Tenancy parsing
-archive/      ← previously-explored cases (not actively maintained)
+
+The [Live tasks](#live-tasks) block below is copy-pasteable — take the entries you want.
+
+Running against a local checkout is fine for iterating; just expect `tp submit` to fail
+unless the checkout is at the pinned commit. `tp submit --allow-unanchored` uploads a run
+with no git provenance — it is stored and viewable, but never ranked.
+
+---
+
+## Live tasks
+
+Registered, public, submittable. Case counts are from the pinned commit.
+
+| Alias | What it tests | Cases | Path |
+|---|---|---|---|
+| `core-calibrated-answer` | Does the model know what it doesn't know? | 30 | [`tasks/core_calibrated_answer`](./tasks/core_calibrated_answer) |
+| `core-date-arithmetic` | Date + time math | 21 | [`tasks/core_date_arithmetic`](./tasks/core_date_arithmetic) |
+| `core-json-schema-output` | Following a function-call schema | 20 | [`tasks/core_json_schema_output`](./tasks/core_json_schema_output) |
+| `core-needle-in-haystack` | Finding one fact in a long document | 15 | [`tasks/core_needle_in_haystack`](./tasks/core_needle_in_haystack) |
+| `core-pdf-ocr` | Reading a scanned PDF | 20 | [`tasks/core_pdf_ocr`](./tasks/core_pdf_ocr) |
+| `debug-subscription-billing-pipeline` | Multi-report consistency debugging | 6 | [`tasks/debug_subscription_billing_pipeline`](./tasks/debug_subscription_billing_pipeline) |
+| `debug-vendor-payout-pipeline` | Debugging a vendor payout pipeline — few cases, hard | 4 | [`tasks/debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline) |
+| `influencer-marketing-disclosure` | Spotting undisclosed paid promotion | 11 | [`tasks/influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) |
+| `pdf-mixed-scan` | PDF parsing when half the document has no text layer | 20 | [`tasks/pdf_mixed_scan`](./tasks/pdf_mixed_scan) |
+| `mbti-profile` | 32-question Likert questionnaire, self-reported | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
+| `pdf-reader` | Legal contract review — superseded by `pdf-reader-v2` | 19 | [`tasks/pdf_reader`](./tasks/pdf_reader) |
+| `pdf-reader-v2` | UK tenancy agreement — rent, dates, clauses | 20 | [`tasks/pdf_reader_v2`](./tasks/pdf_reader_v2) |
+| `pdf-tables` | Reading values out of wide, repetitive tables | 20 | [`tasks/pdf_tables`](./tasks/pdf_tables) |
+| `python-bugfix-diff` | Which code-review skill actually finds the bug? | 10 | [`tasks/code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff) |
+
+<details>
+<summary><b>Paste this into your <code>trap.yaml</code></b> — pinned sources for all 14</summary>
+
+```yaml
+tasks:
+  core-calibrated-answer:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_calibrated_answer
+  core-date-arithmetic:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_date_arithmetic
+  core-json-schema-output:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_json_schema_output
+  core-needle-in-haystack:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_needle_in_haystack
+  core-pdf-ocr:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@8bee00aaf0dfad72979aca8b39c87183b01cd5c7#subdirectory=tasks/core_pdf_ocr
+  debug-subscription-billing-pipeline:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@4d7400a7e5c9ace5b4db3f9d6c89b73777419dbc#subdirectory=tasks/debug_subscription_billing_pipeline
+  debug-vendor-payout-pipeline:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/debug_vendor_payout_pipeline
+  influencer-marketing-disclosure:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/influencer_marketing_disclosure
+  pdf-mixed-scan:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
+  mbti-profile:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/personality/mbti_profile
+  pdf-reader:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/pdf_reader
+  pdf-reader-v2:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
+  pdf-tables:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@f17b9b41456031b187bd57d8234047bd92e65b84#subdirectory=tasks/pdf_tables
+  python-bugfix-diff:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@93d6ef239e640d3faaf92fafa4c6b0c251ad00cb#subdirectory=tasks/code_review_skill/python_bugfix_diff
 ```
 
-## Active tasks
+</details>
 
-| Path | Task | Input | Output |
-|------|------|-------|--------|
-| [`tasks/pdf_reader/`](./tasks/pdf_reader/) | Parse a real UK signed AST PDF | Tenancy PDF + question | Exact answer (rent, dates, clauses) |
+### Where `main` differs from what runs
 
----
+For these three the directory at `main` has changed since the registered commit, so what you
+read here is **not** what a submitted run executes — read the pinned commit for the exact
+contract:
 
-## Archived cases
-
-The cases below were earlier explorations. They live under [`archive/`](./archive/) for reference.
-
-| # | Name | Dataset | Input | Output |
-|---|------|---------|-------|--------|
-| 2 | [Article Summarization](#case-2-article-summarization) | CNN/DailyMail | News article | Bullet-point summary |
-| 4 | [Everyday Q&A](#case-4-everyday-qa) | TriviaQA | Trivia question | Short factual answer |
-| 5 | [Finance Q&A](#case-5-finance-qa--document-grounded) | FinanceBench | Financial question + SEC filing PDF | Exact dollar/number answer |
-| 12 | [Legal — Contract Clause Extraction](#case-12-legal--contract-clause-extraction) | CUAD | Contract text + clause type | Exact clause span (or "no clause") |
-| 19 | [Agent Tool Use / Function Calling](#case-19-agent-tool-use--function-calling) | BFCL v4 | User query + function schema | Correct function call (name + args) |
-| 20 | [PDF Pricing Extraction](#case-20-pdf-pricing-extraction) | 4 hand-curated public pricing PDFs | Pricing PDF + row query | Cell value(s) for the matched row |
+`pdf-reader` · `mbti-profile` · `python-bugfix-diff`
 
 ---
 
-## How to use
+## Community tasks in other repos
 
-Each case folder has its own README with the full schema. The pattern is the same for all cases:
+Registered on trapstreet.run, but the task lives elsewhere. Listed here for discovery only.
 
-1. **Download the data** using the links in each case folder.
-2. **Pick the right split** — always use `test` (or `validation` where noted). Never use `train`.
-3. **Feed each row to your model:** the `input` field goes in, the model's response comes out.
-4. **Compare the model's response** against the `output` field to score it.
-
-> **Why test/validation and not train?**
-> The train split was used to build the models being evaluated — they've already seen it. Test and validation are held-out data the models were never supposed to optimize for, making them the only fair basis for comparison.
-
----
-
-## Case 2: Article Summarization
-
-**"Too long, didn't read — give me the key points."**
-
-| | |
+| Alias | Repo |
 |---|---|
-| Dataset | CNN/DailyMail |
-| Full case doc | [case2_article_summarization/](./archive/case2_article_summarization/) |
-| Data (test split, 1 file) | https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/test/0.parquet |
-
-| Role | Field | Description |
-|------|-------|-------------|
-| Input | `article` | Full news article text |
-| Output | `highlights` | Journalist-written bullet summary (newline-separated) |
-
-**Quick start:**
-```python
-import pandas as pd
-
-df = pd.read_parquet("https://huggingface.co/api/datasets/abisee/cnn_dailymail/parquet/3.0.0/test/0.parquet")
-
-input_text  = df["article"][0]      # → send to model
-output_text = df["highlights"][0]   # → compare against model response
-```
+| `karpathys-jagged-questions` | [xiaotianhan91/karpathys-jagged-questions](https://github.com/xiaotianhan91/karpathys-jagged-questions) |
+| `minecraft-obtain-diamond` | [Ruqii/minecraft-obtain-diamond](https://github.com/Ruqii/minecraft-obtain-diamond) |
+| `mineral-species-id` | [Zhuaiz/elastic-mineral-hackson](https://github.com/Zhuaiz/elastic-mineral-hackson) (`trap/task`) |
 
 ---
 
-## Case 4: Everyday Q&A
+## Not yet on the platform
 
-**"Using AI as a smarter Google."**
+Complete tasks — `traptask.yaml`, `judge.py`, generated `inputs/` and `expected/` — that
+have **not been registered** as task versions. `tp run` works against a local checkout.
+`tp submit` returns `404`, because there is no published version to match. Registering one
+is a `POST /api/tasks` away; nothing in the task itself needs to change.
 
-| | |
-|---|---|
-| Dataset | TriviaQA |
-| Full case doc | [case4_everyday_qa/](./archive/case4_everyday_qa/) |
-| Data (validation split, file 0 of 5) | https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/0.parquet |
+| Path | What it tests | Cases |
+|---|---|---|
+| [`tasks/ai_text_detector`](./tasks/ai_text_detector) | Human-written vs AI-generated text | 20 |
+| [`tasks/bloodstain_reader`](./tasks/bloodstain_reader) | Forensic vision — evidence vs suspect statement | 20 |
+| [`tasks/codebase_graph_qa`](./tasks/codebase_graph_qa) | Cross-file Q&A over a small multi-language repo | 15 |
+| [`tasks/connections/word_groups`](./tasks/connections/word_groups) | Partition 16 words into 4 groups of 4 | 10 |
+| [`tasks/core_code_syntax_generation`](./tasks/core_code_syntax_generation) | Basic code generation from signature + docstring | 20 |
+| [`tasks/core_follow_instructions`](./tasks/core_follow_instructions) | Obeying explicit prompt constraints | 25 |
+| [`tasks/core_multi_turn_memory`](./tasks/core_multi_turn_memory) | Recall across a multi-session conversation | 20 |
+| [`tasks/core_parallel_tool_calls`](./tasks/core_parallel_tool_calls) | Planning several tool calls at once | 20 |
+| [`tasks/core_tool_selection_at_scale`](./tasks/core_tool_selection_at_scale) | Tool choice as the catalog grows to 300 | 64 |
+| [`tasks/cuad`](./tasks/cuad) | Legal contract clause extraction — exact span, or correctly "absent" | 32 |
+| [`tasks/doc_editing`](./tasks/doc_editing) | Content retention when editing a document | 4 |
+| [`tasks/imported/gsm8k`](./tasks/imported/gsm8k) | Grade-school math word problems | 25 |
+| [`tasks/imported/mmlu`](./tasks/imported/mmlu) | Multiple-choice knowledge across subjects | 25 |
+| [`tasks/invoice_reconciliation`](./tasks/invoice_reconciliation) | Locating the source of a reconciliation discrepancy | 14 |
+| [`tasks/plant_disease_id`](./tasks/plant_disease_id) | Plant pathology from PlantVillage leaf photos | 20 |
+| [`tasks/product_matching/sku_disambiguation`](./tasks/product_matching/sku_disambiguation) | Are two product names the same SKU? | 12 |
+| [`tasks/receipt_extraction`](./tasks/receipt_extraction) | Receipt parsing from real-world photos | 20 |
+| [`tasks/scheduler/cross_timezone`](./tasks/scheduler/cross_timezone) | Scheduling across timezones | 11 |
+| [`tasks/spreadsheet_reader`](./tasks/spreadsheet_reader) | One aggregation question over a real `.xlsx` | 6 |
+| [`tasks/web_scraping/game_store_navigation`](./tasks/web_scraping/game_store_navigation) | Navigating a mock game storefront | 10 |
+| [`tasks/wildlife_camera_trap`](./tasks/wildlife_camera_trap) | Species ID from Serengeti camera-trap photos | 20 |
+| [`tasks/agents-in-situationship`](./tasks/agents-in-situationship) | 20 multiple-choice dating scenarios, self-reported | 1 |
 
-> Use `validation` here, not `test` — TriviaQA's test split has no public gold answers.
+### Special cases
 
-| Role | Field | Description |
-|------|-------|-------------|
-| Input | `question` | Plain-language trivia question |
-| Output | `answer.value` | Primary correct answer |
-| Output (flexible) | `answer.aliases` | All accepted phrasings (e.g. "Paris", "City of Paris") |
+**[`tasks/core_tool_selection_under_load`](./tasks/core_tool_selection_under_load) — frozen, do not edit.**
+Superseded by `core_tool_selection_at_scale`. Kept byte-identical on purpose: it returned
+`1.0` on all 270 case-scores it ever produced, and those scores stay interpretable only if
+the task doesn't move. That null result is also cited in a write-up, so the directory is
+what makes the account checkable. Not a candidate for deletion.
 
-**Quick start:**
-```python
-import pandas as pd
-
-df = pd.read_parquet("https://huggingface.co/api/datasets/mandarjoshi/trivia_qa/parquet/unfiltered/validation/0.parquet")
-
-input_text     = df["question"][0]             # → send to model
-output_value   = df["answer"][0]["value"]      # → primary answer
-output_aliases = df["answer"][0]["aliases"]    # → all valid answers
-```
-
----
-
-## Case 5: Finance Q&A — Document-Grounded
-
-**"Read this earnings report and answer my question."**
-
-| | |
-|---|---|
-| Dataset | FinanceBench |
-| Full case doc | [case5_finance_qa/](./archive/case5_finance_qa/) |
-| Questions + answers | https://raw.githubusercontent.com/patronus-ai/financebench/main/data/financebench_open_source.jsonl |
-| Document metadata (PDF links) | https://raw.githubusercontent.com/patronus-ai/financebench/main/data/financebench_document_information.jsonl |
-
-This case is **document-grounded**: the model must read an actual SEC filing PDF (10-K, 10-Q, etc.) to find the answer. It can't rely on general knowledge — the numbers change every quarter.
-
-| Role | Field | Source file |
-|------|-------|-------------|
-| Input | `question` | `financebench_open_source.jsonl` |
-| Input | `doc_link` (the SEC filing PDF) | `financebench_document_information.jsonl`, joined on `doc_name` |
-| Output | `answer` | `financebench_open_source.jsonl` |
-
-**Quick start:**
-```python
-import json, urllib.request
-
-def load_jsonl(url):
-    with urllib.request.urlopen(url) as f:
-        return [json.loads(line) for line in f]
-
-questions = load_jsonl("https://raw.githubusercontent.com/patronus-ai/financebench/main/data/financebench_open_source.jsonl")
-doc_info  = {d["doc_name"]: d for d in load_jsonl("https://raw.githubusercontent.com/patronus-ai/financebench/main/data/financebench_document_information.jsonl")}
-
-example = questions[0]
-
-input_question = example["question"]
-input_pdf_url  = doc_info[example["doc_name"]]["doc_link"]  # → send question + this PDF to model
-output_answer  = example["answer"]                          # → compare against model response
-```
+**[`tasks/pdf_reader`](./tasks/pdf_reader) — superseded but still live.**
+`pdf-reader-v2` replaces it. Removing the directory would **not** take it off the
+leaderboard — task versions are pinned to a commit that stays in git history. Retiring it
+is a platform-side change (task visibility), not a repo change.
 
 ---
 
-## Case 12: Legal — Contract Clause Extraction
+## Archive
 
-**"There are 20+ legal AI tools claiming to review contracts. But can they find the termination clause? That's step 1."**
+[`archive/`](./archive) is kept for reference and not maintained.
 
-| | |
-|---|---|
-| Dataset | CUAD (Contract Understanding Atticus Dataset) |
-| Full case doc | [case12_legal_clause_extraction/](./archive/case12_legal_clause_extraction/) |
-| Data (eval-ready, SQuAD format) | https://huggingface.co/datasets/theatticusproject/cuad-qa |
-| Raw PDFs + master CSV | https://huggingface.co/datasets/theatticusproject/cuad |
+Six early explorations, documentation only — no runnable cases: article summarization
+(CNN/DailyMail), everyday Q&A (TriviaQA), finance Q&A (FinanceBench), legal clause
+extraction (CUAD), agent tool use (BFCL v4), PDF pricing extraction.
 
-A real commercial contract goes in with a question targeting one of 41 clause types (Anti-Assignment, Change of Control, Cap on Liability, etc.). The model must return the exact clause span — or correctly say none exists. Models have a known **"laziness"** problem: they confidently say "no clause found" when one is plainly there.
-
-| Role | Field | Description |
-|------|-------|-------------|
-| Input | `context` | Full contract text |
-| Input | `question` | Templated prompt naming one of 41 clause categories |
-| Output | `answers.text[]` | Expert-labeled clause spans (empty list = "no such clause") |
-| Output | `answers.answer_start[]` | Character offsets into `context` |
-
-**Quick start:**
-```python
-from datasets import load_dataset
-
-ds = load_dataset("theatticusproject/cuad-qa", split="test")
-row = ds[0]
-
-input_question = row["question"]
-input_context  = row["context"]            # → send question + context to model
-output_spans   = row["answers"]["text"]    # → compare against model response
-```
+Plus [`archive/financebench`](./archive/financebench) — a complete 5-case task, archived
+because FinanceBench is **CC BY-NC 4.0** (NonCommercial), which
+[`tasks/imported/README.md`](./tasks/imported/README.md) excludes by policy. Never
+registered on trapstreet.run. To use this material, author original questions over the same
+public SEC 10-K filings instead.
 
 ---
 
-## Case 19: Agent Tool Use / Function Calling
+## Writing a task
 
-**"Every 'autonomous agent' claims to use tools. Did it actually call the right function with the right arguments?"** ⭐ priority
+Every task follows the same layout and I/O contract:
 
-| | |
-|---|---|
-| Dataset | Berkeley Function Calling Leaderboard (BFCL) v4 |
-| Full case doc | [case19_agent_tool_use/](./archive/case19_agent_tool_use/) |
-| Data (per category) | `https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_<category>.json` |
-| Gold answers | `https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/bfcl_eval/data/possible_answer/BFCL_v4_<category>.json` |
-| Live leaderboard | https://gorilla.cs.berkeley.edu/leaderboard.html |
-
-Foundational sub-step for every "one-person company" agent claim. If function calling fails, every workflow built on top is theater. v4 specifically tests agentic failures — multi-turn memory, deciding when not to act, recovering from tool errors. Top 2026 models split-brained: ace single-turn, fail on multi-turn (~30 percentage points between top models on the same questions).
-
-| Role | Field | Description |
-|------|-------|-------------|
-| Input | `question` | User messages (doubly-nested array for multi-turn) |
-| Input | `function` | List of available functions (name + JSON Schema) |
-| Output | `ground_truth` | List of accepted function calls — each parameter has a list of acceptable values |
-
-**Quick start:**
-```python
-import json, urllib.request
-
-def load_jsonl(url):
-    with urllib.request.urlopen(url) as f:
-        return [json.loads(line) for line in f]
-
-CAT  = "multi_turn_miss_param"   # or simple_python, irrelevance, parallel, etc.
-BASE = "https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/bfcl_eval/data"
-
-questions = load_jsonl(f"{BASE}/BFCL_v4_{CAT}.json")
-answers   = {a["id"]: a["ground_truth"] for a in load_jsonl(f"{BASE}/possible_answer/BFCL_v4_{CAT}.json")}
-
-row = questions[0]
-input_messages  = row["question"][0]    # → user messages
-input_functions = row["function"]       # → tool schema
-gold = answers[row["id"]]               # → list of accepted calls
+```
+tasks/<name>/
+├── gold.cases.json    single source of truth, hand-edited
+├── build_cases.py     validates gold.cases.json, generates inputs/ + expected/
+├── judge.py           scores ONE case — must return {"score": 0.0-1.0}
+├── grader.py          aggregates all cases into a run verdict
+├── traptask.yaml      case list + tags + judge/grader commands
+├── inputs/<case_id>/  generated — what the solution sees
+├── expected/<case_id>/ generated — judge-only
+└── README.md          I/O contract, scoring, sources and licensing
 ```
 
-> Use the official `bfcl-eval` CLI (Apache 2.0) for grading rather than re-implementing AST comparison.
+Not every task here uses `gold.cases.json` + `build_cases.py`; several of the `core_*` tasks
+generate cases inline and are live on the platform regardless. The parts that are load-bearing
+are `traptask.yaml`, `judge.py`, and the generated `inputs/` / `expected/` pair.
 
----
+**One security rule:** case IDs must never leak the answer. A solution can read its own
+`inputs_dir` path, so `leopard_01` gives the game away — use `case_01`, and keep the real
+label in `expected/<id>/answer.json`.
 
-## Case 20: PDF Pricing Extraction
-
-**"There are 50+ community AI repos that 'parse PDFs to structured data.' Can they actually pull the right number out of a real pricing PDF — including the asterisked footnote that adds £40K/year to the bill?"** ⭐ priority
-
-| | |
-|---|---|
-| Test corpus | 4 hand-curated public pricing PDFs (London-flavoured) |
-| Full case doc | [case20_pdf_pricing_extraction/](./archive/case20_pdf_pricing_extraction/) |
-| Live demo flow | [case20_pdf_pricing_extraction/DEMO.md](./archive/case20_pdf_pricing_extraction/DEMO.md) |
-
-A real-world pricing PDF (multi-tier, multi-page, footnoted) goes in. A structured representation of pricing (cell values for queried rows) comes out. Foundational sub-step for every "AI procurement assistant," "AI cost optimiser," "AI vendor comparison" workflow. Discrimination empirically confirmed: Docling 2.93 produces >50% structurally broken rows on the multi-page Snowflake table; Claude 4.7 vision parses the same table cleanly.
-
-| Role | Source | Description |
-|------|--------|-------------|
-| Input | PDF file (download fresh from URL) | Real pricing PDF — see corpus below |
-| Input | Row query | Structured spec of which row + columns to extract |
-| Output | Cell values | Cell-level exact match against hand-curated gold (~10 rows per PDF) |
-
-**Test corpus (download URLs):**
-
-| # | PDF | Pages | URL |
-|---|-----|-------|-----|
-| 1 ⭐ | Royal Mail 2026 Business Price Guide | 35 | https://www.mymailingroom.com/wp-content/uploads/Royal-Mail-2026-Business-Price-Guide.pdf |
-| 2 ⭐ | Snowflake Service Consumption Table | 21 | https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf |
-| 3 | HSBC Business Price List | 40 | https://www.business.hsbc.uk/-/media/media/uk/pdfs/regulations/business-price-list.pdf |
-| 4 | Vodafone Business Advance (control / easy) | 24 | https://www.vodafone.co.uk/cs/groups/configfiles/documents/document/vfcon072748.pdf |
-
-**Quick start:**
-```bash
-mkdir -p data
-curl -sL -o data/royalmail.pdf  "https://www.mymailingroom.com/wp-content/uploads/Royal-Mail-2026-Business-Price-Guide.pdf"
-curl -sL -o data/snowflake.pdf  "https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf"
-curl -sL -o data/hsbc.pdf       "https://www.business.hsbc.uk/-/media/media/uk/pdfs/regulations/business-price-list.pdf"
-curl -sL -o data/vodafone.pdf   "https://www.vodafone.co.uk/cs/groups/configfiles/documents/document/vfcon072748.pdf"
-```
-
-> Use `pdftotext -raw <pdf>` to verify gold cells before publishing — it's a faithful baseline of what's actually in the document.
-
----
-
-## Criteria
-
-All cases are selected to meet the following bar:
-
-- **No-tech friendly** — the concept is immediately obvious to any user
-- **Universal** — no special setup, domain knowledge, or environment needed
-- **Fast** — each example runs in seconds
-- **Standardized** — public datasets with existing human-labeled input/output pairs, no custom annotation needed
+Full reference: [`trap` docs](https://github.com/trapstreet/trap/tree/main/docs) ·
+[writing a task](https://github.com/trapstreet/trap/blob/main/docs/guides/writing-task.md)
