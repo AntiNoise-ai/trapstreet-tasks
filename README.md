@@ -249,3 +249,14 @@ label in `expected/<id>/answer.json`.
 
 Full reference: [`trap` docs](https://github.com/trapstreet/trap/tree/main/docs) ·
 [writing a task](https://github.com/trapstreet/trap/blob/main/docs/guides/writing-task.md)
+
+---
+
+## License
+
+Harness code and hand-authored task content: [MIT](./LICENSE).
+
+Tasks that vendor third-party data carry their own `ATTRIBUTION.md` or
+`LICENSE.md` with the upstream source and its license — that license governs
+the vendored content, not this repo's. Check the task directory before reusing
+its data.
