@@ -1,0 +1,12 @@
+trapstreet-tasks
+Copyright (c) 2026 trapstreet.run
+
+The MIT license in LICENSE covers the harness code in this repository
+(judge.py, grader.py, build_cases.py, traptask.yaml) and all hand-authored,
+synthetic task content.
+
+It does NOT override the license of third-party material vendored into
+individual tasks. Where a task includes content from an upstream dataset, that
+task carries its own ATTRIBUTION.md or LICENSE.md stating the source and its
+license, and that license governs the vendored content. Check the task
+directory before reusing its data.

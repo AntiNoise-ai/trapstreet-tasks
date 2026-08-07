@@ -254,7 +254,7 @@ Full reference: [`trap` docs](https://github.com/trapstreet/trap/tree/main/docs)
 
 ## License
 
-Harness code and hand-authored task content: [MIT](./LICENSE).
+Harness code and hand-authored task content: [MIT](./LICENSE) (see [NOTICE](./NOTICE)).
 
 Tasks that vendor third-party data carry their own `ATTRIBUTION.md` or
 `LICENSE.md` with the upstream source and its license — that license governs

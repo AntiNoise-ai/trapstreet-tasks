@@ -19,17 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-## Third-party content
-
-This license covers the harness code in this repository (`judge.py`,
-`grader.py`, `build_cases.py`, `traptask.yaml`) and all hand-authored,
-synthetic task content.
-
-It does NOT override the license of third-party material vendored into
-individual tasks. Where a task includes content from an upstream dataset, that
-task carries its own `ATTRIBUTION.md` or `LICENSE.md` stating the source and
-its license, and that license governs the vendored content. Check the task
-directory before reusing its data.
