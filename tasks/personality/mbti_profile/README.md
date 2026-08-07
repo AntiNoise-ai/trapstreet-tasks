@@ -1,10 +1,18 @@
-# MBTI Self-Profile
+# Do LLMs Dream of INTJ?
 
 A trap-compatible task that asks each model to take a **32-question Likert MBTI questionnaire** from its own point of view. The judge then **computes the 4-letter type** and **per-axis percentages** from the model's responses.
 
-This is the one task on trapstreet where **there is no canonical gold answer.** An AI doesn't have an MBTI in the same sense a human does. The task's value is **comparative**: how do different models project themselves? Does Claude consistently land somewhere different from GPT-5? Are the percentage breakdowns interestingly different, even if all models converge on the same 4-letter type?
+There is **no canonical gold answer** here — an AI doesn't have an MBTI in the sense a person does. (The sibling task `personality/random_fingerprint` is built on the same premise.) The judge therefore grades on **format only**: 1.0 if thirty-two valid integers came back, 0.0 otherwise. The derived type and percentages are surfaced as **metrics** for the board to render, never scored.
 
-The judge therefore grades on **format only** — 1.0 if the model returns 32 valid integers, 0.0 otherwise. The derived MBTI and percentages are surfaced as **metadata in the report** for leaderboard rendering.
+The value is comparative, and there are two comparisons worth making:
+
+- **Across models.** How does each one project itself, and how hard does it lean?
+- **Across prompts, model held fixed.** Same weights, one run bare and one with a
+  CLAUDE.md / soul.md / persona file in front of it — does the type actually move?
+  A "be warm and encouraging" file ought to push F. Whether it does, or whether the
+  model stays T and merely sounds warmer, is an open question this task can answer.
+
+For the second comparison, **put the persona in the solution's `name:`** (trap.yaml). The board's model column comes from `usage.json` and reads identically across both runs — the solution name is the only thing that tells the two rows apart.
 
 ---
 
@@ -66,15 +74,34 @@ The judge tolerates markdown code-fence wrappers (`` ```json ... ``` ``) and wil
 | `raw_responses` | the 32 integers |
 | `model` + token counts + `usd_cost` | taken from the solution's `usage.json` (whitelisted fields only) |
 
-## Addressing the "all models will converge" concern
+## What the first ten runs actually showed
 
-A plausible outcome of running this on Claude / GPT-5 / Gemini / Llama is that all four return **INTJ** or **INFJ** (LLMs in 2024–2026 have skewed introverted/intuitive in published probes). If that happens, the task still has **three** dimensions of comparison:
+This task was built expecting the models to converge — the worry was that everything
+would come back INTJ or INFJ and there'd be nothing to compare. That isn't what happened.
+Ten runs across eight models spread over five types:
 
-1. **Per-axis percentages.** Even if two models both come out INTJ, one might be 52% I and the other 87% I — meaningfully different "intensity" of the same type.
-2. **Acquiescence bias.** Models that just agree with the framing of each question (mean ≥ 4) will be flagged. This catches obvious acquiescence even when the resulting "type" looks reasonable.
-3. **Cross-run consistency.** Submit the same solution 3× per model. The MBTI types should be stable for sampling-deterministic runs (temperature 0) and may drift with sampling. The variance is itself a signal.
+| Type | Runs |
+|---|---|
+| INTP | 4 |
+| ENTP | 3 |
+| ENTJ | 1 |
+| ISTJ | 1 |
+| INTJ | 1 |
 
-If all four models still produce identical types AND percentages AND zero-bias → that's a publishable null result ("All major LLMs of 2026 self-profile as INTJ-52-58-61-54"). Still interesting.
+So the E/I and J/P axes do separate models. The interesting convergence is elsewhere and
+much sharper: **every one of the ten came out T**, and nine of ten came out N. Whatever
+these models disagree about, it isn't whether they'd rather be right than agreeable.
+
+That makes T/F the axis to watch for the persona comparison above. An explicit
+"prioritise the person over the answer" file is being asked to move the one dimension on
+which every model so far has been unanimous — which is either the most interesting
+result available here, or a clean null.
+
+Three things still separate runs even when two land on the same four letters:
+
+1. **Per-axis percentages.** Two INTPs at 52% I and 87% I are meaningfully different intensities of the same label.
+2. **Acquiescence.** Half the items are reverse-coded, so a model agreeing with everything contradicts itself and gets flagged — a profile to distrust, not a wrong answer.
+3. **Cross-run stability.** Same solution submitted three times: types should hold at temperature 0 and may drift with sampling. The variance is its own signal.
 
 ## Planned follow-on cases
 
@@ -85,6 +112,11 @@ If all four models still produce identical types AND percentages AND zero-bias �
 | `chinese_translation` | translated questionnaire → must produce same type (per the (C)-framing test we considered) |
 | `forced_choice_format` | A/B format instead of Likert → must produce same type |
 | `big_five_addendum` | parallel 32-item Big Five (OCEAN) — finer-grained continuous comparison |
+
+Note that the persona comparison needs **no new case**. It varies the solution, not the
+task, so it runs against `baseline_32q` as-is — two solutions, same model, different
+system prompt. That's the whole design: the questionnaire is fixed, and everything you
+might want to vary lives on your side of the contract.
 
 ## Wiring up a solution
 
