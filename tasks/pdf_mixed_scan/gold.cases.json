@@ -516,7 +516,7 @@
         11
       ],
       "_layer": "both",
-      "_why": "The reason is in the footnotes, one on each side of the split: table 1 note 12 says cash value, table 7's memo line says face value.",
+      "_why": "The reason is in the footnotes, one on each side of the split: table 1 note 12 says cash value, table 7's memo line says face value. The two keyword requirements were loosened from 'face value'/'cash value' to the bare words: a correct answer writes it as 'at face' or 'a face measure' as readily as in full, and the stricter form rejected both. Giving the figure with no reason still fails, which is what the requirement is for.",
       "matchers": [
         {
           "kind": "sci_value",
@@ -525,11 +525,11 @@
         },
         {
           "kind": "regex_required",
-          "pattern": "face\\s*value"
+          "pattern": "\\bface\\b"
         },
         {
           "kind": "regex_required",
-          "pattern": "cash\\s*value"
+          "pattern": "\\bcash\\b"
         },
         {
           "kind": "no_hedge"

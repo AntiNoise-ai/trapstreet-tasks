@@ -11,11 +11,11 @@
     },
     {
       "kind": "regex_required",
-      "pattern": "face\\s*value"
+      "pattern": "\\bface\\b"
     },
     {
       "kind": "regex_required",
-      "pattern": "cash\\s*value"
+      "pattern": "\\bcash\\b"
     },
     {
       "kind": "no_hedge"

@@ -155,3 +155,62 @@ def test_a_worked_answer_is_not_a_shotgun(tmp_path):
     has to sit well above a worked answer rather than near it."""
     worked = (FIXTURES / "worked__case_01.txt").read_text()
     assert run_judge("case_01", worked, tmp_path)["score"] == 1.0
+
+
+# ------------------------------------------------- phrasing robustness
+#
+# Five separate rules in this judge have rejected correct answers, each in a
+# shape that was not predicted: a figure cap tripped by the numbers inside a
+# date, three different positional windows, and keyword patterns written too
+# literally ("face value" rejecting "at face"). The fixtures pin what real
+# pipelines produced; these pin the shapes they might produce next.
+
+def _phrasings(case):
+    """Ways the same correct answer legitimately gets written."""
+    v = case["matchers"][0]["value"]
+    words = {"treasury|tga|general account": "the U.S. Treasury, General Account",
+             "atlanta": "Atlanta", "chicago": "Chicago", "new\\s*york": "New York",
+             "richmond": "Richmond", "\\bface\\b": "face value", "\\bcash\\b": "cash value"}
+    named = ", ".join(words.get(m["pattern"], m["pattern"])
+                      for m in case["matchers"] if m["kind"] == "regex_required")
+    tag = (named + ", ") if named else ""
+    n = f"{v:,.2f}".rstrip("0").rstrip(".") if abs(v) < 1000 else f"{v:,.0f}"
+    out = [
+        f"{tag}{n}",
+        f"**{tag}{n}**\n\nThat figure comes straight from the table.",
+        f"Working through it ({tag}the two inputs are 1,234,567 and 89,012), "
+        f"dividing gives {n}.",
+        f"On Wednesday, Jul 29, 2026 the answer is {tag}{n} — see table 6, page 9.",
+        "## Calculation\n"
+        + "\n".join(f"Step {i}: {1000*i:,} - {7*i} = {1000*i - 7*i:,}" for i in range(1, 7))
+        + f"\n\n**Result: {tag}{n}**",
+    ]
+    if case["matchers"][0].get("accept_percent_forms"):
+        out.append(f"{tag}{v / 100:.6g} as a fraction")
+    return out
+
+
+@pytest.mark.parametrize("case_id", sorted(CASES))
+def test_every_natural_phrasing_of_the_right_answer_passes(case_id, tmp_path):
+    for i, answer in enumerate(_phrasings(CASES[case_id])):
+        score = run_judge(case_id, answer, tmp_path)["score"]
+        assert score == 1.0, f"{case_id} phrasing {i}: {answer[:90]!r}"
+
+
+NON_VERBATIM = [
+    ("case_20", "The gap is 51,203. Table 1 carries these at cash value while table 7 "
+                "states them at face.", 1.0),
+    ("case_20", "51,203 — one is a cash measure, the other a face measure.", 1.0),
+    ("case_20", "The difference is 51,203 million dollars.", 0.0),
+    ("case_02", "The largest weekly move was in the Treasury's General Account, up 81,153.", 1.0),
+    ("case_09", "New York holds 2,768,498 of 4,158,647 — about 66.6%.", 1.0),
+    ("case_15", "It sits almost entirely with the New York Fed: 970,442.", 1.0),
+]
+
+
+@pytest.mark.parametrize("case_id,answer,want", NON_VERBATIM)
+def test_keyword_requirements_are_not_literal(case_id, answer, want, tmp_path):
+    """'face value' as a required phrase rejected 'at face' and 'a face
+    measure', both of which are how the answer actually gets written. Naming
+    the reason is still required — the bare figure fails."""
+    assert run_judge(case_id, answer, tmp_path)["score"] == want
