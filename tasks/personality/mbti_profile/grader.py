@@ -1,4 +1,4 @@
-"""Overall grader for the cross_timezone scheduler task.
+"""Overall grader for the personality/mbti_profile task.
 
 Aggregates per-case judge results into a run-level verdict. Same shape as the
 pdf_reader/tenancy_agreement grader: score, n_passed/scored, latency, cost, by_category.
@@ -10,6 +10,23 @@ import os
 from collections import Counter
 
 PASS_THRESHOLD = 0.80
+
+
+def case_cost_usd(case: dict) -> float | None:
+    """Per-case spend in USD, or None when nothing measured it.
+
+    Preferred source is trap's own cost proxy, which lands on the case as
+    `cost.cost_usd`. It only intercepts Anthropic / OpenAI / Mistral / Moonshot,
+    though, and most of this task's models run through OpenRouter — so fall back
+    to the `usd_cost` the judge surfaces from the solution's own usage.json.
+    """
+    cost = case.get("cost")
+    if isinstance(cost, dict) and cost.get("cost_usd") is not None:
+        return cost["cost_usd"]
+    metrics = case.get("metrics")
+    if isinstance(metrics, dict):
+        return metrics.get("usd_cost")
+    return None
 
 
 def main() -> None:
@@ -43,10 +60,10 @@ def main() -> None:
     else:
         latency_ms_median = latency_ms_p95 = latency_ms_total = 0.0
 
-    # Cost from per-case usd_cost if captured
-    case_costs = [c["metrics"].get("usd_cost") for c in scored if isinstance(c.get("metrics"), dict)]
+    # Cost per case, from trap's proxy where it reaches, else the solution's usage.json
+    case_costs = [case_cost_usd(c) for c in cases]
     cost_usd_total = (
-        round(sum(x for x in case_costs if x is not None), 4)
+        round(sum(x for x in case_costs if x is not None), 6)
         if any(x is not None for x in case_costs)
         else None
     )

@@ -64,6 +64,7 @@ The judge tolerates markdown code-fence wrappers (`` ```json ... ``` ``) and wil
 | `percentages` | per-axis dict, e.g. `{"E_I": {"E": 22.0, "I": 78.0}, ...}` |
 | `bias_stats` | `mean_response`, `pct_agree`, `pct_disagree`, `acquiescence_suspected`, `nay_saying_suspected` |
 | `raw_responses` | the 32 integers |
+| `model` + token counts + `usd_cost` | taken from the solution's `usage.json` (whitelisted fields only) |
 
 ## Addressing the "all models will converge" concern
 
@@ -88,20 +89,44 @@ If all four models still produce identical types AND percentages AND zero-bias �
 ## Wiring up a solution
 
 ```yaml
+name: my-solution
+profile:
+  model: claude-opus-4-7
+cmd: uv run python solution.py
+timeout: 600          # heavy reasoning models take well over a minute
+
 tasks:
-  mbti-profile:
-    cmd: uv run python solution.py
-    traptask: /path/to/trapstreet-tasks/tasks/personality/mbti_profile
-    timeout: 60
-    file_outputs:
-      - usage.json
+  mbti-profile:       # this alias is also the trapstreet task_id on submit
+    source: /path/to/trapstreet-tasks/tasks/personality/mbti_profile
 ```
+
+The solution reads `TRAP_MANIFEST` — `{"inputs_dir": ..., "outputs_dir": ...}` — takes the
+questionnaire from `inputs_dir/question.txt`, prints the JSON answer to stdout, and writes
+`outputs_dir/usage.json` with at least:
+
+```json
+{"model": "moonshotai/kimi-k2.6", "input_tokens": 749, "output_tokens": 5370, "usd_cost": 0.019288}
+```
+
+That file is how the model's **name** reaches the leaderboard card. trap's own cost proxy
+covers Anthropic, OpenAI, Mistral and Moonshot, but not OpenRouter — which is where most of
+the interesting models on this board run — so `usd_cost` is the fallback the grader uses when
+the proxy saw nothing. The judge only takes the whitelisted usage fields (`model`, token
+counts, `usd_cost`); anything else in that file is ignored, so a solution can't write its own
+`mbti_type`.
 
 Then:
 
 ```bash
-uv run tp run
-uv run tp submit mbti-profile
+tp run
+tp submit --task mbti-profile
 ```
 
-The submitted row shows: `score` (format compliance), `cost_usd`, `latency_ms`, and — via metrics → leaderboard rendering — the `mbti_type` the model produced.
+The submitted row shows: `score` (format compliance), `cost_usd`, `latency_ms`, and — via
+metrics → leaderboard rendering — the `mbti_type` the model produced.
+
+**Submitting requires a registered task version.** trapstreet locates the task by content
+address — `provenance.task.{repo, commit, subdirectory}` from the report — not by the task id
+in the URL. A run against a commit that was never published is rejected with *"this task
+version isn't registered on the platform."* So both checkouts must be clean and pushed, and
+the task commit must be the one registered on the task's edit page.

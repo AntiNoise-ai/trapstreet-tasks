@@ -363,8 +363,20 @@ def m_sci_value(answer: str, spec: dict) -> tuple[bool, str]:
     # name requirement (the district, the account) that a bare list of numbers
     # cannot satisfy. The cap survives only against dumping a whole page.
     #
+    # The cap itself then misfired a fifth time, at 25, on an answer that laid
+    # out its arithmetic as numbered steps:
+    #
+    #   Step 1: 2,917,756 - (-310,644) = 3,228,400
+    #   Step 2: 2,638,757 - (-250,396) = 2,889,153
+    #   Step 3: 2,889,153 / 3,228,400 = 89.49%
+    #
+    # Twenty-nine figures, and every one of them load-bearing. Questions that
+    # ask for a derived figure invite exactly this, so the cap has to sit far
+    # above a worked answer: the text pages carry about 1,300 numbers, so a
+    # genuine dump lands in the hundreds and 80 separates the two cleanly.
+    #
     # `require_commitment` restores positional scoring for a case that needs it.
-    cap = int(spec.get("max_figures", 25))
+    cap = int(spec.get("max_figures", 80))
     if len(plain) > cap:
         return False, (f"answer lists {len(plain)} figures (cap {cap}) — treated as a "
                        f"shotgun, not a committed answer")

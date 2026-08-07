@@ -1,6 +1,12 @@
+name: MBTI Self-Profile
+
 dirs:
   inputs: inputs/
   expected: expected/
+
+# stdout carries the answer; usage.json is how a solution reports which model
+# produced it (the leaderboard's profile card reads `model` from there).
+declared_outputs: [stdout, usage.json]
 
 cases:
 - id: baseline_32q

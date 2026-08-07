@@ -25,6 +25,22 @@ from pathlib import Path
 from typing import Any
 
 
+# Fields the solution may contribute through outputs_dir/usage.json. They travel into
+# the case metrics because the leaderboard's profile card reads the model name from
+# `model` and there is no other channel for it — trap's cost proxy covers Anthropic /
+# OpenAI / Mistral / Moonshot, but not OpenRouter, where most of this task's models run.
+# Whitelisted rather than merged wholesale: the solution writes that file itself, so an
+# open merge would let it overwrite mbti_type / percentages / bias_stats with anything.
+USAGE_FIELDS = (
+    "model",
+    "input_tokens",
+    "output_tokens",
+    "cache_creation_input_tokens",
+    "cache_read_input_tokens",
+    "usd_cost",
+)
+
+
 def _strip_fences(text: str) -> str:
     """Some LLMs wrap JSON in ```json...```. Strip it."""
     text = text.strip()
@@ -181,9 +197,11 @@ def main() -> None:
     usage_path = Path(manifest["outputs_dir"]) / "usage.json"
     if usage_path.exists():
         try:
-            usage_record = json.loads(usage_path.read_text())
+            raw_usage = json.loads(usage_path.read_text())
         except json.JSONDecodeError:
-            pass
+            raw_usage = {}
+        if isinstance(raw_usage, dict):
+            usage_record = {k: v for k, v in raw_usage.items() if k in USAGE_FIELDS}
 
     if exit_code != 0:
         out = {

@@ -1,0 +1,23 @@
+## Calculation
+
+**Step 1: Find total securities held in custody one year ago (week ended Jul 30, 2025)**
+
+Current week-ended total (Jul 29, 2026): 2,917,756
+Change from year earlier: −310,644
+
+Year-ago total = Current − Change = 2,917,756 − (−310,644) = **3,228,400**
+
+**Step 2: Find marketable U.S. Treasury securities one year ago**
+
+Current week-ended figure (Jul 29, 2026): 2,638,757
+Change from year earlier: −250,396
+
+Year-ago Treasuries = 2,638,757 − (−250,396) = **2,889,153**
+
+**Step 3: Compute the share**
+
+Share = 2,889,153 ÷ 3,228,400 = **0.8949**, or **89.49%**
+
+## Answer
+
+A year ago (week ended July 30, 2025), marketable U.S. Treasury securities represented approximately **89.49%** of the total securities held in custody for foreign official and international accounts (2,889,153 ÷ 3,228,400 ≈ 89.49%).

@@ -140,3 +140,18 @@ MALFORMED = ["", "not json at all {{{", "null", "[1, 2, 3]", '{"answer": NaN}',
 @pytest.mark.parametrize("bad", MALFORMED)
 def test_malformed_output_scores_zero_without_crashing(bad, tmp_path):
     assert run_judge("case_01", bad, tmp_path)["score"] == 0.0
+
+
+def test_a_worked_answer_is_not_a_shotgun(tmp_path):
+    """Verbatim from a real run, and the fifth time an anti-shotgun rule
+    rejected a correct answer. It sets its arithmetic out as numbered steps —
+    twenty-nine figures, every one load-bearing:
+
+        Step 1: 2,917,756 - (-310,644) = 3,228,400
+        Step 2: 2,638,757 - (-250,396) = 2,889,153
+        Step 3: 2,889,153 / 3,228,400 = 89.49%
+
+    Questions that ask for a derived figure invite exactly this, so the cap
+    has to sit well above a worked answer rather than near it."""
+    worked = (FIXTURES / "worked__case_01.txt").read_text()
+    assert run_judge("case_01", worked, tmp_path)["score"] == 1.0
