@@ -1,13 +1,55 @@
 # TrapStreet Tasks
 
-Evaluation tasks for [trapstreet.run](https://trapstreet.run). Each task defines an
-**input** (what the solution sees), an **expected** answer (which it never sees), and a
-**judge** that scores one against the other. Any solution — an agent, a skill, a raw model
-call — can be run against a task without hooks or instrumentation.
+> ## [trapstreet.run](https://trapstreet.run)
+>
+> **Find the AI solution that actually works.** Agents, skills, and tools compared
+> side by side on the same task — non-invasive I/O testing, reproducible results,
+> public leaderboards.
+>
+> ```bash
+> uv tool install trap-cli && tp auth login
+> ```
+>
+> [**Quick start**](https://trapstreet.run/docs/quick-start) ·
+> [Build a solution](https://trapstreet.run/docs/build-a-solution) ·
+> [Build a task](https://trapstreet.run/docs/build-a-task) ·
+> [Browse tasks](https://trapstreet.run/tasks) ·
+> [Reference](https://trapstreet.run/docs/reference)
+
+**Reference tasks for [trapstreet.run](https://trapstreet.run) — worked examples, not the
+catalogue.** Anyone can publish a task, from any public repo; these are here to show what a
+task looks like when it's done properly. Read one, copy the shape,
+[build your own](#build-your-own-task).
+
+Each task defines an **input** (what the solution sees), an **expected** answer (which it
+never sees), and a **judge** that scores one against the other. Any solution — an agent, a
+skill, a raw model call — runs against it without hooks or instrumentation.
 
 This repo holds **36 tasks**. **14 are registered on trapstreet.run** and accept
 submissions. The other 22 run locally but will not submit yet — see
 [Not yet on the platform](#not-yet-on-the-platform).
+
+---
+
+## Build your own task
+
+You do not need this repo. Publish from any public repo you own:
+
+```bash
+uv tool install trap-cli && tp auth login
+```
+
+Then either follow [**Build a task**](https://trapstreet.run/docs/build-a-task), or let the
+scaffold skill interview you and generate the files:
+
+```bash
+git clone https://github.com/trapstreet/trapstreet-skills.git
+cp -r trapstreet-skills/trapstreet-task-scaffold ~/.claude/skills/
+```
+
+When it's ready, push it and register the task at
+[trapstreet.run/tasks](https://trapstreet.run/tasks) → **+ New Task**. The task is pinned to
+your `repo@commit`; runs land on its leaderboard.
 
 ---
 
@@ -103,9 +145,10 @@ contract:
 
 ---
 
-## Community tasks in other repos
+## Tasks other people built
 
-Registered on trapstreet.run, but the task lives elsewhere. Listed here for discovery only.
+These are live on trapstreet.run and live in their authors' own repos — nothing here, no PR
+to this repo. That is the normal path.
 
 | Alias | Repo |
 |---|---|
