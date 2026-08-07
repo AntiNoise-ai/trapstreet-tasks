@@ -5,8 +5,8 @@ Evaluation tasks for [trapstreet.run](https://trapstreet.run). Each task defines
 **judge** that scores one against the other. Any solution — an agent, a skill, a raw model
 call — can be run against a task without hooks or instrumentation.
 
-This repo holds **37 tasks**. **14 are registered on trapstreet.run** and accept
-submissions. The other 23 run locally but will not submit yet — see
+This repo holds **36 tasks**. **14 are registered on trapstreet.run** and accept
+submissions. The other 22 run locally but will not submit yet — see
 [Not yet on the platform](#not-yet-on-the-platform).
 
 ---
@@ -133,7 +133,6 @@ is a `POST /api/tasks` away; nothing in the task itself needs to change.
 | [`tasks/core_multi_turn_memory`](./tasks/core_multi_turn_memory) | Recall across a multi-session conversation | 20 |
 | [`tasks/core_parallel_tool_calls`](./tasks/core_parallel_tool_calls) | Planning several tool calls at once | 20 |
 | [`tasks/core_tool_selection_at_scale`](./tasks/core_tool_selection_at_scale) | Tool choice as the catalog grows to 300 | 64 |
-| [`tasks/cuad`](./tasks/cuad) | Legal contract clause extraction — exact span, or correctly "absent" | 32 |
 | [`tasks/doc_editing`](./tasks/doc_editing) | Content retention when editing a document | 4 |
 | [`tasks/imported/gsm8k`](./tasks/imported/gsm8k) | Grade-school math word problems | 25 |
 | [`tasks/imported/mmlu`](./tasks/imported/mmlu) | Multiple-choice knowledge across subjects | 25 |
@@ -169,6 +168,9 @@ is a platform-side change (task visibility), not a repo change.
 Six early explorations, documentation only — no runnable cases: article summarization
 (CNN/DailyMail), everyday Q&A (TriviaQA), finance Q&A (FinanceBench), legal clause
 extraction (CUAD), agent tool use (BFCL v4), PDF pricing extraction.
+
+[`archive/cuad`](./archive/cuad) — the full 32-case CUAD task (SEC EDGAR contracts,
+CC BY 4.0). Deregistered from trapstreet.run; kept complete for reference.
 
 Plus [`archive/financebench`](./archive/financebench) — a complete 5-case task, archived
 because FinanceBench is **CC BY-NC 4.0** (NonCommercial), which
