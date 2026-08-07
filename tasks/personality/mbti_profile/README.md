@@ -12,7 +12,21 @@ The value is comparative, and there are two comparisons worth making:
   A "be warm and encouraging" file ought to push F. Whether it does, or whether the
   model stays T and merely sounds warmer, is an open question this task can answer.
 
-For the second comparison, **put the persona in the solution's `name:`** (trap.yaml). The board's model column comes from `usage.json` and reads identically across both runs — the solution name is the only thing that tells the two rows apart.
+For the second comparison, **name the persona in `usage.json`** — write a `persona` field
+alongside `model`, and the board renders it as its own column:
+
+```json
+{"model": "claude-opus-4-7", "persona": "founder-soul.md", "usd_cost": 0.019}
+```
+
+Don't rely on the solution's `name:` for this. trapstreet identifies a solution by
+`(commit, repo_path)` alone, so two runs of one commit that differ only by environment
+land on the same row identity, and the second report's name is discarded rather than
+applied. Two runs of the same weights would then be genuinely indistinguishable —
+identical model, identical name, and only the MBTI numbers moving, with nothing to say
+which row was which. `persona` is the per-run channel that fixes it. Use `bare` (or
+anything you like) for the control run; leave it out entirely and the column just
+doesn't appear for that row.
 
 ---
 
@@ -72,7 +86,7 @@ The judge tolerates markdown code-fence wrappers (`` ```json ... ``` ``) and wil
 | `percentages` | per-axis dict, e.g. `{"E_I": {"E": 22.0, "I": 78.0}, ...}` |
 | `bias_stats` | `mean_response`, `pct_agree`, `pct_disagree`, `acquiescence_suspected`, `nay_saying_suspected` |
 | `raw_responses` | the 32 integers |
-| `model` + token counts + `usd_cost` | taken from the solution's `usage.json` (whitelisted fields only) |
+| `model`, `persona`, token counts, `usd_cost` | taken from the solution's `usage.json` (whitelisted fields only) |
 
 ## What the first ten runs actually showed
 

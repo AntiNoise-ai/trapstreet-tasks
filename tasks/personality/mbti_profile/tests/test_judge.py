@@ -149,6 +149,26 @@ def test_usage_json_supplies_the_model_name(tmp_path):
     assert out["input_tokens"] == 749
 
 
+def test_usage_json_carries_the_persona_label(tmp_path):
+    """The persona has to ride per-run. The platform keys a solution on
+    (commit, repo_path), so two runs of one commit differing only in environment
+    share a row identity and the later `name:` is dropped — this field is the only
+    thing that can tell "bare" from "with a soul.md" apart on the board."""
+    out = _run_judge(
+        tmp_path,
+        json.dumps({"responses": STRONG_ESTJ}),
+        {"model": "claude-opus-4-7", "persona": "founder-soul.md", "usd_cost": 0.02},
+    )
+    assert out["model"] == "claude-opus-4-7"
+    assert out["persona"] == "founder-soul.md"
+
+
+def test_persona_is_optional(tmp_path):
+    out = _run_judge(tmp_path, json.dumps({"responses": STRONG_ESTJ}), {"model": "m"})
+    assert out["model"] == "m"
+    assert "persona" not in out
+
+
 def test_usage_json_cannot_overwrite_the_derived_profile(tmp_path):
     """The solution writes usage.json itself, so it must not be merged wholesale —
     otherwise a model could simply declare the type it wanted to be seen as."""

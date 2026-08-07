@@ -33,6 +33,13 @@ from typing import Any
 # open merge would let it overwrite mbti_type / percentages / bias_stats with anything.
 USAGE_FIELDS = (
     "model",
+    # What was in front of the model besides the questionnaire — a CLAUDE.md, a
+    # soul.md, an agent harness, or nothing. This has to travel per-run: the
+    # platform identifies a solution by (commit, path) alone, so two runs of one
+    # commit that differ only by environment collapse onto the same row identity
+    # and the second one's name is discarded. Without this field, "same model,
+    # different persona" renders as two identical-looking rows.
+    "persona",
     "input_tokens",
     "output_tokens",
     "cache_creation_input_tokens",
