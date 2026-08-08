@@ -6,6 +6,12 @@
 > side by side on the same task — non-invasive I/O testing, reproducible results,
 > public leaderboards.
 >
+> **New here?** Start at
+> **[trapstreet-skills](https://github.com/trapstreet/trapstreet-skills)** — install three
+> skills and your coding agent handles the setup, builds a solution, and submits it for you.
+>
+> Prefer to drive it yourself:
+>
 > ```bash
 > uv tool install trap-cli && tp auth login
 > ```
@@ -13,7 +19,7 @@
 > [**Quick start**](https://trapstreet.run/docs/quick-start) ·
 > [Build a solution](https://trapstreet.run/docs/build-a-solution) ·
 > [Build a task](https://trapstreet.run/docs/build-a-task) ·
-> [Browse tasks](https://trapstreet.run/tasks) ·
+> [Browse tasks](https://trapstreet.run) ·
 > [Reference](https://trapstreet.run/docs/reference)
 
 **Reference tasks for [trapstreet.run](https://trapstreet.run) — worked examples, not the
@@ -25,8 +31,9 @@ Each task defines an **input** (what the solution sees), an **expected** answer 
 never sees), and a **judge** that scores one against the other. Any solution — an agent, a
 skill, a raw model call — runs against it without hooks or instrumentation.
 
-This repo holds **36 tasks**. **14 are registered on trapstreet.run** and accept
-submissions. The other 22 run locally but will not submit yet — see
+This repo holds **36 tasks**. **14 of them are live on trapstreet.run** and accept
+submissions (as 15 registrations — `personality/mbti_profile` is registered twice, see
+below). The other **22 run locally but will not submit yet** — see
 [Not yet on the platform](#not-yet-on-the-platform).
 
 ---
@@ -43,12 +50,12 @@ Then either follow [**Build a task**](https://trapstreet.run/docs/build-a-task),
 scaffold skill interview you and generate the files:
 
 ```bash
-git clone https://github.com/trapstreet/trapstreet-skills.git
-cp -r trapstreet-skills/trapstreet-task-scaffold ~/.claude/skills/
+git clone --depth 1 -q https://github.com/trapstreet/trapstreet-skills.git /tmp/ts-skills \
+  && mkdir -p ~/.claude/skills && cp -r /tmp/ts-skills/trapstreet-* ~/.claude/skills/ && rm -rf /tmp/ts-skills
 ```
 
 When it's ready, push it and register the task at
-[trapstreet.run/tasks](https://trapstreet.run/tasks) → **+ New Task**. The task is pinned to
+[trapstreet.run](https://trapstreet.run) → **+ New Task**. The task is pinned to
 your `repo@commit`; runs land on its leaderboard.
 
 ---
@@ -65,8 +72,36 @@ published task versions are pinned to specific commits. Your `trap.yaml` must po
 
 ```yaml
 tasks:
+  core-calibrated-answer:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_calibrated_answer
+  core-date-arithmetic:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_date_arithmetic
+  core-json-schema-output:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_json_schema_output
+  core-needle-in-haystack:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_needle_in_haystack
+  core-pdf-ocr:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@8bee00aaf0dfad72979aca8b39c87183b01cd5c7#subdirectory=tasks/core_pdf_ocr
+  debug-subscription-billing-pipeline:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@4d7400a7e5c9ace5b4db3f9d6c89b73777419dbc#subdirectory=tasks/debug_subscription_billing_pipeline
+  debug-vendor-payout-pipeline:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/debug_vendor_payout_pipeline
+  do-llms-dream-of-intj:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@792617f8ec46d4585046e15dc771ca14f020b710#subdirectory=tasks/personality/mbti_profile
+  influencer-marketing-disclosure:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/influencer_marketing_disclosure
+  mbti-profile:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/personality/mbti_profile
+  pdf-mixed-scan:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
+  pdf-reader:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/pdf_reader
+  pdf-reader-v2:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
   pdf-tables:
     source: git+https://github.com/trapstreet/trapstreet-tasks@f17b9b41456031b187bd57d8234047bd92e65b84#subdirectory=tasks/pdf_tables
+  python-bugfix-diff:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@93d6ef239e640d3faaf92fafa4c6b0c251ad00cb#subdirectory=tasks/code_review_skill/python_bugfix_diff
 ```
 
 The [Live tasks](#live-tasks) block below is copy-pasteable — take the entries you want.
@@ -90,16 +125,17 @@ Registered, public, submittable. Case counts are from the pinned commit.
 | `core-pdf-ocr` | Reading a scanned PDF | 20 | [`tasks/core_pdf_ocr`](./tasks/core_pdf_ocr) |
 | `debug-subscription-billing-pipeline` | Multi-report consistency debugging | 6 | [`tasks/debug_subscription_billing_pipeline`](./tasks/debug_subscription_billing_pipeline) |
 | `debug-vendor-payout-pipeline` | Debugging a vendor payout pipeline — few cases, hard | 4 | [`tasks/debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline) |
+| `do-llms-dream-of-intj` | 32-question Likert questionnaire, self-reported | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
 | `influencer-marketing-disclosure` | Spotting undisclosed paid promotion | 11 | [`tasks/influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) |
+| `mbti-profile` | Superseded by `do-llms-dream-of-intj` — kept for its run history | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
 | `pdf-mixed-scan` | PDF parsing when half the document has no text layer | 20 | [`tasks/pdf_mixed_scan`](./tasks/pdf_mixed_scan) |
-| `mbti-profile` | 32-question Likert questionnaire, self-reported | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
 | `pdf-reader` | Legal contract review — superseded by `pdf-reader-v2` | 19 | [`tasks/pdf_reader`](./tasks/pdf_reader) |
 | `pdf-reader-v2` | UK tenancy agreement — rent, dates, clauses | 20 | [`tasks/pdf_reader_v2`](./tasks/pdf_reader_v2) |
 | `pdf-tables` | Reading values out of wide, repetitive tables | 20 | [`tasks/pdf_tables`](./tasks/pdf_tables) |
 | `python-bugfix-diff` | Which code-review skill actually finds the bug? | 10 | [`tasks/code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff) |
 
 <details>
-<summary><b>Paste this into your <code>trap.yaml</code></b> — pinned sources for all 14</summary>
+<summary><b>Paste this into your <code>trap.yaml</code></b> — pinned sources for all 15</summary>
 
 ```yaml
 tasks:
@@ -141,7 +177,7 @@ For these three the directory at `main` has changed since the registered commit,
 read here is **not** what a submitted run executes — read the pinned commit for the exact
 contract:
 
-`pdf-reader` · `mbti-profile` · `python-bugfix-diff`
+`mbti-profile` · `pdf-reader` · `python-bugfix-diff`
 
 ---
 
