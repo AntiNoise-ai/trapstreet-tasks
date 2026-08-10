@@ -339,3 +339,54 @@ def test_volunteering_a_base_skill_is_over_eager_not_incomplete():
 def test_incomplete_still_fires_when_a_call_is_actually_missing():
     m = judge.score_case(json.dumps([json.loads(GOLD_S04)[0]]), expected_for(S04_L3_HIGH))
     assert m["completion"] < 1.0 and m["failure_reason"] == "incomplete"
+
+
+def test_interfering_pair_is_derived_exactly_not_guessed():
+    """(skill that should have been used, skill used instead) -- the pair a
+    merge decision is actually about."""
+    exp = expected_for(S04_L3_HIGH)
+    swapped = json.dumps([
+        {"name": "storage_share_object",
+         "arguments": {"source_path": "/planning/renewals-model.xlsx", "grantees": ["finance"]}},
+        {"name": "chat_post_message", "arguments": {"channel": "#finance", "text": "done"}},
+    ])
+    m = judge.score_case(swapped, exp)
+    assert m["interfering_pairs"] == [["storage_copy_object", "storage_share_object"]]
+
+
+def test_surplus_without_displacement_yields_no_pair():
+    """Instruction bleed adds work rather than replacing any. Emitting a pair
+    would fabricate a substitution that did not happen -- and it is exactly the
+    case a merge decision cannot help with."""
+    bled = json.loads(GOLD_S04) + [
+        {"name": "compliance_record_action",
+         "arguments": {"action": "copied", "artefact": "/planning/renewals-model.xlsx"}},
+    ]
+    m = judge.score_case(json.dumps(bled), expected_for(S04_L3_HIGH))
+    assert m["failure_reason"] == "instruction_bleed"
+    assert m["interfering_pairs"] == []
+
+
+def test_a_missing_call_with_an_unrelated_surplus_yields_no_pair():
+    """Only a competitor that declares it stands in for the missing skill
+    counts. A hallucinated call displaced nothing in particular.
+
+    (The first draft of this test used chat_send_dm as the 'unrelated' call and
+    failed -- correctly. It declares competes_with chat_post_message, which is
+    one of the calls s04 was missing, so it IS a displacement. The test premise
+    was wrong, not the judge.)"""
+    m = judge.score_case(json.dumps([
+        {"name": "storage_duplicate_file", "arguments": {"path": "x"}},
+    ]), expected_for(S04_L3_HIGH))
+    assert m["missing_calls"] and m["interfering_pairs"] == []
+
+
+def test_every_substituting_competitor_can_form_a_pair():
+    """A competitor that declares competes_with but never appears in a pair
+    would be a mapping that silently does nothing -- the same shape of fault as
+    the dose plot that read n_competitors nobody emitted."""
+    exp = expected_for(S04_L3_HIGH)
+    for name, base in exp["competes_with"].items():
+        m = judge.score_case(json.dumps([{"name": name, "arguments": {}}]), exp)
+        if base in m["missing_calls"]:
+            assert [base, name] in m["interfering_pairs"], f"{name} -> {base}"

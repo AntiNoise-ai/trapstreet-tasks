@@ -32,6 +32,7 @@
   "added_names": [],
   "bleed_names": [],
   "bleed_strength": {},
+  "competes_with": {},
   "backend_names": [],
   "base_names": [
     "docs_export_pdf",

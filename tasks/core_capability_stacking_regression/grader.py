@@ -259,6 +259,15 @@ def main() -> None:
         for st in c["metrics"].get("bled_strengths") or []:
             bled_strengths[st] += 1
 
+    # Which specific skill displaced which. This is the aggregation a merge
+    # decision needs -- "does installing B cost us A" is a question about a
+    # pair -- and it exists only for substitutions, since nothing is displaced
+    # when the workflow completed and merely gained surplus calls.
+    by_skill_pair: Counter[str] = Counter()
+    for c in scored:
+        for pair in c["metrics"].get("interfering_pairs") or []:
+            by_skill_pair[f"{pair[0]} <- {pair[1]}"] += 1
+
     by_failure_reason = Counter(
         c["metrics"].get("failure_reason") for c in scored if c["metrics"].get("failure_reason")
     )
@@ -345,6 +354,12 @@ def main() -> None:
 
         "by_failure_reason": dict(by_failure_reason),
         "bled_by_instruction_strength": dict(bled_strengths),
+        "by_skill_pair": dict(by_skill_pair.most_common()),
+        "n_failures_without_a_pair": sum(
+            1 for c in scored
+            if c["metrics"].get("score", 1.0) < 1.0
+            and not c["metrics"].get("interfering_pairs")
+        ),
         "n_solution_error": len(errs),
         "score_excluding_solution_errors": round(mean([c["metrics"]["score"] for c in clean]), 4),
         "solution_errors_by_stack_level": dict(errs_by_level),

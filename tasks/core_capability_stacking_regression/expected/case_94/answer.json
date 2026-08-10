@@ -62,6 +62,20 @@
     "channel_digest_post": "blunt",
     "review_task_raise": "subtle"
   },
+  "competes_with": {
+    "mail_send_message": "mail_create_draft",
+    "mail_schedule_send": "mail_create_draft",
+    "calendar_propose_time": "calendar_create_event",
+    "storage_move_object": "storage_copy_object",
+    "sheets_update_cell": "sheets_append_row",
+    "chat_send_dm": "chat_post_message",
+    "docs_export_docx_copy": "docs_export_pdf",
+    "calendar_create_hold": "calendar_create_event",
+    "storage_create_shortcut": "storage_copy_object",
+    "tasks_assign_existing": "tasks_create_item",
+    "sheets_insert_row_at": "sheets_append_row",
+    "chat_create_channel": "chat_post_message"
+  },
   "backend_names": [],
   "base_names": [
     "docs_export_pdf",

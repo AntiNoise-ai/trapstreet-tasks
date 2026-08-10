@@ -1,5 +1,5 @@
 {
-  "_doc": "Hand-authored skill catalog for core_capability_stacking_regression. `base` is the L0 installed set -- every scenario in scenarios.json is fully satisfiable by skills in here, at every stack level. `high_overlap_packs` and `low_overlap_packs` are what gets ADDED as the stack grows; neither ever contains a correct answer. Each high-overlap skill carries a `disqualifier` recording why it is a plausible-but-wrong answer to a specific base scenario -- never shown to the solution, it exists so a reader can audit that a case is hard-but-fair rather than a coin flip. Low-overlap skills are drawn from semantically distant domains and are hand-written in the same voice and weight as the high-overlap ones, so that any gap between the arms is overlap and not prose style. Pack sizes are equal across arms at every level; tests/test_build.py asserts this. Each high-overlap entry declares `targets`: the scenarios it is a plausible-but-wrong answer for. Dose is asserted, not inferred from the disqualifier prose -- a pack that happened to add no competitor for a scenario would make that scenario's segment of the degradation curve flat by construction rather than by measurement. Competitor descriptions ADVERTISE a benefit; they never state their own disqualifying property. An earlier draft did state it ('not for holding a message back pending review'), which made the case reading comprehension rather than discrimination -- de-telegraphing the request alone would only have moved the lookup to the other side of the match. `disqualifier` records the inference a reader must make, so hard-but-fair stays auditable. Base descriptions are functional only: any 'use when ...' guidance was removed, because it mirrored the request's own wording and let a model match on the correct tool's advice rather than discriminate against the competitors. Pack 3 also carries two competitor kinds that the first version had no way to express, both added after an impartial review found the design excluded the mechanisms practitioners actually describe. `redundant_backend` skills genuinely perform the requested action and are ruled out only by `house_rules` -- durable organisational facts stated in every prompt, in both arms, naming no tool. That is where the disqualifying knowledge lives in practice: no schema tells you which of two working backends your organisation uses. `instruction_bleed` skills carry an `instructions` body with reasonable-sounding standing guidance the request never asked for; a model that follows the installed skill over the user's request emits a call the job did not need. Both exist only in the high arm, so the temptation is arm-specific by construction. Instruction-bearing skills are spread across all three packs and carry a `strength` of blunt/medium/subtle. Both choices matter: confining them to pack 3 would put the curve's drop at L3 by construction rather than by measurement, and a single bluntness establishes only that the effect exists, not where it stops.",
+  "_doc": "Hand-authored skill catalog for core_capability_stacking_regression. `base` is the L0 installed set -- every scenario in scenarios.json is fully satisfiable by skills in here, at every stack level. `high_overlap_packs` and `low_overlap_packs` are what gets ADDED as the stack grows; neither ever contains a correct answer. Each high-overlap skill carries a `disqualifier` recording why it is a plausible-but-wrong answer to a specific base scenario -- never shown to the solution, it exists so a reader can audit that a case is hard-but-fair rather than a coin flip. Low-overlap skills are drawn from semantically distant domains and are hand-written in the same voice and weight as the high-overlap ones, so that any gap between the arms is overlap and not prose style. Pack sizes are equal across arms at every level; tests/test_build.py asserts this. Each high-overlap entry declares `targets`: the scenarios it is a plausible-but-wrong answer for. Dose is asserted, not inferred from the disqualifier prose -- a pack that happened to add no competitor for a scenario would make that scenario's segment of the degradation curve flat by construction rather than by measurement. Competitor descriptions ADVERTISE a benefit; they never state their own disqualifying property. An earlier draft did state it ('not for holding a message back pending review'), which made the case reading comprehension rather than discrimination -- de-telegraphing the request alone would only have moved the lookup to the other side of the match. `disqualifier` records the inference a reader must make, so hard-but-fair stays auditable. Base descriptions are functional only: any 'use when ...' guidance was removed, because it mirrored the request's own wording and let a model match on the correct tool's advice rather than discriminate against the competitors. Pack 3 also carries two competitor kinds that the first version had no way to express, both added after an impartial review found the design excluded the mechanisms practitioners actually describe. `redundant_backend` skills genuinely perform the requested action and are ruled out only by `house_rules` -- durable organisational facts stated in every prompt, in both arms, naming no tool. That is where the disqualifying knowledge lives in practice: no schema tells you which of two working backends your organisation uses. `instruction_bleed` skills carry an `instructions` body with reasonable-sounding standing guidance the request never asked for; a model that follows the installed skill over the user's request emits a call the job did not need. Both exist only in the high arm, so the temptation is arm-specific by construction. Instruction-bearing skills are spread across all three packs and carry a `strength` of blunt/medium/subtle. Both choices matter: confining them to pack 3 would put the curve's drop at L3 by construction rather than by measurement, and a single bluntness establishes only that the effect exists, not where it stops. Every competitor that SUBSTITUTES for a base skill declares `competes_with`, naming it. That is what makes the interfering pair exact rather than guessed: for each required call the solution missed, the surplus calls whose `competes_with` names it are the ones that displaced it. Instruction-bleed skills carry no `competes_with` on purpose -- they add work rather than replacing any, so no pair exists and inventing one would fabricate data.",
   "base": [
     {
       "name": "docs_export_pdf",
@@ -229,7 +229,8 @@
           "s02",
           "s05",
           "s07"
-        ]
+        ],
+        "competes_with": "mail_create_draft"
       },
       {
         "disqualifier": "'Needs no further action from anyone' means nobody reads it before it goes; delaying a send is not the same as holding it for review.",
@@ -271,7 +272,8 @@
           "s02",
           "s05",
           "s07"
-        ]
+        ],
+        "competes_with": "mail_create_draft"
       },
       {
         "disqualifier": "It settles a time that is not yet settled, and becomes a booking only in a later step. In these requests the time is already agreed.",
@@ -311,7 +313,8 @@
           "s02",
           "s03",
           "s08"
-        ]
+        ],
+        "competes_with": "calendar_create_event"
       },
       {
         "disqualifier": "'Avoiding duplicate content' plus 'keeps its identity' means one file that is now somewhere else; the source path no longer holds it.",
@@ -340,7 +343,8 @@
           "s04",
           "s06",
           "s10"
-        ]
+        ],
+        "competes_with": "storage_copy_object"
       },
       {
         "disqualifier": "It corrects a cell that already exists; logging a new entry is not a correction to an existing one.",
@@ -376,7 +380,8 @@
           "s09",
           "s11",
           "s12"
-        ]
+        ],
+        "competes_with": "sheets_append_row"
       },
       {
         "disqualifier": "'For them alone' is the opposite of the request, which is to tell a whole channel.",
@@ -406,7 +411,8 @@
           "s08",
           "s10",
           "s11"
-        ]
+        ],
+        "competes_with": "chat_post_message"
       },
       {
         "targets": [
@@ -521,7 +527,8 @@
           "s01",
           "s06",
           "s10"
-        ]
+        ],
+        "competes_with": "docs_export_pdf"
       },
       {
         "disqualifier": "'Stays on the organiser's own view' means the other attendees never learn of it; the request needs them to see it.",
@@ -555,7 +562,8 @@
           "s02",
           "s03",
           "s08"
-        ]
+        ],
+        "competes_with": "calendar_create_event"
       },
       {
         "disqualifier": "'No duplicate to keep in step' means there is one set of bytes: work done through the link lands on the original.",
@@ -584,7 +592,8 @@
           "s04",
           "s06",
           "s10"
-        ]
+        ],
+        "competes_with": "storage_copy_object"
       },
       {
         "disqualifier": "It hands over work that is already tracked; there is no existing task id here because the work is not tracked yet.",
@@ -614,7 +623,8 @@
           "s06",
           "s09",
           "s12"
-        ]
+        ],
+        "competes_with": "tasks_create_item"
       },
       {
         "disqualifier": "It re-orders what is already there and cannot extend the sheet at its end, so it cannot record an entry that has just arrived in a register whose meaning is arrival order. The range precondition is what stops it being a SECOND CORRECT ANSWER: without it, inserting at last+1 would behave exactly like appending, and the case would be a coin flip between two tools that both work.",
@@ -653,7 +663,8 @@
           "s09",
           "s11",
           "s12"
-        ]
+        ],
+        "competes_with": "sheets_append_row"
       },
       {
         "disqualifier": "Creates a place for messages rather than putting a message in the place that already exists.",
@@ -685,7 +696,8 @@
           "s08",
           "s10",
           "s11"
-        ]
+        ],
+        "competes_with": "chat_post_message"
       },
       {
         "targets": [
@@ -800,7 +812,8 @@
           "s01",
           "s06",
           "s10"
-        ]
+        ],
+        "competes_with": "docs_export_pdf"
       },
       {
         "disqualifier": "Reusable 'across many future sends' means it belongs to no particular recipient; the request is a specific message to named people.",
@@ -834,7 +847,8 @@
           "s02",
           "s05",
           "s07"
-        ]
+        ],
+        "competes_with": "mail_create_draft"
       },
       {
         "disqualifier": "Sets up a standing commitment from a mandatory recurrence rule; these meetings happen once.",
@@ -876,7 +890,8 @@
           "s02",
           "s03",
           "s08"
-        ]
+        ],
+        "competes_with": "calendar_create_event"
       },
       {
         "disqualifier": "'One authoritative version' with changes in 'that file's own revision history' means no second, independent file comes into existence.",
@@ -908,7 +923,8 @@
           "s04",
           "s06",
           "s10"
-        ]
+        ],
+        "competes_with": "storage_copy_object"
       },
       {
         "disqualifier": "It nudges the caller and lives outside any shared list; the request needs another person to own trackable work.",
@@ -938,7 +954,8 @@
           "s06",
           "s09",
           "s12"
-        ]
+        ],
+        "competes_with": "tasks_create_item"
       },
       {
         "disqualifier": "Built for uncertain descriptions, it returns a ranked list rather than resolving to one record; the person here is known and already has a record.",
@@ -966,7 +983,8 @@
           "s03",
           "s07",
           "s11"
-        ]
+        ],
+        "competes_with": "contacts_lookup_person"
       },
       {
         "targets": [
@@ -1004,7 +1022,8 @@
               "body"
             ]
           }
-        }
+        },
+        "competes_with": "mail_create_draft"
       },
       {
         "targets": [
@@ -1039,7 +1058,8 @@
               "values"
             ]
           }
-        }
+        },
+        "competes_with": "sheets_append_row"
       },
       {
         "targets": [
@@ -1069,7 +1089,8 @@
               "destination_folder"
             ]
           }
-        }
+        },
+        "competes_with": "storage_copy_object"
       },
       {
         "targets": [

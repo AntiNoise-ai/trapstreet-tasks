@@ -199,6 +199,7 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
     bleed = set(expected.get("bleed_names") or [])
     bleed_strength = expected.get("bleed_strength") or {}
     backend = set(expected.get("backend_names") or [])
+    competes_with = expected.get("competes_with") or {}
     shared: dict[str, Any] = {
         "scenario": expected.get("scenario"),
         "difficulty": expected.get("difficulty"),
@@ -297,6 +298,19 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
         "correctness": round(correctness, 4),
         "failure_reason": failure_reason,
         "n_emitted": len(calls),
+        # (skill that should have been used, skill used instead). Derived from
+        # each competitor's declared `competes_with`, so it is exact rather than
+        # a guess at which surplus call displaced which missing one.
+        #
+        # A pair exists ONLY for substitutions. When completion is 1.0 nothing
+        # was displaced -- instruction bleed, over-eagerness and unsolicited
+        # additions are surplus work, not replacement -- so this list is empty
+        # for them, and it should be. That is a real limit on what the field can
+        # support: pairwise "should A and B be merged" reasoning covers the
+        # substitution mechanism only, which is not the largest one observed.
+        "interfering_pairs": sorted(
+            [m, x] for m in missing for x in extra if competes_with.get(x) == m
+        ),
         "bled_strengths": sorted({bleed_strength[n] for n in extra if n in bleed_strength}),
         "matched_calls": matched,
         "missing_calls": missing,

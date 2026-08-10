@@ -100,12 +100,40 @@ def assert_dose_is_monotone() -> None:
 def assert_targets_are_real() -> None:
     for i, pack in enumerate(_catalog["high_overlap_packs"], start=1):
         for entry in pack:
+            name = entry["tool"]["name"]
             targets = entry.get("targets")
             if not targets:
-                raise ValueError(f"pack {i}/{entry['tool']['name']}: no targets declared")
+                raise ValueError(f"pack {i}/{name}: no targets declared")
             for t in targets:
                 if t not in _scenarios:
-                    raise ValueError(f"pack {i}/{entry['tool']['name']}: unknown target {t!r}")
+                    raise ValueError(f"pack {i}/{name}: unknown target {t!r}")
+
+            if entry.get("kind") == "instruction_bleed":
+                if "competes_with" in entry:
+                    raise ValueError(
+                        f"pack {i}/{name}: an instruction-bleed skill adds work rather than "
+                        "replacing any, so it can have no competes_with -- declaring one would "
+                        "fabricate an interfering pair"
+                    )
+                continue
+
+            base = entry.get("competes_with")
+            if base not in _base_by_name:
+                raise ValueError(f"pack {i}/{name}: competes_with {base!r} is not a base skill")
+            for t in targets:
+                uses = {c["name"] for c in _scenarios[t]["required_calls"]}
+                if base in uses:
+                    continue
+                # One legitimate exception, and stating it here is what keeps the
+                # edge design explicit: an edge scenario tempts a call that should
+                # NOT be made at all, so the competitor is not standing in for a
+                # required call -- there is nothing for it to displace.
+                if _scenarios[t]["difficulty"] == "edge":
+                    continue
+                raise ValueError(
+                    f"pack {i}/{name}: targets {t}, which never calls {base}. Only an edge "
+                    "scenario may be tempted by a competitor whose base skill it does not use"
+                )
 
 
 def assert_no_answer_leak(scenario: dict) -> None:
@@ -354,6 +382,12 @@ def build() -> None:
             "added_names": added_names(case),
             "bleed_names": names_of_kind(case, "instruction_bleed"),
             "bleed_strength": bleed_strengths(case),
+            "competes_with": {
+                entry["tool"]["name"]: entry["competes_with"]
+                for pack in arm_packs("high")[:LEVEL_PACKS[case["stack_level"]]]
+                for entry in pack
+                if entry.get("competes_with")
+            } if case["overlap_class"] == "high" else {},
             "backend_names": names_of_kind(case, "redundant_backend"),
             "base_names": [t["name"] for t in _catalog["base"]],
         }, indent=2) + "\n")

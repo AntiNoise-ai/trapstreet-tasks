@@ -46,6 +46,14 @@
     "team_heads_up_post": "medium",
     "followup_task_open": "blunt"
   },
+  "competes_with": {
+    "mail_send_message": "mail_create_draft",
+    "mail_schedule_send": "mail_create_draft",
+    "calendar_propose_time": "calendar_create_event",
+    "storage_move_object": "storage_copy_object",
+    "sheets_update_cell": "sheets_append_row",
+    "chat_send_dm": "chat_post_message"
+  },
   "backend_names": [],
   "base_names": [
     "docs_export_pdf",
