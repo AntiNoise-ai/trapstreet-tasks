@@ -207,6 +207,7 @@ is a `POST /api/tasks` away; nothing in the task itself needs to change.
 | [`tasks/bloodstain_reader`](./tasks/bloodstain_reader) | Forensic vision — evidence vs suspect statement | 20 |
 | [`tasks/codebase_graph_qa`](./tasks/codebase_graph_qa) | Cross-file Q&A over a small multi-language repo | 15 |
 | [`tasks/connections/word_groups`](./tasks/connections/word_groups) | Partition 16 words into 4 groups of 4 | 10 |
+| [`tasks/core_capability_stacking_regression`](./tasks/core_capability_stacking_regression) | Do added skills break the jobs an agent already did? | 108 |
 | [`tasks/core_code_syntax_generation`](./tasks/core_code_syntax_generation) | Basic code generation from signature + docstring | 20 |
 | [`tasks/core_follow_instructions`](./tasks/core_follow_instructions) | Obeying explicit prompt constraints | 25 |
 | [`tasks/core_multi_turn_memory`](./tasks/core_multi_turn_memory) | Recall across a multi-session conversation | 20 |
