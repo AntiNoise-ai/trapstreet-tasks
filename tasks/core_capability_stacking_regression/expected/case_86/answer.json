@@ -1,0 +1,72 @@
+{
+  "scenario": "s10",
+  "difficulty": "hard",
+  "stack_level": "L2",
+  "overlap_class": "low",
+  "n_skills": 26,
+  "n_competitors": 0,
+  "required_calls": [
+    {
+      "name": "docs_export_pdf",
+      "expected_args": {
+        "source_path": [
+          "/policy/travel-2026.docx"
+        ]
+      }
+    },
+    {
+      "name": "storage_copy_object",
+      "expected_args": {
+        "source_path": [
+          "/policy/travel-2026.docx"
+        ],
+        "destination_folder": [
+          "/hr/published",
+          "published"
+        ]
+      }
+    },
+    {
+      "name": "chat_post_message",
+      "expected_args": {
+        "channel": [
+          "#general",
+          "general"
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "hvac_set_zone_setpoint",
+    "hvac_read_sensor_history",
+    "fleet_log_vehicle_inspection",
+    "fleet_schedule_maintenance",
+    "lab_register_specimen",
+    "lab_record_assay_result",
+    "hatchery_note_grading_pass",
+    "weir_post_gate_bulletin",
+    "apiary_open_inspection_job",
+    "greenhouse_set_irrigation_cycle",
+    "greenhouse_read_soil_moisture",
+    "kennel_record_vaccination",
+    "port_file_cargo_manifest",
+    "port_assign_berth_window",
+    "mint_log_die_wear",
+    "quarry_haul_register_entry",
+    "foundry_post_pour_digest",
+    "vineyard_raise_block_review"
+  ],
+  "bleed_names": [],
+  "bleed_strength": {},
+  "backend_names": [],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

@@ -200,7 +200,7 @@ You are an assistant with the following skills installed. Each is given as a JSO
 ]
 
 Request:
-Dana Whitfield starts Monday. Pull up the record we already hold for her so I can check which department she is in, raise an IT-setup job for Rob to work through, and book a half-hour intro coffee with Dana at 10:00 on Monday.
+Dana Whitfield starts Monday and I still could not tell you which team she is landing in -- see what we already hold on her. Rob is going to need to work through her IT setup before then. And put half an hour aside at 10:00 on Monday so Dana and I can have a coffee.
 
 Emit the tool calls needed to carry out this request, as a JSON array:
 [{"name": "<tool_name>", "arguments": {"<arg>": <value>}}]

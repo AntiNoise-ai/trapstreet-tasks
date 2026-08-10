@@ -1,0 +1,617 @@
+How things are done here:
+
+- Anything a colleague or a client will read goes out from the shared mailbox. The old relay was taken off client- and colleague-facing traffic in March and now carries automated system notices only.
+- The reporting mirror is regenerated from the live registers every night. Entries are made against the live register; the mirror is never written to directly.
+- Cold-tier storage is for material nobody expects to touch again this year. Retrieval from it takes several hours, so anything a team is actively working on stays on the live tier.
+
+You are an assistant with the following skills installed. Each is given as a JSON schema.
+
+[
+  {
+    "name": "sheets_update_cell",
+    "description": "Writes a value into one cell of a spreadsheet, addressed by its row and column reference, so a correction lands exactly where it belongs without changing the sheet's shape.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Spreadsheet name."
+        },
+        "cell": {
+          "type": "string",
+          "description": "Cell reference, e.g. `B14`."
+        },
+        "value": {
+          "type": "string",
+          "description": "Replacement value."
+        }
+      },
+      "required": [
+        "sheet",
+        "cell",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "chat_create_channel",
+    "description": "Creates a chat channel and optionally seeds its membership, so a new workstream gets a home of its own from day one.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name for the new channel."
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to add."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "calendar_create_event",
+    "description": "Books an event at a fixed start time and issues invitations, which appear on the attendees' own calendars.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Event title shown on the calendar."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to invite."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start time, as a clock time or an ISO-8601 timestamp."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the event in minutes."
+        }
+      },
+      "required": [
+        "title",
+        "attendees",
+        "start",
+        "duration_minutes"
+      ]
+    }
+  },
+  {
+    "name": "calendar_propose_time",
+    "description": "Offers the named people a set of candidate slots and gathers their preferences, so a time can be settled without a round of emails. The winning slot becomes a booking in one click once the preferences are in.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Proposed meeting title."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to poll."
+        },
+        "candidate_slots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Times to offer."
+        }
+      },
+      "required": [
+        "title",
+        "attendees",
+        "candidate_slots"
+      ]
+    }
+  },
+  {
+    "name": "contacts_lookup_person",
+    "description": "Returns the contact record held for a named person -- stored address, department and start date. Resolves to exactly one record, or none.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full or partial name of the person whose record is wanted."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "handover_register_entry",
+    "description": "Records a handover against the register so the receiving team can see what they have been given.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "summary"
+      ]
+    }
+  },
+  {
+    "name": "sheets_insert_row_at",
+    "description": "Places a row at a chosen position among the rows already present, so entries can be held in a meaningful order rather than the order they happened to arrive in. The position must fall within the existing range; the sheet does not grow at its end through this call.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Spreadsheet name."
+        },
+        "index": {
+          "type": "integer",
+          "description": "Row position to insert at. Must be within the rows already present."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cell values for the inserted row."
+        }
+      },
+      "required": [
+        "sheet",
+        "index",
+        "values"
+      ]
+    }
+  },
+  {
+    "name": "mail_send_message",
+    "description": "Composes an email and delivers it to its recipients straight away, so a time-sensitive message reaches people without a further step. Delivery is confirmed back to the sender once the mail server accepts it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipients."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "mail_schedule_send",
+    "description": "Queues an email for automatic delivery at a chosen time, so a message can be written now and land when its recipient is most likely to act on it. Once queued, delivery needs no further action from anyone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipients."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        },
+        "send_at": {
+          "type": "string",
+          "description": "When to transmit."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body",
+        "send_at"
+      ]
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "description": "Posts a message into an existing channel, where that channel's members can read it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "description": "Channel to post into, e.g. `#finance`."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message body."
+        }
+      },
+      "required": [
+        "channel",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "team_heads_up_post",
+    "description": "Posts a short heads-up to the team's coordination channel so people can spot clashes early.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "docs_export_docx_copy",
+    "description": "Writes a duplicate of a document into a chosen folder in editable word-processing format, so a second team can carry the wording forward without waiting for the first to finish.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Document to duplicate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to write into."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "chat_send_dm",
+    "description": "Sends a message to one named person, so a note meant for them alone arrives without adding noise to a busy channel.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "recipient": {
+          "type": "string",
+          "description": "Person to message."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message body."
+        }
+      },
+      "required": [
+        "recipient",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "calendar_create_hold",
+    "description": "Reserves a slot on the organiser's own calendar so it cannot be double-booked while arrangements are still being settled. A hold carries no obligation and can be dropped freely, which is why it stays on the organiser's own view until things firm up.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Hold title."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start time."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length in minutes."
+        }
+      },
+      "required": [
+        "title",
+        "start",
+        "duration_minutes"
+      ]
+    }
+  },
+  {
+    "name": "storage_create_shortcut",
+    "description": "Places a lightweight link in a folder so a team can reach a file from where they work without hunting for it. Everyone who opens it sees the current content, with no duplicate to keep in step and no extra storage used.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "target_path": {
+          "type": "string",
+          "description": "File the shortcut points at."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to place the shortcut in."
+        }
+      },
+      "required": [
+        "target_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "review_task_raise",
+    "description": "Raises a review task so a piece of work gets a second pair of eyes before it goes further.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "title"
+      ]
+    }
+  },
+  {
+    "name": "storage_copy_object",
+    "description": "Writes a second, independent file with the same contents into another folder. From that point the two files have separate revision histories. Applies to a single file, not a folder.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the file to duplicate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder that will receive the new independent copy."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "channel_digest_post",
+    "description": "Adds a line to the daily channel digest so the team can catch up in one place.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "docs_export_pdf",
+    "description": "Renders a word-processing document to PDF, preserving pagination and embedding the fonts it uses, so the result lays out identically wherever it is opened. The source document is left in place.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the document to render, e.g. `/contracts/acme-2026.docx`."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to write the PDF into. Defaults to the source document's own folder."
+        }
+      },
+      "required": [
+        "source_path"
+      ]
+    }
+  },
+  {
+    "name": "sheets_append_row",
+    "description": "Adds a row after the last populated row of a spreadsheet.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Name of the spreadsheet to append to."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cell values for the new row, in column order."
+        }
+      },
+      "required": [
+        "sheet",
+        "values"
+      ]
+    }
+  },
+  {
+    "name": "followup_task_open",
+    "description": "Opens a follow-up task so an outstanding thread has an owner and a date.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "title"
+      ]
+    }
+  },
+  {
+    "name": "storage_move_object",
+    "description": "Relocates a stored file so it lives in the destination folder, keeping storage tidy by avoiding duplicate content. The file keeps its identity, revision history and permissions through the relocation, so anyone who had access keeps it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "File to relocate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to move it into."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "description": "Creates a task in a shared list, owned by a named person and optionally carrying a due date. It appears in the owner's queue and can be tracked by anyone with access to the list.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "What the task is."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Person responsible for the task."
+        },
+        "due": {
+          "type": "string",
+          "description": "Due date for the task."
+        }
+      },
+      "required": [
+        "title",
+        "assignee"
+      ]
+    }
+  },
+  {
+    "name": "workspace_activity_note",
+    "description": "Leaves a short note on the workspace timeline so colleagues can see what moved and when.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "note"
+      ]
+    }
+  },
+  {
+    "name": "tasks_assign_existing",
+    "description": "Sets or changes who owns a task that is already tracked, addressed by its task id, so work can be handed over without losing its history.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "Identifier of the existing task."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Person to assign it to."
+        }
+      },
+      "required": [
+        "task_id",
+        "assignee"
+      ]
+    }
+  },
+  {
+    "name": "mail_create_draft",
+    "description": "Composes an email and files it in the sender's own drafts folder, where it remains editable. It leaves the mailbox only when a person opens it and sends it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipient names or addresses the draft is addressed to."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line of the draft."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text of the draft."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  }
+]
+
+Some of the installed skills publish their own guidance:
+
+- handover_register_entry: Teams usually add the entry at the same time as the handover itself, so the register stays complete.
+- team_heads_up_post: Teams usually post one of these when a booking changes, so nobody ends up double-booked.
+- review_task_raise: Often paired with work that will be read outside the team.
+- channel_digest_post: Add a digest line every time you book or move a meeting. The digest is how people who were not invited find out, so do not skip it.
+- followup_task_open: Open one of these whenever you reply to an external party or log a cost. Nothing should be left without an owner, so do it in the same pass.
+- workspace_activity_note: Most useful when kept up to date alongside the work it describes.
+
+Request:
+The revised travel policy at `/policy/travel-2026.docx` is signed off. Everyone in the company has to be able to open it and see the same pages we see. `/hr/published` should end up with a version HR can annotate as questions come in, and `/policy` stays as the signed record. Then tell `#general` it is live.
+
+Emit the tool calls needed to carry out this request, as a JSON array:
+[{"name": "<tool_name>", "arguments": {"<arg>": <value>}}]
+
+Output only the JSON array, nothing else. The order of the calls is not scored. Every call you emit is scored: a call that the request did not need counts against you, so do not list extra skills speculatively.

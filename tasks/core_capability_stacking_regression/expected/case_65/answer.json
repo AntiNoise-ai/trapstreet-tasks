@@ -1,0 +1,69 @@
+{
+  "scenario": "s08",
+  "difficulty": "hard",
+  "stack_level": "L1",
+  "overlap_class": "high",
+  "n_skills": 17,
+  "n_competitors": 3,
+  "required_calls": [
+    {
+      "name": "calendar_create_event",
+      "expected_args": {
+        "attendees": [
+          [
+            "Priya",
+            "Marco",
+            "Aisha"
+          ]
+        ],
+        "start": [
+          "14:00"
+        ],
+        "duration_minutes": [
+          60
+        ]
+      }
+    },
+    {
+      "name": "chat_post_message",
+      "expected_args": {
+        "channel": [
+          "#ops",
+          "ops"
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "mail_send_message",
+    "mail_schedule_send",
+    "calendar_propose_time",
+    "storage_move_object",
+    "sheets_update_cell",
+    "chat_send_dm",
+    "workspace_activity_note",
+    "team_heads_up_post",
+    "followup_task_open"
+  ],
+  "bleed_names": [
+    "workspace_activity_note",
+    "team_heads_up_post",
+    "followup_task_open"
+  ],
+  "bleed_strength": {
+    "workspace_activity_note": "subtle",
+    "team_heads_up_post": "medium",
+    "followup_task_open": "blunt"
+  },
+  "backend_names": [],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

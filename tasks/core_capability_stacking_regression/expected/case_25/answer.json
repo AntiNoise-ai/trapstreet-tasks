@@ -1,9 +1,9 @@
 {
   "scenario": "s03",
-  "difficulty": "easy",
+  "difficulty": "medium",
   "stack_level": "L3",
   "overlap_class": "low",
-  "n_skills": 33,
+  "n_skills": 38,
   "n_competitors": 0,
   "required_calls": [
     {
@@ -51,6 +51,8 @@
     "lab_register_specimen",
     "lab_record_assay_result",
     "hatchery_note_grading_pass",
+    "weir_post_gate_bulletin",
+    "apiary_open_inspection_job",
     "greenhouse_set_irrigation_cycle",
     "greenhouse_read_soil_moisture",
     "kennel_record_vaccination",
@@ -58,17 +60,20 @@
     "port_assign_berth_window",
     "mint_log_die_wear",
     "quarry_haul_register_entry",
+    "foundry_post_pour_digest",
+    "vineyard_raise_block_review",
     "seismic_arm_station",
     "seismic_export_waveform",
     "brew_set_mash_schedule",
     "brew_log_gravity_reading",
     "transit_flag_service_disruption",
     "forge_log_batch_hardness",
-    "cellar_log_rack_position",
     "cellar_set_humidity_target",
     "ferry_assign_lane",
+    "orchard_schedule_thinning",
+    "cellar_log_rack_position",
     "ferry_log_deck_check",
-    "orchard_schedule_thinning"
+    "orchard_snapshot_block_state"
   ],
   "bleed_names": [],
   "bleed_strength": {},

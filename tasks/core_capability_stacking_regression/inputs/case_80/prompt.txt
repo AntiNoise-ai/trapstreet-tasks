@@ -1,0 +1,3138 @@
+How things are done here:
+
+- Anything a colleague or a client will read goes out from the shared mailbox. The old relay was taken off client- and colleague-facing traffic in March and now carries automated system notices only.
+- The reporting mirror is regenerated from the live registers every night. Entries are made against the live register; the mirror is never written to directly.
+- Cold-tier storage is for material nobody expects to touch again this year. Retrieval from it takes several hours, so anything a team is actively working on stays on the live tier.
+
+You are an assistant with the following skills installed. Each is given as a JSON schema.
+
+[
+  {
+    "name": "svc_smelter__read_history",
+    "description": "Report on the potline for a aluminium reduction site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the potline to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "log_batch_tannery",
+    "description": "Certify the drum. Fails closed if the drum is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the drum."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the hide batch."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "peatland.log_batch.v2",
+    "description": "Adjust the compartment. Returns a status envelope; see the bog restoration integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the compartment."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the rewetting plan."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "mail_create_template",
+    "description": "Saves a message skeleton to the shared template library so the same wording can be reused across many future sends. Templates are indexed by name and pick up the sender's signature each time one is used.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Template name."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Default subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Template body."
+        }
+      },
+      "required": [
+        "name",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "DredgerLogBatchHandler",
+    "description": "Book maintenance for the cutter within a channel dredging deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cutter."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the spoil load."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "glasshouse.read_history.v2",
+    "description": "File a record against the bench. Returns a status envelope; see the orchid propagation integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the bench to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "chat_create_channel",
+    "description": "Creates a chat channel and optionally seeds its membership, so a new workstream gets a home of its own from day one.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name for the new channel."
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to add."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "peatland.read_history.v2",
+    "description": "Commission the compartment. Returns a status envelope; see the bog restoration integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the compartment to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "LockkeeperReadHistoryHandler",
+    "description": "Reconcile the lock within a canal lock operation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the lock to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "foundry.set_target.v2",
+    "description": "Commission the furnace. Returns a status envelope; see the metal casting integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the furnace to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "kiln_schedule_service",
+    "description": "Book maintenance for the kiln.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the kiln to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "log_batch_archive",
+    "description": "Commission the vault. Fails closed if the vault is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the vault."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the accession lot."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "cablelay_set_target",
+    "description": "Commission the plough.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the plough to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "compliance_record_action",
+    "description": "Records an action against the compliance register with the actor, the artefact and a timestamp.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  },
+  {
+    "name": "svc_windtunnel__set_target",
+    "description": "Certify the test section for a aerodynamic testing site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the test section to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "sheets_append_row",
+    "description": "Adds a row after the last populated row of a spreadsheet.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Name of the spreadsheet to append to."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cell values for the new row, in column order."
+        }
+      },
+      "required": [
+        "sheet",
+        "values"
+      ]
+    }
+  },
+  {
+    "name": "schedule_service_quarry",
+    "description": "Certify the face. Fails closed if the face is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the face to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "calendar_create_event",
+    "description": "Books an event at a fixed start time and issues invitations, which appear on the attendees' own calendars.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Event title shown on the calendar."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to invite."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start time, as a clock time or an ISO-8601 timestamp."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the event in minutes."
+        }
+      },
+      "required": [
+        "title",
+        "attendees",
+        "start",
+        "duration_minutes"
+      ]
+    }
+  },
+  {
+    "name": "stakeholder_notice_post",
+    "description": "Posts a notice to the stakeholder channel so people outside the immediate team stay in the picture.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "LockkeeperLogBatchHandler",
+    "description": "Certify the lock within a canal lock operation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the lock."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the passage."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "SaltworksLogBatchHandler",
+    "description": "Adjust the pan within a salt evaporation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the pan."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the crystallisation run."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "calendar_create_hold",
+    "description": "Reserves a slot on the organiser's own calendar so it cannot be double-booked while arrangements are still being settled. A hold carries no obligation and can be dropped freely, which is why it stays on the organiser's own view until things firm up.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Hold title."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start time."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length in minutes."
+        }
+      },
+      "required": [
+        "title",
+        "start",
+        "duration_minutes"
+      ]
+    }
+  },
+  {
+    "name": "foundry.schedule_service.v2",
+    "description": "File a record against the furnace. Returns a status envelope; see the metal casting integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the furnace to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "set_target_vineyard",
+    "description": "Adjust the block. Fails closed if the block is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the block to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "sheets_insert_row_at",
+    "description": "Places a row at a chosen position among the rows already present, so entries can be held in a meaningful order rather than the order they happened to arrive in. The position must fall within the existing range; the sheet does not grow at its end through this call.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Spreadsheet name."
+        },
+        "index": {
+          "type": "integer",
+          "description": "Row position to insert at. Must be within the rows already present."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cell values for the inserted row."
+        }
+      },
+      "required": [
+        "sheet",
+        "index",
+        "values"
+      ]
+    }
+  },
+  {
+    "name": "DredgerScheduleServiceHandler",
+    "description": "Reconcile the cutter within a channel dredging deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cutter to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "SawmillSetTargetHandler",
+    "description": "Adjust the headrig within a timber conversion deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the headrig to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "foundry.read_history.v2",
+    "description": "Adjust the furnace. Returns a status envelope; see the metal casting integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the furnace to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "svc_windtunnel__read_history",
+    "description": "Retire the test section for a aerodynamic testing site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the test section to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "log_batch_vineyard",
+    "description": "File a record against the block. Fails closed if the block is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the block."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the harvest lot."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "kiln_log_batch",
+    "description": "File a record against the kiln.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the kiln."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the firing chamber."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "calendar_propose_time",
+    "description": "Offers the named people a set of candidate slots and gathers their preferences, so a time can be settled without a round of emails. The winning slot becomes a booking in one click once the preferences are in.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Proposed meeting title."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to poll."
+        },
+        "candidate_slots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Times to offer."
+        }
+      },
+      "required": [
+        "title",
+        "attendees",
+        "candidate_slots"
+      ]
+    }
+  },
+  {
+    "name": "SawmillLogBatchHandler",
+    "description": "File a record against the headrig within a timber conversion deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the headrig."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the log parcel."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "hatchery_schedule_service",
+    "description": "Adjust the raceway.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the raceway to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "schedule_service_vineyard",
+    "description": "Book maintenance for the block. Fails closed if the block is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the block to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "svc_cannery__log_batch",
+    "description": "Certify the retort for a food preserving site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the retort."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the sterilisation batch."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "set_target_tannery",
+    "description": "Book maintenance for the drum. Fails closed if the drum is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the drum to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "backup_snapshot_copy",
+    "description": "Takes a point-in-time snapshot of a file into the backup area so an earlier state can be recovered.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "artefact": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "artefact"
+      ]
+    }
+  },
+  {
+    "name": "aquifer_log_batch",
+    "description": "Reconcile the borehole.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the borehole."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the abstraction licence."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "CablecarSetTargetHandler",
+    "description": "Reconcile the cabin within a aerial lift operation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cabin to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "SawmillReadHistoryHandler",
+    "description": "Report on the headrig within a timber conversion deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the headrig to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "svc_observatory__schedule_service",
+    "description": "Report on the instrument for a telescope scheduling site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the instrument to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "read_history_quarry",
+    "description": "Book maintenance for the face. Fails closed if the face is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the face to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "schedule_service_funicular",
+    "description": "File a record against the car. Fails closed if the car is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the car to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "contacts_search_directory",
+    "description": "Runs a free-text search across the whole organisation directory and returns ranked matches, so someone can be found from a partial or uncertain description.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Free-text search terms."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum matches to return."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "schedule_service_tannery",
+    "description": "Retire the drum. Fails closed if the drum is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the drum to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "mail_relay_dispatch",
+    "description": "Composes a message and dispatches it through the relay, which accepts high volumes and returns a delivery receipt per recipient. Suited to messages that need an auditable delivery record.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipients."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "SaltworksSetTargetHandler",
+    "description": "Retire the pan within a salt evaporation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the pan to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "foundry.log_batch.v2",
+    "description": "Report on the furnace. Returns a status envelope; see the metal casting integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the furnace."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the pour."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "peatland.schedule_service.v2",
+    "description": "Report on the compartment. Returns a status envelope; see the bog restoration integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the compartment to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "aquifer_schedule_service",
+    "description": "Certify the borehole.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the borehole to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "windfarm.set_target.v2",
+    "description": "Reconcile the turbine. Returns a status envelope; see the turbine operations integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the turbine to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "handover_register_entry",
+    "description": "Records a handover against the register so the receiving team can see what they have been given.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "summary"
+      ]
+    }
+  },
+  {
+    "name": "mail_create_draft",
+    "description": "Composes an email and files it in the sender's own drafts folder, where it remains editable. It leaves the mailbox only when a person opens it and sends it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipient names or addresses the draft is addressed to."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line of the draft."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text of the draft."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "apiary.log_batch.v2",
+    "description": "Reconcile the hive. Returns a status envelope; see the beekeeping integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the hive."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the colony."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "read_history_vineyard",
+    "description": "Report on the block. Fails closed if the block is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the block to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "creamery_log_batch",
+    "description": "Retire the cave.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cave."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the wheel batch."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "log_batch_funicular",
+    "description": "Report on the car. Fails closed if the car is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the car."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the brake test."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "svc_cannery__read_history",
+    "description": "Reconcile the retort for a food preserving site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the retort to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "kiln_set_target",
+    "description": "Adjust the kiln.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the kiln to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "channel_digest_post",
+    "description": "Adds a line to the daily channel digest so the team can catch up in one place.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "docs_export_docx_copy",
+    "description": "Writes a duplicate of a document into a chosen folder in editable word-processing format, so a second team can carry the wording forward without waiting for the first to finish.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Document to duplicate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to write into."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "DredgerReadHistoryHandler",
+    "description": "File a record against the cutter within a channel dredging deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cutter to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "workspace_activity_note",
+    "description": "Leaves a short note on the workspace timeline so colleagues can see what moved and when.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "note"
+      ]
+    }
+  },
+  {
+    "name": "chat_send_dm",
+    "description": "Sends a message to one named person, so a note meant for them alone arrives without adding noise to a busy channel.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "recipient": {
+          "type": "string",
+          "description": "Person to message."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message body."
+        }
+      },
+      "required": [
+        "recipient",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "svc_windtunnel__log_batch",
+    "description": "Commission the test section for a aerodynamic testing site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the test section."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the run card."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "CablecarScheduleServiceHandler",
+    "description": "Commission the cabin within a aerial lift operation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cabin to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "svc_smelter__schedule_service",
+    "description": "Book maintenance for the potline for a aluminium reduction site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the potline to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "svc_weir__schedule_service",
+    "description": "Reconcile the weir for a river flow regulation site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the weir to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "calendar_create_recurring_event",
+    "description": "Books a repeating series from a recurrence rule such as weekly or every weekday, inviting attendees to every occurrence, so a standing commitment only has to be set up once.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Series title."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to invite."
+        },
+        "start": {
+          "type": "string",
+          "description": "First occurrence start time."
+        },
+        "recurrence": {
+          "type": "string",
+          "description": "Recurrence rule."
+        }
+      },
+      "required": [
+        "title",
+        "attendees",
+        "start",
+        "recurrence"
+      ]
+    }
+  },
+  {
+    "name": "glasshouse.schedule_service.v2",
+    "description": "Reconcile the bench. Returns a status envelope; see the orchid propagation integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the bench to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "aquifer_set_target",
+    "description": "File a record against the borehole.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the borehole to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "aquifer_read_history",
+    "description": "Book maintenance for the borehole.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the borehole to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "sheets_update_cell",
+    "description": "Writes a value into one cell of a spreadsheet, addressed by its row and column reference, so a correction lands exactly where it belongs without changing the sheet's shape.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Spreadsheet name."
+        },
+        "cell": {
+          "type": "string",
+          "description": "Cell reference, e.g. `B14`."
+        },
+        "value": {
+          "type": "string",
+          "description": "Replacement value."
+        }
+      },
+      "required": [
+        "sheet",
+        "cell",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "windfarm.read_history.v2",
+    "description": "Certify the turbine. Returns a status envelope; see the turbine operations integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the turbine to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "hatchery_read_history",
+    "description": "Retire the raceway.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the raceway to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "apiary.set_target.v2",
+    "description": "File a record against the hive. Returns a status envelope; see the beekeeping integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the hive to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "docs_print_to_file",
+    "description": "Renders a document into a spool file for a named print queue, carrying the tray, duplex and finishing options that queue expects, so a long print run can be released later without reopening the source.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Document to render."
+        },
+        "queue": {
+          "type": "string",
+          "description": "Print queue to target."
+        }
+      },
+      "required": [
+        "source_path",
+        "queue"
+      ]
+    }
+  },
+  {
+    "name": "creamery_schedule_service",
+    "description": "Commission the cave.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cave to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "log_batch_quarry",
+    "description": "Reconcile the face. Fails closed if the face is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the face."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the blast round."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "schedule_service_archive",
+    "description": "Adjust the vault. Fails closed if the vault is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the vault to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "set_target_quarry",
+    "description": "File a record against the face. Fails closed if the face is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the face to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "svc_smelter__set_target",
+    "description": "Adjust the potline for a aluminium reduction site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the potline to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "docs_export_pdf",
+    "description": "Renders a word-processing document to PDF, preserving pagination and embedding the fonts it uses, so the result lays out identically wherever it is opened. The source document is left in place.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the document to render, e.g. `/contracts/acme-2026.docx`."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to write the PDF into. Defaults to the source document's own folder."
+        }
+      },
+      "required": [
+        "source_path"
+      ]
+    }
+  },
+  {
+    "name": "apiary.schedule_service.v2",
+    "description": "Certify the hive. Returns a status envelope; see the beekeeping integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the hive to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "glasshouse.log_batch.v2",
+    "description": "Book maintenance for the bench. Returns a status envelope; see the orchid propagation integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the bench."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the propagation tray."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "windfarm.schedule_service.v2",
+    "description": "Commission the turbine. Returns a status envelope; see the turbine operations integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the turbine to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "DredgerSetTargetHandler",
+    "description": "Report on the cutter within a channel dredging deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cutter to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "followup_task_open",
+    "description": "Opens a follow-up task so an outstanding thread has an owner and a date.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "title"
+      ]
+    }
+  },
+  {
+    "name": "svc_cannery__schedule_service",
+    "description": "Retire the retort for a food preserving site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the retort to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "LockkeeperScheduleServiceHandler",
+    "description": "Retire the lock within a canal lock operation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the lock to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "glasshouse.set_target.v2",
+    "description": "Report on the bench. Returns a status envelope; see the orchid propagation integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the bench to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "storage_copy_to_cold_tier",
+    "description": "Writes an independent duplicate of a file into cold-tier storage, which costs a fraction of live storage per gigabyte. The duplicate has its own revision history and can be edited once retrieved.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "File to duplicate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Cold-tier folder to write into."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "svc_weir__set_target",
+    "description": "Report on the weir for a river flow regulation site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the weir to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "svc_observatory__set_target",
+    "description": "Retire the instrument for a telescope scheduling site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the instrument to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "contacts_lookup_person",
+    "description": "Returns the contact record held for a named person -- stored address, department and start date. Resolves to exactly one record, or none.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full or partial name of the person whose record is wanted."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "svc_observatory__log_batch",
+    "description": "Adjust the instrument for a telescope scheduling site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the instrument."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the observing block."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "CablecarReadHistoryHandler",
+    "description": "Certify the cabin within a aerial lift operation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cabin to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "review_task_raise",
+    "description": "Raises a review task so a piece of work gets a second pair of eyes before it goes further.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "title"
+      ]
+    }
+  },
+  {
+    "name": "hatchery_set_target",
+    "description": "Certify the raceway.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the raceway to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "svc_weir__log_batch",
+    "description": "Book maintenance for the weir for a river flow regulation site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the weir."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the gate."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "CablecarLogBatchHandler",
+    "description": "Retire the cabin within a aerial lift operation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cabin."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the haul rope."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "cablelay_schedule_service",
+    "description": "File a record against the plough.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the plough to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "tasks_create_reminder",
+    "description": "Sets a personal reminder that nudges the caller at a chosen moment, so something small does not have to occupy a shared list.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "What to be reminded of."
+        },
+        "remind_at": {
+          "type": "string",
+          "description": "When to fire."
+        }
+      },
+      "required": [
+        "text",
+        "remind_at"
+      ]
+    }
+  },
+  {
+    "name": "LockkeeperSetTargetHandler",
+    "description": "Book maintenance for the lock within a canal lock operation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the lock to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "team_heads_up_post",
+    "description": "Posts a short heads-up to the team's coordination channel so people can spot clashes early.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "storage_share_object",
+    "description": "Grants named people permission to work on a stored file so a team can collaborate on one authoritative version. Access is revocable at any time and every change lands in that file's own revision history.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "File to grant access to."
+        },
+        "grantees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People or groups to grant access to."
+        }
+      },
+      "required": [
+        "source_path",
+        "grantees"
+      ]
+    }
+  },
+  {
+    "name": "creamery_set_target",
+    "description": "Reconcile the cave.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cave to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "svc_smelter__log_batch",
+    "description": "File a record against the potline for a aluminium reduction site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the potline."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the anode set."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "creamery_read_history",
+    "description": "Certify the cave.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the cave to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "peatland.set_target.v2",
+    "description": "Retire the compartment. Returns a status envelope; see the bog restoration integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the compartment to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "description": "Creates a task in a shared list, owned by a named person and optionally carrying a due date. It appears in the owner's queue and can be tracked by anyone with access to the list.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "What the task is."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Person responsible for the task."
+        },
+        "due": {
+          "type": "string",
+          "description": "Due date for the task."
+        }
+      },
+      "required": [
+        "title",
+        "assignee"
+      ]
+    }
+  },
+  {
+    "name": "storage_move_object",
+    "description": "Relocates a stored file so it lives in the destination folder, keeping storage tidy by avoiding duplicate content. The file keeps its identity, revision history and permissions through the relocation, so anyone who had access keeps it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "File to relocate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to move it into."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "storage_copy_object",
+    "description": "Writes a second, independent file with the same contents into another folder. From that point the two files have separate revision histories. Applies to a single file, not a folder.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the file to duplicate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder that will receive the new independent copy."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "mail_send_message",
+    "description": "Composes an email and delivers it to its recipients straight away, so a time-sensitive message reaches people without a further step. Delivery is confirmed back to the sender once the mail server accepts it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipients."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "svc_weir__read_history",
+    "description": "File a record against the weir for a river flow regulation site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the weir to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "sheets_mirror_append",
+    "description": "Appends a row to the reporting mirror, which is optimised for read-heavy dashboards and is faster to write to than the primary registers. Prior rows are left untouched.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Mirror sheet to append to."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cell values, in column order."
+        }
+      },
+      "required": [
+        "sheet",
+        "values"
+      ]
+    }
+  },
+  {
+    "name": "SaltworksReadHistoryHandler",
+    "description": "Commission the pan within a salt evaporation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the pan to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "cablelay_log_batch",
+    "description": "Report on the plough.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the plough."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the splice."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "set_target_funicular",
+    "description": "Commission the car. Fails closed if the car is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the car to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "SaltworksScheduleServiceHandler",
+    "description": "Report on the pan within a salt evaporation deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the pan to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  },
+  {
+    "name": "svc_cannery__set_target",
+    "description": "Book maintenance for the retort for a food preserving site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the retort to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "kiln_read_history",
+    "description": "Report on the kiln.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the kiln to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "svc_observatory__read_history",
+    "description": "Commission the instrument for a telescope scheduling site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the instrument to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "storage_create_shortcut",
+    "description": "Places a lightweight link in a folder so a team can reach a file from where they work without hunting for it. Everyone who opens it sees the current content, with no duplicate to keep in step and no extra storage used.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "target_path": {
+          "type": "string",
+          "description": "File the shortcut points at."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to place the shortcut in."
+        }
+      },
+      "required": [
+        "target_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "read_history_tannery",
+    "description": "Reconcile the drum. Fails closed if the drum is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the drum to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "hatchery_log_batch",
+    "description": "Commission the raceway.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the raceway."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the cohort."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id",
+        "batch_ref"
+      ]
+    }
+  },
+  {
+    "name": "read_history_archive",
+    "description": "Retire the vault. Fails closed if the vault is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the vault to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "windfarm.log_batch.v2",
+    "description": "Retire the turbine. Returns a status envelope; see the turbine operations integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the turbine."
+        },
+        "batch_ref": {
+          "type": "string",
+          "description": "Reference of the curtailment window."
+        },
+        "result": {
+          "type": "string",
+          "description": "Recorded outcome."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "set_target_archive",
+    "description": "Certify the vault. Fails closed if the vault is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the vault to adjust."
+        },
+        "target": {
+          "type": "string",
+          "description": "Requested operating target."
+        }
+      },
+      "required": [
+        "unit_id",
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "description": "Posts a message into an existing channel, where that channel's members can read it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "description": "Channel to post into, e.g. `#finance`."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message body."
+        }
+      },
+      "required": [
+        "channel",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "tasks_assign_existing",
+    "description": "Sets or changes who owns a task that is already tracked, addressed by its task id, so work can be handed over without losing its history.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "Identifier of the existing task."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Person to assign it to."
+        }
+      },
+      "required": [
+        "task_id",
+        "assignee"
+      ]
+    }
+  },
+  {
+    "name": "mail_schedule_send",
+    "description": "Queues an email for automatic delivery at a chosen time, so a message can be written now and land when its recipient is most likely to act on it. Once queued, delivery needs no further action from anyone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipients."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        },
+        "send_at": {
+          "type": "string",
+          "description": "When to transmit."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body",
+        "send_at"
+      ]
+    }
+  },
+  {
+    "name": "apiary.read_history.v2",
+    "description": "Book maintenance for the hive. Returns a status envelope; see the beekeeping integration notes for retry semantics.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the hive to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id",
+        "window"
+      ]
+    }
+  },
+  {
+    "name": "svc_windtunnel__schedule_service",
+    "description": "Adjust the test section for a aerodynamic testing site. The call is idempotent within a shift and returns the prior value so a caller can reconcile. Values outside the commissioned band are refused rather than clamped, because downstream compliance reporting treats a clamped value as a fault.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the test section to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "read_history_funicular",
+    "description": "Adjust the car. Fails closed if the car is not currently in service.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the car to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "cablelay_read_history",
+    "description": "Adjust the plough.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the plough to read."
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window to return."
+        }
+      },
+      "required": [
+        "unit_id"
+      ]
+    }
+  },
+  {
+    "name": "SawmillScheduleServiceHandler",
+    "description": "Book maintenance for the headrig within a timber conversion deployment. Callers are expected to hold the shift lock.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "unit_id": {
+          "type": "string",
+          "description": "Identifier of the headrig to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Requested maintenance window."
+        }
+      },
+      "required": [
+        "unit_id",
+        "job_code"
+      ]
+    }
+  }
+]
+
+Some of the installed skills publish their own guidance:
+
+- compliance_record_action: Use this whenever a document is exported or a file is copied for another team. The compliance team relies on a complete record, so log the action as part of the same piece of work.
+- stakeholder_notice_post: Worth keeping current when something visible changes.
+- backup_snapshot_copy: Teams usually take a snapshot before publishing anything outside the team, so there is always a state to fall back to.
+- handover_register_entry: Teams usually add the entry at the same time as the handover itself, so the register stays complete.
+- channel_digest_post: Add a digest line every time you book or move a meeting. The digest is how people who were not invited find out, so do not skip it.
+- workspace_activity_note: Most useful when kept up to date alongside the work it describes.
+- followup_task_open: Open one of these whenever you reply to an external party or log a cost. Nothing should be left without an owner, so do it in the same pass.
+- review_task_raise: Often paired with work that will be read outside the team.
+- team_heads_up_post: Teams usually post one of these when a booking changes, so nobody ends up double-booked.
+
+Request:
+October's mileage came to £212.40 and it is still not in the expenses log -- the auditors read that log as a record of when each cost was incurred, in the order they arrived. Aisha needs to reconcile it against the card statement by the 5th.
+
+Emit the tool calls needed to carry out this request, as a JSON array:
+[{"name": "<tool_name>", "arguments": {"<arg>": <value>}}]
+
+Output only the JSON array, nothing else. The order of the calls is not scored. Every call you emit is scored: a call that the request did not need counts against you, so do not list extra skills speculatively.

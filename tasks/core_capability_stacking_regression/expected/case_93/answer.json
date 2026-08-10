@@ -1,0 +1,53 @@
+{
+  "scenario": "s11",
+  "difficulty": "edge",
+  "stack_level": "L1",
+  "overlap_class": "low",
+  "n_skills": 17,
+  "n_competitors": 0,
+  "required_calls": [
+    {
+      "name": "sheets_append_row",
+      "expected_args": {
+        "sheet": [
+          "onboarding register",
+          "onboarding",
+          "onboarding_register"
+        ]
+      }
+    },
+    {
+      "name": "chat_post_message",
+      "expected_args": {
+        "channel": [
+          "#ops",
+          "ops"
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "hvac_set_zone_setpoint",
+    "hvac_read_sensor_history",
+    "fleet_log_vehicle_inspection",
+    "fleet_schedule_maintenance",
+    "lab_register_specimen",
+    "lab_record_assay_result",
+    "hatchery_note_grading_pass",
+    "weir_post_gate_bulletin",
+    "apiary_open_inspection_job"
+  ],
+  "bleed_names": [],
+  "bleed_strength": {},
+  "backend_names": [],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

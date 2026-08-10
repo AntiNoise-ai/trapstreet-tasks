@@ -60,31 +60,31 @@ cases:
   tags: [office_automation, scenario:s02, difficulty:hard, stack_level:L4, overlap_class:low]
 - id: case_19
   description: "new starter onboarding — L0, baseline, nothing added"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L0, overlap_class:none]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L0, overlap_class:none]
 - id: case_20
   description: "new starter onboarding — L1, high-overlap skills added"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L1, overlap_class:high]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L1, overlap_class:high]
 - id: case_21
   description: "new starter onboarding — L1, low-overlap skills added"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L1, overlap_class:low]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L1, overlap_class:low]
 - id: case_22
   description: "new starter onboarding — L2, high-overlap skills added"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L2, overlap_class:high]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L2, overlap_class:high]
 - id: case_23
   description: "new starter onboarding — L2, low-overlap skills added"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L2, overlap_class:low]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L2, overlap_class:low]
 - id: case_24
   description: "new starter onboarding — L3, high-overlap skills added"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L3, overlap_class:high]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L3, overlap_class:high]
 - id: case_25
   description: "new starter onboarding — L3, low-overlap skills added"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L3, overlap_class:low]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L3, overlap_class:low]
 - id: case_26
   description: "new starter onboarding — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L4, overlap_class:high]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L4, overlap_class:high]
 - id: case_27
   description: "new starter onboarding — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
-  tags: [office_automation, scenario:s03, difficulty:easy, stack_level:L4, overlap_class:low]
+  tags: [office_automation, scenario:s03, difficulty:medium, stack_level:L4, overlap_class:low]
 - id: case_28
   description: "finance gets its own copy — L0, baseline, nothing added"
   tags: [office_automation, scenario:s04, difficulty:hard, stack_level:L0, overlap_class:none]
@@ -113,59 +113,221 @@ cases:
   description: "finance gets its own copy — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
   tags: [office_automation, scenario:s04, difficulty:hard, stack_level:L4, overlap_class:low]
 - id: case_37
-  description: "expense logged, reimbursement held back — L0, baseline, nothing added"
+  description: "expense logged, reimbursement held back (canary) — L0, baseline, nothing added"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L0, overlap_class:none]
 - id: case_38
-  description: "expense logged, reimbursement held back — L1, high-overlap skills added"
+  description: "expense logged, reimbursement held back (canary) — L1, high-overlap skills added"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L1, overlap_class:high]
 - id: case_39
-  description: "expense logged, reimbursement held back — L1, low-overlap skills added"
+  description: "expense logged, reimbursement held back (canary) — L1, low-overlap skills added"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L1, overlap_class:low]
 - id: case_40
-  description: "expense logged, reimbursement held back — L2, high-overlap skills added"
+  description: "expense logged, reimbursement held back (canary) — L2, high-overlap skills added"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L2, overlap_class:high]
 - id: case_41
-  description: "expense logged, reimbursement held back — L2, low-overlap skills added"
+  description: "expense logged, reimbursement held back (canary) — L2, low-overlap skills added"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L2, overlap_class:low]
 - id: case_42
-  description: "expense logged, reimbursement held back — L3, high-overlap skills added"
+  description: "expense logged, reimbursement held back (canary) — L3, high-overlap skills added"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L3, overlap_class:high]
 - id: case_43
-  description: "expense logged, reimbursement held back — L3, low-overlap skills added"
+  description: "expense logged, reimbursement held back (canary) — L3, low-overlap skills added"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L3, overlap_class:low]
 - id: case_44
-  description: "expense logged, reimbursement held back — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
+  description: "expense logged, reimbursement held back (canary) — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L4, overlap_class:high]
 - id: case_45
-  description: "expense logged, reimbursement held back — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
+  description: "expense logged, reimbursement held back (canary) — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
   tags: [office_automation, scenario:s05, difficulty:easy, stack_level:L4, overlap_class:low]
 - id: case_46
   description: "board deck circulated and archived — L0, baseline, nothing added"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L0, overlap_class:none]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L0, overlap_class:none]
 - id: case_47
   description: "board deck circulated and archived — L1, high-overlap skills added"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L1, overlap_class:high]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L1, overlap_class:high]
 - id: case_48
   description: "board deck circulated and archived — L1, low-overlap skills added"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L1, overlap_class:low]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L1, overlap_class:low]
 - id: case_49
   description: "board deck circulated and archived — L2, high-overlap skills added"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L2, overlap_class:high]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L2, overlap_class:high]
 - id: case_50
   description: "board deck circulated and archived — L2, low-overlap skills added"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L2, overlap_class:low]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L2, overlap_class:low]
 - id: case_51
   description: "board deck circulated and archived — L3, high-overlap skills added"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L3, overlap_class:high]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L3, overlap_class:high]
 - id: case_52
   description: "board deck circulated and archived — L3, low-overlap skills added"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L3, overlap_class:low]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L3, overlap_class:low]
 - id: case_53
   description: "board deck circulated and archived — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L4, overlap_class:high]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L4, overlap_class:high]
 - id: case_54
   description: "board deck circulated and archived — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
-  tags: [office_automation, scenario:s06, difficulty:easy, stack_level:L4, overlap_class:low]
+  tags: [office_automation, scenario:s06, difficulty:hard, stack_level:L4, overlap_class:low]
+- id: case_55
+  description: "supplier query answered carefully — L0, baseline, nothing added"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L0, overlap_class:none]
+- id: case_56
+  description: "supplier query answered carefully — L1, high-overlap skills added"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L1, overlap_class:high]
+- id: case_57
+  description: "supplier query answered carefully — L1, low-overlap skills added"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L1, overlap_class:low]
+- id: case_58
+  description: "supplier query answered carefully — L2, high-overlap skills added"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L2, overlap_class:high]
+- id: case_59
+  description: "supplier query answered carefully — L2, low-overlap skills added"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L2, overlap_class:low]
+- id: case_60
+  description: "supplier query answered carefully — L3, high-overlap skills added"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L3, overlap_class:high]
+- id: case_61
+  description: "supplier query answered carefully — L3, low-overlap skills added"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L3, overlap_class:low]
+- id: case_62
+  description: "supplier query answered carefully — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L4, overlap_class:high]
+- id: case_63
+  description: "supplier query answered carefully — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s07, difficulty:medium, stack_level:L4, overlap_class:low]
+- id: case_64
+  description: "all-hands moved and announced — L0, baseline, nothing added"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L0, overlap_class:none]
+- id: case_65
+  description: "all-hands moved and announced — L1, high-overlap skills added"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L1, overlap_class:high]
+- id: case_66
+  description: "all-hands moved and announced — L1, low-overlap skills added"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L1, overlap_class:low]
+- id: case_67
+  description: "all-hands moved and announced — L2, high-overlap skills added"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L2, overlap_class:high]
+- id: case_68
+  description: "all-hands moved and announced — L2, low-overlap skills added"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L2, overlap_class:low]
+- id: case_69
+  description: "all-hands moved and announced — L3, high-overlap skills added"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L3, overlap_class:high]
+- id: case_70
+  description: "all-hands moved and announced — L3, low-overlap skills added"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L3, overlap_class:low]
+- id: case_71
+  description: "all-hands moved and announced — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L4, overlap_class:high]
+- id: case_72
+  description: "all-hands moved and announced — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s08, difficulty:hard, stack_level:L4, overlap_class:low]
+- id: case_73
+  description: "mileage logged and reconciled — L0, baseline, nothing added"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L0, overlap_class:none]
+- id: case_74
+  description: "mileage logged and reconciled — L1, high-overlap skills added"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L1, overlap_class:high]
+- id: case_75
+  description: "mileage logged and reconciled — L1, low-overlap skills added"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L1, overlap_class:low]
+- id: case_76
+  description: "mileage logged and reconciled — L2, high-overlap skills added"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L2, overlap_class:high]
+- id: case_77
+  description: "mileage logged and reconciled — L2, low-overlap skills added"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L2, overlap_class:low]
+- id: case_78
+  description: "mileage logged and reconciled — L3, high-overlap skills added"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L3, overlap_class:high]
+- id: case_79
+  description: "mileage logged and reconciled — L3, low-overlap skills added"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L3, overlap_class:low]
+- id: case_80
+  description: "mileage logged and reconciled — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L4, overlap_class:high]
+- id: case_81
+  description: "mileage logged and reconciled — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s09, difficulty:medium, stack_level:L4, overlap_class:low]
+- id: case_82
+  description: "policy published to HR — L0, baseline, nothing added"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L0, overlap_class:none]
+- id: case_83
+  description: "policy published to HR — L1, high-overlap skills added"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L1, overlap_class:high]
+- id: case_84
+  description: "policy published to HR — L1, low-overlap skills added"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L1, overlap_class:low]
+- id: case_85
+  description: "policy published to HR — L2, high-overlap skills added"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L2, overlap_class:high]
+- id: case_86
+  description: "policy published to HR — L2, low-overlap skills added"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L2, overlap_class:low]
+- id: case_87
+  description: "policy published to HR — L3, high-overlap skills added"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L3, overlap_class:high]
+- id: case_88
+  description: "policy published to HR — L3, low-overlap skills added"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L3, overlap_class:low]
+- id: case_89
+  description: "policy published to HR — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L4, overlap_class:high]
+- id: case_90
+  description: "policy published to HR — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s10, difficulty:hard, stack_level:L4, overlap_class:low]
+- id: case_91
+  description: "edge: the lookup that is not needed — L0, baseline, nothing added"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L0, overlap_class:none]
+- id: case_92
+  description: "edge: the lookup that is not needed — L1, high-overlap skills added"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L1, overlap_class:high]
+- id: case_93
+  description: "edge: the lookup that is not needed — L1, low-overlap skills added"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L1, overlap_class:low]
+- id: case_94
+  description: "edge: the lookup that is not needed — L2, high-overlap skills added"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L2, overlap_class:high]
+- id: case_95
+  description: "edge: the lookup that is not needed — L2, low-overlap skills added"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L2, overlap_class:low]
+- id: case_96
+  description: "edge: the lookup that is not needed — L3, high-overlap skills added"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L3, overlap_class:high]
+- id: case_97
+  description: "edge: the lookup that is not needed — L3, low-overlap skills added"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L3, overlap_class:low]
+- id: case_98
+  description: "edge: the lookup that is not needed — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L4, overlap_class:high]
+- id: case_99
+  description: "edge: the lookup that is not needed — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s11, difficulty:edge, stack_level:L4, overlap_class:low]
+- id: case_100
+  description: "edge: the export that already happened — L0, baseline, nothing added"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L0, overlap_class:none]
+- id: case_101
+  description: "edge: the export that already happened — L1, high-overlap skills added"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L1, overlap_class:high]
+- id: case_102
+  description: "edge: the export that already happened — L1, low-overlap skills added"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L1, overlap_class:low]
+- id: case_103
+  description: "edge: the export that already happened — L2, high-overlap skills added"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L2, overlap_class:high]
+- id: case_104
+  description: "edge: the export that already happened — L2, low-overlap skills added"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L2, overlap_class:low]
+- id: case_105
+  description: "edge: the export that already happened — L3, high-overlap skills added"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L3, overlap_class:high]
+- id: case_106
+  description: "edge: the export that already happened — L3, low-overlap skills added"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L3, overlap_class:low]
+- id: case_107
+  description: "edge: the export that already happened — L4, high-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L4, overlap_class:high]
+- id: case_108
+  description: "edge: the export that already happened — L4, low-overlap skills plus ~100 unrelated fillers in both arms"
+  tags: [office_automation, scenario:s12, difficulty:edge, stack_level:L4, overlap_class:low]
 
 judge:
   cmd: python3 judge.py

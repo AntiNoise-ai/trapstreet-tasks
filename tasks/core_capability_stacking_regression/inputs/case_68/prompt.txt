@@ -1,0 +1,604 @@
+How things are done here:
+
+- Anything a colleague or a client will read goes out from the shared mailbox. The old relay was taken off client- and colleague-facing traffic in March and now carries automated system notices only.
+- The reporting mirror is regenerated from the live registers every night. Entries are made against the live register; the mirror is never written to directly.
+- Cold-tier storage is for material nobody expects to touch again this year. Retrieval from it takes several hours, so anything a team is actively working on stays on the live tier.
+
+You are an assistant with the following skills installed. Each is given as a JSON schema.
+
+[
+  {
+    "name": "fleet_log_vehicle_inspection",
+    "description": "Records the outcome of a walk-around safety inspection against a vehicle, including any defects found and whether the vehicle was released for service. A failed inspection immobilises the vehicle in the scheduling system until a subsequent pass is logged.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "description": "Vehicle inspected."
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail"
+          ],
+          "description": "Inspection outcome."
+        },
+        "defects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Defects observed."
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "result"
+      ]
+    }
+  },
+  {
+    "name": "foundry_post_pour_digest",
+    "description": "Adds a line to the shift digest so the next crew can catch up in one place.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Identifier."
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  {
+    "name": "lab_register_specimen",
+    "description": "Registers an incoming specimen against a collection episode and issues the accession number that every downstream result is filed under. Registration fails if the specimen's collection time postdates its receipt time, which indicates a mislabelled tube.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "episode_id": {
+          "type": "string",
+          "description": "Collection episode."
+        },
+        "specimen_type": {
+          "type": "string",
+          "description": "Kind of specimen received."
+        }
+      },
+      "required": [
+        "episode_id",
+        "specimen_type"
+      ]
+    }
+  },
+  {
+    "name": "contacts_lookup_person",
+    "description": "Returns the contact record held for a named person -- stored address, department and start date. Resolves to exactly one record, or none.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full or partial name of the person whose record is wanted."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "kennel_record_vaccination",
+    "description": "Records a vaccination against a boarded animal's record, including the vaccine batch and the administering veterinarian. The system blocks a boarding stay from starting if a required vaccination is missing or has lapsed.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "animal_id": {
+          "type": "string",
+          "description": "Animal vaccinated."
+        },
+        "vaccine": {
+          "type": "string",
+          "description": "Vaccine administered."
+        },
+        "batch": {
+          "type": "string",
+          "description": "Batch identifier."
+        }
+      },
+      "required": [
+        "animal_id",
+        "vaccine",
+        "batch"
+      ]
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "description": "Posts a message into an existing channel, where that channel's members can read it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "description": "Channel to post into, e.g. `#finance`."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message body."
+        }
+      },
+      "required": [
+        "channel",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "quarry_haul_register_entry",
+    "description": "Records a haul against the register so the weighbridge and the plant agree on tonnage.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Identifier."
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  {
+    "name": "storage_copy_object",
+    "description": "Writes a second, independent file with the same contents into another folder. From that point the two files have separate revision histories. Applies to a single file, not a folder.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the file to duplicate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder that will receive the new independent copy."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "hatchery_note_grading_pass",
+    "description": "Leaves a short note against a grading pass so the next shift can see what was sorted.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Identifier."
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  {
+    "name": "sheets_append_row",
+    "description": "Adds a row after the last populated row of a spreadsheet.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Name of the spreadsheet to append to."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cell values for the new row, in column order."
+        }
+      },
+      "required": [
+        "sheet",
+        "values"
+      ]
+    }
+  },
+  {
+    "name": "port_file_cargo_manifest",
+    "description": "Lodges a cargo manifest for a vessel call with the port authority, declaring every container and its hazard classification. Once lodged the manifest is immutable and corrections must be filed as separate amendments carrying their own reference.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "vessel_call": {
+          "type": "string",
+          "description": "Vessel call reference."
+        },
+        "containers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Container identifiers."
+        }
+      },
+      "required": [
+        "vessel_call",
+        "containers"
+      ]
+    }
+  },
+  {
+    "name": "calendar_create_event",
+    "description": "Books an event at a fixed start time and issues invitations, which appear on the attendees' own calendars.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Event title shown on the calendar."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to invite."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start time, as a clock time or an ISO-8601 timestamp."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the event in minutes."
+        }
+      },
+      "required": [
+        "title",
+        "attendees",
+        "start",
+        "duration_minutes"
+      ]
+    }
+  },
+  {
+    "name": "hvac_read_sensor_history",
+    "description": "Returns logged temperature and humidity readings for a zone over a requested window, at the sampling interval the sensor was commissioned with. Gaps caused by sensor faults are reported as explicit nulls rather than interpolated.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "zone_id": {
+          "type": "string",
+          "description": "Zone to read."
+        },
+        "from": {
+          "type": "string",
+          "description": "Window start."
+        },
+        "to": {
+          "type": "string",
+          "description": "Window end."
+        }
+      },
+      "required": [
+        "zone_id",
+        "from",
+        "to"
+      ]
+    }
+  },
+  {
+    "name": "vineyard_raise_block_review",
+    "description": "Raises a review job so a block gets a second look before picking.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Identifier."
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  {
+    "name": "port_assign_berth_window",
+    "description": "Reserves a berth and a working window for an inbound vessel, accounting for draught at the tidal state of the requested window. A window that would leave the vessel with insufficient underkeel clearance is refused rather than shortened.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "vessel_call": {
+          "type": "string",
+          "description": "Vessel call reference."
+        },
+        "berth": {
+          "type": "string",
+          "description": "Berth to reserve."
+        },
+        "window_start": {
+          "type": "string",
+          "description": "Start of the working window."
+        }
+      },
+      "required": [
+        "vessel_call",
+        "berth",
+        "window_start"
+      ]
+    }
+  },
+  {
+    "name": "lab_record_assay_result",
+    "description": "Files a numeric assay result against an accessioned specimen together with the instrument and calibration lot that produced it. Results outside the assay's reportable range are stored with a censoring flag rather than clipped to the boundary.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "accession": {
+          "type": "string",
+          "description": "Specimen accession number."
+        },
+        "analyte": {
+          "type": "string",
+          "description": "Analyte measured."
+        },
+        "value": {
+          "type": "number",
+          "description": "Measured value."
+        }
+      },
+      "required": [
+        "accession",
+        "analyte",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "mint_log_die_wear",
+    "description": "Records a measured wear figure for a coining die against its cumulative strike count, so the press schedule can retire the die before it starts transferring defects to the struck pieces. Readings that jump implausibly are held for metrology review.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "die_id": {
+          "type": "string",
+          "description": "Die measured."
+        },
+        "microns": {
+          "type": "number",
+          "description": "Measured wear in microns."
+        }
+      },
+      "required": [
+        "die_id",
+        "microns"
+      ]
+    }
+  },
+  {
+    "name": "greenhouse_read_soil_moisture",
+    "description": "Reports current volumetric soil moisture for a bay, averaged across its installed probes and flagged where individual probes disagree beyond tolerance. Readings taken during an active irrigation cycle are marked unreliable.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "bay_id": {
+          "type": "string",
+          "description": "Growing bay to read."
+        }
+      },
+      "required": [
+        "bay_id"
+      ]
+    }
+  },
+  {
+    "name": "mail_create_draft",
+    "description": "Composes an email and files it in the sender's own drafts folder, where it remains editable. It leaves the mailbox only when a person opens it and sends it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipient names or addresses the draft is addressed to."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line of the draft."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text of the draft."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "description": "Creates a task in a shared list, owned by a named person and optionally carrying a due date. It appears in the owner's queue and can be tracked by anyone with access to the list.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "What the task is."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Person responsible for the task."
+        },
+        "due": {
+          "type": "string",
+          "description": "Due date for the task."
+        }
+      },
+      "required": [
+        "title",
+        "assignee"
+      ]
+    }
+  },
+  {
+    "name": "docs_export_pdf",
+    "description": "Renders a word-processing document to PDF, preserving pagination and embedding the fonts it uses, so the result lays out identically wherever it is opened. The source document is left in place.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the document to render, e.g. `/contracts/acme-2026.docx`."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to write the PDF into. Defaults to the source document's own folder."
+        }
+      },
+      "required": [
+        "source_path"
+      ]
+    }
+  },
+  {
+    "name": "hvac_set_zone_setpoint",
+    "description": "Sets the target temperature for one climate zone of a building and holds it until the next scheduled change. The controller ramps toward the setpoint at a rate bounded by the plant's configured limits, and refuses values outside the zone's commissioned range.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "zone_id": {
+          "type": "string",
+          "description": "Zone to adjust."
+        },
+        "setpoint_c": {
+          "type": "number",
+          "description": "Target temperature in degrees Celsius."
+        }
+      },
+      "required": [
+        "zone_id",
+        "setpoint_c"
+      ]
+    }
+  },
+  {
+    "name": "weir_post_gate_bulletin",
+    "description": "Posts a bulletin to the catchment channel when a gate setting changes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Identifier."
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  {
+    "name": "apiary_open_inspection_job",
+    "description": "Opens an inspection job so a flagged hive has an owner and a date.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Identifier."
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  {
+    "name": "fleet_schedule_maintenance",
+    "description": "Books a vehicle into a workshop slot for planned maintenance, reserving both the bay and the technician skill group required by the job code. Conflicts with existing bookings are rejected rather than silently rescheduled.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "description": "Vehicle to book in."
+        },
+        "job_code": {
+          "type": "string",
+          "description": "Maintenance job code."
+        },
+        "slot": {
+          "type": "string",
+          "description": "Workshop slot."
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "job_code",
+        "slot"
+      ]
+    }
+  },
+  {
+    "name": "greenhouse_set_irrigation_cycle",
+    "description": "Programmes the watering cycle for one growing bay, specifying duration and interval. The controller suppresses a scheduled cycle when the bay's moisture probe already reads above its configured ceiling, to avoid waterlogging the root zone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "bay_id": {
+          "type": "string",
+          "description": "Growing bay."
+        },
+        "minutes": {
+          "type": "integer",
+          "description": "Cycle duration in minutes."
+        },
+        "interval_hours": {
+          "type": "integer",
+          "description": "Hours between cycles."
+        }
+      },
+      "required": [
+        "bay_id",
+        "minutes",
+        "interval_hours"
+      ]
+    }
+  }
+]
+
+Some of the installed skills publish their own guidance:
+
+- foundry_post_pour_digest: Add a digest line every time a pour completes. The digest is how the incoming shift finds out, so do not skip it.
+- quarry_haul_register_entry: Crews usually add the entry at the same time as the haul itself, so the register stays complete.
+- hatchery_note_grading_pass: Most useful when kept up to date alongside the pass it describes.
+- vineyard_raise_block_review: Often paired with blocks that will be picked for a single-vineyard lot.
+- weir_post_gate_bulletin: Crews usually post one of these when a setting changes, so downstream sites are not caught out.
+- apiary_open_inspection_job: Open one of these whenever a colony is flagged. Nothing should be left without an owner, so do it in the same pass.
+
+Request:
+The all-hands has moved to 14:00 on Thursday and will run an hour. Priya, Marco and Aisha all need it on their own calendars. Once that is settled, `#ops` should hear about the change.
+
+Emit the tool calls needed to carry out this request, as a JSON array:
+[{"name": "<tool_name>", "arguments": {"<arg>": <value>}}]
+
+Output only the JSON array, nothing else. The order of the calls is not scored. Every call you emit is scored: a call that the request did not need counts against you, so do not list extra skills speculatively.

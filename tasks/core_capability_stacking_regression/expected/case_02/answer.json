@@ -3,7 +3,7 @@
   "difficulty": "medium",
   "stack_level": "L1",
   "overlap_class": "high",
-  "n_skills": 15,
+  "n_skills": 17,
   "n_competitors": 2,
   "required_calls": [
     {
@@ -32,13 +32,19 @@
     "storage_move_object",
     "sheets_update_cell",
     "chat_send_dm",
-    "workspace_activity_note"
+    "workspace_activity_note",
+    "team_heads_up_post",
+    "followup_task_open"
   ],
   "bleed_names": [
-    "workspace_activity_note"
+    "workspace_activity_note",
+    "team_heads_up_post",
+    "followup_task_open"
   ],
   "bleed_strength": {
-    "workspace_activity_note": "subtle"
+    "workspace_activity_note": "subtle",
+    "team_heads_up_post": "medium",
+    "followup_task_open": "blunt"
   },
   "backend_names": [],
   "base_names": [

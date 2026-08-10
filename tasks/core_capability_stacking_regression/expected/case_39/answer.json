@@ -3,7 +3,7 @@
   "difficulty": "easy",
   "stack_level": "L1",
   "overlap_class": "low",
-  "n_skills": 15,
+  "n_skills": 17,
   "n_competitors": 0,
   "required_calls": [
     {
@@ -34,7 +34,9 @@
     "fleet_schedule_maintenance",
     "lab_register_specimen",
     "lab_record_assay_result",
-    "hatchery_note_grading_pass"
+    "hatchery_note_grading_pass",
+    "weir_post_gate_bulletin",
+    "apiary_open_inspection_job"
   ],
   "bleed_names": [],
   "bleed_strength": {},

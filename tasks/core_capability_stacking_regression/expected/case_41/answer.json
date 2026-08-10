@@ -3,7 +3,7 @@
   "difficulty": "easy",
   "stack_level": "L2",
   "overlap_class": "low",
-  "n_skills": 22,
+  "n_skills": 26,
   "n_competitors": 0,
   "required_calls": [
     {
@@ -35,13 +35,17 @@
     "lab_register_specimen",
     "lab_record_assay_result",
     "hatchery_note_grading_pass",
+    "weir_post_gate_bulletin",
+    "apiary_open_inspection_job",
     "greenhouse_set_irrigation_cycle",
     "greenhouse_read_soil_moisture",
     "kennel_record_vaccination",
     "port_file_cargo_manifest",
     "port_assign_berth_window",
     "mint_log_die_wear",
-    "quarry_haul_register_entry"
+    "quarry_haul_register_entry",
+    "foundry_post_pour_digest",
+    "vineyard_raise_block_review"
   ],
   "bleed_names": [],
   "bleed_strength": {},

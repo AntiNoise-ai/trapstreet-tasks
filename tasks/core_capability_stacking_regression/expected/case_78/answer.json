@@ -1,0 +1,97 @@
+{
+  "scenario": "s09",
+  "difficulty": "medium",
+  "stack_level": "L3",
+  "overlap_class": "high",
+  "n_skills": 38,
+  "n_competitors": 8,
+  "required_calls": [
+    {
+      "name": "sheets_append_row",
+      "expected_args": {
+        "sheet": [
+          "expenses log",
+          "expenses",
+          "expenses_log"
+        ]
+      }
+    },
+    {
+      "name": "tasks_create_item",
+      "expected_args": {
+        "assignee": [
+          "Aisha"
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "mail_send_message",
+    "mail_schedule_send",
+    "calendar_propose_time",
+    "storage_move_object",
+    "sheets_update_cell",
+    "chat_send_dm",
+    "workspace_activity_note",
+    "team_heads_up_post",
+    "followup_task_open",
+    "docs_export_docx_copy",
+    "calendar_create_hold",
+    "storage_create_shortcut",
+    "tasks_assign_existing",
+    "sheets_insert_row_at",
+    "chat_create_channel",
+    "handover_register_entry",
+    "channel_digest_post",
+    "review_task_raise",
+    "docs_print_to_file",
+    "mail_create_template",
+    "calendar_create_recurring_event",
+    "storage_share_object",
+    "tasks_create_reminder",
+    "contacts_search_directory",
+    "mail_relay_dispatch",
+    "sheets_mirror_append",
+    "storage_copy_to_cold_tier",
+    "compliance_record_action",
+    "stakeholder_notice_post",
+    "backup_snapshot_copy"
+  ],
+  "bleed_names": [
+    "workspace_activity_note",
+    "team_heads_up_post",
+    "followup_task_open",
+    "handover_register_entry",
+    "channel_digest_post",
+    "review_task_raise",
+    "compliance_record_action",
+    "stakeholder_notice_post",
+    "backup_snapshot_copy"
+  ],
+  "bleed_strength": {
+    "workspace_activity_note": "subtle",
+    "team_heads_up_post": "medium",
+    "followup_task_open": "blunt",
+    "handover_register_entry": "medium",
+    "channel_digest_post": "blunt",
+    "review_task_raise": "subtle",
+    "compliance_record_action": "blunt",
+    "stakeholder_notice_post": "subtle",
+    "backup_snapshot_copy": "medium"
+  },
+  "backend_names": [
+    "mail_relay_dispatch",
+    "sheets_mirror_append",
+    "storage_copy_to_cold_tier"
+  ],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

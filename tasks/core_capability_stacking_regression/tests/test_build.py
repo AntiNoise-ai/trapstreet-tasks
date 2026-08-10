@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import copy
 import json
+from collections import Counter
 import sys
 from pathlib import Path
 
@@ -366,3 +367,59 @@ def test_adding_a_level_only_interleaves_and_never_reorders():
                 cur = catalog_names(case_for(scenario, level, arm))
                 assert [n for n in cur if n in set(prev)] == prev, f"{scenario}/{level}/{arm}"
                 prev = cur
+
+
+# --- the design that keeps nine scenarios from measuring one thing -------
+
+PRIMARY = [i for i, s in SCENARIOS.items() if s["difficulty"] in bc.PRIMARY_TIERS]
+
+
+def test_every_primary_scenario_meets_each_instruction_strength_exactly_once():
+    """Strength must be orthogonal to level.
+
+    If subtle skills sat in pack 1 and blunt ones in pack 3, the instructions
+    would get more forceful as the stack grows, and a dose effect would be a
+    strength effect in disguise. Each scenario meets subtle, medium and blunt
+    exactly once across L1-L3, and the ORDER differs between scenario groups.
+    """
+    orders = set()
+    for sid in PRIMARY:
+        seq = [e["strength"] for p in CATALOG["high_overlap_packs"] for e in p
+               if e.get("kind") == "instruction_bleed" and sid in e["targets"]]
+        assert sorted(seq) == ["blunt", "medium", "subtle"], f"{sid}: {seq}"
+        orders.add(tuple(seq))
+    assert len(orders) > 1, "every scenario meets the strengths in the same order"
+
+
+def test_bleed_dose_rises_by_exactly_one_per_level_for_every_primary_scenario():
+    for sid in PRIMARY:
+        cum, n = [], 0
+        for p in CATALOG["high_overlap_packs"]:
+            n += sum(1 for e in p if e.get("kind") == "instruction_bleed" and sid in e["targets"])
+            cum.append(n)
+        assert cum == [1, 2, 3], f"{sid}: {cum}"
+
+
+def test_the_nine_primary_scenarios_are_tempted_on_more_than_one_surface():
+    """Nine scenarios all rehearsing the same trap would inflate n without
+    adding information. The surface is derived from the catalog rather than
+    declared per scenario -- a hand-maintained copy drifts as soon as a
+    bleeding skill's targets change, which is how this test first failed."""
+    def surfaces_for(sid: str) -> set[str]:
+        return {e["bleed_surface"] for p in CATALOG["high_overlap_packs"] for e in p
+                if e.get("kind") == "instruction_bleed" and sid in e["targets"]}
+
+    all_surfaces = set().union(*(surfaces_for(sid) for sid in PRIMARY))
+    assert len(all_surfaces) >= 3, all_surfaces
+    for surface in all_surfaces:
+        covered = [sid for sid in PRIMARY if surface in surfaces_for(sid)]
+        assert len(covered) < len(PRIMARY), f"{surface} tempts every primary scenario"
+    for sid in PRIMARY:
+        assert surfaces_for(sid), f"{sid} faces no instruction-bleed temptation at all"
+
+
+def test_tier_mix_matches_what_the_statistic_needs():
+    tiers = Counter(s["difficulty"] for s in SCENARIOS.values())
+    assert tiers["easy"] == 1, "one canary; L0 is already the per-scenario floor check"
+    assert tiers["medium"] + tiers["hard"] >= 8, "the permutation test needs 8-9 primary scenarios"
+    assert tiers["edge"] >= 2

@@ -1,0 +1,86 @@
+{
+  "scenario": "s10",
+  "difficulty": "hard",
+  "stack_level": "L2",
+  "overlap_class": "high",
+  "n_skills": 26,
+  "n_competitors": 7,
+  "required_calls": [
+    {
+      "name": "docs_export_pdf",
+      "expected_args": {
+        "source_path": [
+          "/policy/travel-2026.docx"
+        ]
+      }
+    },
+    {
+      "name": "storage_copy_object",
+      "expected_args": {
+        "source_path": [
+          "/policy/travel-2026.docx"
+        ],
+        "destination_folder": [
+          "/hr/published",
+          "published"
+        ]
+      }
+    },
+    {
+      "name": "chat_post_message",
+      "expected_args": {
+        "channel": [
+          "#general",
+          "general"
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "mail_send_message",
+    "mail_schedule_send",
+    "calendar_propose_time",
+    "storage_move_object",
+    "sheets_update_cell",
+    "chat_send_dm",
+    "workspace_activity_note",
+    "team_heads_up_post",
+    "followup_task_open",
+    "docs_export_docx_copy",
+    "calendar_create_hold",
+    "storage_create_shortcut",
+    "tasks_assign_existing",
+    "sheets_insert_row_at",
+    "chat_create_channel",
+    "handover_register_entry",
+    "channel_digest_post",
+    "review_task_raise"
+  ],
+  "bleed_names": [
+    "workspace_activity_note",
+    "team_heads_up_post",
+    "followup_task_open",
+    "handover_register_entry",
+    "channel_digest_post",
+    "review_task_raise"
+  ],
+  "bleed_strength": {
+    "workspace_activity_note": "subtle",
+    "team_heads_up_post": "medium",
+    "followup_task_open": "blunt",
+    "handover_register_entry": "medium",
+    "channel_digest_post": "blunt",
+    "review_task_raise": "subtle"
+  },
+  "backend_names": [],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

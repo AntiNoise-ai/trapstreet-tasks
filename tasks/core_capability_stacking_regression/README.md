@@ -124,9 +124,31 @@ emit the set of tool calls that carries the request out — no more, no fewer?**
 | `overlap_class` | `high` / `low` | whether the added skills compete with the ones the job needs |
 | `difficulty` | `easy` / `medium` / `hard` / `edge` | which scenarios may enter the primary test |
 
-6 scenarios × 9 variants = **54 cases** today; the target set is 12 scenarios
-(**108 cases**). L0 is the shared baseline — nothing added yet, so both arms
-are identical there and share one case.
+**12 scenarios × 9 variants = 108 cases.** L0 is the shared baseline — nothing
+added yet, so both arms are identical there and share one case.
+
+The tier mix is set by what the statistic needs, not by taste: **9 primary**
+(medium/hard), **1 easy canary**, **2 edge**. Nine is what the permutation test
+wants — at n=6 a single wrong-direction scenario puts the secondary sign test at
+p = 0.109 whatever the effect size, and only one easy scenario is kept because
+L0 already measures the per-scenario floor better than a dedicated easy case
+would.
+
+Two properties keep nine scenarios from all measuring the same thing, both
+asserted in `tests/test_build.py`:
+
+- **Instruction strength is orthogonal to level.** Each scenario meets a subtle,
+  a medium and a blunt instruction exactly once across L1–L3, and the order
+  differs between scenario groups. If subtle skills sat in pack 1 and blunt ones
+  in pack 3, the instructions would get more forceful as the stack grows and a
+  dose effect would be a strength effect wearing its clothes.
+- **The temptation surface varies.** Scenarios are pulled toward different kinds
+  of surplus action — an extra log line, an extra broadcast, an extra task, an
+  extra backup copy — so the set is not nine rehearsals of one trap. Which
+  surface a scenario faces is *derived* from the catalog rather than declared on
+  the scenario, because a hand-maintained copy drifts as soon as a bleeding
+  skill changes its targets. That is not hypothetical: the declared field and
+  the catalog had already diverged when the assertion was first written.
 
 ### The design decisions that make a result attributable
 
@@ -347,9 +369,13 @@ Until both have run, this directory holds an instrument and no result.
 
 ## Known limitations
 
-- **6 of a target 12 scenarios, one domain.** Three sit in the primary tiers,
-  which is below the 9 the statistic wants; the rest are unwritten by design
-  until the probe reports.
+- **One domain.** Twelve scenarios of office administration. Enough for the
+  paired statistic; not enough to say anything about per-domain differences.
+- **Every calibration number in `CALIBRATION.md` comes from a three-scenario
+  subset** (s01, s02, s04) run before the set was completed. The mechanism
+  findings do not depend on n and stand; the dose-response curve was explicitly
+  left unestablished *because* n=3 was too coarse, and the full set has not been
+  run.
 - **Position is controlled between arms but not manipulated.**
 - **Five required arguments go unverified** because their values are prose.
 - **The stack is composed, not installed.** Skills are presented in the prompt
@@ -373,11 +399,16 @@ Until both have run, this directory holds an instrument and no result.
   two issue trackers that both genuinely create — where the wrong choice is
   wrong for organisational reasons that no schema states. That regime is
   defined out of existence here.
-- **The edge tier is not written yet.** Planned: a step that should *not* be
-  taken (testing over-eagerness, whose tempting tool exists only in the high
-  arm). Two other shapes were considered and dropped — the same tool needed
-  twice tests counting rather than discrimination, and an added skill that is
-  correct for one step would break the "right answer always present" invariant.
+- **The edge tier tests one shape, not three.** Both edge scenarios are "a step
+  that should *not* be taken" — a lookup for a record the request says is
+  already on file, an export for a document the request says already exists.
+  Two other shapes were considered and dropped: the same tool needed twice tests
+  counting rather than discrimination, and an added skill that is correct for
+  one step of a scenario would break the "right answer always present"
+  invariant. Note the honest limit — in both edge scenarios the *tempting* tool
+  is a base skill, present in both arms, so that channel measures generic
+  over-eagerness rather than anything arm-specific. The arm-specific channel is
+  still there via the bleeding skills; the base-skill one is a diagnostic.
 
 ## Sources & licensing
 

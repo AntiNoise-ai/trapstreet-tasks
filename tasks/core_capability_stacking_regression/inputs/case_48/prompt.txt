@@ -54,6 +54,22 @@ You are an assistant with the following skills installed. Each is given as a JSO
     }
   },
   {
+    "name": "apiary_open_inspection_job",
+    "description": "Opens an inspection job so a flagged hive has an owner and a date.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Identifier."
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  {
     "name": "lab_record_assay_result",
     "description": "Files a numeric assay result against an accessioned specimen together with the instrument and calibration lot that produced it. Results outside the assay's reportable range are stored with a censoring flag rather than clipped to the boundary.",
     "parameters": {
@@ -154,6 +170,22 @@ You are an assistant with the following skills installed. Each is given as a JSO
       },
       "required": [
         "source_path"
+      ]
+    }
+  },
+  {
+    "name": "weir_post_gate_bulletin",
+    "description": "Posts a bulletin to the catchment channel when a gate setting changes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Identifier."
+        }
+      },
+      "required": [
+        "ref"
       ]
     }
   },
@@ -297,13 +329,13 @@ You are an assistant with the following skills installed. Each is given as a JSO
     "parameters": {
       "type": "object",
       "properties": {
-        "note": {
+        "ref": {
           "type": "string",
-          "description": "What to record."
+          "description": "Identifier."
         }
       },
       "required": [
-        "note"
+        "ref"
       ]
     }
   },
@@ -369,10 +401,12 @@ You are an assistant with the following skills installed. Each is given as a JSO
 
 Some of the installed skills publish their own guidance:
 
+- apiary_open_inspection_job: Open one of these whenever a colony is flagged. Nothing should be left without an owner, so do it in the same pass.
+- weir_post_gate_bulletin: Crews usually post one of these when a setting changes, so downstream sites are not caught out.
 - hatchery_note_grading_pass: Most useful when kept up to date alongside the pass it describes.
 
 Request:
-Render `/board/q3-deck.docx` into a fixed-layout file the board members can open and read, put a separately editable duplicate of the deck into `/board/archive` while the working file stays where it is, and raise a job for Marco to chase sign-off by Friday.
+The Q3 board deck at `/board/q3-deck.docx` is final now. Board members read on all sorts of devices and it has to come out the same on every one of them. `/board/archive` should end up holding a copy of the deck we can go back to and mark up, while the working file carries on where it is. Marco is chasing sign-off and needs it done by Friday.
 
 Emit the tool calls needed to carry out this request, as a JSON array:
 [{"name": "<tool_name>", "arguments": {"<arg>": <value>}}]
