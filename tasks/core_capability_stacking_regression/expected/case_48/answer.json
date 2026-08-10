@@ -1,0 +1,60 @@
+{
+  "scenario": "s06",
+  "difficulty": "easy",
+  "stack_level": "L1",
+  "overlap_class": "low",
+  "n_skills": 15,
+  "n_competitors": 0,
+  "required_calls": [
+    {
+      "name": "docs_export_pdf",
+      "expected_args": {
+        "source_path": [
+          "/board/q3-deck.docx"
+        ]
+      }
+    },
+    {
+      "name": "storage_copy_object",
+      "expected_args": {
+        "source_path": [
+          "/board/q3-deck.docx"
+        ],
+        "destination_folder": [
+          "/board/archive",
+          "archive"
+        ]
+      }
+    },
+    {
+      "name": "tasks_create_item",
+      "expected_args": {
+        "assignee": [
+          "Marco"
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "hvac_set_zone_setpoint",
+    "hvac_read_sensor_history",
+    "fleet_log_vehicle_inspection",
+    "fleet_schedule_maintenance",
+    "lab_register_specimen",
+    "lab_record_assay_result",
+    "hatchery_note_grading_pass"
+  ],
+  "bleed_names": [],
+  "bleed_strength": {},
+  "backend_names": [],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

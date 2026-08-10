@@ -1,0 +1,82 @@
+{
+  "scenario": "s01",
+  "difficulty": "medium",
+  "stack_level": "L4",
+  "overlap_class": "high",
+  "n_skills": 133,
+  "n_competitors": 8,
+  "required_calls": [
+    {
+      "name": "docs_export_pdf",
+      "expected_args": {
+        "source_path": [
+          "/contracts/acme-2026.docx"
+        ]
+      }
+    },
+    {
+      "name": "sheets_append_row",
+      "expected_args": {
+        "sheet": [
+          "vendor register",
+          "vendor_register",
+          "Vendor Register"
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "mail_send_message",
+    "mail_schedule_send",
+    "calendar_propose_time",
+    "storage_move_object",
+    "sheets_update_cell",
+    "chat_send_dm",
+    "workspace_activity_note",
+    "docs_export_docx_copy",
+    "calendar_create_hold",
+    "storage_create_shortcut",
+    "tasks_assign_existing",
+    "sheets_insert_row_at",
+    "chat_create_channel",
+    "handover_register_entry",
+    "docs_print_to_file",
+    "mail_create_template",
+    "calendar_create_recurring_event",
+    "storage_share_object",
+    "tasks_create_reminder",
+    "contacts_search_directory",
+    "mail_relay_dispatch",
+    "sheets_mirror_append",
+    "storage_copy_to_cold_tier",
+    "compliance_record_action",
+    "team_heads_up_post"
+  ],
+  "bleed_names": [
+    "workspace_activity_note",
+    "handover_register_entry",
+    "compliance_record_action",
+    "team_heads_up_post"
+  ],
+  "bleed_strength": {
+    "workspace_activity_note": "subtle",
+    "handover_register_entry": "medium",
+    "compliance_record_action": "blunt",
+    "team_heads_up_post": "blunt"
+  },
+  "backend_names": [
+    "mail_relay_dispatch",
+    "sheets_mirror_append",
+    "storage_copy_to_cold_tier"
+  ],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

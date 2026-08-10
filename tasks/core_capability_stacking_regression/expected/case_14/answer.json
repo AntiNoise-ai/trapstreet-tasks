@@ -1,0 +1,67 @@
+{
+  "scenario": "s02",
+  "difficulty": "hard",
+  "stack_level": "L2",
+  "overlap_class": "low",
+  "n_skills": 22,
+  "n_competitors": 0,
+  "required_calls": [
+    {
+      "name": "calendar_create_event",
+      "expected_args": {
+        "attendees": [
+          [
+            "Priya",
+            "Marco"
+          ]
+        ],
+        "start": [
+          "10:00"
+        ],
+        "duration_minutes": [
+          30
+        ]
+      }
+    },
+    {
+      "name": "mail_create_draft",
+      "expected_args": {
+        "to": [
+          [
+            "Priya",
+            "Marco"
+          ]
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "hvac_set_zone_setpoint",
+    "hvac_read_sensor_history",
+    "fleet_log_vehicle_inspection",
+    "fleet_schedule_maintenance",
+    "lab_register_specimen",
+    "lab_record_assay_result",
+    "hatchery_note_grading_pass",
+    "greenhouse_set_irrigation_cycle",
+    "greenhouse_read_soil_moisture",
+    "kennel_record_vaccination",
+    "port_file_cargo_manifest",
+    "port_assign_berth_window",
+    "mint_log_die_wear",
+    "quarry_haul_register_entry"
+  ],
+  "bleed_names": [],
+  "bleed_strength": {},
+  "backend_names": [],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

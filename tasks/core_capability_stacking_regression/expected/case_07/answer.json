@@ -1,0 +1,68 @@
+{
+  "scenario": "s01",
+  "difficulty": "medium",
+  "stack_level": "L3",
+  "overlap_class": "low",
+  "n_skills": 33,
+  "n_competitors": 0,
+  "required_calls": [
+    {
+      "name": "docs_export_pdf",
+      "expected_args": {
+        "source_path": [
+          "/contracts/acme-2026.docx"
+        ]
+      }
+    },
+    {
+      "name": "sheets_append_row",
+      "expected_args": {
+        "sheet": [
+          "vendor register",
+          "vendor_register",
+          "Vendor Register"
+        ]
+      }
+    }
+  ],
+  "added_names": [
+    "hvac_set_zone_setpoint",
+    "hvac_read_sensor_history",
+    "fleet_log_vehicle_inspection",
+    "fleet_schedule_maintenance",
+    "lab_register_specimen",
+    "lab_record_assay_result",
+    "hatchery_note_grading_pass",
+    "greenhouse_set_irrigation_cycle",
+    "greenhouse_read_soil_moisture",
+    "kennel_record_vaccination",
+    "port_file_cargo_manifest",
+    "port_assign_berth_window",
+    "mint_log_die_wear",
+    "quarry_haul_register_entry",
+    "seismic_arm_station",
+    "seismic_export_waveform",
+    "brew_set_mash_schedule",
+    "brew_log_gravity_reading",
+    "transit_flag_service_disruption",
+    "forge_log_batch_hardness",
+    "cellar_log_rack_position",
+    "cellar_set_humidity_target",
+    "ferry_assign_lane",
+    "ferry_log_deck_check",
+    "orchard_schedule_thinning"
+  ],
+  "bleed_names": [],
+  "bleed_strength": {},
+  "backend_names": [],
+  "base_names": [
+    "docs_export_pdf",
+    "mail_create_draft",
+    "calendar_create_event",
+    "storage_copy_object",
+    "tasks_create_item",
+    "contacts_lookup_person",
+    "sheets_append_row",
+    "chat_post_message"
+  ]
+}

@@ -1,0 +1,1625 @@
+{
+  "_doc": "Hand-authored skill catalog for core_capability_stacking_regression. `base` is the L0 installed set -- every scenario in scenarios.json is fully satisfiable by skills in here, at every stack level. `high_overlap_packs` and `low_overlap_packs` are what gets ADDED as the stack grows; neither ever contains a correct answer. Each high-overlap skill carries a `disqualifier` recording why it is a plausible-but-wrong answer to a specific base scenario -- never shown to the solution, it exists so a reader can audit that a case is hard-but-fair rather than a coin flip. Low-overlap skills are drawn from semantically distant domains and are hand-written in the same voice and weight as the high-overlap ones, so that any gap between the arms is overlap and not prose style. Pack sizes are equal across arms at every level; tests/test_build.py asserts this. Each high-overlap entry declares `targets`: the scenarios it is a plausible-but-wrong answer for. Dose is asserted, not inferred from the disqualifier prose -- a pack that happened to add no competitor for a scenario would make that scenario's segment of the degradation curve flat by construction rather than by measurement. Competitor descriptions ADVERTISE a benefit; they never state their own disqualifying property. An earlier draft did state it ('not for holding a message back pending review'), which made the case reading comprehension rather than discrimination -- de-telegraphing the request alone would only have moved the lookup to the other side of the match. `disqualifier` records the inference a reader must make, so hard-but-fair stays auditable. Base descriptions are functional only: any 'use when ...' guidance was removed, because it mirrored the request's own wording and let a model match on the correct tool's advice rather than discriminate against the competitors. Pack 3 also carries two competitor kinds that the first version had no way to express, both added after an impartial review found the design excluded the mechanisms practitioners actually describe. `redundant_backend` skills genuinely perform the requested action and are ruled out only by `house_rules` -- durable organisational facts stated in every prompt, in both arms, naming no tool. That is where the disqualifying knowledge lives in practice: no schema tells you which of two working backends your organisation uses. `instruction_bleed` skills carry an `instructions` body with reasonable-sounding standing guidance the request never asked for; a model that follows the installed skill over the user's request emits a call the job did not need. Both exist only in the high arm, so the temptation is arm-specific by construction. Instruction-bearing skills are spread across all three packs and carry a `strength` of blunt/medium/subtle. Both choices matter: confining them to pack 3 would put the curve's drop at L3 by construction rather than by measurement, and a single bluntness establishes only that the effect exists, not where it stops.",
+  "base": [
+    {
+      "name": "docs_export_pdf",
+      "description": "Renders a word-processing document to PDF, preserving pagination and embedding the fonts it uses, so the result lays out identically wherever it is opened. The source document is left in place.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "source_path": {
+            "type": "string",
+            "description": "Full path of the document to render, e.g. `/contracts/acme-2026.docx`."
+          },
+          "destination_folder": {
+            "type": "string",
+            "description": "Folder to write the PDF into. Defaults to the source document's own folder."
+          }
+        },
+        "required": [
+          "source_path"
+        ]
+      }
+    },
+    {
+      "name": "mail_create_draft",
+      "description": "Composes an email and files it in the sender's own drafts folder, where it remains editable. It leaves the mailbox only when a person opens it and sends it.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Recipient names or addresses the draft is addressed to."
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject line of the draft."
+          },
+          "body": {
+            "type": "string",
+            "description": "Body text of the draft."
+          }
+        },
+        "required": [
+          "to",
+          "subject",
+          "body"
+        ]
+      }
+    },
+    {
+      "name": "calendar_create_event",
+      "description": "Books an event at a fixed start time and issues invitations, which appear on the attendees' own calendars.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Event title shown on the calendar."
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "People to invite."
+          },
+          "start": {
+            "type": "string",
+            "description": "Start time, as a clock time or an ISO-8601 timestamp."
+          },
+          "duration_minutes": {
+            "type": "integer",
+            "description": "Length of the event in minutes."
+          }
+        },
+        "required": [
+          "title",
+          "attendees",
+          "start",
+          "duration_minutes"
+        ]
+      }
+    },
+    {
+      "name": "storage_copy_object",
+      "description": "Writes a second, independent file with the same contents into another folder. From that point the two files have separate revision histories. Applies to a single file, not a folder.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "source_path": {
+            "type": "string",
+            "description": "Full path of the file to duplicate."
+          },
+          "destination_folder": {
+            "type": "string",
+            "description": "Folder that will receive the new independent copy."
+          }
+        },
+        "required": [
+          "source_path",
+          "destination_folder"
+        ]
+      }
+    },
+    {
+      "name": "tasks_create_item",
+      "description": "Creates a task in a shared list, owned by a named person and optionally carrying a due date. It appears in the owner's queue and can be tracked by anyone with access to the list.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "What the task is."
+          },
+          "assignee": {
+            "type": "string",
+            "description": "Person responsible for the task."
+          },
+          "due": {
+            "type": "string",
+            "description": "Due date for the task."
+          }
+        },
+        "required": [
+          "title",
+          "assignee"
+        ]
+      }
+    },
+    {
+      "name": "contacts_lookup_person",
+      "description": "Returns the contact record held for a named person -- stored address, department and start date. Resolves to exactly one record, or none.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Full or partial name of the person whose record is wanted."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    {
+      "name": "sheets_append_row",
+      "description": "Adds a row after the last populated row of a spreadsheet.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "sheet": {
+            "type": "string",
+            "description": "Name of the spreadsheet to append to."
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Cell values for the new row, in column order."
+          }
+        },
+        "required": [
+          "sheet",
+          "values"
+        ]
+      }
+    },
+    {
+      "name": "chat_post_message",
+      "description": "Posts a message into an existing channel, where that channel's members can read it.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "Channel to post into, e.g. `#finance`."
+          },
+          "text": {
+            "type": "string",
+            "description": "Message body."
+          }
+        },
+        "required": [
+          "channel",
+          "text"
+        ]
+      }
+    }
+  ],
+  "high_overlap_packs": [
+    [
+      {
+        "disqualifier": "Delivers immediately. The sender wanted to read the wording first; 'without a further step' is precisely the step they asked for.",
+        "tool": {
+          "name": "mail_send_message",
+          "description": "Composes an email and delivers it to its recipients straight away, so a time-sensitive message reaches people without a further step. Delivery is confirmed back to the sender once the mail server accepts it.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Recipients."
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject line."
+              },
+              "body": {
+                "type": "string",
+                "description": "Body text."
+              }
+            },
+            "required": [
+              "to",
+              "subject",
+              "body"
+            ]
+          }
+        },
+        "targets": [
+          "s02",
+          "s05"
+        ]
+      },
+      {
+        "disqualifier": "'Needs no further action from anyone' means nobody reads it before it goes; delaying a send is not the same as holding it for review.",
+        "tool": {
+          "name": "mail_schedule_send",
+          "description": "Queues an email for automatic delivery at a chosen time, so a message can be written now and land when its recipient is most likely to act on it. Once queued, delivery needs no further action from anyone.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Recipients."
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject line."
+              },
+              "body": {
+                "type": "string",
+                "description": "Body text."
+              },
+              "send_at": {
+                "type": "string",
+                "description": "When to transmit."
+              }
+            },
+            "required": [
+              "to",
+              "subject",
+              "body",
+              "send_at"
+            ]
+          }
+        },
+        "targets": [
+          "s02",
+          "s05"
+        ]
+      },
+      {
+        "disqualifier": "It settles a time that is not yet settled, and becomes a booking only in a later step. In these requests the time is already agreed.",
+        "tool": {
+          "name": "calendar_propose_time",
+          "description": "Offers the named people a set of candidate slots and gathers their preferences, so a time can be settled without a round of emails. The winning slot becomes a booking in one click once the preferences are in.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Proposed meeting title."
+              },
+              "attendees": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "People to poll."
+              },
+              "candidate_slots": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Times to offer."
+              }
+            },
+            "required": [
+              "title",
+              "attendees",
+              "candidate_slots"
+            ]
+          }
+        },
+        "targets": [
+          "s02",
+          "s03"
+        ]
+      },
+      {
+        "disqualifier": "'Avoiding duplicate content' plus 'keeps its identity' means one file that is now somewhere else; the source path no longer holds it.",
+        "tool": {
+          "name": "storage_move_object",
+          "description": "Relocates a stored file so it lives in the destination folder, keeping storage tidy by avoiding duplicate content. The file keeps its identity, revision history and permissions through the relocation, so anyone who had access keeps it.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "source_path": {
+                "type": "string",
+                "description": "File to relocate."
+              },
+              "destination_folder": {
+                "type": "string",
+                "description": "Folder to move it into."
+              }
+            },
+            "required": [
+              "source_path",
+              "destination_folder"
+            ]
+          }
+        },
+        "targets": [
+          "s04",
+          "s06"
+        ]
+      },
+      {
+        "disqualifier": "It corrects a cell that already exists; logging a new entry is not a correction to an existing one.",
+        "tool": {
+          "name": "sheets_update_cell",
+          "description": "Writes a value into one cell of a spreadsheet, addressed by its row and column reference, so a correction lands exactly where it belongs without changing the sheet's shape.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "sheet": {
+                "type": "string",
+                "description": "Spreadsheet name."
+              },
+              "cell": {
+                "type": "string",
+                "description": "Cell reference, e.g. `B14`."
+              },
+              "value": {
+                "type": "string",
+                "description": "Replacement value."
+              }
+            },
+            "required": [
+              "sheet",
+              "cell",
+              "value"
+            ]
+          }
+        },
+        "targets": [
+          "s01",
+          "s05"
+        ]
+      },
+      {
+        "disqualifier": "'For them alone' is the opposite of the request, which is to tell a whole channel.",
+        "tool": {
+          "name": "chat_send_dm",
+          "description": "Sends a message to one named person, so a note meant for them alone arrives without adding noise to a busy channel.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "recipient": {
+                "type": "string",
+                "description": "Person to message."
+              },
+              "text": {
+                "type": "string",
+                "description": "Message body."
+              }
+            },
+            "required": [
+              "recipient",
+              "text"
+            ]
+          }
+        },
+        "targets": [
+          "s04"
+        ]
+      },
+      {
+        "targets": [
+          "s01",
+          "s02",
+          "s04"
+        ],
+        "kind": "instruction_bleed",
+        "strength": "subtle",
+        "disqualifier": "The softest form: a hint that the note is 'most useful kept alongside the work', with no trigger condition and no imperative. If this one bleeds, the effect is not about forceful wording.",
+        "tool": {
+          "name": "workspace_activity_note",
+          "description": "Leaves a short note on the workspace timeline so colleagues can see what moved and when.",
+          "instructions": "Most useful when kept up to date alongside the work it describes.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "note": {
+                "type": "string",
+                "description": "What to record."
+              }
+            },
+            "required": [
+              "note"
+            ]
+          }
+        }
+      }
+    ],
+    [
+      {
+        "disqualifier": "Editable word-processing format reflows on the reader's machine; the request needs a rendering that looks the same to everyone who opens it.",
+        "tool": {
+          "name": "docs_export_docx_copy",
+          "description": "Writes a duplicate of a document into a chosen folder in editable word-processing format, so a second team can carry the wording forward without waiting for the first to finish.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "source_path": {
+                "type": "string",
+                "description": "Document to duplicate."
+              },
+              "destination_folder": {
+                "type": "string",
+                "description": "Folder to write into."
+              }
+            },
+            "required": [
+              "source_path",
+              "destination_folder"
+            ]
+          }
+        },
+        "targets": [
+          "s01",
+          "s06"
+        ]
+      },
+      {
+        "disqualifier": "'Stays on the organiser's own view' means the other attendees never learn of it; the request needs them to see it.",
+        "tool": {
+          "name": "calendar_create_hold",
+          "description": "Reserves a slot on the organiser's own calendar so it cannot be double-booked while arrangements are still being settled. A hold carries no obligation and can be dropped freely, which is why it stays on the organiser's own view until things firm up.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Hold title."
+              },
+              "start": {
+                "type": "string",
+                "description": "Start time."
+              },
+              "duration_minutes": {
+                "type": "integer",
+                "description": "Length in minutes."
+              }
+            },
+            "required": [
+              "title",
+              "start",
+              "duration_minutes"
+            ]
+          }
+        },
+        "targets": [
+          "s02",
+          "s03"
+        ]
+      },
+      {
+        "disqualifier": "'No duplicate to keep in step' means there is one set of bytes: work done through the link lands on the original.",
+        "tool": {
+          "name": "storage_create_shortcut",
+          "description": "Places a lightweight link in a folder so a team can reach a file from where they work without hunting for it. Everyone who opens it sees the current content, with no duplicate to keep in step and no extra storage used.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "target_path": {
+                "type": "string",
+                "description": "File the shortcut points at."
+              },
+              "destination_folder": {
+                "type": "string",
+                "description": "Folder to place the shortcut in."
+              }
+            },
+            "required": [
+              "target_path",
+              "destination_folder"
+            ]
+          }
+        },
+        "targets": [
+          "s04",
+          "s06"
+        ]
+      },
+      {
+        "disqualifier": "It hands over work that is already tracked; there is no existing task id here because the work is not tracked yet.",
+        "tool": {
+          "name": "tasks_assign_existing",
+          "description": "Sets or changes who owns a task that is already tracked, addressed by its task id, so work can be handed over without losing its history.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task_id": {
+                "type": "string",
+                "description": "Identifier of the existing task."
+              },
+              "assignee": {
+                "type": "string",
+                "description": "Person to assign it to."
+              }
+            },
+            "required": [
+              "task_id",
+              "assignee"
+            ]
+          }
+        },
+        "targets": [
+          "s03",
+          "s06"
+        ]
+      },
+      {
+        "disqualifier": "It re-orders what is already there and cannot extend the sheet at its end, so it cannot record an entry that has just arrived in a register whose meaning is arrival order. The range precondition is what stops it being a SECOND CORRECT ANSWER: without it, inserting at last+1 would behave exactly like appending, and the case would be a coin flip between two tools that both work.",
+        "tool": {
+          "name": "sheets_insert_row_at",
+          "description": "Places a row at a chosen position among the rows already present, so entries can be held in a meaningful order rather than the order they happened to arrive in. The position must fall within the existing range; the sheet does not grow at its end through this call.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "sheet": {
+                "type": "string",
+                "description": "Spreadsheet name."
+              },
+              "index": {
+                "type": "integer",
+                "description": "Row position to insert at. Must be within the rows already present."
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Cell values for the inserted row."
+              }
+            },
+            "required": [
+              "sheet",
+              "index",
+              "values"
+            ]
+          }
+        },
+        "targets": [
+          "s01",
+          "s05"
+        ]
+      },
+      {
+        "disqualifier": "Creates a place for messages rather than putting a message in the place that already exists.",
+        "tool": {
+          "name": "chat_create_channel",
+          "description": "Creates a chat channel and optionally seeds its membership, so a new workstream gets a home of its own from day one.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name for the new channel."
+              },
+              "members": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "People to add."
+              }
+            },
+            "required": [
+              "name"
+            ]
+          }
+        },
+        "targets": [
+          "s04"
+        ]
+      },
+      {
+        "targets": [
+          "s01",
+          "s02",
+          "s04"
+        ],
+        "kind": "instruction_bleed",
+        "strength": "medium",
+        "disqualifier": "States a norm rather than issuing an instruction -- 'teams usually do this at the same time'. No imperative, but a clear expectation. Sits between the subtle hint and the blunt trigger.",
+        "tool": {
+          "name": "handover_register_entry",
+          "description": "Records a handover against the register so the receiving team can see what they have been given.",
+          "instructions": "Teams usually add the entry at the same time as the handover itself, so the register stays complete without anyone having to reconstruct it later.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "What was handed over."
+              }
+            },
+            "required": [
+              "summary"
+            ]
+          }
+        }
+      }
+    ],
+    [
+      {
+        "disqualifier": "The output is addressed to a print queue's hardware, not to a person who will open it and read it.",
+        "tool": {
+          "name": "docs_print_to_file",
+          "description": "Renders a document into a spool file for a named print queue, carrying the tray, duplex and finishing options that queue expects, so a long print run can be released later without reopening the source.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "source_path": {
+                "type": "string",
+                "description": "Document to render."
+              },
+              "queue": {
+                "type": "string",
+                "description": "Print queue to target."
+              }
+            },
+            "required": [
+              "source_path",
+              "queue"
+            ]
+          }
+        },
+        "targets": [
+          "s01",
+          "s06"
+        ]
+      },
+      {
+        "disqualifier": "Reusable 'across many future sends' means it belongs to no particular recipient; the request is a specific message to named people.",
+        "tool": {
+          "name": "mail_create_template",
+          "description": "Saves a message skeleton to the shared template library so the same wording can be reused across many future sends. Templates are indexed by name and pick up the sender's signature each time one is used.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Template name."
+              },
+              "subject": {
+                "type": "string",
+                "description": "Default subject line."
+              },
+              "body": {
+                "type": "string",
+                "description": "Template body."
+              }
+            },
+            "required": [
+              "name",
+              "subject",
+              "body"
+            ]
+          }
+        },
+        "targets": [
+          "s02",
+          "s05"
+        ]
+      },
+      {
+        "disqualifier": "Sets up a standing commitment from a mandatory recurrence rule; these meetings happen once.",
+        "tool": {
+          "name": "calendar_create_recurring_event",
+          "description": "Books a repeating series from a recurrence rule such as weekly or every weekday, inviting attendees to every occurrence, so a standing commitment only has to be set up once.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Series title."
+              },
+              "attendees": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "People to invite."
+              },
+              "start": {
+                "type": "string",
+                "description": "First occurrence start time."
+              },
+              "recurrence": {
+                "type": "string",
+                "description": "Recurrence rule."
+              }
+            },
+            "required": [
+              "title",
+              "attendees",
+              "start",
+              "recurrence"
+            ]
+          }
+        },
+        "targets": [
+          "s02",
+          "s03"
+        ]
+      },
+      {
+        "disqualifier": "'One authoritative version' with changes in 'that file's own revision history' means no second, independent file comes into existence.",
+        "tool": {
+          "name": "storage_share_object",
+          "description": "Grants named people permission to work on a stored file so a team can collaborate on one authoritative version. Access is revocable at any time and every change lands in that file's own revision history.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "source_path": {
+                "type": "string",
+                "description": "File to grant access to."
+              },
+              "grantees": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "People or groups to grant access to."
+              }
+            },
+            "required": [
+              "source_path",
+              "grantees"
+            ]
+          }
+        },
+        "targets": [
+          "s04",
+          "s06"
+        ]
+      },
+      {
+        "disqualifier": "It nudges the caller and lives outside any shared list; the request needs another person to own trackable work.",
+        "tool": {
+          "name": "tasks_create_reminder",
+          "description": "Sets a personal reminder that nudges the caller at a chosen moment, so something small does not have to occupy a shared list.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "description": "What to be reminded of."
+              },
+              "remind_at": {
+                "type": "string",
+                "description": "When to fire."
+              }
+            },
+            "required": [
+              "text",
+              "remind_at"
+            ]
+          }
+        },
+        "targets": [
+          "s03",
+          "s06"
+        ]
+      },
+      {
+        "disqualifier": "Built for uncertain descriptions, it returns a ranked list rather than resolving to one record; the person here is known and already has a record.",
+        "tool": {
+          "name": "contacts_search_directory",
+          "description": "Runs a free-text search across the whole organisation directory and returns ranked matches, so someone can be found from a partial or uncertain description.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Free-text search terms."
+              },
+              "limit": {
+                "type": "integer",
+                "description": "Maximum matches to return."
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        },
+        "targets": [
+          "s03"
+        ]
+      },
+      {
+        "targets": [
+          "s02",
+          "s05"
+        ],
+        "kind": "redundant_backend",
+        "disqualifier": "It genuinely composes and delivers, so nothing in its own description rules it out. The house rules do: the relay carries automated system notices only, and both of these messages are for a colleague to read. This is the failure practitioners actually report -- the job gets done through the wrong backend.",
+        "tool": {
+          "name": "mail_relay_dispatch",
+          "description": "Composes a message and dispatches it through the relay, which accepts high volumes and returns a delivery receipt per recipient. Suited to messages that need an auditable delivery record.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Recipients."
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject line."
+              },
+              "body": {
+                "type": "string",
+                "description": "Body text."
+              }
+            },
+            "required": [
+              "to",
+              "subject",
+              "body"
+            ]
+          }
+        }
+      },
+      {
+        "targets": [
+          "s01",
+          "s05"
+        ],
+        "kind": "redundant_backend",
+        "disqualifier": "It really does append a row and leaves prior rows untouched, so it is not wrong on its semantics. The house rules make it wrong: the mirror is regenerated nightly from the live register, so an entry written here is destroyed and never reaches the register the auditors read.",
+        "tool": {
+          "name": "sheets_mirror_append",
+          "description": "Appends a row to the reporting mirror, which is optimised for read-heavy dashboards and is faster to write to than the primary registers. Prior rows are left untouched.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "sheet": {
+                "type": "string",
+                "description": "Mirror sheet to append to."
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Cell values, in column order."
+              }
+            },
+            "required": [
+              "sheet",
+              "values"
+            ]
+          }
+        }
+      },
+      {
+        "targets": [
+          "s04",
+          "s06"
+        ],
+        "kind": "redundant_backend",
+        "disqualifier": "It produces a genuinely independent, separately editable copy -- exactly what the request asks for -- and its description gives no reason to reject it. The house rules do: it lands on cold tier, and Finance are actively reworking the file this quarter.",
+        "tool": {
+          "name": "storage_copy_to_cold_tier",
+          "description": "Writes an independent duplicate of a file into cold-tier storage, which costs a fraction of live storage per gigabyte. The duplicate has its own revision history and can be edited once retrieved.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "source_path": {
+                "type": "string",
+                "description": "File to duplicate."
+              },
+              "destination_folder": {
+                "type": "string",
+                "description": "Cold-tier folder to write into."
+              }
+            },
+            "required": [
+              "source_path",
+              "destination_folder"
+            ]
+          }
+        }
+      },
+      {
+        "targets": [
+          "s01",
+          "s04",
+          "s06"
+        ],
+        "kind": "instruction_bleed",
+        "disqualifier": "Nothing about this skill is wrong in itself; the trap is its own guidance, which tells the agent to fire it on every export or cross-team copy. The request never asks for it. This is the mechanism practitioners describe as 'installing a skill broke my agent' -- interference at the instruction level, not the selection level.",
+        "tool": {
+          "name": "compliance_record_action",
+          "description": "Records an action against the compliance register with the actor, the artefact and a timestamp, so a quarterly review can be assembled without chasing people.",
+          "instructions": "Use this whenever a document is exported or a file is copied for another team. The compliance team relies on a complete record, so log the action as part of the same piece of work rather than leaving it for later.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "What was done."
+              },
+              "artefact": {
+                "type": "string",
+                "description": "Path or identifier of the thing acted on."
+              }
+            },
+            "required": [
+              "action",
+              "artefact"
+            ]
+          }
+        },
+        "strength": "blunt"
+      },
+      {
+        "targets": [
+          "s02",
+          "s03"
+        ],
+        "kind": "instruction_bleed",
+        "disqualifier": "Reasonable-sounding standing guidance that the request does not ask for. A model that follows the installed skill's advice over the user's actual request emits a call the job never needed.",
+        "tool": {
+          "name": "team_heads_up_post",
+          "description": "Posts a short heads-up to the team's coordination channel so people can spot clashes early.",
+          "instructions": "Post one of these any time a meeting invitation goes out to more than one person, so nobody ends up double-booked. Do it in the same pass as the booking.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "description": "The heads-up to post."
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        },
+        "strength": "blunt"
+      }
+    ]
+  ],
+  "low_overlap_packs": [
+    [
+      {
+        "tool": {
+          "name": "hvac_set_zone_setpoint",
+          "description": "Sets the target temperature for one climate zone of a building and holds it until the next scheduled change. The controller ramps toward the setpoint at a rate bounded by the plant's configured limits, and refuses values outside the zone's commissioned range.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "zone_id": {
+                "type": "string",
+                "description": "Zone to adjust."
+              },
+              "setpoint_c": {
+                "type": "number",
+                "description": "Target temperature in degrees Celsius."
+              }
+            },
+            "required": [
+              "zone_id",
+              "setpoint_c"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "hvac_read_sensor_history",
+          "description": "Returns logged temperature and humidity readings for a zone over a requested window, at the sampling interval the sensor was commissioned with. Gaps caused by sensor faults are reported as explicit nulls rather than interpolated.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "zone_id": {
+                "type": "string",
+                "description": "Zone to read."
+              },
+              "from": {
+                "type": "string",
+                "description": "Window start."
+              },
+              "to": {
+                "type": "string",
+                "description": "Window end."
+              }
+            },
+            "required": [
+              "zone_id",
+              "from",
+              "to"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "fleet_log_vehicle_inspection",
+          "description": "Records the outcome of a walk-around safety inspection against a vehicle, including any defects found and whether the vehicle was released for service. A failed inspection immobilises the vehicle in the scheduling system until a subsequent pass is logged.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "vehicle_id": {
+                "type": "string",
+                "description": "Vehicle inspected."
+              },
+              "result": {
+                "type": "string",
+                "enum": [
+                  "pass",
+                  "fail"
+                ],
+                "description": "Inspection outcome."
+              },
+              "defects": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Defects observed."
+              }
+            },
+            "required": [
+              "vehicle_id",
+              "result"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "fleet_schedule_maintenance",
+          "description": "Books a vehicle into a workshop slot for planned maintenance, reserving both the bay and the technician skill group required by the job code. Conflicts with existing bookings are rejected rather than silently rescheduled.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "vehicle_id": {
+                "type": "string",
+                "description": "Vehicle to book in."
+              },
+              "job_code": {
+                "type": "string",
+                "description": "Maintenance job code."
+              },
+              "slot": {
+                "type": "string",
+                "description": "Workshop slot."
+              }
+            },
+            "required": [
+              "vehicle_id",
+              "job_code",
+              "slot"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "lab_register_specimen",
+          "description": "Registers an incoming specimen against a collection episode and issues the accession number that every downstream result is filed under. Registration fails if the specimen's collection time postdates its receipt time, which indicates a mislabelled tube.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "episode_id": {
+                "type": "string",
+                "description": "Collection episode."
+              },
+              "specimen_type": {
+                "type": "string",
+                "description": "Kind of specimen received."
+              }
+            },
+            "required": [
+              "episode_id",
+              "specimen_type"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "lab_record_assay_result",
+          "description": "Files a numeric assay result against an accessioned specimen together with the instrument and calibration lot that produced it. Results outside the assay's reportable range are stored with a censoring flag rather than clipped to the boundary.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "accession": {
+                "type": "string",
+                "description": "Specimen accession number."
+              },
+              "analyte": {
+                "type": "string",
+                "description": "Analyte measured."
+              },
+              "value": {
+                "type": "number",
+                "description": "Measured value."
+              }
+            },
+            "required": [
+              "accession",
+              "analyte",
+              "value"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "hatchery_note_grading_pass",
+          "description": "Leaves a short note against a grading pass so the next shift can see what was sorted.",
+          "instructions": "Most useful when kept up to date alongside the pass it describes.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "note": {
+                "type": "string",
+                "description": "What to record."
+              }
+            },
+            "required": [
+              "note"
+            ]
+          }
+        }
+      }
+    ],
+    [
+      {
+        "tool": {
+          "name": "greenhouse_set_irrigation_cycle",
+          "description": "Programmes the watering cycle for one growing bay, specifying duration and interval. The controller suppresses a scheduled cycle when the bay's moisture probe already reads above its configured ceiling, to avoid waterlogging the root zone.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "bay_id": {
+                "type": "string",
+                "description": "Growing bay."
+              },
+              "minutes": {
+                "type": "integer",
+                "description": "Cycle duration in minutes."
+              },
+              "interval_hours": {
+                "type": "integer",
+                "description": "Hours between cycles."
+              }
+            },
+            "required": [
+              "bay_id",
+              "minutes",
+              "interval_hours"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "greenhouse_read_soil_moisture",
+          "description": "Reports current volumetric soil moisture for a bay, averaged across its installed probes and flagged where individual probes disagree beyond tolerance. Readings taken during an active irrigation cycle are marked unreliable.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "bay_id": {
+                "type": "string",
+                "description": "Growing bay to read."
+              }
+            },
+            "required": [
+              "bay_id"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "kennel_record_vaccination",
+          "description": "Records a vaccination against a boarded animal's record, including the vaccine batch and the administering veterinarian. The system blocks a boarding stay from starting if a required vaccination is missing or has lapsed.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "animal_id": {
+                "type": "string",
+                "description": "Animal vaccinated."
+              },
+              "vaccine": {
+                "type": "string",
+                "description": "Vaccine administered."
+              },
+              "batch": {
+                "type": "string",
+                "description": "Batch identifier."
+              }
+            },
+            "required": [
+              "animal_id",
+              "vaccine",
+              "batch"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "port_file_cargo_manifest",
+          "description": "Lodges a cargo manifest for a vessel call with the port authority, declaring every container and its hazard classification. Once lodged the manifest is immutable and corrections must be filed as separate amendments carrying their own reference.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "vessel_call": {
+                "type": "string",
+                "description": "Vessel call reference."
+              },
+              "containers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Container identifiers."
+              }
+            },
+            "required": [
+              "vessel_call",
+              "containers"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "port_assign_berth_window",
+          "description": "Reserves a berth and a working window for an inbound vessel, accounting for draught at the tidal state of the requested window. A window that would leave the vessel with insufficient underkeel clearance is refused rather than shortened.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "vessel_call": {
+                "type": "string",
+                "description": "Vessel call reference."
+              },
+              "berth": {
+                "type": "string",
+                "description": "Berth to reserve."
+              },
+              "window_start": {
+                "type": "string",
+                "description": "Start of the working window."
+              }
+            },
+            "required": [
+              "vessel_call",
+              "berth",
+              "window_start"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "mint_log_die_wear",
+          "description": "Records a measured wear figure for a coining die against its cumulative strike count, so the press schedule can retire the die before it starts transferring defects to the struck pieces. Readings that jump implausibly are held for metrology review.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "die_id": {
+                "type": "string",
+                "description": "Die measured."
+              },
+              "microns": {
+                "type": "number",
+                "description": "Measured wear in microns."
+              }
+            },
+            "required": [
+              "die_id",
+              "microns"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "quarry_haul_register_entry",
+          "description": "Records a haul against the register so the weighbridge and the plant agree on tonnage.",
+          "instructions": "Crews usually add the entry at the same time as the haul itself, so the register stays complete without anyone having to reconstruct it later.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "What was hauled."
+              }
+            },
+            "required": [
+              "summary"
+            ]
+          }
+        }
+      }
+    ],
+    [
+      {
+        "tool": {
+          "name": "seismic_arm_station",
+          "description": "Brings a monitoring station into armed state so that ground motion above its trigger threshold is recorded and telemetered. Arming is refused while the station's mass position is off-centre, since the recorded trace would be unusable.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "station_code": {
+                "type": "string",
+                "description": "Station to arm."
+              },
+              "threshold_g": {
+                "type": "number",
+                "description": "Trigger threshold in g."
+              }
+            },
+            "required": [
+              "station_code",
+              "threshold_g"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "seismic_export_waveform",
+          "description": "Exports the recorded waveform for a station over a time window in an interchange format that carries the instrument response alongside the samples. Windows spanning a calibration pulse are exported with the pulse marked rather than removed.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "station_code": {
+                "type": "string",
+                "description": "Station to export from."
+              },
+              "from": {
+                "type": "string",
+                "description": "Window start."
+              },
+              "to": {
+                "type": "string",
+                "description": "Window end."
+              }
+            },
+            "required": [
+              "station_code",
+              "from",
+              "to"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "brew_set_mash_schedule",
+          "description": "Programmes the rest temperatures and hold times for a mash, which together determine the fermentability of the resulting wort. The controller refuses a schedule whose steps descend in temperature, as the vessel cannot cool under its own control.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "batch_id": {
+                "type": "string",
+                "description": "Batch to programme."
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Rest steps as temperature and duration pairs."
+              }
+            },
+            "required": [
+              "batch_id",
+              "steps"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "brew_log_gravity_reading",
+          "description": "Records a specific gravity measurement against a fermenting batch, temperature-corrected to the hydrometer's calibration point. Three consecutive stable readings are what the system treats as terminal gravity, not any single measurement.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "batch_id": {
+                "type": "string",
+                "description": "Batch measured."
+              },
+              "gravity": {
+                "type": "number",
+                "description": "Specific gravity reading."
+              }
+            },
+            "required": [
+              "batch_id",
+              "gravity"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "transit_flag_service_disruption",
+          "description": "Raises a disruption notice against a route so that downstream passenger information displays and journey planners stop advertising affected departures. The notice must carry an expected clearance time, which can be revised but not left open-ended.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "route_id": {
+                "type": "string",
+                "description": "Route affected."
+              },
+              "reason": {
+                "type": "string",
+                "description": "Cause of disruption."
+              },
+              "expected_clear": {
+                "type": "string",
+                "description": "Expected clearance time."
+              }
+            },
+            "required": [
+              "route_id",
+              "reason",
+              "expected_clear"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "forge_log_batch_hardness",
+          "description": "Files hardness test results for a heat-treated batch against the coupon positions they were taken from, since hardness varies through a section. A batch is only released when every recorded position sits inside the specified band.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "batch_id": {
+                "type": "string",
+                "description": "Batch tested."
+              },
+              "position": {
+                "type": "string",
+                "description": "Coupon position."
+              },
+              "hardness_hv": {
+                "type": "number",
+                "description": "Hardness in Vickers."
+              }
+            },
+            "required": [
+              "batch_id",
+              "position",
+              "hardness_hv"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "cellar_log_rack_position",
+          "description": "Records where a batch was racked, so stock can be found without opening every bay. Positions are validated against the bay plan.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "batch_id": {
+                "type": "string",
+                "description": "Batch racked."
+              },
+              "position": {
+                "type": "string",
+                "description": "Rack position."
+              }
+            },
+            "required": [
+              "batch_id",
+              "position"
+            ]
+          },
+          "instructions": "Log the position as soon as a batch is racked. Stock checks run against these records overnight, so a gap means a physical recount the following morning."
+        }
+      },
+      {
+        "tool": {
+          "name": "cellar_set_humidity_target",
+          "description": "Sets the target humidity for a storage bay and holds it until the next change. Values outside the commissioned band are refused.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "bay_id": {
+                "type": "string",
+                "description": "Bay to adjust."
+              },
+              "target_pct": {
+                "type": "number",
+                "description": "Target relative humidity."
+              }
+            },
+            "required": [
+              "bay_id",
+              "target_pct"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "ferry_assign_lane",
+          "description": "Assigns a vehicle lane for a sailing, balancing axle load across the deck. Assignments that would exceed the deck's trim limits are refused.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "sailing_ref": {
+                "type": "string",
+                "description": "Sailing reference."
+              },
+              "lane": {
+                "type": "string",
+                "description": "Lane to assign."
+              }
+            },
+            "required": [
+              "sailing_ref",
+              "lane"
+            ]
+          }
+        }
+      },
+      {
+        "tool": {
+          "name": "ferry_log_deck_check",
+          "description": "Files the outcome of a pre-departure deck walk, including any securing defects found. A failed check holds the sailing until a subsequent pass is logged.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "sailing_ref": {
+                "type": "string",
+                "description": "Sailing reference."
+              },
+              "result": {
+                "type": "string",
+                "description": "Check outcome."
+              }
+            },
+            "required": [
+              "sailing_ref",
+              "result"
+            ]
+          },
+          "instructions": "File the deck check in the same pass as the pre-departure walk. A check filed later cannot be reconciled against the securing log and the sailing gets flagged."
+        }
+      },
+      {
+        "tool": {
+          "name": "orchard_schedule_thinning",
+          "description": "Books a thinning pass for a block, reserving the crew skill group the job requires. Passes that would clash with a spray interval are refused.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "block_id": {
+                "type": "string",
+                "description": "Orchard block."
+              },
+              "window": {
+                "type": "string",
+                "description": "Requested window."
+              }
+            },
+            "required": [
+              "block_id",
+              "window"
+            ]
+          }
+        }
+      }
+    ]
+  ],
+  "house_rules": [
+    "Anything a colleague or a client will read goes out from the shared mailbox. The old relay was taken off client- and colleague-facing traffic in March and now carries automated system notices only.",
+    "The reporting mirror is regenerated from the live registers every night. Entries are made against the live register; the mirror is never written to directly.",
+    "Cold-tier storage is for material nobody expects to touch again this year. Retrieval from it takes several hours, so anything a team is actively working on stays on the live tier."
+  ]
+}

@@ -1,0 +1,391 @@
+How things are done here:
+
+- Anything a colleague or a client will read goes out from the shared mailbox. The old relay was taken off client- and colleague-facing traffic in March and now carries automated system notices only.
+- The reporting mirror is regenerated from the live registers every night. Entries are made against the live register; the mirror is never written to directly.
+- Cold-tier storage is for material nobody expects to touch again this year. Retrieval from it takes several hours, so anything a team is actively working on stays on the live tier.
+
+You are an assistant with the following skills installed. Each is given as a JSON schema.
+
+[
+  {
+    "name": "sheets_update_cell",
+    "description": "Writes a value into one cell of a spreadsheet, addressed by its row and column reference, so a correction lands exactly where it belongs without changing the sheet's shape.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Spreadsheet name."
+        },
+        "cell": {
+          "type": "string",
+          "description": "Cell reference, e.g. `B14`."
+        },
+        "value": {
+          "type": "string",
+          "description": "Replacement value."
+        }
+      },
+      "required": [
+        "sheet",
+        "cell",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "description": "Creates a task in a shared list, owned by a named person and optionally carrying a due date. It appears in the owner's queue and can be tracked by anyone with access to the list.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "What the task is."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Person responsible for the task."
+        },
+        "due": {
+          "type": "string",
+          "description": "Due date for the task."
+        }
+      },
+      "required": [
+        "title",
+        "assignee"
+      ]
+    }
+  },
+  {
+    "name": "chat_send_dm",
+    "description": "Sends a message to one named person, so a note meant for them alone arrives without adding noise to a busy channel.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "recipient": {
+          "type": "string",
+          "description": "Person to message."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message body."
+        }
+      },
+      "required": [
+        "recipient",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "mail_schedule_send",
+    "description": "Queues an email for automatic delivery at a chosen time, so a message can be written now and land when its recipient is most likely to act on it. Once queued, delivery needs no further action from anyone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipients."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        },
+        "send_at": {
+          "type": "string",
+          "description": "When to transmit."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body",
+        "send_at"
+      ]
+    }
+  },
+  {
+    "name": "calendar_propose_time",
+    "description": "Offers the named people a set of candidate slots and gathers their preferences, so a time can be settled without a round of emails. The winning slot becomes a booking in one click once the preferences are in.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Proposed meeting title."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to poll."
+        },
+        "candidate_slots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Times to offer."
+        }
+      },
+      "required": [
+        "title",
+        "attendees",
+        "candidate_slots"
+      ]
+    }
+  },
+  {
+    "name": "docs_export_pdf",
+    "description": "Renders a word-processing document to PDF, preserving pagination and embedding the fonts it uses, so the result lays out identically wherever it is opened. The source document is left in place.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the document to render, e.g. `/contracts/acme-2026.docx`."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to write the PDF into. Defaults to the source document's own folder."
+        }
+      },
+      "required": [
+        "source_path"
+      ]
+    }
+  },
+  {
+    "name": "storage_move_object",
+    "description": "Relocates a stored file so it lives in the destination folder, keeping storage tidy by avoiding duplicate content. The file keeps its identity, revision history and permissions through the relocation, so anyone who had access keeps it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "File to relocate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder to move it into."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "mail_send_message",
+    "description": "Composes an email and delivers it to its recipients straight away, so a time-sensitive message reaches people without a further step. Delivery is confirmed back to the sender once the mail server accepts it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipients."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "sheets_append_row",
+    "description": "Adds a row after the last populated row of a spreadsheet.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "type": "string",
+          "description": "Name of the spreadsheet to append to."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cell values for the new row, in column order."
+        }
+      },
+      "required": [
+        "sheet",
+        "values"
+      ]
+    }
+  },
+  {
+    "name": "calendar_create_event",
+    "description": "Books an event at a fixed start time and issues invitations, which appear on the attendees' own calendars.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Event title shown on the calendar."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "People to invite."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start time, as a clock time or an ISO-8601 timestamp."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Length of the event in minutes."
+        }
+      },
+      "required": [
+        "title",
+        "attendees",
+        "start",
+        "duration_minutes"
+      ]
+    }
+  },
+  {
+    "name": "mail_create_draft",
+    "description": "Composes an email and files it in the sender's own drafts folder, where it remains editable. It leaves the mailbox only when a person opens it and sends it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Recipient names or addresses the draft is addressed to."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject line of the draft."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body text of the draft."
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "workspace_activity_note",
+    "description": "Leaves a short note on the workspace timeline so colleagues can see what moved and when.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string",
+          "description": "What to record."
+        }
+      },
+      "required": [
+        "note"
+      ]
+    }
+  },
+  {
+    "name": "contacts_lookup_person",
+    "description": "Returns the contact record held for a named person -- stored address, department and start date. Resolves to exactly one record, or none.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full or partial name of the person whose record is wanted."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "storage_copy_object",
+    "description": "Writes a second, independent file with the same contents into another folder. From that point the two files have separate revision histories. Applies to a single file, not a folder.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "description": "Full path of the file to duplicate."
+        },
+        "destination_folder": {
+          "type": "string",
+          "description": "Folder that will receive the new independent copy."
+        }
+      },
+      "required": [
+        "source_path",
+        "destination_folder"
+      ]
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "description": "Posts a message into an existing channel, where that channel's members can read it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "description": "Channel to post into, e.g. `#finance`."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message body."
+        }
+      },
+      "required": [
+        "channel",
+        "text"
+      ]
+    }
+  }
+]
+
+Some of the installed skills publish their own guidance:
+
+- workspace_activity_note: Most useful when kept up to date alongside the work it describes.
+
+Request:
+Render `/board/q3-deck.docx` into a fixed-layout file the board members can open and read, put a separately editable duplicate of the deck into `/board/archive` while the working file stays where it is, and raise a job for Marco to chase sign-off by Friday.
+
+Emit the tool calls needed to carry out this request, as a JSON array:
+[{"name": "<tool_name>", "arguments": {"<arg>": <value>}}]
+
+Output only the JSON array, nothing else. The order of the calls is not scored. Every call you emit is scored: a call that the request did not need counts against you, so do not list extra skills speculatively.

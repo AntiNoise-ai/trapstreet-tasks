@@ -1,0 +1,238 @@
+{
+  "_doc": "Hand-authored base scenarios for core_capability_stacking_regression. Each scenario is an office-automation job needing 2-4 tool calls, ALL of which are satisfied by skills in catalog.json's `base` set -- stacking never removes the right answer, it only adds neighbours. `expected_args` lists only the arguments the request objectively determines; every one of them must be marked `required` in the correct tool's own schema, which build_cases.py asserts, so the judge can never penalise an omission the schema did not ask for. `unchecked_required` records the required arguments deliberately NOT checked because their value is free-form prose (a subject line, a message body, a row's cell text) -- verifying prose deterministically needs an LLM judge, which this task avoids. That is a real scoring looseness and it is recorded here rather than hidden. No request text may contain the name of a correct tool; build_cases.py asserts that too. `difficulty` decides whether a scenario can enter the primary test: only `medium` and `hard` do (grader.py PRIMARY_TIERS). The `easy` tier states its disqualifying constraint in the request text and is a harness canary; L0 is already the per-scenario floor check, so the easy tier is kept deliberately small.",
+  "scenarios": [
+    {
+      "id": "s01",
+      "label": "vendor agreement filed for audit",
+      "request": "The Acme agreement at `/contracts/acme-2026.docx` came back signed this morning. The auditors will want to open it next year and see it laid out exactly as we see it now, whatever machine they use. The vendor register also needs the Acme line -- the auditors read that register as a chronological trail of when each agreement landed.",
+      "required_calls": [
+        {
+          "name": "docs_export_pdf",
+          "expected_args": {
+            "source_path": [
+              "/contracts/acme-2026.docx"
+            ]
+          },
+          "unchecked_required": []
+        },
+        {
+          "name": "sheets_append_row",
+          "expected_args": {
+            "sheet": [
+              "vendor register",
+              "vendor_register",
+              "Vendor Register"
+            ]
+          },
+          "unchecked_required": [
+            "values"
+          ]
+        }
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "s02",
+      "label": "design review booked, agenda held back",
+      "request": "Priya and Marco have settled on 10:00 on Thursday for a 30-minute design review, so get that onto their calendars. Put the agenda email to the two of them together as well -- I'm speaking to Priya's team tomorrow and will be adding a couple of items off the back of it, so it needs to sit with me until then.",
+      "required_calls": [
+        {
+          "name": "calendar_create_event",
+          "expected_args": {
+            "attendees": [
+              [
+                "Priya",
+                "Marco"
+              ]
+            ],
+            "start": [
+              "10:00"
+            ],
+            "duration_minutes": [
+              30
+            ]
+          },
+          "unchecked_required": [
+            "title"
+          ]
+        },
+        {
+          "name": "mail_create_draft",
+          "expected_args": {
+            "to": [
+              [
+                "Priya",
+                "Marco"
+              ]
+            ]
+          },
+          "unchecked_required": [
+            "subject",
+            "body"
+          ]
+        }
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "s03",
+      "label": "new starter onboarding",
+      "request": "Dana Whitfield starts Monday. Pull up the record we already hold for her so I can check which department she is in, raise an IT-setup job for Rob to work through, and book a half-hour intro coffee with Dana at 10:00 on Monday.",
+      "required_calls": [
+        {
+          "name": "contacts_lookup_person",
+          "expected_args": {
+            "name": [
+              "Dana Whitfield",
+              "Dana"
+            ]
+          },
+          "unchecked_required": []
+        },
+        {
+          "name": "tasks_create_item",
+          "expected_args": {
+            "assignee": [
+              "Rob"
+            ]
+          },
+          "unchecked_required": [
+            "title"
+          ]
+        },
+        {
+          "name": "calendar_create_event",
+          "expected_args": {
+            "attendees": [
+              [
+                "Dana"
+              ],
+              [
+                "Dana Whitfield"
+              ]
+            ],
+            "start": [
+              "10:00"
+            ],
+            "duration_minutes": [
+              30
+            ]
+          },
+          "unchecked_required": [
+            "title"
+          ]
+        }
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "s04",
+      "label": "finance gets its own copy",
+      "request": "Finance are taking over the renewals model at `/planning/renewals-model.xlsx` and will be reworking it heavily between now and year end, out of their own `/finance` folder. Whatever they end up working on, `/planning` has to keep reading exactly as it does today, because that is what the year-end review gets checked against. Let `#finance` know once it is there for them.",
+      "required_calls": [
+        {
+          "name": "storage_copy_object",
+          "expected_args": {
+            "source_path": [
+              "/planning/renewals-model.xlsx"
+            ],
+            "destination_folder": [
+              "/finance",
+              "finance"
+            ]
+          },
+          "unchecked_required": []
+        },
+        {
+          "name": "chat_post_message",
+          "expected_args": {
+            "channel": [
+              "#finance",
+              "finance"
+            ]
+          },
+          "unchecked_required": [
+            "text"
+          ]
+        }
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "s05",
+      "label": "expense logged, reimbursement held back",
+      "request": "\u00a348.20 went on the client lunch on Tuesday. Add it to the expenses log as a new entry without touching the entries already there, and write the reimbursement request to Aisha \u2014 keep it in my mailbox, I want to check the wording before it reaches her.",
+      "required_calls": [
+        {
+          "name": "sheets_append_row",
+          "expected_args": {
+            "sheet": [
+              "expenses log",
+              "expenses",
+              "expenses_log"
+            ]
+          },
+          "unchecked_required": [
+            "values"
+          ]
+        },
+        {
+          "name": "mail_create_draft",
+          "expected_args": {
+            "to": [
+              [
+                "Aisha"
+              ]
+            ]
+          },
+          "unchecked_required": [
+            "subject",
+            "body"
+          ]
+        }
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "s06",
+      "label": "board deck circulated and archived",
+      "request": "Render `/board/q3-deck.docx` into a fixed-layout file the board members can open and read, put a separately editable duplicate of the deck into `/board/archive` while the working file stays where it is, and raise a job for Marco to chase sign-off by Friday.",
+      "required_calls": [
+        {
+          "name": "docs_export_pdf",
+          "expected_args": {
+            "source_path": [
+              "/board/q3-deck.docx"
+            ]
+          },
+          "unchecked_required": []
+        },
+        {
+          "name": "storage_copy_object",
+          "expected_args": {
+            "source_path": [
+              "/board/q3-deck.docx"
+            ],
+            "destination_folder": [
+              "/board/archive",
+              "archive"
+            ]
+          },
+          "unchecked_required": []
+        },
+        {
+          "name": "tasks_create_item",
+          "expected_args": {
+            "assignee": [
+              "Marco"
+            ]
+          },
+          "unchecked_required": [
+            "title"
+          ]
+        }
+      ],
+      "difficulty": "easy"
+    }
+  ]
+}
