@@ -23,9 +23,11 @@ Failure reasons separate four mechanisms that all look like "score went down":
 substituting a confusable neighbour (`near_miss`), doing the job through a
 redundant but organisationally wrong backend (`wrong_backend`), obeying an
 installed skill's standing guidance the request never asked for
-(`instruction_bleed`), and volunteering an extra call unprompted
-(`unsolicited_addition`). They need different fixes, and only the first is
-semantic confusion at selection time.
+(`instruction_bleed`), and volunteering an extra call unprompted --
+`unsolicited_addition` when the surplus skill was newly installed,
+`over_eager` when it was in the base set all along and therefore present in
+both arms. They need different fixes, and only the first is semantic confusion
+at selection time.
 
 Order is not scored. Argument matching is deliberately generous and is reused
 verbatim from core_tool_selection_at_scale, where it already absorbed three
@@ -203,6 +205,7 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
         "stack_level": expected.get("stack_level"),
         "overlap_class": expected.get("overlap_class"),
         "n_skills": expected.get("n_skills"),
+        "n_competitors": expected.get("n_competitors"),
         "n_required": len(required),
     }
 
@@ -279,6 +282,11 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
         failure_reason = "unrelated_tool"
     elif any(n in {r["name"] for r in required} for n in extra):
         failure_reason = "bad_arguments"
+    elif completion == 1.0 and extra:
+        # Every required call arrived and the surplus is base skills, present in
+        # both arms. Arm-neutral over-eagerness: real, worth counting, but it
+        # cannot produce the arm difference that instruction_bleed does.
+        failure_reason = "over_eager"
     else:
         failure_reason = "incomplete"
 

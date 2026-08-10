@@ -312,3 +312,30 @@ def test_a_confusable_neighbour_is_still_a_near_miss_not_a_backend_error():
         {"name": "chat_post_message", "arguments": {"channel": "#finance", "text": "done"}},
     ])
     assert judge.score_case(swapped, expected_for(S04_L3_HIGH))["failure_reason"] == "near_miss"
+
+
+def test_competitor_dose_reaches_the_metrics_dict():
+    """grader.py's dose plot reads `n_competitors` off the judge's output. It
+    was absent for several revisions, so `by_competitor_dose` came back empty
+    on a full matrix run -- a diagnostic reporting nothing reads as no signal,
+    which is worse than having no diagnostic."""
+    m = judge.score_case("[]", expected_for(S04_L3_HIGH))
+    assert m["n_competitors"] is not None and m["n_competitors"] > 0
+
+
+def test_volunteering_a_base_skill_is_over_eager_not_incomplete():
+    """completion == 1.0 with surplus calls is never 'incomplete'. Surplus base
+    skills had no label and fell through to the wrong one. They need their own:
+    base skills sit in both arms, so that surplus is arm-neutral and cannot
+    produce the arm difference instruction_bleed does."""
+    eager = json.loads(GOLD_S04) + [
+        {"name": "contacts_lookup_person", "arguments": {"name": "someone"}},
+    ]
+    m = judge.score_case(json.dumps(eager), expected_for(S04_L3_HIGH))
+    assert m["completion"] == 1.0
+    assert m["failure_reason"] == "over_eager"
+
+
+def test_incomplete_still_fires_when_a_call_is_actually_missing():
+    m = judge.score_case(json.dumps([json.loads(GOLD_S04)[0]]), expected_for(S04_L3_HIGH))
+    assert m["completion"] < 1.0 and m["failure_reason"] == "incomplete"

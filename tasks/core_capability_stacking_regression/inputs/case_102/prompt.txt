@@ -406,7 +406,7 @@ Some of the installed skills publish their own guidance:
 - weir_post_gate_bulletin: Crews usually post one of these when a setting changes, so downstream sites are not caught out.
 
 Request:
-The auditors' copy of the Acme agreement went into `/audit/2026` last week and is sitting there fine. What never happened is the register line -- add it, and put a job on Marco to check the two against each other by Friday.
+The auditors' copy of the Acme agreement went into `/audit/2026` last week and is sitting there fine. What never happened is the vendor register line -- add it, and put a job on Marco to check the two against each other by Friday.
 
 Emit the tool calls needed to carry out this request, as a JSON array:
 [{"name": "<tool_name>", "arguments": {"<arg>": <value>}}]

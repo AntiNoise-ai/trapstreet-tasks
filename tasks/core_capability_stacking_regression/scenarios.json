@@ -119,7 +119,7 @@
       "id": "s12",
       "label": "edge: the export that already happened",
       "difficulty": "edge",
-      "request": "The auditors' copy of the Acme agreement went into `/audit/2026` last week and is sitting there fine. What never happened is the register line -- add it, and put a job on Marco to check the two against each other by Friday.",
+      "request": "The auditors' copy of the Acme agreement went into `/audit/2026` last week and is sitting there fine. What never happened is the vendor register line -- add it, and put a job on Marco to check the two against each other by Friday.",
       "required_calls": [
         {"name": "sheets_append_row", "expected_args": {"sheet": ["vendor register", "vendor_register", "Vendor Register"]}, "unchecked_required": ["values"]},
         {"name": "tasks_create_item", "expected_args": {"assignee": ["Marco"]}, "unchecked_required": ["title"]}

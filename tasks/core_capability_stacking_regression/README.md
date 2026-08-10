@@ -5,79 +5,37 @@ already handled correctly — and if it stops, is that because there are *more*
 skills, or because some of the new ones are *hard to tell apart* from the ones
 it needed?
 
-**Status: v2 instrument built and calibrated. It separates — and by a mechanism
-the circulating claim does not name.**
+**Status: complete instrument, full matrix run — and the pre-registered primary
+test did not clear its threshold.**
 
-The design went through two calibrations, both recorded in `CALIBRATION.md`.
+```
+PRIMARY    permutation over L1-L3, n=9 scenarios    p = 0.0625    does not clear 0.05
+secondary  sign test at L3 only                     p = 0.0039
+```
 
-**v1 failed its own pre-registered band.** `claude-haiku-4-5` scored 1.0 on all
-15 probe cases, including 126 skills with 4–6 direct competitors per scenario.
-0 of 3 scenarios separated against a rule requiring 2. The closed-book probe
-passed cleanly (0 of 6 exact tool-name hits with no catalog), so the baseline
-was earned rather than guessed, and nothing was unfair at L0. The rule's stated
-consequence was applied: the remaining scenarios stayed unwritten.
+The two disagree, the primary is the claim, and `RESULTS.md` reports 0.0625
+rather than the number that looks better. Seven of nine scenarios run in the
+hypothesised direction; two run against it.
 
-**The instrument was changed rather than the case count.** An impartial review
-found that v1 tested one mechanism — semantic confusion at selection time —
-while excluding the two that practitioners more plausibly experience. v2 adds
-both, and both are gradeable with no tracing:
+What the matrix does establish, at twelve scenarios rather than the three the
+earlier probes used:
 
-- **`house_rules`** — durable organisational facts stated in every prompt, in
-  both arms, naming no tool. They are what rules out the **redundant-backend**
-  competitors: skills that genuinely perform the requested action and are wrong
-  only because of how this organisation works. No schema states that, which is
-  exactly the situation in a real stack with two working mail integrations or
-  two issue trackers.
-- **Instruction-bearing skill cards** — some installed skills publish standing
-  guidance ("log this whenever a file is copied for another team"). Reasonable
-  advice the request never asked for. A model that follows the installed skill
-  over the user emits a call the job did not need. This is **instruction
-  bleed**, and it is what "installing a skill broke my agent" usually means.
+- **Instruction bleed is the largest single mechanism** (13 of 40 failures), but
+  it is *not* the only one — semantic confusion is a comparable contributor
+  (`near_miss` 11). The sharper claim the three-scenario probes appeared to
+  support does not survive twelve.
+- **Instruction strength is graded, not flat.** Blunt guidance bled 13 times,
+  medium 8, subtle 3. All three still bleed, so the effect does not need
+  forceful wording — but it is clearly modulated by it, which n=3 could not
+  resolve.
+- **The overlap arm scores below the control arm overall** (0.755 vs 0.881), with
+  a baseline of 0.914.
 
-Both arms carry the same number of instruction-bearing skills, so the guidance
-block cannot make one arm's prompt longer. The L4 filler was rebuilt too: v1
-generated it from a single 4-verb template lattice a reader could dismiss as one
-pattern, so "126 skills" overstated the load. It now spans five naming
-conventions and description lengths from 16 to 303 characters.
-
-**v2 separates 3 of 3 scenarios, at both L3 and L4.** Every failure was
-`instruction_bleed`: completion 1.0, one surplus call, always the skill whose
-own guidance told the agent to fire it. `near_miss` fired zero times and
-`wrong_backend` zero times — the model resisted every redundant backend and
-never confused two skills.
-
-A follow-up probe spread the instruction-bearing skills across all three packs
-(so the drop could not sit at L3 by construction) and gave them a strength
-gradient. **All three strengths bleed — including a card whose entire guidance
-is "Most useful when kept up to date alongside the work it describes",** with no
-trigger condition and no imperative. The effect is not about forceful phrasing;
-the presence of standing guidance is enough. That probe also produced the first
-`near_miss` seen in any calibration here, so the honest form is *semantic
-confusion is rare, instruction bleed is routine* — 1 against 5.
-
-**The dose-response curve is not established, and repeats showed why it was not
-a sampling problem.** Three passes per cell returned an identical score in 19 of
-21 cells, so the non-monotone per-scenario series were stable, not noisy. The
-actual fault was in the composer: it shuffled the assembled tool list with a
-seed including the level, and a shuffle's permutation depends on list length, so
-every level reordered everything — position was controlled *between the arms*
-and uncontrolled *across levels*, which is the axis the curve is read along.
-Ordering is now a stable per-tool sort, so a level only interleaves and never
-rearranges, and both properties are asserted.
-
-Re-measuring after that fix changed real outcomes — the one `near_miss` ever
-observed here vanished, having been a position artifact — which establishes that
-*where* a skill sits moves results about as much as *which* skills are present.
-The curve is still not monotone. With sampling noise and the position confound
-both eliminated by measurement, the remaining explanation is that **three
-scenarios is too coarse**: each cell is near-binary, so one scenario flipping
-moves a level mean by 0.07–0.11. That is the earned case for authoring the
-remaining nine. See `CALIBRATION.md`.
-
-The short version of what two instruments now show: **the mechanism the
-circulating claim travels with produced almost nothing across 300 tools and 131
-skills; the mechanism nobody names fires routinely, at any instruction
-strength.**
+`CALIBRATION.md` records how the instrument got here, including the version that
+could not fail and the two design faults found by measurement. Read it before
+trusting any of the above: v1 scored 15/15 and had to be rebuilt, and both the
+position confound and the dead dose plot were found by running rather than by
+reasoning.
 
 ## Why this task exists in this form
 
