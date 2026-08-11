@@ -3,6 +3,8 @@
 When an agent has more skills installed, does it still do the jobs it already
 did correctly?
 
+## What this measures
+
 The circulating claim is that adding skills degrades 30–50% of previously
 working tasks. `core_tool_selection_at_scale` tested the obvious version of it —
 catalog size, up to 300 tools — and it did not reproduce. So this task holds
@@ -10,10 +12,11 @@ count fixed and manipulates the variable the claim's proponents actually
 describe: **interference between skills that functionally overlap**, as distinct
 from skills that merely coexist.
 
-Every case exists twice. Same scenario, same required calls, same number of
+**Every case exists twice.** Same scenario, same required calls, same number of
 skills added — the arms differ only in whether the added skills compete with the
 ones the job needs. The low-overlap arm is the control, and it is what makes a
-drop attributable to overlap rather than to catalog size.
+drop attributable to overlap rather than to catalog size. Without it, a drop is
+just as easily explained by the catalog having grown.
 
 ## Case structure
 
