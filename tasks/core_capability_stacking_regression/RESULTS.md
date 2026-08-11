@@ -181,7 +181,14 @@ Two models, one domain, twelve scenarios, one pass per cell, no L4. Run 2's
 tiers are within 0.04 of each other, so the labels track intended discrimination
 rather than measured difficulty and should not be read as calibrated levels.
 
-Two gaps worth naming rather than defending. **One domain** — office automation
+**Every arm gap on this page is an upper bound on the overlap effect, not an
+estimate of it.** The control arm adds distant-domain skills — HVAC, fleet, lab,
+apiary — so it holds catalog size fixed but not domain proximity. Two things
+vary between the arms at once, and nothing here separates them. The arm that
+would isolate overlap is same-domain-but-non-competing, and it is not built. See
+the control-arm limitation in the README.
+
+Two further gaps worth naming rather than defending. **One domain** — office automation
 only; nothing here shows the effect generalises to other tool ecosystems. And
 **the arm gap is bounded by scenario length**: one surplus call against two
 required calls is a 0.2 hit by construction, so the absolute size of the effect

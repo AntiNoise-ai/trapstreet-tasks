@@ -27,7 +27,8 @@ been added yet, so both arms are identical there and share one case.
 | `overlap_class` | `high` / `low` | whether the added skills compete with what the job needs |
 | `difficulty` | `easy` / `medium` / `hard` / `edge` | which scenarios enter the primary test — 9 primary (medium/hard), 1 easy canary, 2 edge |
 
-Three invariants make a result attributable, all asserted in `tests/`:
+Three invariants make a result attributable, all asserted in `tests/` — but read
+the control-arm limitation below before treating a measured gap as pure overlap:
 
 - **The arms are the same size at every level.** Both add 6 skills per pack; at
   L4 both receive the same 100 fillers.
@@ -108,6 +109,16 @@ merely in prose.
 
 ## Known limitations
 
+- **The control arm does not isolate overlap.** It adds distant-domain skills —
+  HVAC setpoints, fleet inspections, lab specimens, apiary jobs — so the contrast
+  is really *same-domain-and-competing vs distant-domain-and-irrelevant*. Two
+  things vary at once: how many competitors are present, and whether the added
+  skills are in the request's domain at all. A model rules out an apiary tool at
+  a glance, so the control is the loosest one available and the measured gap
+  includes a domain-proximity component of unknown size. The arm that would
+  isolate overlap is same-domain-but-non-competing — office tools that need a
+  real read to exclude — and it is not built. Treat the gap as an upper bound on
+  the overlap effect, not an estimate of it.
 - **One domain.** Twelve scenarios of office administration.
 - **The stack is composed, not installed.** Skills are presented as schemas in
   the prompt rather than loaded through a real runtime, so this measures
