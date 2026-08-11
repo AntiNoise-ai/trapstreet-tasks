@@ -192,6 +192,37 @@ def call_satisfies(call: dict, required: dict) -> bool:
     )
 
 
+def pair_labels(expected: dict) -> dict[str, Any]:
+    """Keys that let a reader find a case's twin.
+
+    A case here means nothing on its own: `case_06` scoring 0.667 is only
+    interpretable next to `case_07`, which is the same scenario at the same
+    level with non-competing skills added instead. Run pages list cases flat
+    and default to hiding the ones that scored 1.0 -- and in this task the
+    control arm is 83% perfect, so that default deletes exactly the half that
+    supplies the meaning. Someone reading a run then sees a pile of unexplained
+    failures.
+
+    `pair` is identical on both members so they can be matched by eye or
+    grouped by a renderer; `arm` says which side this one is and how much
+    overlap it actually carried, without digging through the other fields.
+    """
+    scenario, level = expected.get("scenario"), expected.get("stack_level")
+    arm, dose = expected.get("overlap_class"), expected.get("n_competitors")
+
+    if arm == "none":
+        label = "baseline · nothing added"
+    elif dose is None:
+        label = str(arm)
+    else:
+        label = f"{arm} · {dose} competitor{'' if dose == 1 else 's'}"
+
+    return {
+        "pair": f"{scenario}/{level}" if scenario and level else None,
+        "arm": label,
+    }
+
+
 def score_case(stdout: str, expected: dict) -> dict[str, Any]:
     required = expected.get("required_calls") or []
     added = set(expected.get("added_names") or [])
@@ -201,6 +232,7 @@ def score_case(stdout: str, expected: dict) -> dict[str, Any]:
     backend = set(expected.get("backend_names") or [])
     competes_with = expected.get("competes_with") or {}
     shared: dict[str, Any] = {
+        **pair_labels(expected),
         "scenario": expected.get("scenario"),
         "difficulty": expected.get("difficulty"),
         "stack_level": expected.get("stack_level"),
@@ -325,6 +357,7 @@ def main() -> None:
     expected = json.loads((Path(m["expected_dir"]) / "answer.json").read_text())
 
     shared = {
+        **pair_labels(expected),
         "scenario": expected.get("scenario"),
         "difficulty": expected.get("difficulty"),
         "stack_level": expected.get("stack_level"),

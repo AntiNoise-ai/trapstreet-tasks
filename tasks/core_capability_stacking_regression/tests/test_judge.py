@@ -390,3 +390,30 @@ def test_every_substituting_competitor_can_form_a_pair():
         m = judge.score_case(json.dumps([{"name": name, "arguments": {}}]), exp)
         if base in m["missing_calls"]:
             assert [base, name] in m["interfering_pairs"], f"{name} -> {base}"
+
+
+def test_matched_cases_share_a_pair_key_and_differ_by_arm():
+    """The two halves of a comparison must be findable from the metrics alone.
+
+    Run pages list cases flat and default to hiding the perfect ones, and the
+    control arm here is mostly perfect -- so without a key that survives into
+    the metrics, a reader sees orphaned failures with nothing to compare them
+    against. `pair` has to match across the arms and `arm` has to distinguish
+    them, or the grouping this exists for silently stops working.
+    """
+    for scenario, level in [("s04", "L3"), ("s01", "L1"), ("s08", "L2")]:
+        hi = judge.pair_labels(expected_for(case_id_for(scenario, level, "high")))
+        lo = judge.pair_labels(expected_for(case_id_for(scenario, level, "low")))
+        assert hi["pair"] == lo["pair"] == f"{scenario}/{level}"
+        assert hi["arm"] != lo["arm"]
+        assert hi["arm"].startswith("high") and lo["arm"].startswith("low")
+
+
+def test_pair_key_reaches_the_metrics_a_run_actually_reports():
+    """pair_labels() being right is not enough -- score_case has two exit
+    paths that build their own dicts, and a key added to one and not the other
+    is invisible exactly on the cases that failed."""
+    exp = expected_for(S04_L3_HIGH)
+    m = judge.score_case(GOLD_S04, exp)
+    assert m["pair"] == "s04/L3"
+    assert m["arm"].startswith("high")
