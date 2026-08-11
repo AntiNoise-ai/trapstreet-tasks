@@ -80,19 +80,31 @@ Each shortfall is classified: `near_miss`, `wrong_backend`, `instruction_bleed`,
 
 ### Reading the numbers
 
-**The headline `score` is the wrong column for this task.** Roughly 43% of the
-cases are the control arm — designed to stay flat — and another ~12% is the
-shared L0 baseline, so only about 43% carries the manipulation. Two models can
-tie on `score` while differing on the thing the task measures; that is exactly
-what happened in `RESULTS.md`, where the two runs land within 0.006 of each
-other on `score` and 0.023 apart on the high-overlap arm.
+**`score` is a compressed proxy, not the measurement.** Roughly 43% of the cases
+are the control arm — designed to stay flat — and another ~12% is the shared L0
+baseline, so only about 43% carries the manipulation. It moves in the right
+direction: a solution that fully removed the overlap penalty would lift `score`
+by about 0.065. But it moves at roughly 43% of the amplitude of the thing it is
+tracking, and two runs can land within 0.006 of each other on `score` while
+sitting 0.023 apart on the high-overlap arm — which is what happened in
+`RESULTS.md`. Read the rank as a rough ordering and the fields below as the
+result.
 
-The readout is `by_overlap_class` (the arm split), `curve_high_overlap` +
-`curve_high_drops` (the dose response, with the low arm as control), and
-`primary_test` — a sign-flip permutation on per-scenario mean(low − high) over
-L1–L3, restricted in code to the medium/hard tiers. `grader.py` also reports
-`by_failure_reason`, `bled_by_instruction_strength`, `by_competitor_dose` and
-`by_skill_pair`.
+Four flat scalars carry the actual outcome, so they show up on a run page
+without digging:
+
+| field | what it is |
+|---|---|
+| `high_overlap_score` | mean under competing skills — the condition being tested |
+| `low_overlap_score` | mean under the control arm |
+| `arm_gap` | `low − high`; an upper bound on the overlap penalty, see limitations |
+| `primary_p` | sign-flip permutation on per-scenario mean(low − high) over L1–L3, medium/hard tiers only |
+
+The same values live in `by_overlap_class` and `primary_test`, which stay
+authoritative for anything reading this programmatically. `grader.py` also
+reports `curve_high_overlap` + `curve_high_drops` (the dose response, with the
+low arm as control), `by_failure_reason`, `bled_by_instruction_strength`,
+`by_competitor_dose` and `by_skill_pair`.
 
 `n_solution_error`, `score_excluding_solution_errors` and
 `solution_errors_by_stack_level` sit beside the headline because provider errors

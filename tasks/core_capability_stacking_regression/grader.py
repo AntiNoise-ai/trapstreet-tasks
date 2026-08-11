@@ -288,6 +288,16 @@ def main() -> None:
     ]
     cost_usd_total = round(sum(case_costs), 4) if case_costs else None
 
+    # The four numbers a reader should see first, lifted out of the nested
+    # objects they also live in. The platform's run page renders a nested value
+    # as `[object Object]`, so anything that only exists inside `primary_test`
+    # or `by_overlap_class` is invisible there. These are duplicates, not a
+    # second source of truth -- the nested versions stay authoritative for
+    # anything consuming this programmatically.
+    arm_high = round(mean(by_arm["high"]), 4) if by_arm.get("high") else None
+    arm_low = round(mean(by_arm["low"]), 4) if by_arm.get("low") else None
+    arm_gap = round(arm_low - arm_high, 4) if arm_high is not None and arm_low is not None else None
+
     print(json.dumps({
         "passed": bool(scored) and accuracy >= PASS_THRESHOLD,
         "score": round(accuracy, 3),
@@ -296,6 +306,12 @@ def main() -> None:
         "n_scored": len(scored),
         "n_skipped_no_gold": len(skipped),
         "threshold": PASS_THRESHOLD,
+
+        # Flat duplicates so the run page can show them -- see above.
+        "primary_p": round(primary_p, 4),
+        "arm_gap": arm_gap,
+        "high_overlap_score": arm_high,
+        "low_overlap_score": arm_low,
 
         "completion_mean": round(mean([c["metrics"].get("completion", 0.0) for c in scored]), 4),
         "correctness_mean": round(mean([c["metrics"].get("correctness", 0.0) for c in scored]), 4),
