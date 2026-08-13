@@ -252,11 +252,10 @@ extraction (CUAD), agent tool use (BFCL v4), PDF pricing extraction.
 [`archive/cuad`](./archive/cuad) — the full 32-case CUAD task (SEC EDGAR contracts,
 CC BY 4.0). Deregistered from trapstreet.run; kept complete for reference.
 
-Plus [`archive/financebench`](./archive/financebench) — a complete 5-case task, archived
-because FinanceBench is **CC BY-NC 4.0** (NonCommercial), which
-[`tasks/imported/README.md`](./tasks/imported/README.md) excludes by policy. Never
-registered on trapstreet.run. To use this material, author original questions over the same
-public SEC 10-K filings instead.
+A FinanceBench task was removed rather than archived: its source data is **CC BY-NC 4.0**
+(NonCommercial), which [`tasks/imported/README.md`](./tasks/imported/README.md) excludes by
+policy. To measure on that material, author original questions over the same public SEC 10-K
+filings.
 
 ---
 
