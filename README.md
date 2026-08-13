@@ -241,23 +241,6 @@ is a platform-side change (task visibility), not a repo change.
 
 ---
 
-## Archive
-
-[`archive/`](./archive) is kept for reference and not maintained.
-
-Six early explorations, documentation only — no runnable cases: article summarization
-(CNN/DailyMail), everyday Q&A (TriviaQA), finance Q&A (FinanceBench), legal clause
-extraction (CUAD), agent tool use (BFCL v4), PDF pricing extraction.
-
-[`archive/cuad`](./archive/cuad) — the full 32-case CUAD task (SEC EDGAR contracts,
-CC BY 4.0). Deregistered from trapstreet.run; kept complete for reference.
-
-A FinanceBench task was removed rather than archived: its source data is **CC BY-NC 4.0**
-(NonCommercial), which [`tasks/imported/README.md`](./tasks/imported/README.md) excludes by
-policy. To measure on that material, author original questions over the same public SEC 10-K
-filings.
-
----
 
 ## Writing a task
 
