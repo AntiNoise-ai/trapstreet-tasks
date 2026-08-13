@@ -1,5 +1,0 @@
-invoice_id,subscription_id,period,baked_customer_name,baked_plan_name,baked_addon_names,baked_base_price_usd,baked_addon_total_usd,baked_discount_applied_usd,baked_tax_usd,baked_total_usd,status
-INV-2001,SUB-001,2024-01,Acme Corp,Growth Monthly,,99.0,0,9.9,7.57,96.67,paid
-INV-2002,SUB-001,2024-03,Acme Corp,Growth Monthly,,99.0,0,9.9,7.57,96.67,paid
-INV-2003,SUB-005,2024-01,Soylent Co,Growth Monthly,API Access,99.0,19.0,50.0,5.44,73.44,paid
-INV-2004,SUB-005,2024-03,Soylent Co,Growth Monthly,API Access,99.0,19.0,50.0,5.44,73.44,paid

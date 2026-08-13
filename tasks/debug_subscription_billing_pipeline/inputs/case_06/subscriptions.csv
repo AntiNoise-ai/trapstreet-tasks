@@ -1,2 +1,0 @@
-subscription_id,customer_id,plan_id,addon_ids,discount_code,status,start_date
-SUB-003,CUST-003,PLAN-STARTER,,,active,2023-06-01

@@ -1,5 +1,0 @@
-plan_id,plan_name,tier_id,base_price_usd
-PLAN-STARTER,Starter Monthly,TIER-STARTER,29.0
-PLAN-GROWTH,Growth Monthly,TIER-GROWTH,99.0
-PLAN-SCALE,Scale Monthly,TIER-SCALE,299.0
-PLAN-ENTERPRISE,Enterprise Monthly,TIER-ENTERPRISE,899.0

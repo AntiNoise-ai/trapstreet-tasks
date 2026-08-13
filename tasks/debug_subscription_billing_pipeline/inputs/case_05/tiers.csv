@@ -1,5 +1,0 @@
-tier_id,tier_name,seat_limit
-TIER-STARTER,Starter,5
-TIER-GROWTH,Growth,25
-TIER-SCALE,Scale,100
-TIER-ENTERPRISE,Enterprise,1000

@@ -1,6 +1,0 @@
-region_id,region_name,tax_rate_pct
-REG-CA,California,8.5
-REG-TX,Texas,0.0
-REG-NY,New York,8.0
-REG-UK,United Kingdom,20.0
-REG-DE,Germany,19.0

@@ -82,8 +82,6 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_needle_in_haystack
   core-pdf-ocr:
     source: git+https://github.com/trapstreet/trapstreet-tasks@8bee00aaf0dfad72979aca8b39c87183b01cd5c7#subdirectory=tasks/core_pdf_ocr
-  debug-subscription-billing-pipeline:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@4d7400a7e5c9ace5b4db3f9d6c89b73777419dbc#subdirectory=tasks/debug_subscription_billing_pipeline
   debug-vendor-payout-pipeline:
     source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/debug_vendor_payout_pipeline
   do-llms-dream-of-intj:
@@ -98,8 +96,6 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/pdf_reader
   pdf-reader-v2:
     source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
-  pdf-tables:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@f17b9b41456031b187bd57d8234047bd92e65b84#subdirectory=tasks/pdf_tables
   python-bugfix-diff:
     source: git+https://github.com/trapstreet/trapstreet-tasks@93d6ef239e640d3faaf92fafa4c6b0c251ad00cb#subdirectory=tasks/code_review_skill/python_bugfix_diff
 ```
@@ -123,16 +119,12 @@ Registered, public, submittable. Case counts are from the pinned commit.
 | `core-json-schema-output` | Following a function-call schema | 20 | [`tasks/core_json_schema_output`](./tasks/core_json_schema_output) |
 | `core-needle-in-haystack` | Finding one fact in a long document | 15 | [`tasks/core_needle_in_haystack`](./tasks/core_needle_in_haystack) |
 | `core-pdf-ocr` | Reading a scanned PDF | 20 | [`tasks/core_pdf_ocr`](./tasks/core_pdf_ocr) |
-| `debug-subscription-billing-pipeline` | Multi-report consistency debugging | 6 | [`tasks/debug_subscription_billing_pipeline`](./tasks/debug_subscription_billing_pipeline) |
-| `debug-vendor-payout-pipeline` | Debugging a vendor payout pipeline — few cases, hard | 4 | [`tasks/debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline) |
 | `do-llms-dream-of-intj` | 32-question Likert questionnaire, self-reported | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
 | `influencer-marketing-disclosure` | Spotting undisclosed paid promotion | 11 | [`tasks/influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) |
 | `mbti-profile` | Superseded by `do-llms-dream-of-intj` — kept for its run history | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
 | `pdf-mixed-scan` | PDF parsing when half the document has no text layer | 20 | [`tasks/pdf_mixed_scan`](./tasks/pdf_mixed_scan) |
 | `pdf-reader` | Legal contract review — superseded by `pdf-reader-v2` | 19 | [`tasks/pdf_reader`](./tasks/pdf_reader) |
 | `pdf-reader-v2` | UK tenancy agreement — rent, dates, clauses | 20 | [`tasks/pdf_reader_v2`](./tasks/pdf_reader_v2) |
-| `pdf-tables` | Reading values out of wide, repetitive tables | 20 | [`tasks/pdf_tables`](./tasks/pdf_tables) |
-| `python-bugfix-diff` | Which code-review skill actually finds the bug? | 10 | [`tasks/code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff) |
 
 <details>
 <summary><b>Paste this into your <code>trap.yaml</code></b> — pinned sources for all 15</summary>
@@ -149,8 +141,6 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_needle_in_haystack
   core-pdf-ocr:
     source: git+https://github.com/trapstreet/trapstreet-tasks@8bee00aaf0dfad72979aca8b39c87183b01cd5c7#subdirectory=tasks/core_pdf_ocr
-  debug-subscription-billing-pipeline:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@4d7400a7e5c9ace5b4db3f9d6c89b73777419dbc#subdirectory=tasks/debug_subscription_billing_pipeline
   debug-vendor-payout-pipeline:
     source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/debug_vendor_payout_pipeline
   influencer-marketing-disclosure:
@@ -163,8 +153,6 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/pdf_reader
   pdf-reader-v2:
     source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
-  pdf-tables:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@f17b9b41456031b187bd57d8234047bd92e65b84#subdirectory=tasks/pdf_tables
   python-bugfix-diff:
     source: git+https://github.com/trapstreet/trapstreet-tasks@93d6ef239e640d3faaf92fafa4c6b0c251ad00cb#subdirectory=tasks/code_review_skill/python_bugfix_diff
 ```
@@ -217,7 +205,6 @@ is a `POST /api/tasks` away; nothing in the task itself needs to change.
 | [`tasks/imported/gsm8k`](./tasks/imported/gsm8k) | Grade-school math word problems | 25 |
 | [`tasks/imported/mmlu`](./tasks/imported/mmlu) | Multiple-choice knowledge across subjects | 25 |
 | [`tasks/invoice_reconciliation`](./tasks/invoice_reconciliation) | Locating the source of a reconciliation discrepancy | 14 |
-| [`tasks/plant_disease_id`](./tasks/plant_disease_id) | Plant pathology from PlantVillage leaf photos | 20 |
 | [`tasks/product_matching/sku_disambiguation`](./tasks/product_matching/sku_disambiguation) | Are two product names the same SKU? | 12 |
 | [`tasks/receipt_extraction`](./tasks/receipt_extraction) | Receipt parsing from real-world photos | 20 |
 | [`tasks/scheduler/cross_timezone`](./tasks/scheduler/cross_timezone) | Scheduling across timezones | 11 |

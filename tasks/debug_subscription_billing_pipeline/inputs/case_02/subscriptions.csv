@@ -1,3 +1,0 @@
-subscription_id,customer_id,plan_id,addon_ids,discount_code,status,start_date
-SUB-001,CUST-001,PLAN-GROWTH,,WELCOME10,active,2023-01-01
-SUB-005,CUST-005,PLAN-GROWTH,ADDON-API,LAUNCH50,active,2023-10-01

@@ -1,3 +1,0 @@
-invoice_id,subscription_id,period,baked_customer_name,baked_plan_name,baked_addon_names,baked_base_price_usd,baked_addon_total_usd,baked_discount_applied_usd,baked_tax_usd,baked_total_usd,status
-INV-3001,SUB-002,2024-01,Globex Ltd,Scale Monthly,Priority Support,299.0,39.0,0.0,67.6,405.6,paid
-INV-3002,SUB-004,2024-01,Umbrella GmbH,Enterprise Monthly,Audit Log Export; Priority Support; Single Sign-On,899.0,113.0,202.4,153.82,963.42,paid
