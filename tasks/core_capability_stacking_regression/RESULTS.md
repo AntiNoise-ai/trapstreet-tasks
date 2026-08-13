@@ -1,14 +1,20 @@
 # Results
 
-Two runs of the 84-case matrix (all 12 scenarios at L0 and at L1/L2/L3 in both
-arms, one pass each). L4 is skipped in both — it is a separately registered bulk
-probe, it has been run twice with the same answer, and neither the curve nor the
-primary statistic reads it.
+Runs 1 and 2 are the 84-case matrix (all 12 scenarios at L0 and at L1/L2/L3 in
+both arms, one pass each), skipping L4 — it is a separately registered bulk
+probe, and neither the curve nor the primary statistic reads it. Run 3 is the
+full 108-case matrix including L4.
 
 | run | model | thinking | cost | primary p |
 |---|---|---|---|---|
 | 1 | `claude-haiku-4-5` | none (the model has no adaptive mode) | $0.46 | 0.0625 |
 | 2 | `claude-sonnet-5` | adaptive, on by default | $1.43 | **0.0078** |
+| 3 | `claude-haiku-4-5` | none | $1.07 | **0.0293** |
+
+Run 3 is run 1's model on the corpus as it stands after the s12 fix, so it
+supersedes run 1 as the haiku number: p = 0.0293 rather than 0.0625. It is also
+the only run whose per-case metrics were kept locally, which is why the
+decomposition below is single-model.
 
 Each model ran at its shipped default rather than at a forced-common setting.
 Forcing thinking off on Sonnet to match haiku would have traded a real
@@ -84,6 +90,60 @@ see faults, below). Broadly monotone: 1 competitor → 1.00, 2–5 → ~0.82,
 6 → 0.76, 7 → 0.66, 11 → 0.44.
 
 ---
+
+## What the arm gap is made of
+
+The arms differ in two ways at once, not one. A same-domain skill competes for
+the answer *and* publishes guidance that fires on these requests. A
+distant-domain skill does neither — `cellar_log_rack_position` carries an
+instruction written to the same length and force as its same-domain counterpart
+("Use this whenever a batch is moved or racked … log it in the same pass"), and
+it never triggers, because office requests do not rack batches. The control arm
+cannot exhibit the second mechanism at all.
+
+Run 3's stored metrics carry `matched_calls`, `extra_calls` and `n_required` per
+case, so the F1 can be recomputed with the guidance-driven calls deleted from
+the emitted set and nothing else changed. The reconstruction reproduces all 108
+stored scores exactly before anything is deleted.
+
+| | as scored | guidance calls deleted | share |
+|---|---|---|---|
+| L1–L3, all 12 scenarios | 0.156 | 0.043 | 73% |
+| L1–L3, 9 primary-tier scenarios | 0.140 | 0.035 | 75% |
+| L3 alone | 0.163 | 0.006 | 97% |
+| L4 (126 skills) | 0.186 | 0.058 | 69% |
+
+The primary statistic moves with it: **p = 0.0293 → p = 0.3281**, mean
+per-scenario difference +0.140 → +0.035.
+
+**What survives is real but small.** The same-domain arm loses recall the
+control does not — mean 0.884 against 0.949 over L1–L3, nine cases with a
+missing required call against four. That is genuine substitution, and it runs in
+the predicted direction. It is about a quarter of what the arm gap reports.
+
+**The two mechanisms have different signatures**, which is what makes them
+separable after the fact:
+
+- All 19 `instruction_bleed` cases have *empty* `missing_calls`. Recall is
+  perfect; the model made every required call and then made another one because
+  an installed skill's guidance told it to. Pure precision loss.
+- `near_miss` is the substitution failure, and it drops recall.
+
+They are also entangled: 10 of 14 `near_miss` cases *also* emitted a guidance
+call, so the labels are a dominant-reason classification rather than a partition.
+
+**Three caveats on this table.** It is one model and one run. It is a
+recomputation, not a re-run — deleting a call from the scored set is not the
+same experiment as never installing the skill that prompted it. And the
+subtraction is asymmetric by construction: only the same-domain arm has calls to
+delete. That asymmetry is the finding rather than a flaw in the arithmetic, but
+it means the right reading is "most of this gap is not selection interference",
+not "the overlap effect is exactly 0.035".
+
+`CALIBRATION.md` reached the same conclusion from the other direction before any
+full matrix ran — "semantic confusion is rare; instruction bleed is routine",
+1 against 5 after two earlier probes found 0 against 6. That reading did not
+carry through to how the results were framed here; it does now.
 
 ## What the second model changed about the finding
 
@@ -176,17 +236,18 @@ tiers, so its p = 0.0625 stands as run.
 
 ## Scope
 
-Two models, one domain, twelve scenarios, one pass per cell, no L4. Run 2's
+Two models, one domain, twelve scenarios, one pass per cell; L4 only in run 3.
+Run 2's
 `by_difficulty` came out easy 0.895, medium 0.852, hard 0.874, edge 0.871 — the
 tiers are within 0.04 of each other, so the labels track intended discrimination
 rather than measured difficulty and should not be read as calibrated levels.
 
-**Every arm gap on this page is an upper bound on the overlap effect, not an
-estimate of it.** The control arm adds distant-domain skills — HVAC, fleet, lab,
-apiary — so it holds catalog size fixed but not domain proximity. Two things
-vary between the arms at once, and nothing here separates them. The arm that
-would isolate overlap is same-domain-but-non-competing, and it is not built. See
-the control-arm limitation in the README.
+**Every arm gap on this page is the cost of adding same-domain skills, not an
+overlap effect.** The control arm adds distant-domain skills — HVAC, fleet, lab,
+apiary — so it holds catalog size fixed but holds neither domain proximity nor
+guidance applicability fixed. Three quarters of the gap is the second of those
+(above). The arm that would separate them is same-domain, non-competing, and
+publishing guidance that does trigger; it is not built.
 
 Two further gaps worth naming rather than defending. **One domain** — office automation
 only; nothing here shows the effect generalises to other tool ecosystems. And

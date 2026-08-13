@@ -8,15 +8,20 @@ did correctly?
 The circulating claim is that adding skills degrades 30–50% of previously
 working tasks. `core_tool_selection_at_scale` tested the obvious version of it —
 catalog size, up to 300 tools — and it did not reproduce. So this task holds
-count fixed and manipulates the variable the claim's proponents actually
-describe: **interference between skills that functionally overlap**, as distinct
-from skills that merely coexist.
+count fixed and varies what the added skills *are*.
 
 **Every case exists twice.** Same scenario, same required calls, same number of
-skills added — the arms differ only in whether the added skills compete with the
-ones the job needs. The low-overlap arm is the control, and it is what makes a
-drop attributable to overlap rather than to catalog size. Without it, a drop is
-just as easily explained by the catalog having grown.
+skills added. One arm adds skills from the request's own domain; the other adds
+skills from domains the request has nothing to do with. The distant-domain arm
+is the control, and it is what makes a drop attributable to something other than
+the catalog having grown.
+
+**That gap is not one mechanism.** A same-domain skill differs from a distant
+one in two ways at once: its schema competes for the answer, and its published
+guidance actually triggers. Both cost score, and this design cannot separate
+them — measured, the split runs about 3:1 in favour of guidance. Read the arm
+gap as what installing same-domain skills costs, not as a measurement of
+overlap. See `RESULTS.md` and the limitations below.
 
 ## Case structure
 
@@ -25,13 +30,13 @@ been added yet, so both arms are identical there and share one case.
 
 | dimension | levels | what it varies |
 |---|---|---|
-| `stack_level` | L0 / L1 / L2 / L3 | overlap dose — 8 / 14 / 20 / 26 skills, count equal across arms |
+| `stack_level` | L0 / L1 / L2 / L3 | dose — 8 / 14 / 20 / 26 skills, count equal across arms |
 | `stack_level` | L4 | the same contrast at 126 skills (~24k tokens); separately registered, excluded from the curve and the primary test |
-| `overlap_class` | `high` / `low` | whether the added skills compete with what the job needs |
+| `overlap_class` | `high` / `low` | whether the added skills come from the request's own domain |
 | `difficulty` | `easy` / `medium` / `hard` / `edge` | which scenarios enter the primary test — 9 primary (medium/hard), 1 easy canary, 2 edge |
 
-Three invariants make a result attributable, all asserted in `tests/` — but read
-the control-arm limitation below before treating a measured gap as pure overlap:
+Three invariants keep the arms comparable, all asserted in `tests/` — but read
+the limitations below before attributing a measured gap to any one mechanism:
 
 - **The arms are the same size at every level.** Both add 6 skills per pack; at
   L4 both receive the same 100 fillers.
@@ -86,10 +91,10 @@ Each shortfall is classified: `near_miss`, `wrong_backend`, `instruction_bleed`,
 **`score` is a compressed proxy, not the measurement.** Roughly 43% of the cases
 are the control arm — designed to stay flat — and another ~12% is the shared L0
 baseline, so only about 43% carries the manipulation. It moves in the right
-direction: a solution that fully removed the overlap penalty would lift `score`
-by about 0.065. But it moves at roughly 43% of the amplitude of the thing it is
+direction: a solution that fully removed the arm penalty would lift `score` by
+about 0.065. But it moves at roughly 43% of the amplitude of the thing it is
 tracking, and two runs can land within 0.006 of each other on `score` while
-sitting 0.023 apart on the high-overlap arm — which is what happened in
+sitting 0.023 apart on the same-domain arm — which is what happened in
 `RESULTS.md`. Read the rank as a rough ordering and the fields below as the
 result.
 
@@ -98,9 +103,9 @@ without digging:
 
 | field | what it is |
 |---|---|
-| `high_overlap_score` | mean under competing skills — the condition being tested |
-| `low_overlap_score` | mean under the control arm |
-| `arm_gap` | `low − high`; an upper bound on the overlap penalty, see limitations |
+| `high_overlap_score` | mean under same-domain additions — the condition being tested |
+| `low_overlap_score` | mean under the distant-domain control |
+| `arm_gap` | `low − high`; the cost of same-domain additions, bundling two mechanisms — see limitations |
 | `primary_p` | sign-flip permutation on per-scenario mean(low − high) over L1–L3, medium/hard tiers only |
 
 The same values live in `by_overlap_class` and `primary_test`, which stay
@@ -124,16 +129,21 @@ merely in prose.
 
 ## Known limitations
 
-- **The control arm does not isolate overlap.** It adds distant-domain skills —
-  HVAC setpoints, fleet inspections, lab specimens, apiary jobs — so the contrast
-  is really *same-domain-and-competing vs distant-domain-and-irrelevant*. Two
-  things vary at once: how many competitors are present, and whether the added
-  skills are in the request's domain at all. A model rules out an apiary tool at
-  a glance, so the control is the loosest one available and the measured gap
-  includes a domain-proximity component of unknown size. The arm that would
-  isolate overlap is same-domain-but-non-competing — office tools that need a
-  real read to exclude — and it is not built. Treat the gap as an upper bound on
-  the overlap effect, not an estimate of it.
+- **The arm gap bundles two mechanisms, and the smaller one is the one the task
+  is named after.** A same-domain skill both competes for the answer *and*
+  publishes guidance that fires on these requests; a distant-domain skill does
+  neither. An apiary tool is ruled out at a glance, and its guidance — "whenever
+  a batch is moved or racked" — never triggers on office work, so the control
+  arm is structurally incapable of the second mechanism rather than merely
+  unlucky. Scoring the same outputs with the guidance-driven calls deleted
+  leaves 0.035 of the 0.140 primary-tier gap and moves the primary statistic
+  from p = 0.029 to p = 0.328. Semantic competition is present and runs in the
+  predicted direction — the same-domain arm loses recall the control does not —
+  but it is about a quarter of what the gap reports. Details in `RESULTS.md`.
+- **The arm that would separate them is not built.** It is same-domain,
+  non-competing, and publishes guidance that does trigger. Until that arm
+  exists, the gap measures what installing same-domain skills costs, and no
+  finer attribution than that is available from these numbers.
 - **One domain.** Twelve scenarios of office administration.
 - **The stack is composed, not installed.** Skills are presented as schemas in
   the prompt rather than loaded through a real runtime, so this measures
