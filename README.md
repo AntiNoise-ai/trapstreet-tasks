@@ -92,8 +92,6 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/personality/mbti_profile
   pdf-mixed-scan:
     source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
-  pdf-reader:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/pdf_reader
   pdf-reader-v2:
     source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
   python-bugfix-diff:
@@ -123,8 +121,6 @@ Registered, public, submittable. Case counts are from the pinned commit.
 | `influencer-marketing-disclosure` | Spotting undisclosed paid promotion | 11 | [`tasks/influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) |
 | `mbti-profile` | Superseded by `do-llms-dream-of-intj` — kept for its run history | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
 | `pdf-mixed-scan` | PDF parsing when half the document has no text layer | 20 | [`tasks/pdf_mixed_scan`](./tasks/pdf_mixed_scan) |
-| `pdf-reader` | Legal contract review — superseded by `pdf-reader-v2` | 19 | [`tasks/pdf_reader`](./tasks/pdf_reader) |
-| `pdf-reader-v2` | UK tenancy agreement — rent, dates, clauses | 20 | [`tasks/pdf_reader_v2`](./tasks/pdf_reader_v2) |
 
 <details>
 <summary><b>Paste this into your <code>trap.yaml</code></b> — pinned sources for all 15</summary>
@@ -149,8 +145,6 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
   mbti-profile:
     source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/personality/mbti_profile
-  pdf-reader:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/pdf_reader
   pdf-reader-v2:
     source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
   python-bugfix-diff:
@@ -202,8 +196,6 @@ is a `POST /api/tasks` away; nothing in the task itself needs to change.
 | [`tasks/core_parallel_tool_calls`](./tasks/core_parallel_tool_calls) | Planning several tool calls at once | 20 |
 | [`tasks/core_tool_selection_at_scale`](./tasks/core_tool_selection_at_scale) | Tool choice as the catalog grows to 300 | 64 |
 | [`tasks/doc_editing`](./tasks/doc_editing) | Content retention when editing a document | 4 |
-| [`tasks/imported/gsm8k`](./tasks/imported/gsm8k) | Grade-school math word problems | 25 |
-| [`tasks/imported/mmlu`](./tasks/imported/mmlu) | Multiple-choice knowledge across subjects | 25 |
 | [`tasks/invoice_reconciliation`](./tasks/invoice_reconciliation) | Locating the source of a reconciliation discrepancy | 14 |
 | [`tasks/product_matching/sku_disambiguation`](./tasks/product_matching/sku_disambiguation) | Are two product names the same SKU? | 12 |
 | [`tasks/receipt_extraction`](./tasks/receipt_extraction) | Receipt parsing from real-world photos | 20 |
@@ -219,11 +211,6 @@ Superseded by `core_tool_selection_at_scale`. Kept byte-identical on purpose: it
 `1.0` on all 270 case-scores it ever produced, and those scores stay interpretable only if
 the task doesn't move. That null result is also cited in a write-up, so the directory is
 what makes the account checkable. Not a candidate for deletion.
-
-**[`tasks/pdf_reader`](./tasks/pdf_reader) — superseded but still live.**
-`pdf-reader-v2` replaces it. Removing the directory would **not** take it off the
-leaderboard — task versions are pinned to a commit that stays in git history. Retiring it
-is a platform-side change (task visibility), not a repo change.
 
 ---
 

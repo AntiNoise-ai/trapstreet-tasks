@@ -1,3 +1,0 @@
-In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance?
-
-Solve the problem and respond with ONLY the final numeric answer (digits only — no working, no units, no currency symbol).

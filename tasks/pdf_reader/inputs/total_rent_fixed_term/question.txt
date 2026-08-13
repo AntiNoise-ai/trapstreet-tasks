@@ -1,1 +1,0 @@
-What is the total rent payable in GBP over the entire fixed term? Compute monthly rent × term length, summing across rent periods if rent changes year-on-year.

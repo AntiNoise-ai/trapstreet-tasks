@@ -1,3 +1,0 @@
-A robe takes 2 bolts of blue fiber and half that much white fiber.  How many bolts in total does it take?
-
-Solve the problem and respond with ONLY the final numeric answer (digits only — no working, no units, no currency symbol).

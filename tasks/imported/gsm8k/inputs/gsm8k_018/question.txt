@@ -1,3 +1,0 @@
-Jill gets paid $20 per hour to teach and $30 to be a cheerleading coach. If she works 50 weeks a year, 35 hours a week as a teacher and 15 hours a week as a coach, what's her annual salary?
-
-Solve the problem and respond with ONLY the final numeric answer (digits only — no working, no units, no currency symbol).

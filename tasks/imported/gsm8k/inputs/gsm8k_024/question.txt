@@ -1,3 +1,0 @@
-A candle melts by 2 centimeters every hour that it burns. How many centimeters shorter will a candle be after burning from 1:00 PM to 5:00 PM?
-
-Solve the problem and respond with ONLY the final numeric answer (digits only — no working, no units, no currency symbol).

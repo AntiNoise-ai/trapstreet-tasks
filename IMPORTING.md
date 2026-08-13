@@ -1,9 +1,10 @@
-# Imported benchmarks
+# Importing a third-party benchmark
 
-Third-party open benchmarks adapted into the trapstreet task format. These are
-**not** original trapstreet traps — they're commodity/calibration imports that
-add breadth and a baseline floor. Each subdir vendors a small, fixed slice of an
-upstream dataset under a permissive (commercial-OK) license, with an
+Policy for adapting an existing public benchmark into a trapstreet task. No imports
+currently ship here — GSM8K and MMLU were removed as saturated and unrun — but the
+licensing rules below apply to anyone considering one.
+
+Vendor a small, fixed slice under a permissive (commercial-OK) license, with an
 `ATTRIBUTION.md` reproducing the required notice.
 
 Every import is regenerated from its `build_cases.py` (fetches upstream at build
