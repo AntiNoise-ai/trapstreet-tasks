@@ -1,134 +1,44 @@
 # TrapStreet Tasks
 
-> ## [trapstreet.run](https://trapstreet.run)
->
-> **Find the AI solution that actually works.** Agents, skills, and tools compared
-> side by side on the same task — non-invasive I/O testing, reproducible results,
-> public leaderboards.
->
-> **New here?** Start at
-> **[trapstreet-skills](https://github.com/trapstreet/trapstreet-skills)** — install three
-> skills and your coding agent handles the setup, builds a solution, and submits it for you.
->
-> Prefer to drive it yourself:
->
-> ```bash
-> uv tool install trap-cli && tp auth login
-> ```
->
-> [**Quick start**](https://trapstreet.run/docs/quick-start) ·
-> [Build a solution](https://trapstreet.run/docs/build-a-solution) ·
-> [Build a task](https://trapstreet.run/docs/build-a-task) ·
-> [Browse tasks](https://trapstreet.run) ·
-> [Reference](https://trapstreet.run/docs/reference)
+Reference tasks for [trapstreet.run](https://trapstreet.run) — worked examples, not a
+catalogue. Anyone can publish a task from their own public repository; these exist to show
+what one looks like when it's done properly.
 
-**Reference tasks for [trapstreet.run](https://trapstreet.run) — worked examples, not the
-catalogue.** Anyone can publish a task, from any public repo; these are here to show what a
-task looks like when it's done properly. Read one, copy the shape,
-[build your own](#build-your-own-task).
-
-Each task defines an **input** (what the solution sees), an **expected** answer (which it
-never sees), and a **judge** that scores one against the other. Any solution — an agent, a
-skill, a raw model call — runs against it without hooks or instrumentation.
-
-This repo holds **36 tasks**. **14 of them are live on trapstreet.run** and accept
-submissions (as 15 registrations — `personality/mbti_profile` is registered twice, see
-below). The other **22 run locally but will not submit yet** — see
-[Not yet on the platform](#not-yet-on-the-platform).
+A task declares its **inputs**, the **expected** answers it never shows the solution, and a
+**judge** that scores one against the other. The solution runs as a subprocess, so anything
+that reads files and writes an answer can be measured — no SDK, no instrumentation.
 
 ---
 
-## Build your own task
+## Validated
 
-You do not need this repo. Publish from any public repo you own:
+Registered on trapstreet.run and run by at least one solution, so we know they produce a
+spread rather than scoring everything the same.
 
-```bash
-uv tool install trap-cli && tp auth login
-```
-
-Then either follow [**Build a task**](https://trapstreet.run/docs/build-a-task), or let the
-scaffold skill interview you and generate the files:
-
-```bash
-git clone --depth 1 -q https://github.com/trapstreet/trapstreet-skills.git /tmp/ts-skills \
-  && mkdir -p ~/.claude/skills && cp -r /tmp/ts-skills/trapstreet-* ~/.claude/skills/ && rm -rf /tmp/ts-skills
-```
-
-When it's ready, push it and register the task at
-[trapstreet.run](https://trapstreet.run) → **+ New Task**. The task is pinned to
-your `repo@commit`; runs land on its leaderboard.
-
----
-
-## The one rule for submitting
-
-**A task's identity on the platform is `(repo_url, commit_sha, repo_path)`.** When you
-`tp submit`, the server matches the provenance recorded by `tp run` against published task
-versions. No match → `404`.
-
-That means **cloning this repo at `main` and submitting will not work.** `main` moves; the
-published task versions are pinned to specific commits. Your `trap.yaml` must point at the
-**exact commit** the task was registered with:
-
-```yaml
-tasks:
-  core-calibrated-answer:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_calibrated_answer
-  core-date-arithmetic:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_date_arithmetic
-  core-json-schema-output:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_json_schema_output
-  core-needle-in-haystack:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_needle_in_haystack
-  core-pdf-ocr:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@8bee00aaf0dfad72979aca8b39c87183b01cd5c7#subdirectory=tasks/core_pdf_ocr
-  debug-vendor-payout-pipeline:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/debug_vendor_payout_pipeline
-  do-llms-dream-of-intj:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@792617f8ec46d4585046e15dc771ca14f020b710#subdirectory=tasks/personality/mbti_profile
-  influencer-marketing-disclosure:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/influencer_marketing_disclosure
-  mbti-profile:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/personality/mbti_profile
-  pdf-mixed-scan:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
-  pdf-reader-v2:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
-  python-bugfix-diff:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@93d6ef239e640d3faaf92fafa4c6b0c251ad00cb#subdirectory=tasks/code_review_skill/python_bugfix_diff
-```
-
-The [Live tasks](#live-tasks) block below is copy-pasteable — take the entries you want.
-
-Running against a local checkout is fine for iterating; just expect `tp submit` to fail
-unless the checkout is at the pinned commit. `tp submit --allow-unanchored` uploads a run
-with no git provenance — it is stored and viewable, but never ranked.
-
----
-
-## Live tasks
-
-Registered, public, submittable. Case counts are from the pinned commit.
-
-| Alias | What it tests | Cases | Path |
+| Task | What it measures | Cases | Runs |
 |---|---|---|---|
-| `core-calibrated-answer` | Does the model know what it doesn't know? | 30 | [`tasks/core_calibrated_answer`](./tasks/core_calibrated_answer) |
-| `core-date-arithmetic` | Date + time math | 21 | [`tasks/core_date_arithmetic`](./tasks/core_date_arithmetic) |
-| `core-json-schema-output` | Following a function-call schema | 20 | [`tasks/core_json_schema_output`](./tasks/core_json_schema_output) |
-| `core-needle-in-haystack` | Finding one fact in a long document | 15 | [`tasks/core_needle_in_haystack`](./tasks/core_needle_in_haystack) |
-| `core-pdf-ocr` | Reading a scanned PDF | 20 | [`tasks/core_pdf_ocr`](./tasks/core_pdf_ocr) |
-| `do-llms-dream-of-intj` | 32-question Likert questionnaire, self-reported | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
-| `influencer-marketing-disclosure` | Spotting undisclosed paid promotion | 11 | [`tasks/influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) |
-| `mbti-profile` | Superseded by `do-llms-dream-of-intj` — kept for its run history | 1 | [`tasks/personality/mbti_profile`](./tasks/personality/mbti_profile) |
-| `pdf-mixed-scan` | PDF parsing when half the document has no text layer | 20 | [`tasks/pdf_mixed_scan`](./tasks/pdf_mixed_scan) |
+| [`personality/mbti_profile`](./tasks/personality/mbti_profile)<br/>[mbti-profile](https://trapstreet.run/tasks/mbti-profile) | A 32-question Likert questionnaire, self-reported | 1 | **10** |
+| [`code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff)<br/>[python-bugfix-diff](https://trapstreet.run/tasks/python-bugfix-diff) | One real file frozen before a real bug was fixed — find it | 10 | **9** |
+| [`pdf_mixed_scan`](./tasks/pdf_mixed_scan)<br/>[pdf-mixed-scan](https://trapstreet.run/tasks/pdf-mixed-scan) | A PDF where half the pages have no text layer | 20 | **6** |
+| [`influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure)<br/>[influencer-marketing-disclosure](https://trapstreet.run/tasks/influencer-marketing-disclosure) | Spotting undisclosed paid promotion | 11 | **6** |
+| [`pdf_reader_v2`](./tasks/pdf_reader_v2)<br/>[pdf-reader-v2](https://trapstreet.run/tasks/pdf-reader-v2) | A UK tenancy agreement — rent, dates, clauses | 20 | **3** |
+| [`debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline)<br/>[debug-vendor-payout-pipeline](https://trapstreet.run/tasks/debug-vendor-payout-pipeline) | Reports from a vendor-payout pipeline disagree; produce correct ones | 4 | **3** |
+| [`core_capability_stacking_regression`](./tasks/core_capability_stacking_regression)<br/>[core-capability-stacking-regression](https://trapstreet.run/tasks/core-capability-stacking-regression) | Does stacking capabilities degrade any one of them? | 108 | **1** |
 
 <details>
-<summary><b>Paste this into your <code>trap.yaml</code></b> — pinned sources for all 15</summary>
+<summary><b>Point your <code>trap.yaml</code> at one</b></summary>
+
+A task's identity on the platform is `(repo_url, commit_sha, repo_path)`. Cloning `main` and
+submitting matches no published version, so pin the registered commit:
 
 ```yaml
 tasks:
+python-bugfix-diff:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@93d6ef239e640d3faaf92fafa4c6b0c251ad00cb#subdirectory=tasks/code_review_skill/python_bugfix_diff
   core-calibrated-answer:
     source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_calibrated_answer
+  core-capability-stacking-regression:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@8abf610e57d298f2fafa232c522a3b2afd0ce620#subdirectory=tasks/core_capability_stacking_regression
   core-date-arithmetic:
     source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_date_arithmetic
   core-json-schema-output:
@@ -143,112 +53,91 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/influencer_marketing_disclosure
   pdf-mixed-scan:
     source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
-  mbti-profile:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/personality/mbti_profile
+  pdf-reader:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/pdf_reader
   pdf-reader-v2:
     source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
-  python-bugfix-diff:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@93d6ef239e640d3faaf92fafa4c6b0c251ad00cb#subdirectory=tasks/code_review_skill/python_bugfix_diff
+  mbti-profile:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/personality/mbti_profile
+  do-llms-dream-of-intj:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@cf92b6690b7c8b3430602dd3b72a8528c96e636b#subdirectory=tasks/personality/mbti_profile
 ```
+
+Then `tp run && tp submit`. Running against a local checkout is fine for iterating; only
+submission needs the pin.
 
 </details>
 
-### Where `main` differs from what runs
-
-For these three the directory at `main` has changed since the registered commit, so what you
-read here is **not** what a submitted run executes — read the pinned commit for the exact
-contract:
-
-`mbti-profile` · `pdf-reader` · `python-bugfix-diff`
-
 ---
 
-## Tasks other people built
+## Unvalidated
 
-These are live on trapstreet.run and live in their authors' own repos — nothing here, no PR
-to this repo. That is the normal path.
+Complete and runnable — `traptask.yaml`, a judge, generated cases — but **nobody has submitted
+a run yet**, so nobody knows whether they separate a good solution from a bad one. That is the
+bar for moving into `tasks/`.
 
-| Alias | Repo |
+Being first on one of these is the cheapest way to find out. Point a `trap.yaml` at the
+directory, `tp run`, and see whether the scores spread.
+
+> Six of these are still registered on trapstreet.run from before they moved here
+> (`core-calibrated-answer`, `core-date-arithmetic`, `core-json-schema-output`,
+> `core-needle-in-haystack`, `core-pdf-ocr`, `pdf-reader`). They still run — a task version is
+> pinned to a commit, not to a path — but their listed source path no longer resolves against
+> `main`.
+
+| Task | Cases |
 |---|---|
-| `karpathys-jagged-questions` | [xiaotianhan91/karpathys-jagged-questions](https://github.com/xiaotianhan91/karpathys-jagged-questions) |
-| `minecraft-obtain-diamond` | [Ruqii/minecraft-obtain-diamond](https://github.com/Ruqii/minecraft-obtain-diamond) |
-| `mineral-species-id` | [Zhuaiz/elastic-mineral-hackson](https://github.com/Zhuaiz/elastic-mineral-hackson) (`trap/task`) |
+| [`ai_text_detector`](./unvalidated/ai_text_detector) | 20 |
+| [`bloodstain_reader`](./unvalidated/bloodstain_reader) | 20 |
+| [`codebase_graph_qa`](./unvalidated/codebase_graph_qa) | 15 |
+| [`connections/word_groups`](./unvalidated/connections/word_groups) | 10 |
+| [`core_calibrated_answer`](./unvalidated/core_calibrated_answer) | 30 |
+| [`core_code_syntax_generation`](./unvalidated/core_code_syntax_generation) | 20 |
+| [`core_date_arithmetic`](./unvalidated/core_date_arithmetic) | 21 |
+| [`core_follow_instructions`](./unvalidated/core_follow_instructions) | 25 |
+| [`core_json_schema_output`](./unvalidated/core_json_schema_output) | 20 |
+| [`core_multi_turn_memory`](./unvalidated/core_multi_turn_memory) | 20 |
+| [`core_needle_in_haystack`](./unvalidated/core_needle_in_haystack) | 15 |
+| [`core_parallel_tool_calls`](./unvalidated/core_parallel_tool_calls) | 20 |
+| [`core_pdf_ocr`](./unvalidated/core_pdf_ocr) | 20 |
+| [`core_tool_selection_at_scale`](./unvalidated/core_tool_selection_at_scale) | 64 |
+| [`core_tool_selection_under_load`](./unvalidated/core_tool_selection_under_load) | 27 |
+| [`doc_editing`](./unvalidated/doc_editing) | 4 |
+| [`invoice_reconciliation`](./unvalidated/invoice_reconciliation) | 14 |
+| [`product_matching/sku_disambiguation`](./unvalidated/product_matching/sku_disambiguation) | 12 |
+| [`receipt_extraction`](./unvalidated/receipt_extraction) | 20 |
+| [`scheduler/cross_timezone`](./unvalidated/scheduler/cross_timezone) | 11 |
+| [`spreadsheet_reader`](./unvalidated/spreadsheet_reader) | 6 |
+| [`web_scraping/game_store_navigation`](./unvalidated/web_scraping/game_store_navigation) | 10 |
+| [`wildlife_camera_trap`](./unvalidated/wildlife_camera_trap) | 20 |
 
 ---
 
-## Not yet on the platform
+## Build your own
 
-Complete tasks — `traptask.yaml`, `judge.py`, generated `inputs/` and `expected/` — that
-have **not been registered** as task versions. `tp run` works against a local checkout.
-`tp submit` returns `404`, because there is no published version to match. Registering one
-is a `POST /api/tasks` away; nothing in the task itself needs to change.
+You do not need this repo. Publish from any public repository you own and register it at
+[trapstreet.run](https://trapstreet.run) → **+ New Task**; the platform pins it to your
+`repo@commit`.
 
-| Path | What it tests | Cases |
-|---|---|---|
-| [`tasks/ai_text_detector`](./tasks/ai_text_detector) | Human-written vs AI-generated text | 20 |
-| [`tasks/bloodstain_reader`](./tasks/bloodstain_reader) | Forensic vision — evidence vs suspect statement | 20 |
-| [`tasks/codebase_graph_qa`](./tasks/codebase_graph_qa) | Cross-file Q&A over a small multi-language repo | 15 |
-| [`tasks/connections/word_groups`](./tasks/connections/word_groups) | Partition 16 words into 4 groups of 4 | 10 |
-| [`tasks/core_capability_stacking_regression`](./tasks/core_capability_stacking_regression) | Do added skills break the jobs an agent already did? | 108 |
-| [`tasks/core_code_syntax_generation`](./tasks/core_code_syntax_generation) | Basic code generation from signature + docstring | 20 |
-| [`tasks/core_follow_instructions`](./tasks/core_follow_instructions) | Obeying explicit prompt constraints | 25 |
-| [`tasks/core_multi_turn_memory`](./tasks/core_multi_turn_memory) | Recall across a multi-session conversation | 20 |
-| [`tasks/core_parallel_tool_calls`](./tasks/core_parallel_tool_calls) | Planning several tool calls at once | 20 |
-| [`tasks/core_tool_selection_at_scale`](./tasks/core_tool_selection_at_scale) | Tool choice as the catalog grows to 300 | 64 |
-| [`tasks/doc_editing`](./tasks/doc_editing) | Content retention when editing a document | 4 |
-| [`tasks/invoice_reconciliation`](./tasks/invoice_reconciliation) | Locating the source of a reconciliation discrepancy | 14 |
-| [`tasks/product_matching/sku_disambiguation`](./tasks/product_matching/sku_disambiguation) | Are two product names the same SKU? | 12 |
-| [`tasks/receipt_extraction`](./tasks/receipt_extraction) | Receipt parsing from real-world photos | 20 |
-| [`tasks/scheduler/cross_timezone`](./tasks/scheduler/cross_timezone) | Scheduling across timezones | 11 |
-| [`tasks/spreadsheet_reader`](./tasks/spreadsheet_reader) | One aggregation question over a real `.xlsx` | 6 |
-| [`tasks/web_scraping/game_store_navigation`](./tasks/web_scraping/game_store_navigation) | Navigating a mock game storefront | 10 |
-| [`tasks/wildlife_camera_trap`](./tasks/wildlife_camera_trap) | Species ID from Serengeti camera-trap photos | 20 |
-
-### Special cases
-
-**[`tasks/core_tool_selection_under_load`](./tasks/core_tool_selection_under_load) — frozen, do not edit.**
-Superseded by `core_tool_selection_at_scale`. Kept byte-identical on purpose: it returned
-`1.0` on all 270 case-scores it ever produced, and those scores stay interpretable only if
-the task doesn't move. That null result is also cited in a write-up, so the directory is
-what makes the account checkable. Not a candidate for deletion.
-
----
-
-
-## Writing a task
-
-Every task follows the same layout and I/O contract:
-
-```
-tasks/<name>/
-├── gold.cases.json    single source of truth, hand-edited
-├── build_cases.py     validates gold.cases.json, generates inputs/ + expected/
-├── judge.py           scores ONE case — must return {"score": 0.0-1.0}
-├── grader.py          aggregates all cases into a run verdict
-├── traptask.yaml      case list + tags + judge/grader commands
-├── inputs/<case_id>/  generated — what the solution sees
-├── expected/<case_id>/ generated — judge-only
-└── README.md          I/O contract, scoring, sources and licensing
+```bash
+npx skills add trapstreet/trapstreet-skills
 ```
 
-Not every task here uses `gold.cases.json` + `build_cases.py`; several of the `core_*` tasks
-generate cases inline and are live on the platform regardless. The parts that are load-bearing
-are `traptask.yaml`, `judge.py`, and the generated `inputs/` / `expected/` pair.
+Then tell your coding agent: *"make a task that evaluates &lt;the thing you want measured&gt;"*.
+[`trapstreet-task-scaffold`](https://github.com/trapstreet/trapstreet-skills) interviews you on
+what counts as correct, where ground truth comes from, and how to keep the scoring ungameable,
+then writes `traptask.yaml`, `judge.py` and `grader.py`.
 
-**One security rule:** case IDs must never leak the answer. A solution can read its own
-`inputs_dir` path, so `leopard_01` gives the game away — use `case_01`, and keep the real
-label in `expected/<id>/answer.json`.
+[`mineral-species-id`](https://trapstreet.run/tasks/mineral-species-id) and
+[`karpathys-jagged-questions`](https://trapstreet.run/tasks/karpathys-jagged-questions) were
+built exactly that way, by people who are not us.
 
-Full reference: [`trap` docs](https://github.com/trapstreet/trap/tree/main/docs) ·
-[writing a task](https://github.com/trapstreet/trap/blob/main/docs/guides/writing-task.md)
+## Results
 
----
+[**RESULTS.md**](./RESULTS.md) — what the boards have measured, generated from the API.
 
-## License
+## Licensing
 
-Harness code and hand-authored task content: [MIT](./LICENSE) (see [NOTICE](./NOTICE)).
-
-Tasks that vendor third-party data carry their own `ATTRIBUTION.md` or
-`LICENSE.md` with the upstream source and its license — that license governs
-the vendored content, not this repo's. Check the task directory before reusing
-its data.
+MIT for the harness and hand-authored content; see [NOTICE](./NOTICE). Tasks that vendor
+third-party data carry their own `ATTRIBUTION.md` or `LICENSE.md`, and that license governs the
+vendored content. Importing a public benchmark? See [IMPORTING.md](./IMPORTING.md).
