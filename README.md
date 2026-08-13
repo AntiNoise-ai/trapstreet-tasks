@@ -1,8 +1,8 @@
 # TrapStreet Tasks
 
 Reference tasks for [trapstreet.run](https://trapstreet.run) — worked examples, not a
-catalogue. Anyone can publish a task from their own public repository; these exist to show
-what one looks like when it's done properly.
+catalogue. Anyone can publish a task from their own public repository; these exist to show what
+one looks like when it's done properly.
 
 A task declares its **inputs**, the **expected** answers it never shows the solution, and a
 **judge** that scores one against the other. The solution runs as a subprocess, so anything
@@ -10,30 +10,36 @@ that reads files and writes an answer can be measured — no SDK, no instrumenta
 
 ---
 
-## Validated
+## On trapstreet.run
 
-Registered on trapstreet.run and run by at least one solution, so we know they produce a
-spread rather than scoring everything the same.
+Everything in [`tasks/`](./tasks) is registered and accepting submissions. **Runs** is how many
+solutions have been measured against it — a task nobody has run yet is unproven, and being
+first on one is the cheapest way to find out whether it separates good work from bad.
 
-| Task | What it measures | Cases | Runs |
-|---|---|---|---|
-| [`personality/mbti_profile`](./tasks/personality/mbti_profile)<br/>[mbti-profile](https://trapstreet.run/tasks/mbti-profile) | A 32-question Likert questionnaire, self-reported | 1 | **10** |
-| [`code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff)<br/>[python-bugfix-diff](https://trapstreet.run/tasks/python-bugfix-diff) | One real file frozen before a real bug was fixed — find it | 10 | **9** |
-| [`pdf_mixed_scan`](./tasks/pdf_mixed_scan)<br/>[pdf-mixed-scan](https://trapstreet.run/tasks/pdf-mixed-scan) | A PDF where half the pages have no text layer | 20 | **6** |
-| [`influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure)<br/>[influencer-marketing-disclosure](https://trapstreet.run/tasks/influencer-marketing-disclosure) | Spotting undisclosed paid promotion | 11 | **6** |
-| [`pdf_reader_v2`](./tasks/pdf_reader_v2)<br/>[pdf-reader-v2](https://trapstreet.run/tasks/pdf-reader-v2) | A UK tenancy agreement — rent, dates, clauses | 20 | **3** |
-| [`debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline)<br/>[debug-vendor-payout-pipeline](https://trapstreet.run/tasks/debug-vendor-payout-pipeline) | Reports from a vendor-payout pipeline disagree; produce correct ones | 4 | **3** |
-| [`core_capability_stacking_regression`](./tasks/core_capability_stacking_regression)<br/>[core-capability-stacking-regression](https://trapstreet.run/tasks/core-capability-stacking-regression) | Does stacking capabilities degrade any one of them? | 108 | **1** |
+| Task | What it measures | Cases | Board | Runs |
+|---|---|---|---|---|
+| [`personality/mbti_profile`](./tasks/personality/mbti_profile) | A 32-question Likert questionnaire, self-reported | 1 | [mbti-profile](https://trapstreet.run/tasks/mbti-profile) · [do-llms-dream-of-intj](https://trapstreet.run/tasks/do-llms-dream-of-intj) | **10** |
+| [`code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff) | One real file frozen just before a real bug was fixed — find it | 10 | [python-bugfix-diff](https://trapstreet.run/tasks/python-bugfix-diff) | **9** |
+| [`pdf_mixed_scan`](./tasks/pdf_mixed_scan) | A PDF where half the pages have no text layer | 20 | [pdf-mixed-scan](https://trapstreet.run/tasks/pdf-mixed-scan) | **6** |
+| [`influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) | Spotting undisclosed paid promotion | 11 | [influencer-marketing-disclosure](https://trapstreet.run/tasks/influencer-marketing-disclosure) | **6** |
+| [`pdf_reader_v2`](./tasks/pdf_reader_v2) | A UK tenancy agreement — rent, dates, clauses | 20 | [pdf-reader-v2](https://trapstreet.run/tasks/pdf-reader-v2) | **3** |
+| [`debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline) | Vendor-payout reports disagree; produce correct ones | 4 | [debug-vendor-payout-pipeline](https://trapstreet.run/tasks/debug-vendor-payout-pipeline) | **3** |
+| [`core_capability_stacking_regression`](./tasks/core_capability_stacking_regression) | Does stacking capabilities degrade any one of them? | 108 | [core-capability-stacking-regression](https://trapstreet.run/tasks/core-capability-stacking-regression) | **1** |
+| [`core_pdf_ocr`](./tasks/core_pdf_ocr) | Reading a rendered PDF page | 20 | [core-pdf-ocr](https://trapstreet.run/tasks/core-pdf-ocr) | — |
+| [`core_needle_in_haystack`](./tasks/core_needle_in_haystack) | Finding one fact in a long document | 15 | [core-needle-in-haystack](https://trapstreet.run/tasks/core-needle-in-haystack) | — |
+| [`core_json_schema_output`](./tasks/core_json_schema_output) | Schema-conforming function calls (BFCL v4) | 20 | [core-json-schema-output](https://trapstreet.run/tasks/core-json-schema-output) | — |
+| [`core_date_arithmetic`](./tasks/core_date_arithmetic) | Date and time arithmetic | 21 | [core-date-arithmetic](https://trapstreet.run/tasks/core-date-arithmetic) | — |
+| [`core_calibrated_answer`](./tasks/core_calibrated_answer) | Does it decline what it cannot answer, or invent? (SimpleQA) | 30 | [core-calibrated-answer](https://trapstreet.run/tasks/core-calibrated-answer) | — |
 
 <details>
 <summary><b>Point your <code>trap.yaml</code> at one</b></summary>
 
-A task's identity on the platform is `(repo_url, commit_sha, repo_path)`. Cloning `main` and
-submitting matches no published version, so pin the registered commit:
+A task's identity is `(repo_url, commit_sha, repo_path)`, matched exactly. Cloning `main` and
+submitting matches no published version — pin the registered commit:
 
 ```yaml
 tasks:
-python-bugfix-diff:
+  python-bugfix-diff:
     source: git+https://github.com/trapstreet/trapstreet-tasks@93d6ef239e640d3faaf92fafa4c6b0c251ad00cb#subdirectory=tasks/code_review_skill/python_bugfix_diff
   core-calibrated-answer:
     source: git+https://github.com/trapstreet/trapstreet-tasks@00d0632172c69e6f31c9ce26799ea34865e67930#subdirectory=tasks/core_calibrated_answer
@@ -53,8 +59,6 @@ python-bugfix-diff:
     source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/influencer_marketing_disclosure
   pdf-mixed-scan:
     source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
-  pdf-reader:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/pdf_reader
   pdf-reader-v2:
     source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
   mbti-profile:
@@ -63,8 +67,8 @@ python-bugfix-diff:
     source: git+https://github.com/trapstreet/trapstreet-tasks@cf92b6690b7c8b3430602dd3b72a8528c96e636b#subdirectory=tasks/personality/mbti_profile
 ```
 
-Then `tp run && tp submit`. Running against a local checkout is fine for iterating; only
-submission needs the pin.
+Then `tp run && tp submit`. Iterating against a local checkout is fine; only submission needs
+the pin.
 
 </details>
 
@@ -72,18 +76,9 @@ submission needs the pin.
 
 ## Unvalidated
 
-Complete and runnable — `traptask.yaml`, a judge, generated cases — but **nobody has submitted
-a run yet**, so nobody knows whether they separate a good solution from a bad one. That is the
-bar for moving into `tasks/`.
-
-Being first on one of these is the cheapest way to find out. Point a `trap.yaml` at the
-directory, `tp run`, and see whether the scores spread.
-
-> Six of these are still registered on trapstreet.run from before they moved here
-> (`core-calibrated-answer`, `core-date-arithmetic`, `core-json-schema-output`,
-> `core-needle-in-haystack`, `core-pdf-ocr`, `pdf-reader`). They still run — a task version is
-> pinned to a commit, not to a path — but their listed source path no longer resolves against
-> `main`.
+Complete and runnable — `traptask.yaml`, a judge, generated cases — but not registered, so
+nothing has ever been measured against them. They live in [`unvalidated/`](./unvalidated) until
+a run shows they produce a spread rather than scoring every solution alike.
 
 | Task | Cases |
 |---|---|
@@ -91,15 +86,10 @@ directory, `tp run`, and see whether the scores spread.
 | [`bloodstain_reader`](./unvalidated/bloodstain_reader) | 20 |
 | [`codebase_graph_qa`](./unvalidated/codebase_graph_qa) | 15 |
 | [`connections/word_groups`](./unvalidated/connections/word_groups) | 10 |
-| [`core_calibrated_answer`](./unvalidated/core_calibrated_answer) | 30 |
 | [`core_code_syntax_generation`](./unvalidated/core_code_syntax_generation) | 20 |
-| [`core_date_arithmetic`](./unvalidated/core_date_arithmetic) | 21 |
 | [`core_follow_instructions`](./unvalidated/core_follow_instructions) | 25 |
-| [`core_json_schema_output`](./unvalidated/core_json_schema_output) | 20 |
 | [`core_multi_turn_memory`](./unvalidated/core_multi_turn_memory) | 20 |
-| [`core_needle_in_haystack`](./unvalidated/core_needle_in_haystack) | 15 |
 | [`core_parallel_tool_calls`](./unvalidated/core_parallel_tool_calls) | 20 |
-| [`core_pdf_ocr`](./unvalidated/core_pdf_ocr) | 20 |
 | [`core_tool_selection_at_scale`](./unvalidated/core_tool_selection_at_scale) | 64 |
 | [`core_tool_selection_under_load`](./unvalidated/core_tool_selection_under_load) | 27 |
 | [`doc_editing`](./unvalidated/doc_editing) | 4 |
@@ -125,8 +115,8 @@ npx skills add trapstreet/trapstreet-skills
 
 Then tell your coding agent: *"make a task that evaluates &lt;the thing you want measured&gt;"*.
 [`trapstreet-task-scaffold`](https://github.com/trapstreet/trapstreet-skills) interviews you on
-what counts as correct, where ground truth comes from, and how to keep the scoring ungameable,
-then writes `traptask.yaml`, `judge.py` and `grader.py`.
+what counts as correct, where ground truth comes from, and how to keep scoring ungameable, then
+writes `traptask.yaml`, `judge.py` and `grader.py`.
 
 [`mineral-species-id`](https://trapstreet.run/tasks/mineral-species-id) and
 [`karpathys-jagged-questions`](https://trapstreet.run/tasks/karpathys-jagged-questions) were
