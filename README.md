@@ -1,8 +1,27 @@
-# TrapStreet Tasks
+<p align="center">
+  <a href="https://trapstreet.run"><img src="https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/main/docs/logo.png" width="92" alt="Trapstreet"/></a>
+</p>
 
-Reference tasks for [trapstreet.run](https://trapstreet.run) — worked examples, not a
-catalogue. Anyone can publish a task from their own public repository; these exist to show what
-one looks like when it's done properly.
+<h1 align="center">TrapStreet Tasks</h1>
+
+<p align="center">
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"/></a>
+  <a href="https://trapstreet.run"><img src="https://img.shields.io/badge/trapstreet.run-live-60a5fa" alt="trapstreet.run"/></a>
+  <a href="https://discord.gg/Ymm57FzYmF"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord"/></a>
+  <a href="./RESULTS.md"><img src="https://img.shields.io/badge/results-measured-a78bfa" alt="Results"/></a>
+</p>
+
+<p align="center">
+  <b>Open evaluation tasks — the hard half is the judge.</b><br/>
+  <a href="https://trapstreet.run">trapstreet.run</a>
+</p>
+
+Anyone can write 20 test cases. What decides whether an evaluation is worth anything is whether
+its **judge** survives contact with a real solution — and in this repo, every task that got a
+first run turned out to have something wrong with that judge.
+
+These are the ones that survived, plus the ones still being fixed. Read one before writing your
+own.
 
 A task declares its **inputs**, the **expected** answers it never shows the solution, and a
 **judge** that scores one against the other. The solution runs as a subprocess, so anything
