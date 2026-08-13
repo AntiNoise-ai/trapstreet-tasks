@@ -10,21 +10,19 @@ that reads files and writes an answer can be measured — no SDK, no instrumenta
 
 ---
 
-## On trapstreet.run
+## Finished
 
-Everything in [`tasks/`](./tasks) is registered and accepting submissions. **Runs** is how many
-solutions have been measured against it — a task nobody has run yet is unproven, and being
-first on one is the cheapest way to find out whether it separates good work from bad.
+Registered on [trapstreet.run](https://trapstreet.run) and accepting submissions.
 
 | Task | What it measures | Cases | Board | Runs |
 |---|---|---|---|---|
-| [`personality/mbti_profile`](./tasks/personality/mbti_profile) | A 32-question Likert questionnaire, self-reported | 1 | [mbti-profile](https://trapstreet.run/tasks/mbti-profile) · [do-llms-dream-of-intj](https://trapstreet.run/tasks/do-llms-dream-of-intj) | **10** |
-| [`code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff) | One real file frozen just before a real bug was fixed — find it | 10 | [python-bugfix-diff](https://trapstreet.run/tasks/python-bugfix-diff) | **9** |
-| [`pdf_mixed_scan`](./tasks/pdf_mixed_scan) | A PDF where half the pages have no text layer | 20 | [pdf-mixed-scan](https://trapstreet.run/tasks/pdf-mixed-scan) | **6** |
-| [`influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) | Spotting undisclosed paid promotion | 11 | [influencer-marketing-disclosure](https://trapstreet.run/tasks/influencer-marketing-disclosure) | **6** |
-| [`pdf_reader_v2`](./tasks/pdf_reader_v2) | A UK tenancy agreement — rent, dates, clauses | 20 | [pdf-reader-v2](https://trapstreet.run/tasks/pdf-reader-v2) | **3** |
-| [`debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline) | Vendor-payout reports disagree; produce correct ones | 4 | [debug-vendor-payout-pipeline](https://trapstreet.run/tasks/debug-vendor-payout-pipeline) | **3** |
-| [`core_capability_stacking_regression`](./tasks/core_capability_stacking_regression) | Does stacking capabilities degrade any one of them? | 108 | [core-capability-stacking-regression](https://trapstreet.run/tasks/core-capability-stacking-regression) | **1** |
+| [`personality/mbti_profile`](./tasks/personality/mbti_profile) | A 32-question Likert questionnaire, self-reported | 1 | [mbti-profile](https://trapstreet.run/tasks/mbti-profile) · [do-llms-dream-of-intj](https://trapstreet.run/tasks/do-llms-dream-of-intj) | 10 |
+| [`code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff) | One real file frozen just before a real bug was fixed — find it | 10 | [python-bugfix-diff](https://trapstreet.run/tasks/python-bugfix-diff) | 9 |
+| [`pdf_mixed_scan`](./tasks/pdf_mixed_scan) | A PDF where half the pages have no text layer | 20 | [pdf-mixed-scan](https://trapstreet.run/tasks/pdf-mixed-scan) | 6 |
+| [`influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) | Spotting undisclosed paid promotion | 11 | [influencer-marketing-disclosure](https://trapstreet.run/tasks/influencer-marketing-disclosure) | 6 |
+| [`pdf_reader_v2`](./tasks/pdf_reader_v2) | A UK tenancy agreement — rent, dates, clauses | 20 | [pdf-reader-v2](https://trapstreet.run/tasks/pdf-reader-v2) | 3 |
+| [`debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline) | Vendor-payout reports disagree; produce correct ones | 4 | [debug-vendor-payout-pipeline](https://trapstreet.run/tasks/debug-vendor-payout-pipeline) | 3 |
+| [`core_capability_stacking_regression`](./tasks/core_capability_stacking_regression) | Does stacking capabilities degrade any one of them? | 108 | [core-capability-stacking-regression](https://trapstreet.run/tasks/core-capability-stacking-regression) | 1 |
 | [`core_pdf_ocr`](./tasks/core_pdf_ocr) | Reading a rendered PDF page | 20 | [core-pdf-ocr](https://trapstreet.run/tasks/core-pdf-ocr) | — |
 | [`core_needle_in_haystack`](./tasks/core_needle_in_haystack) | Finding one fact in a long document | 15 | [core-needle-in-haystack](https://trapstreet.run/tasks/core-needle-in-haystack) | — |
 | [`core_json_schema_output`](./tasks/core_json_schema_output) | Schema-conforming function calls (BFCL v4) | 20 | [core-json-schema-output](https://trapstreet.run/tasks/core-json-schema-output) | — |
@@ -74,11 +72,18 @@ the pin.
 
 ---
 
-## Unvalidated
+## Still being built
 
-Complete and runnable — `traptask.yaml`, a judge, generated cases — but not registered, so
-nothing has ever been measured against them. They live in [`unvalidated/`](./unvalidated) until
-a run shows they produce a spread rather than scoring every solution alike.
+[`unvalidated/`](./unvalidated) is work in progress, and the name is literal: **nothing here
+has been run yet, which means it isn't finished.**
+
+That sounds like a technicality. It isn't. Every task in this repo that got its first real run
+had something badly wrong with the judge — a matcher that accepted a wrong answer, a gold value
+that was itself incorrect, a scoring rule that gave every solution the same number. Writing the
+cases is the easy half. A judge only becomes trustworthy after a real solution has attacked it.
+
+So these are drafts. They will move up once a run has been through them and the judge has
+survived it.
 
 | Task | Cases |
 |---|---|
