@@ -1,0 +1,19 @@
+```json
+[
+  {
+    "name": "sheets_append_row",
+    "arguments": {
+      "sheet": "expenses log",
+      "values": ["£48.20", "client lunch", "Tuesday"]
+    }
+  },
+  {
+    "name": "mail_create_draft",
+    "arguments": {
+      "to": ["Aisha"],
+      "subject": "Reimbursement Request - Client Lunch Expense",
+      "body": "Hi Aisha,\n\nI incurred an expense of £48.20 for a client lunch on Tuesday. Please see the expenses log for the full entry.\n\nCould you process this for reimbursement?\n\nThanks"
+    }
+  }
+]
+```

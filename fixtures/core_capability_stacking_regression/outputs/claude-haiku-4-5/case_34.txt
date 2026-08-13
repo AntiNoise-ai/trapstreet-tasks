@@ -1,0 +1,18 @@
+```json
+[
+  {
+    "name": "storage_copy_object",
+    "arguments": {
+      "source_path": "/planning/renewals-model.xlsx",
+      "destination_folder": "/finance"
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "arguments": {
+      "channel": "#finance",
+      "text": "The renewals model is now available in `/finance/renewals-model.xlsx` for your rework."
+    }
+  }
+]
+```

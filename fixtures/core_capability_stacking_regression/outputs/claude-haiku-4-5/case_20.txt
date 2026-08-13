@@ -1,0 +1,7 @@
+```json
+[
+  {"name": "contacts_lookup_person", "arguments": {"name": "Dana Whitfield"}},
+  {"name": "chat_send_dm", "arguments": {"recipient": "Rob", "text": "Dana Whitfield starts Monday. Could you work through her IT setup before then?"}},
+  {"name": "calendar_create_event", "arguments": {"title": "Coffee with Dana Whitfield", "attendees": ["Dana Whitfield"], "start": "Monday 10:00", "duration_minutes": 30}}
+]
+```

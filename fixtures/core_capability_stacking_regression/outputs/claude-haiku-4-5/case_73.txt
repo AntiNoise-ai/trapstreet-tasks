@@ -1,0 +1,19 @@
+```json
+[
+  {
+    "name": "sheets_append_row",
+    "arguments": {
+      "sheet": "expenses log",
+      "values": ["October", "£212.40", "Mileage"]
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "arguments": {
+      "title": "Reconcile October mileage (£212.40) against card statement",
+      "assignee": "Aisha",
+      "due": "2024-11-05"
+    }
+  }
+]
+```

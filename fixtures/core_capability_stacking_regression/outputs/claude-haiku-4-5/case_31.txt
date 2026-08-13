@@ -1,0 +1,18 @@
+```json
+[
+  {
+    "name": "storage_copy_object",
+    "arguments": {
+      "source_path": "/planning/renewals-model.xlsx",
+      "destination_folder": "/finance"
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "arguments": {
+      "channel": "#finance",
+      "text": "Renewals model is ready for you in /finance. The original in /planning will continue to be used for year-end review, so your reworking can proceed independently."
+    }
+  }
+]
+```

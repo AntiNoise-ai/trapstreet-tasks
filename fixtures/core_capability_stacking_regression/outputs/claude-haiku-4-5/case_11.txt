@@ -1,0 +1,21 @@
+```json
+[
+  {
+    "name": "calendar_create_event",
+    "arguments": {
+      "title": "Design review",
+      "attendees": ["Priya", "Marco"],
+      "start": "10:00 Thursday",
+      "duration_minutes": 30
+    }
+  },
+  {
+    "name": "mail_create_draft",
+    "arguments": {
+      "to": ["Priya", "Marco"],
+      "subject": "Design review - Thursday 10:00",
+      "body": "Hi Priya and Marco,\n\nThis confirms our design review scheduled for Thursday at 10:00 (30 minutes).\n\nI'll be adding a couple of agenda items following my discussion with Priya's team tomorrow.\n\nLooking forward to it."
+    }
+  }
+]
+```

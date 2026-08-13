@@ -1,0 +1,6 @@
+```json
+[
+  {"name": "contacts_lookup_person", "arguments": {"name": "Dana Whitfield"}},
+  {"name": "calendar_create_event", "arguments": {"title": "Coffee with Dana Whitfield", "attendees": ["Dana Whitfield"], "start": "Monday 10:00", "duration_minutes": 30}}
+]
+```

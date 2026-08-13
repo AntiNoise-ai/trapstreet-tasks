@@ -1,0 +1,17 @@
+```json
+[
+  {
+    "name": "docs_export_pdf",
+    "arguments": {
+      "source_path": "/contracts/acme-2026.docx"
+    }
+  },
+  {
+    "name": "sheets_append_row",
+    "arguments": {
+      "sheet": "vendor register",
+      "values": ["Acme", "2026-01-09"]
+    }
+  }
+]
+```

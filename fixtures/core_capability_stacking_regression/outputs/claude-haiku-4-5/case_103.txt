@@ -1,0 +1,18 @@
+```json
+[
+  {
+    "name": "handover_register_entry",
+    "arguments": {
+      "summary": "Acme agreement audit copy placed in /audit/2026"
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "arguments": {
+      "title": "Check Acme agreement audit copy against vendor register",
+      "assignee": "Marco",
+      "due": "Friday"
+    }
+  }
+]
+```

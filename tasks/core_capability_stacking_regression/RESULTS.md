@@ -256,6 +256,8 @@ required calls is a 0.2 hit by construction, so the absolute size of the effect
 is a property of the case design, not a portable number. The *sign*, the
 *curve shape*, and the *between-model comparison* are what travel.
 
-The raw model outputs were not retained in either run, only per-case metrics.
-That is why run 2's single `unparseable` cannot be diagnosed without re-running
-the case — worth fixing in the harness before a third run.
+Runs 1 and 2 kept only per-case metrics, which is why run 2's single
+`unparseable` cannot be diagnosed without re-running the case. Run 3's raw
+outputs survive — they are checked in at `fixtures/core_capability_stacking_regression/`
+with a replay harness, so a scoring change can be evaluated against real model
+behaviour in about three seconds and no API spend.

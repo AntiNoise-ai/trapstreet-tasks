@@ -1,0 +1,27 @@
+```json
+[
+  {
+    "name": "calendar_create_event",
+    "arguments": {
+      "title": "Design review",
+      "attendees": ["Priya", "Marco"],
+      "start": "Thursday 10:00",
+      "duration_minutes": 30
+    }
+  },
+  {
+    "name": "mail_create_draft",
+    "arguments": {
+      "to": ["Priya", "Marco"],
+      "subject": "Design review - Thursday 10:00",
+      "body": "Hi Priya and Marco,\n\nThis is to confirm our design review scheduled for Thursday at 10:00.\n\nPlease see the calendar invite for details.\n\nBest regards"
+    }
+  },
+  {
+    "name": "channel_digest_post",
+    "arguments": {
+      "text": "Design review scheduled: Priya and Marco, Thursday 10:00 (30 mins)"
+    }
+  }
+]
+```

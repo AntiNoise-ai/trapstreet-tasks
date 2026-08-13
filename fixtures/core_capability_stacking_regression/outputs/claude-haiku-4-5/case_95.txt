@@ -1,0 +1,7 @@
+```json
+[
+  {"name": "contacts_lookup_person", "arguments": {"name": "Dana"}},
+  {"name": "sheets_append_row", "arguments": {"sheet": "onboarding register", "values": ["Dana", "IT setup complete"]}},
+  {"name": "chat_post_message", "arguments": {"channel": "#ops", "text": "Dana is ready to go - IT setup complete."}}
+]
+```

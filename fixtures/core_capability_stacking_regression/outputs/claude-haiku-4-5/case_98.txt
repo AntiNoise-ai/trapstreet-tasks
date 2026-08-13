@@ -1,0 +1,17 @@
+```json
+[
+  {
+    "name": "handover_register_entry",
+    "arguments": {
+      "summary": "Dana's IT setup completed by Rob"
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "arguments": {
+      "channel": "#ops",
+      "text": "Dana is ready to go - IT setup completed"
+    }
+  }
+]
+```

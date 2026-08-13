@@ -1,0 +1,19 @@
+```json
+[
+  {
+    "name": "calendar_create_event",
+    "arguments": {
+      "title": "All-hands",
+      "attendees": ["Priya", "Marco", "Aisha"],
+      "start": "Thursday 14:00",
+      "duration_minutes": 60
+    }
+  },
+  {
+    "name": "team_heads_up_post",
+    "arguments": {
+      "text": "All-hands has moved to 14:00 on Thursday (1 hour)"
+    }
+  }
+]
+```

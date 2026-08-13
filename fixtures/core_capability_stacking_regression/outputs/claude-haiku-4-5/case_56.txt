@@ -1,0 +1,24 @@
+```json
+[
+  {
+    "name": "contacts_lookup_person",
+    "arguments": {
+      "name": "Ines Barros"
+    }
+  },
+  {
+    "name": "mail_create_draft",
+    "arguments": {
+      "to": ["Ines Barros"],
+      "subject": "Re: March Invoice Query",
+      "body": "Thank you for your query regarding the March invoice. I am currently verifying the figures against our delivery notes and will provide you with a detailed response shortly."
+    }
+  },
+  {
+    "name": "followup_task_open",
+    "arguments": {
+      "title": "Verify March invoice figures for Ines Barros (Northwind) against delivery notes before sending reply"
+    }
+  }
+]
+```

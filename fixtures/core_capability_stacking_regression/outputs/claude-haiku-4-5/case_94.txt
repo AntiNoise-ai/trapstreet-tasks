@@ -1,0 +1,6 @@
+```json
+[
+  {"name": "handover_register_entry", "arguments": {"summary": "Dana's IT setup completed by Rob. Ready to go."}},
+  {"name": "chat_post_message", "arguments": {"channel": "#ops", "text": "Dana's IT setup is complete and ready to go."}}
+]
+```

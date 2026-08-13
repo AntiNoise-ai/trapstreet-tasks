@@ -1,0 +1,30 @@
+```json
+[
+  {
+    "name": "docs_export_pdf",
+    "arguments": {
+      "source_path": "/policy/travel-2026.docx"
+    }
+  },
+  {
+    "name": "docs_export_docx_copy",
+    "arguments": {
+      "source_path": "/policy/travel-2026.docx",
+      "destination_folder": "/hr/published"
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "arguments": {
+      "channel": "#general",
+      "text": "The revised travel policy for 2026 is now live. You can access it at /policy/travel-2026.docx"
+    }
+  },
+  {
+    "name": "compliance_record_action",
+    "arguments": {
+      "action": "Travel policy 2026 signed off and published to /policy and /hr/published"
+    }
+  }
+]
+```

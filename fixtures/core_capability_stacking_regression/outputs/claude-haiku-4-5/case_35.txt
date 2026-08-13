@@ -1,0 +1,37 @@
+```json
+[
+  {
+    "name": "backup_snapshot_copy",
+    "arguments": {
+      "artefact": "/planning/renewals-model.xlsx"
+    }
+  },
+  {
+    "name": "docs_export_docx_copy",
+    "arguments": {
+      "source_path": "/planning/renewals-model.xlsx",
+      "destination_folder": "/finance"
+    }
+  },
+  {
+    "name": "storage_create_shortcut",
+    "arguments": {
+      "target_path": "/planning/renewals-model.xlsx",
+      "destination_folder": "/planning"
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "arguments": {
+      "channel": "#finance",
+      "text": "The renewals model is now in your `/finance` folder and ready for reworking. The `/planning` folder will continue to reference the original for year-end review purposes."
+    }
+  },
+  {
+    "name": "compliance_record_action",
+    "arguments": {
+      "action": "Exported renewals model from /planning/renewals-model.xlsx to /finance for Finance team rework"
+    }
+  }
+]
+```

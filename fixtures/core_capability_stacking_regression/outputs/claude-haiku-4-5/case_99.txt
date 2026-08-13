@@ -1,0 +1,17 @@
+```json
+[
+  {
+    "name": "contacts_lookup_person",
+    "arguments": {
+      "name": "Dana"
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "arguments": {
+      "channel": "#ops",
+      "text": "Dana is ready to go - IT setup complete."
+    }
+  }
+]
+```

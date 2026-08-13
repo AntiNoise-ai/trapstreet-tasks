@@ -1,0 +1,7 @@
+```json
+[
+  {"name": "docs_export_pdf", "arguments": {"source_path": "/policy/travel-2026.docx"}},
+  {"name": "storage_copy_object", "arguments": {"source_path": "/policy/travel-2026.pdf", "destination_folder": "/hr/published"}},
+  {"name": "chat_post_message", "arguments": {"channel": "#general", "text": "The revised 2026 travel policy is now live. See `/policy/travel-2026.docx` for the signed record."}}
+]
+```

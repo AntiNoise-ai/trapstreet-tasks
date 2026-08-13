@@ -1,0 +1,31 @@
+```json
+[
+  {
+    "name": "docs_export_pdf",
+    "arguments": {
+      "source_path": "/policy/travel-2026.docx",
+      "destination_folder": "/policy"
+    }
+  },
+  {
+    "name": "storage_copy_object",
+    "arguments": {
+      "source_path": "/policy/travel-2026.docx",
+      "destination_folder": "/hr/published"
+    }
+  },
+  {
+    "name": "compliance_record_action",
+    "arguments": {
+      "action": "Exported travel-2026.docx to PDF for company-wide distribution and copied to /hr/published for HR annotation"
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "arguments": {
+      "channel": "#general",
+      "text": "The revised travel policy (2026) is now live. Everyone can access it at `/policy/travel-2026.pdf` for viewing. HR is managing questions and clarifications."
+    }
+  }
+]
+```

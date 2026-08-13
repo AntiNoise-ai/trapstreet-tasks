@@ -1,0 +1,19 @@
+```json
+[
+  {
+    "name": "sheets_append_row",
+    "arguments": {
+      "sheet": "vendor register",
+      "values": ["Acme", "agreement", "/audit/2026"]
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "arguments": {
+      "title": "Check Acme agreement copy against vendor register",
+      "assignee": "Marco",
+      "due": "Friday"
+    }
+  }
+]
+```

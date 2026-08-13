@@ -1,0 +1,27 @@
+```json
+[
+  {
+    "name": "contacts_lookup_person",
+    "arguments": {
+      "name": "Dana Whitfield"
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "arguments": {
+      "title": "IT setup for Dana Whitfield",
+      "assignee": "Rob",
+      "due": "Monday"
+    }
+  },
+  {
+    "name": "calendar_create_event",
+    "arguments": {
+      "title": "Coffee with Dana Whitfield",
+      "attendees": ["Dana Whitfield"],
+      "start": "10:00 Monday",
+      "duration_minutes": 30
+    }
+  }
+]
+```

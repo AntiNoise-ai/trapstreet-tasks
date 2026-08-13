@@ -1,0 +1,6 @@
+```json
+[
+  {"name": "contacts_lookup_person", "arguments": {"name": "Ines Barros"}},
+  {"name": "mail_create_draft", "arguments": {"to": ["Ines Barros"], "subject": "Re: March Invoice Query", "body": "Dear Ines,\n\nThank you for your inquiry regarding our March invoice. We are currently reviewing the figures against our delivery notes to ensure accuracy before providing you with a detailed response.\n\nWe will follow up with you shortly.\n\nBest regards"}}
+]
+```

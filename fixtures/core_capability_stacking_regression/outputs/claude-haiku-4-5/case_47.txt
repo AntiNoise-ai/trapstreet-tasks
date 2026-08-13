@@ -1,0 +1,26 @@
+```json
+[
+  {
+    "name": "docs_export_pdf",
+    "arguments": {
+      "source_path": "/board/q3-deck.docx",
+      "destination_folder": "/board"
+    }
+  },
+  {
+    "name": "storage_copy_object",
+    "arguments": {
+      "source_path": "/board/q3-deck.docx",
+      "destination_folder": "/board/archive"
+    }
+  },
+  {
+    "name": "tasks_create_item",
+    "arguments": {
+      "title": "Obtain board sign-off on Q3 deck",
+      "assignee": "Marco",
+      "due": "Friday"
+    }
+  }
+]
+```

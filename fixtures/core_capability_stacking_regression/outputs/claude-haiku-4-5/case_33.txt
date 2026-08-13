@@ -1,0 +1,24 @@
+```json
+[
+  {
+    "name": "storage_copy_object",
+    "arguments": {
+      "source_path": "/planning/renewals-model.xlsx",
+      "destination_folder": "/finance"
+    }
+  },
+  {
+    "name": "compliance_record_action",
+    "arguments": {
+      "action": "Copied /planning/renewals-model.xlsx to /finance for Finance team rework"
+    }
+  },
+  {
+    "name": "chat_post_message",
+    "arguments": {
+      "channel": "#finance",
+      "text": "Renewals model is ready for you in /finance/renewals-model.xlsx"
+    }
+  }
+]
+```
