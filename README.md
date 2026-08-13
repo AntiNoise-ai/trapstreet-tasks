@@ -224,7 +224,6 @@ is a `POST /api/tasks` away; nothing in the task itself needs to change.
 | [`tasks/spreadsheet_reader`](./tasks/spreadsheet_reader) | One aggregation question over a real `.xlsx` | 6 |
 | [`tasks/web_scraping/game_store_navigation`](./tasks/web_scraping/game_store_navigation) | Navigating a mock game storefront | 10 |
 | [`tasks/wildlife_camera_trap`](./tasks/wildlife_camera_trap) | Species ID from Serengeti camera-trap photos | 20 |
-| [`tasks/agents-in-situationship`](./tasks/agents-in-situationship) | 20 multiple-choice dating scenarios, self-reported | 1 |
 
 ### Special cases
 
