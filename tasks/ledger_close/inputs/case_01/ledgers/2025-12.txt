@@ -1,0 +1,20 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2025-12 (prior year)
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                               0.00
+2025-01-02  AR-900001               Service billed       C-FAIR      5,367.87                 5,367.87
+2025-01-04  AR-900002   DOC-27005   Payment received     C-FAIR                  5,367.87         0.00
+2025-01-11  AR-900003               Service billed       C-FAIR      7,053.58                 7,053.58
+2025-01-13  AR-900004               Invoice raised       C-DELT      3,298.77                10,352.35
+2025-01-14  AR-900005               Freight recharged    C-ANCH      2,475.20                12,827.55
+2025-01-16  AR-900006   DOC-27005   Payment received     C-FAIR                  7,053.58     5,773.97
+2025-01-16  AR-900007               Service billed       C-EAST      7,742.64                13,516.61
+2025-01-18  AR-900008               Late-payment charge  C-CEDA      8,248.35                21,764.96
+2025-01-23  AR-900009               Settlement received  C-DELT                  3,298.77    18,466.19
+2025-01-25  AR-900010               Service billed       C-FAIR      8,174.23                26,640.42
+2025-01-28  AR-900011               Service billed       C-EAST      1,204.42                27,844.84
+2025-01-30  AR-900012               Service billed       C-CEDA      7,713.72                35,558.56
+                                    Closing balance                                          35,558.56

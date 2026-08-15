@@ -1,0 +1,9 @@
+{
+  "id": "case_02",
+  "question_kind": "open_total_cp",
+  "answer": "1450.07",
+  "answer_kind": "money",
+  "months": 7,
+  "gap_month": 3,
+  "gap_entries": 3
+}

@@ -1,0 +1,20 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2025-12 (prior year)
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                               0.00
+2025-01-03  AR-900001               Invoice raised       C-DELT      3,045.94                 3,045.94
+2025-01-06  AR-900002               Invoice raised       C-BAYL      6,782.79                 9,828.73
+2025-01-10  AR-900003   DOC-16292   Settlement received  C-BAYL                  1,048.91     8,779.82
+2025-01-11  AR-900004               Goods dispatched     C-FAIR      2,777.63                11,557.45
+2025-01-12  AR-900005               Invoice raised       C-ANCH      2,374.47                13,931.92
+2025-01-14  AR-900006               Service billed       C-BAYL      3,768.01                17,699.93
+2025-01-15  AR-900007               Invoice raised       C-BAYL      3,423.54                21,123.47
+2025-01-15  AR-900008               Service billed       C-EAST      4,121.10                25,244.57
+2025-01-18  AR-900009               Payment received     C-EAST                    611.43    24,633.14
+2025-01-24  AR-900010               Invoice raised       C-FAIR      5,666.11                30,299.25
+2025-01-28  AR-900011               Invoice raised       C-ANCH      7,757.06                38,056.31
+2025-01-29  AR-900012   DOC-67332   Settlement received  C-ANCH                  6,957.32    31,098.99
+                                    Closing balance                                          31,098.99

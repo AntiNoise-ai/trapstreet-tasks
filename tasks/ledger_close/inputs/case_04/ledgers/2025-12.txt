@@ -1,0 +1,21 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2025-12 (prior year)
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                               0.00
+2025-01-05  AR-900001               Invoice raised       C-EAST      4,797.33                 4,797.33
+2025-01-08  AR-900002   DOC-53285   Payment received     C-EAST                  4,057.86       739.47
+2025-01-09  AR-900003               Freight recharged    C-DELT        538.17                 1,277.64
+2025-01-13  AR-900004               Goods dispatched     C-EAST      7,597.96                 8,875.60
+2025-01-14  AR-900005               Invoice raised       C-BAYL      5,351.33                14,226.93
+2025-01-17  AR-900006   DOC-54963   Settlement received  C-DELT                    538.17    13,688.76
+2025-01-25  AR-900007               Late-payment charge  C-EAST      1,033.47                14,722.23
+2025-01-25  AR-900008               Settlement received  C-BAYL                  3,187.06    11,535.17
+2025-01-26  AR-900009               Freight recharged    C-DELT      7,572.64                19,107.81
+2025-01-26  AR-900010               Payment received     C-EAST                  7,077.42    12,030.39
+2025-01-28  AR-900011               Invoice raised       C-EAST      1,141.03                13,171.42
+2025-01-28  AR-900012               Invoice raised       C-ANCH      1,392.99                14,564.41
+2025-01-30  AR-900013               Invoice raised       C-DELT      2,284.03                16,848.44
+                                    Closing balance                                          16,848.44

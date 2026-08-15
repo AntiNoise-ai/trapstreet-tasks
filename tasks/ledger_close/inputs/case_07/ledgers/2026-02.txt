@@ -1,0 +1,22 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2026-02
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                          43,073.85
+2026-02-01  AR-00015                Goods dispatched     C-EAST      5,593.90                48,667.75
+2026-02-03  AR-00016                Invoice raised       C-CEDW      1,285.98                49,953.73
+2026-02-04  AR-00017                Settlement received  C-ANCH                  8,225.22    41,728.51
+2026-02-10  AR-00018    DOC-56122   Payment received     C-DELT                  6,252.63    35,475.88
+2026-02-12  AR-00019                Invoice raised       C-CEDW      5,419.26                40,895.14
+2026-02-18  AR-00020                Goods dispatched     C-FAIR      7,640.21                48,535.35
+2026-02-19  AR-00021    DOC-91990   Payment received     C-CEDW                  4,460.39    44,074.96
+2026-02-19  AR-00022                Goods dispatched     C-EAST        665.89                44,740.85
+2026-02-19  AR-00023                Freight recharged    C-BAYL      2,351.21                47,092.06
+2026-02-22  AR-00024                Payment received     C-EAST                  5,588.09    41,503.97
+2026-02-23  AR-00025                Refund applied       C-CEDW                  2,863.19    38,640.78
+2026-02-25  AR-00026    DOC-57577   Payment received     C-FAIR                  1,121.43    37,519.35
+2026-02-26  AR-00027                Invoice raised       C-EAST      6,882.14                44,401.49
+2026-02-28  AR-00028                Service billed       C-BAYL      5,200.29                49,601.78
+                                    Closing balance                                          49,601.78
