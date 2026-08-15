@@ -1,0 +1,9 @@
+{
+  "id": "case_09",
+  "question_kind": "settled_total",
+  "answer": "88132.77",
+  "answer_kind": "money",
+  "months": 6,
+  "gap_month": 4,
+  "gap_entries": 3
+}

@@ -1,0 +1,19 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2026-04
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                          69,976.80
+2026-04-01  AR-00043                Invoice raised       C-CEDW      4,738.60                74,715.40
+2026-04-01  AR-00044                Invoice raised       C-EAST        787.52                75,502.92
+2026-04-02  AR-00045                Settlement received  C-DELT                  6,285.65    69,217.27
+2026-04-04  AR-00046                Goods dispatched     C-BAYL      7,426.04                76,643.31
+2026-04-04  AR-00047                Freight recharged    C-ANCH      5,303.61                81,946.92
+2026-04-05  AR-00048                Invoice raised       C-EAST      6,275.77                88,222.69
+2026-04-08  AR-00049    DOC-81205   Discount allowed     C-BAYL                  6,688.89    81,533.80
+2026-04-10  AR-00050                Invoice raised       C-BAYL      1,030.79                82,564.59
+2026-04-13  AR-00051                Goods dispatched     C-CEDW      1,108.35                83,672.94
+2026-04-14  AR-00052    DOC-10555   Payment received     C-CEDW                  3,528.41    80,144.53
+2026-04-14  AR-00053    DOC-74456   Payment received     C-CEDW                  6,622.58    73,521.95
+                                    Closing balance                                          73,521.95

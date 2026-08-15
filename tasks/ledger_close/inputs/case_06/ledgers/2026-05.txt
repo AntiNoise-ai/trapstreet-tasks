@@ -1,0 +1,17 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2026-05
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                         112,685.74
+2026-05-01  AR-00049    DOC-46565   Payment received     C-DELT                  8,295.86   104,389.88
+2026-05-04  AR-00050    DOC-99001   Payment received     C-FAIR                  3,600.50   100,789.38
+2026-05-09  AR-00051    DOC-99001   Payment received     C-FAIR                  3,193.61    97,595.77
+2026-05-12  AR-00052                Goods dispatched     C-ANCH      1,111.93                98,707.70
+2026-05-13  AR-00053                Invoice raised       C-ANCH      2,654.48               101,362.18
+2026-05-14  AR-00054                Invoice raised       C-CEDA      6,478.71               107,840.89
+2026-05-15  AR-00055    DOC-98259   Credit note issued   C-ANCH                  1,180.51   106,660.38
+2026-05-15  AR-00056    DOC-63951   Refund applied       C-CEDA                  3,370.03   103,290.35
+2026-05-15  AR-00057                Invoice raised       C-ANCH      1,926.99               105,217.34
+                                    Closing balance                                         105,217.34

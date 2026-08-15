@@ -1,0 +1,9 @@
+{
+  "id": "case_01",
+  "question_kind": "aged_open_after",
+  "answer": "110841.80",
+  "answer_kind": "money",
+  "months": 6,
+  "gap_month": 3,
+  "gap_entries": 3
+}

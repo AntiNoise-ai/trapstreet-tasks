@@ -1,0 +1,21 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2026-06
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                         151,042.66
+2026-06-05  AR-00066                Invoice raised       C-BAYL      7,201.45               158,244.11
+2026-06-05  AR-00067                Invoice raised       C-BAYL      3,808.89               162,053.00
+2026-06-10  AR-00068                Service billed       C-CEDA      2,874.54               164,927.54
+2026-06-11  AR-00069    DOC-22336   Settlement received  C-CEDA                  9,075.99   155,851.55
+2026-06-12  AR-00070                Payment received     C-EAST                  2,926.97   152,924.58
+2026-06-13  AR-00071    DOC-84280   Payment received     C-EAST                  1,162.96   151,761.62
+2026-06-15  AR-00072                Payment received     C-CEDA                  2,288.74   149,472.88
+2026-06-15  AR-00073                Invoice raised       C-DELT      6,035.61               155,508.49
+2026-06-16  AR-00074                Freight recharged    C-CEDA      7,465.21               162,973.70
+2026-06-19  AR-00075                Invoice raised       C-EAST      2,126.18               165,099.88
+2026-06-21  AR-00076                Freight recharged    C-BAYL      3,360.72               168,460.60
+2026-06-27  AR-00077                Goods dispatched     C-FAIR      1,201.90               169,662.50
+2026-06-29  AR-00078                Payment received     C-EAST                  2,126.18   167,536.32
+                                    Closing balance                                         167,536.32
