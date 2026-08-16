@@ -1,0 +1,26 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2026-08
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                         152,427.23
+2026-08-07  AR-00127                Settlement received  C-DELT                  5,816.49   146,610.74
+2026-08-07  AR-00128                Settlement received  C-BAYL                    186.79   146,423.95
+2026-08-09  AR-00129                Invoice raised       C-EAST      5,955.88               152,379.83
+2026-08-10  AR-00130                Invoice raised       C-CEDA      7,488.80               159,868.63
+2026-08-11  AR-00131                Service billed       C-EAST      2,484.36               162,352.99
+2026-08-12  AR-00132    DOC-83480   Discount allowed     C-CEDA                  7,460.52   154,892.47
+2026-08-14  AR-00133                Settlement received  C-EAST                    200.39   154,692.08
+2026-08-16  AR-00134                Invoice raised       C-EAST      6,110.00               160,802.08
+2026-08-21  AR-00135                Invoice raised       C-BAYL      4,654.82               165,456.90
+2026-08-22  AR-00136                Service billed       C-ANCH        849.58               166,306.48
+2026-08-24  AR-00137    DOC-90472   Credit note issued   C-ANCH                  3,746.38   162,560.10
+2026-08-25  AR-00138                Service billed       C-FAIR      7,784.85               170,344.95
+2026-08-26  AR-00139                Invoice raised       C-BAYL      1,723.57               172,068.52
+2026-08-28  AR-00140                Invoice raised       C-ANCH      3,496.98               175,565.50
+2026-08-28  AR-00141    DOC-71476   Payment received     C-BAYL                  4,521.58   171,043.92
+2026-08-29  AR-00142                Late-payment charge  C-EAST      5,212.28               176,256.20
+2026-08-30  AR-00143                Service billed       C-DELT        975.89               177,232.09
+2026-08-31  AR-00144                Goods dispatched     C-DELT      8,200.64               185,432.73
+                                    Closing balance                                         185,432.73

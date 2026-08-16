@@ -1,9 +1,10 @@
 {
   "id": "case_04",
   "question_kind": "aged_open_after",
-  "answer": "105074.39",
+  "answer": "142526.45",
   "answer_kind": "money",
-  "months": 7,
+  "tier": 2,
+  "months": 8,
   "gap_month": 4,
-  "gap_entries": 3
+  "gap_entries": 4
 }

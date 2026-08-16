@@ -8,7 +8,8 @@ Amounts in USD. 'Ref doc' is the document the customer's remittance advice or cr
 Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
 ------------------------------------------------------------------------------------------------------
                                     Opening balance                                               0.00
-2026-03-25  AR-00034    DOC-66863   Settlement received  C-FAIR                    877.66      -877.66
-2026-03-27  AR-00035                Service billed       C-ANCH      7,317.28                 6,439.62
-2026-03-31  AR-00036                Invoice raised       C-ANCH      9,062.68                15,502.30
-                                    Closing balance                                          15,502.30
+2026-03-20  AR-00051                Freight recharged    C-FAIR      1,381.89                 1,381.89
+2026-03-22  AR-00052                Payment received     C-ANCH                  6,295.81    -4,913.92
+2026-03-23  AR-00053    DOC-64436   Settlement received  C-CEDW                    951.89    -5,865.81
+2026-03-30  AR-00054                Service billed       C-FAIR      3,718.97                -2,146.84
+                                    Closing balance                                          -2,146.84

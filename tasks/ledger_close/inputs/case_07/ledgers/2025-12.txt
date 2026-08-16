@@ -5,18 +5,26 @@ Amounts in USD. 'Ref doc' is the document the customer's remittance advice or cr
 Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
 ------------------------------------------------------------------------------------------------------
                                     Opening balance                                               0.00
-2025-01-05  AR-900001               Service billed       C-DELT      8,152.77                 8,152.77
-2025-01-07  AR-900002               Freight recharged    C-EAST      7,416.64                15,569.41
-2025-01-07  AR-900003               Goods dispatched     C-ANCH      3,535.60                19,105.01
-2025-01-08  AR-900004               Goods dispatched     C-FAIR      3,167.50                22,272.51
-2025-01-09  AR-900005   DOC-18501   Discount allowed     C-FAIR                  3,167.50    19,105.01
-2025-01-11  AR-900006               Invoice raised       C-DELT      5,857.08                24,962.09
-2025-01-17  AR-900007   DOC-91442   Settlement received  C-EAST                  5,131.64    19,830.45
-2025-01-19  AR-900008   DOC-92842   Payment received     C-DELT                  5,131.28    14,699.17
-2025-01-21  AR-900009               Goods dispatched     C-ANCH      7,253.01                21,952.18
-2025-01-23  AR-900010               Payment received     C-DELT                  6,824.94    15,127.24
-2025-01-26  AR-900011               Service billed       C-BAYL      5,240.16                20,367.40
-2025-01-27  AR-900012               Invoice raised       C-ANCH      5,147.77                25,515.17
-2025-01-28  AR-900013               Goods dispatched     C-CEDA      5,055.07                30,570.24
-2025-01-30  AR-900014               Service billed       C-DELT      9,069.08                39,639.32
-                                    Closing balance                                          39,639.32
+2025-01-05  AR-900001               Goods dispatched     C-CEDA      4,419.52                 4,419.52
+2025-01-14  AR-900002               Invoice raised       C-BAYL      4,607.92                 9,027.44
+2025-01-17  AR-900003               Invoice raised       C-EAST      4,845.18                13,872.62
+2025-01-17  AR-900004   DOC-80142   Refund applied       C-BAYL                  4,328.42     9,544.20
+2025-01-17  AR-900005               Invoice raised       C-DELT      4,228.06                13,772.26
+2025-01-18  AR-900006               Payment received     C-EAST                  4,845.18     8,927.08
+2025-01-19  AR-900007   DOC-80142   Credit note issued   C-BAYL                    279.50     8,647.58
+2025-01-20  AR-900008               Invoice raised       C-ANCH      7,589.40                16,236.98
+2025-01-21  AR-900009               Invoice raised       C-BAYL      1,960.24                18,197.22
+2025-01-22  AR-900010   DOC-80142   Payment received     C-BAYL                  2,156.26    16,040.96
+2025-01-23  AR-900011               Invoice raised       C-CEDA      2,851.70                18,892.66
+2025-01-23  AR-900012               Goods dispatched     C-DELT      5,606.81                24,499.47
+2025-01-23  AR-900013               Service billed       C-BAYL      5,758.30                30,257.77
+2025-01-23  AR-900014               Invoice raised       C-EAST      9,002.30                39,260.07
+2025-01-24  AR-900015               Settlement received  C-DELT                  2,205.95    37,054.12
+2025-01-24  AR-900016               Refund applied       C-BAYL                  5,758.30    31,295.82
+2025-01-25  AR-900017               Payment received     C-ANCH                  7,589.40    23,706.42
+2025-01-25  AR-900018               Service billed       C-BAYL      2,648.71                26,355.13
+2025-01-25  AR-900019               Invoice raised       C-EAST      7,457.03                33,812.16
+2025-01-26  AR-900020               Service billed       C-EAST        974.20                34,786.36
+2025-01-28  AR-900021   DOC-37026   Payment received     C-BAYL                  2,913.58    31,872.78
+2025-01-29  AR-900022   DOC-37024   Payment received     C-CEDA                  7,108.19    24,764.59
+                                    Closing balance                                          24,764.59

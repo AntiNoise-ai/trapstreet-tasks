@@ -14,7 +14,7 @@ what you are reading before you use it.
 
 ## Question
 
-How much did Anchor Distributors still owe at the end of the year?
+How much of everything billed during the year had been settled in full by the end of it?
 
 ## Output
 

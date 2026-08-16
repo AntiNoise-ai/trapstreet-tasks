@@ -8,7 +8,7 @@ Amounts in USD. 'Ref doc' is the document the customer's remittance advice or cr
 Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
 ------------------------------------------------------------------------------------------------------
                                     Opening balance                                               0.00
-2026-04-21  AR-00054                Service billed       C-EAST      6,347.04                 6,347.04
-2026-04-25  AR-00055                Freight recharged    C-ANCH        724.02                 7,071.06
-2026-04-28  AR-00056                Late-payment charge  C-CEDW      2,328.49                 9,399.55
-                                    Closing balance                                           9,399.55
+2026-04-26  AR-00050                Refund applied       C-EAST                  2,247.83    -2,247.83
+2026-04-26  AR-00051                Service billed       C-DELT      5,687.53                 3,439.70
+2026-04-29  AR-00052                Invoice raised       C-DELT      7,350.16                10,789.86
+                                    Closing balance                                          10,789.86

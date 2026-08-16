@@ -1,0 +1,15 @@
+Late-posted entries for 2026-06, booked after that month's extract was taken.
+These entries are part of account 1200 and of the 2026 close.
+
+Accounts Receivable — Account 1200 Trade Debtors — 2026-06 supplement
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                               0.00
+2026-06-28  AR-00105                Invoice raised       C-DELT        921.42                   921.42
+2026-06-29  AR-00106                Freight recharged    C-BAYL      7,338.44                 8,259.86
+2026-06-30  AR-00107                Late-payment charge  C-ANCH      6,809.93                15,069.79
+2026-06-30  AR-00108                Discount allowed     C-DELT                  7,835.35     7,234.44
+                                    Closing balance                                           7,234.44

@@ -5,35 +5,29 @@ dirs:
 
 cases:
 - id: case_01
-  description: "6-month close, aged open after; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, aged_open_after]
+  description: "tier 1: 6-month close, aged open after"
+  tags: [ledger_close, accounting, aged_open_after, tier1]
 - id: case_02
-  description: "7-month close, open total cp; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, open_total_cp]
+  description: "tier 1: 6-month close, settled total"
+  tags: [ledger_close, accounting, settled_total, tier1]
 - id: case_03
-  description: "6-month close, settled total; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, settled_total]
+  description: "tier 1: 6-month close, open total cp"
+  tags: [ledger_close, accounting, open_total_cp, tier1]
 - id: case_04
-  description: "7-month close, aged open after; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, aged_open_after]
+  description: "tier 2: 8-month close, aged open after"
+  tags: [ledger_close, accounting, aged_open_after, tier2]
 - id: case_05
-  description: "6-month close, open total cp; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, open_total_cp]
+  description: "tier 2: 8-month close, settled total"
+  tags: [ledger_close, accounting, settled_total, tier2]
 - id: case_06
-  description: "7-month close, settled total; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, settled_total]
+  description: "tier 2: 8-month close, open total cp"
+  tags: [ledger_close, accounting, open_total_cp, tier2]
 - id: case_07
-  description: "6-month close, aged open after; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, aged_open_after]
+  description: "tier 3: 10-month close, aged open after"
+  tags: [ledger_close, accounting, aged_open_after, tier3]
 - id: case_08
-  description: "7-month close, open total cp; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, open_total_cp]
-- id: case_09
-  description: "6-month close, settled total; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, settled_total]
-- id: case_10
-  description: "7-month close, aged open after; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-  tags: [ledger_close, accounting, aged_open_after]
+  description: "tier 3: 10-month close, settled total"
+  tags: [ledger_close, accounting, settled_total, tier3]
 
 judge:
   cmd: python3 judge.py

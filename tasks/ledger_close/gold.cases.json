@@ -1,135 +1,117 @@
 {
-  "_doc": "Source of truth for ledger_close. inputs/, expected/ and traptask.yaml are GENERATED. No answers here.",
+  "_doc": "Source of truth for ledger_close. inputs/, expected/ and traptask.yaml are GENERATED. No answers here: each case declares only its shape (question kind, seed, months, entries per month, difficulty tier).",
   "cases": [
     {
       "id": "case_01",
       "question": "aged_open_after",
-      "seed": 202280,
+      "seed": 3000248,
       "months": 6,
-      "per_month": 12,
+      "per_month": 13,
+      "tier": 1,
       "tags": [
         "ledger_close",
         "accounting",
         "aged_open_after"
       ],
-      "description": "6-month close, aged open after; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
+      "description": "tier 1: 6-month close, aged open after"
     },
     {
       "id": "case_02",
-      "question": "open_total_cp",
-      "seed": 202299,
-      "months": 7,
-      "per_month": 12,
-      "tags": [
-        "ledger_close",
-        "accounting",
-        "open_total_cp"
-      ],
-      "description": "7-month close, open total cp; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-    },
-    {
-      "id": "case_03",
       "question": "settled_total",
-      "seed": 202337,
+      "seed": 3000527,
       "months": 6,
-      "per_month": 14,
+      "per_month": 13,
+      "tier": 1,
       "tags": [
         "ledger_close",
         "accounting",
         "settled_total"
       ],
-      "description": "6-month close, settled total; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
+      "description": "tier 1: 6-month close, settled total"
+    },
+    {
+      "id": "case_03",
+      "question": "open_total_cp",
+      "seed": 3000961,
+      "months": 6,
+      "per_month": 13,
+      "tier": 1,
+      "tags": [
+        "ledger_close",
+        "accounting",
+        "open_total_cp"
+      ],
+      "description": "tier 1: 6-month close, open total cp"
     },
     {
       "id": "case_04",
       "question": "aged_open_after",
-      "seed": 202394,
-      "months": 7,
-      "per_month": 13,
+      "seed": 3001054,
+      "months": 8,
+      "per_month": 18,
+      "tier": 2,
       "tags": [
         "ledger_close",
         "accounting",
         "aged_open_after"
       ],
-      "description": "7-month close, aged open after; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
+      "description": "tier 2: 8-month close, aged open after"
     },
     {
       "id": "case_05",
-      "question": "open_total_cp",
-      "seed": 202679,
-      "months": 6,
-      "per_month": 13,
-      "tags": [
-        "ledger_close",
-        "accounting",
-        "open_total_cp"
-      ],
-      "description": "6-month close, open total cp; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-    },
-    {
-      "id": "case_06",
       "question": "settled_total",
-      "seed": 203097,
-      "months": 7,
-      "per_month": 12,
+      "seed": 3001085,
+      "months": 8,
+      "per_month": 18,
+      "tier": 2,
       "tags": [
         "ledger_close",
         "accounting",
         "settled_total"
       ],
-      "description": "7-month close, settled total; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
+      "description": "tier 2: 8-month close, settled total"
+    },
+    {
+      "id": "case_06",
+      "question": "open_total_cp",
+      "seed": 3001116,
+      "months": 8,
+      "per_month": 18,
+      "tier": 2,
+      "tags": [
+        "ledger_close",
+        "accounting",
+        "open_total_cp"
+      ],
+      "description": "tier 2: 8-month close, open total cp"
     },
     {
       "id": "case_07",
       "question": "aged_open_after",
-      "seed": 203306,
-      "months": 6,
-      "per_month": 14,
+      "seed": 3001147,
+      "months": 10,
+      "per_month": 22,
+      "tier": 3,
       "tags": [
         "ledger_close",
         "accounting",
         "aged_open_after"
       ],
-      "description": "6-month close, aged open after; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
+      "description": "tier 3: 10-month close, aged open after"
     },
     {
       "id": "case_08",
-      "question": "open_total_cp",
-      "seed": 203363,
-      "months": 7,
-      "per_month": 14,
-      "tags": [
-        "ledger_close",
-        "accounting",
-        "open_total_cp"
-      ],
-      "description": "7-month close, open total cp; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-    },
-    {
-      "id": "case_09",
       "question": "settled_total",
-      "seed": 203895,
-      "months": 6,
-      "per_month": 12,
+      "seed": 3001178,
+      "months": 10,
+      "per_month": 22,
+      "tier": 3,
       "tags": [
         "ledger_close",
         "accounting",
         "settled_total"
       ],
-      "description": "6-month close, settled total; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
-    },
-    {
-      "id": "case_10",
-      "question": "aged_open_after",
-      "seed": 204427,
-      "months": 7,
-      "per_month": 12,
-      "tags": [
-        "ledger_close",
-        "accounting",
-        "aged_open_after"
-      ],
-      "description": "7-month close, aged open after; supplement gap, decoy prior-year ledger, re-coded customer, mid-year policy change."
+      "description": "tier 3: 10-month close, settled total"
     }
   ]
 }

@@ -14,7 +14,7 @@ import os
 from collections import Counter
 
 PASS_THRESHOLD = 0.5
-CATEGORY_FIELD = "category"  # change to match your judge.py's metrics dict, or None to disable
+CATEGORY_FIELD = "tier"  # change to match your judge.py's metrics dict, or None to disable
 
 
 def main() -> None:

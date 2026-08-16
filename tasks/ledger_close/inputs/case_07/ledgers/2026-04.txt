@@ -4,19 +4,27 @@ Amounts in USD. 'Ref doc' is the document the customer's remittance advice or cr
 
 Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
 ------------------------------------------------------------------------------------------------------
-                                    Opening balance                                          94,288.15
-2026-04-04  AR-00043    DOC-97830   Payment received     C-ANCH                    597.24    93,690.91
-2026-04-06  AR-00044    DOC-92672   Payment received     C-BAYL                  4,747.23    88,943.68
-2026-04-08  AR-00045                Settlement received  C-CEDW                  3,754.23    85,189.45
-2026-04-08  AR-00046    DOC-17012   Payment received     C-DELT                  2,005.28    83,184.17
-2026-04-11  AR-00047                Service billed       C-BAYL      3,218.95                86,403.12
-2026-04-12  AR-00048    DOC-23394   Credit note issued   C-FAIR                  5,941.54    80,461.58
-2026-04-16  AR-00049                Invoice raised       C-DELT      7,039.73                87,501.31
-2026-04-21  AR-00050                Goods dispatched     C-DELT      5,810.40                93,311.71
-2026-04-23  AR-00051    DOC-25148   Payment received     C-DELT                  3,903.58    89,408.13
-2026-04-25  AR-00052                Invoice raised       C-FAIR      8,924.31                98,332.44
-2026-04-26  AR-00053                Invoice raised       C-CEDW      1,633.75                99,966.19
-2026-04-27  AR-00054                Service billed       C-FAIR      6,457.15               106,423.34
-2026-04-27  AR-00055    DOC-96138   Settlement received  C-CEDW                  8,438.98    97,984.36
-2026-04-27  AR-00056                Invoice raised       C-BAYL      7,682.27               105,666.63
-                                    Closing balance                                         105,666.63
+                                    Opening balance                                          83,588.98
+2026-04-04  AR-00067                Invoice raised       C-DELT        820.44                84,409.42
+2026-04-05  AR-00068                Payment received     C-CEDW                  7,320.29    77,089.13
+2026-04-05  AR-00069    DOC-79701   Settlement received  C-BAYL                  3,231.94    73,857.19
+2026-04-06  AR-00070                Invoice raised       C-FAIR      1,653.40                75,510.59
+2026-04-08  AR-00071                Payment received     C-DELT                  1,182.07    74,328.52
+2026-04-10  AR-00072                Refund applied       C-CEDW                    454.49    73,874.03
+2026-04-11  AR-00073                Invoice raised       C-EAST      5,800.34                79,674.37
+2026-04-12  AR-00074                Service billed       C-DELT        219.58                79,893.95
+2026-04-13  AR-00075    DOC-93746   Credit note issued   C-DELT                  4,292.85    75,601.10
+2026-04-13  AR-00076                Goods dispatched     C-CEDW      5,964.31                81,565.41
+2026-04-14  AR-00077                Invoice raised       C-BAYL        906.52                82,471.93
+2026-04-14  AR-00078                Service billed       C-DELT      4,882.20                87,354.13
+2026-04-14  AR-00079                Invoice raised       C-FAIR      8,991.90                96,346.03
+2026-04-15  AR-00080                Service billed       C-FAIR      9,323.99               105,670.02
+2026-04-19  AR-00081                Invoice raised       C-DELT      5,582.01               111,252.03
+2026-04-19  AR-00082                Invoice raised       C-DELT      6,446.33               117,698.36
+2026-04-19  AR-00083                Payment received     C-ANCH                  8,032.89   109,665.47
+2026-04-20  AR-00084    DOC-37026   Payment received     C-CEDW                  4,448.01   105,217.46
+2026-04-21  AR-00085                Refund applied       C-DELT                  8,368.17    96,849.29
+2026-04-26  AR-00086    DOC-68502   Payment received     C-DELT                  4,346.97    92,502.32
+2026-04-28  AR-00087                Payment received     C-DELT                  2,194.01    90,308.31
+2026-04-29  AR-00088                Service billed       C-EAST      9,376.57                99,684.88
+                                    Closing balance                                          99,684.88

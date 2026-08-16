@@ -100,14 +100,24 @@ added after a calibration run produced a result it turned out not to deserve.
 ## Calibration
 
 `months`, `per_month`, the size of the supplement, the number of decoy files
-and `MIN_CHANGE_EVIDENCE` are the knobs. Measured against a bare DeepSeek
+and `MIN_CHANGE_EVIDENCE` are the knobs. Cases carry a `tier` so the grader
+reports accuracy per tier, which is what makes a saturating band visible
+before the whole board saturates. Measured against a bare DeepSeek
 Harness (no plugins, default model):
 
 | build | score | mean wall-clock |
 |---|---|---|
 | single-shot (`ledger_audit`) | 9–10 / 10 | 9–399 s |
-| 8–12 months × 18–28 entries | 1 / 10 | 1625 s |
-| 6–7 months × 12–14 entries | 6 / 10 | 509 s |
+| 10 uniform cases, 8–12 months × 18–28 entries | 1 / 10 | 1625 s |
+| 10 uniform cases, 6–7 months × 12–14 entries | 7 / 10 | 504 s |
+| this build — 3 / 3 / 2 across three tiers | pending | pending |
+
+The two ten-case figures are the only reliable ones. Intermediate
+configurations were probed at n=2 and n=3 and every result sat inside the
+noise: with per-question success near 0.5–0.7, a two-case probe cannot tell
+50% from 70%. This build's tiers are assembled from the two measured anchors
+rather than from those probes, and its own figure will come from a ten-case
+run.
 
 Calibrate with repeated trials, not single runs. Per-question success rates on
 this family sit well away from 0 and 1, and a single run cannot distinguish a

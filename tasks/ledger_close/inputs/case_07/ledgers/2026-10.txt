@@ -1,0 +1,30 @@
+Accounts Receivable — Account 1200 Trade Debtors — 2026-10
+Amounts in USD. 'Ref doc' is the document the customer's remittance advice or credit note cites; resolve it through index/documents.csv.
+'Cust' is a counterparty code; see masters/counterparties.csv.
+
+Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
+------------------------------------------------------------------------------------------------------
+                                    Opening balance                                         178,893.34
+2026-10-01  AR-00199                Invoice raised       C-BAYL      6,172.48               185,065.82
+2026-10-04  AR-00200    DOC-46739   Credit note issued   C-FAIR                  9,342.72   175,723.10
+2026-10-04  AR-00201                Payment received     C-CEDA                  5,597.41   170,125.69
+2026-10-06  AR-00202                Invoice raised       C-DELT      2,227.87               172,353.56
+2026-10-06  AR-00203                Refund applied       C-BAYL                  2,840.31   169,513.25
+2026-10-06  AR-00204                Payment received     C-FAIR                  2,705.93   166,807.32
+2026-10-06  AR-00205    DOC-46739   Settlement received  C-FAIR                  5,404.76   161,402.56
+2026-10-07  AR-00206                Payment received     C-ANCH                  9,072.27   152,330.29
+2026-10-12  AR-00207                Service billed       C-FAIR      8,880.17               161,210.46
+2026-10-13  AR-00208    DOC-28369   Payment received     C-DELT                  2,619.52   158,590.94
+2026-10-16  AR-00209                Invoice raised       C-CEDA      3,539.06               162,130.00
+2026-10-18  AR-00210                Invoice raised       C-EAST      4,451.22               166,581.22
+2026-10-19  AR-00211                Freight recharged    C-CEDA      6,687.32               173,268.54
+2026-10-19  AR-00212    DOC-46837   Credit note issued   C-FAIR                  6,583.34   166,685.20
+2026-10-19  AR-00213                Goods dispatched     C-DELT      8,313.49               174,998.69
+2026-10-20  AR-00214                Service billed       C-BAYL      7,237.72               182,236.41
+2026-10-23  AR-00215                Service billed       C-DELT      7,214.11               189,450.52
+2026-10-23  AR-00216                Invoice raised       C-FAIR      8,862.68               198,313.20
+2026-10-24  AR-00217                Payment received     C-DELT                  8,616.03   189,697.17
+2026-10-24  AR-00218                Discount allowed     C-EAST                  2,429.26   187,267.91
+2026-10-25  AR-00219                Goods dispatched     C-FAIR        492.55               187,760.46
+2026-10-26  AR-00220                Service billed       C-DELT      8,417.92               196,178.38
+                                    Closing balance                                         196,178.38
