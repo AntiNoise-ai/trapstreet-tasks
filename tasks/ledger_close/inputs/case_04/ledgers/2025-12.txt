@@ -5,22 +5,17 @@ Amounts in USD. 'Ref doc' is the document the customer's remittance advice or cr
 Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
 ------------------------------------------------------------------------------------------------------
                                     Opening balance                                               0.00
-2025-01-01  AR-900001               Invoice raised       C-EAST      1,562.37                 1,562.37
-2025-01-02  AR-900002               Late-payment charge  C-FAIR      6,302.45                 7,864.82
-2025-01-04  AR-900003               Goods dispatched     C-DELT      4,046.15                11,910.97
-2025-01-04  AR-900004               Invoice raised       C-ANCH      5,552.18                17,463.15
-2025-01-06  AR-900005               Service billed       C-DELT      7,364.93                24,828.08
-2025-01-08  AR-900006               Invoice raised       C-BAYL      6,289.54                31,117.62
-2025-01-10  AR-900007               Late-payment charge  C-EAST      3,012.51                34,130.13
-2025-01-12  AR-900008   DOC-91458   Settlement received  C-ANCH                  5,552.18    28,577.95
-2025-01-18  AR-900009   DOC-52681   Settlement received  C-BAYL                  6,289.54    22,288.41
-2025-01-19  AR-900010               Invoice raised       C-FAIR      3,854.81                26,143.22
-2025-01-20  AR-900011               Invoice raised       C-EAST      9,297.47                35,440.69
-2025-01-23  AR-900012   DOC-62917   Discount allowed     C-DELT                  8,388.75    27,051.94
-2025-01-24  AR-900013               Goods dispatched     C-BAYL      5,286.47                32,338.41
-2025-01-25  AR-900014               Invoice raised       C-CEDA      7,314.74                39,653.15
-2025-01-27  AR-900015               Late-payment charge  C-DELT      1,125.39                40,778.54
-2025-01-28  AR-900016               Service billed       C-EAST        539.17                41,317.71
-2025-01-28  AR-900017   DOC-52681   Settlement received  C-BAYL                  5,815.12    35,502.59
-2025-01-31  AR-900018               Service billed       C-ANCH        467.36                35,969.95
-                                    Closing balance                                          35,969.95
+2025-01-05  AR-900001               Invoice raised       C-EAST      4,797.33                 4,797.33
+2025-01-08  AR-900002   DOC-53285   Payment received     C-EAST                  4,057.86       739.47
+2025-01-09  AR-900003               Freight recharged    C-DELT        538.17                 1,277.64
+2025-01-13  AR-900004               Goods dispatched     C-EAST      7,597.96                 8,875.60
+2025-01-14  AR-900005               Invoice raised       C-BAYL      5,351.33                14,226.93
+2025-01-17  AR-900006   DOC-54963   Settlement received  C-DELT                    538.17    13,688.76
+2025-01-25  AR-900007               Late-payment charge  C-EAST      1,033.47                14,722.23
+2025-01-25  AR-900008               Settlement received  C-BAYL                  3,187.06    11,535.17
+2025-01-26  AR-900009               Freight recharged    C-DELT      7,572.64                19,107.81
+2025-01-26  AR-900010               Payment received     C-EAST                  7,077.42    12,030.39
+2025-01-28  AR-900011               Invoice raised       C-EAST      1,141.03                13,171.42
+2025-01-28  AR-900012               Invoice raised       C-ANCH      1,392.99                14,564.41
+2025-01-30  AR-900013               Invoice raised       C-DELT      2,284.03                16,848.44
+                                    Closing balance                                          16,848.44

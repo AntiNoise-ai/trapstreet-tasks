@@ -1,19 +1,18 @@
 Allocation memo — Accounts Receivable
 
-Cash and credit notes are allocated to open invoices under the allocation policy in force. The schedule below records how each receipt was allocated. It has been worked through to 2026-03-27 and stops there; the remainder of the year has not yet been allocated.
+Cash and credit notes are allocated to open invoices under the allocation policy in force. The schedule below records how each receipt was allocated. It has been worked through to 2026-05-10 and stops there; the remainder of the year has not yet been allocated.
 
 Cash received in excess of what the customer owed at that moment is parked as unapplied. This account does not carry unapplied cash forward against invoices raised later.
 
 Date        Voucher     Ref doc          Amount   Allocated to
 ----------------------------------------------------------------------------------------------------
-2026-01-15  AR-00009                   3,896.62   AR-00007 3,896.62
-2026-02-22  AR-00020    DOC-64574        510.73   AR-00001 510.73
-2026-02-23  AR-00021    DOC-51463      2,005.19   AR-00017 2,005.19
-2026-02-24  AR-00022    DOC-67910      3,624.15   AR-00006 3,624.15
-2026-02-25  AR-00023                   6,952.57   AR-00002 2,798.45  AR-00010 4,154.12
-2026-02-25  AR-00024                   3,201.01   AR-00001 1,054.86  AR-00018 2,146.15
-2026-02-27  AR-00026    DOC-63211      7,617.97   AR-00004 1,777.90  AR-00006 5,419.81  AR-00025 420.26
-2026-03-06  AR-00027    DOC-17423      6,084.10   AR-00007 560.16  AR-00012 4,906.51  AR-00019 617.43
-2026-03-18  AR-00033    DOC-93828      8,263.58   AR-00013 7,645.12  AR-00015 618.46
-2026-03-23  AR-00035    DOC-47762      8,483.33   AR-00003 4,091.31  AR-00005 4,392.02
-2026-03-27  AR-00038    DOC-90544      1,813.07   AR-00019 1,813.07
+2026-01-29  AR-00011                   1,156.82   AR-00008 1,156.82
+2026-02-01  AR-00013                   3,834.66   AR-00001 3,834.66
+2026-02-02  AR-00014    DOC-68947      4,985.93   AR-00010 4,985.93
+2026-02-23  AR-00020    DOC-92368        254.85   AR-00007 254.85
+2026-03-08  AR-00026    DOC-76092      7,483.12   AR-00024 2,192.72  AR-00021 5,290.40
+2026-03-30  AR-00036    DOC-50823      8,002.65   AR-00031 8,002.65
+2026-04-07  AR-00041    DOC-67928      5,143.02   AR-00031 118.39  AR-00034 3,479.60  AR-00037 1,545.03
+2026-04-09  AR-00042    DOC-11992      4,408.36   AR-00006 4,408.36
+2026-04-17  AR-00045                   3,864.42   AR-00001 3,864.42
+2026-05-10  AR-00053    DOC-48048      8,511.74   AR-00008 5,918.13  AR-00019 2,593.61

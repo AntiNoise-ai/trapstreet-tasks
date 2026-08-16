@@ -4,27 +4,16 @@ Amounts in USD. 'Ref doc' is the document the customer's remittance advice or cr
 
 Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
 ------------------------------------------------------------------------------------------------------
-                                    Opening balance                                         101,977.78
-2026-04-03  AR-00067                Service billed       C-DELT      4,027.40               106,005.18
-2026-04-08  AR-00068                Payment received     C-EAST                  2,608.01   103,397.17
-2026-04-09  AR-00069                Goods dispatched     C-EAST      3,876.83               107,274.00
-2026-04-10  AR-00070                Service billed       C-DELT      4,154.71               111,428.71
-2026-04-11  AR-00071                Payment received     C-DELT                    576.84   110,851.87
-2026-04-11  AR-00072                Invoice raised       C-EAST      2,859.10               113,710.97
-2026-04-12  AR-00073    DOC-61028   Payment received     C-FAIR                  5,303.24   108,407.73
-2026-04-17  AR-00074    DOC-37282   Credit note issued   C-ANCH                  3,982.92   104,424.81
-2026-04-18  AR-00075                Late-payment charge  C-ANCH      7,224.56               111,649.37
-2026-04-18  AR-00076                Late-payment charge  C-CEDW      6,408.42               118,057.79
-2026-04-19  AR-00077                Invoice raised       C-BAYL      8,835.75               126,893.54
-2026-04-21  AR-00078                Payment received     C-BAYL                    861.82   126,031.72
-2026-04-23  AR-00079                Service billed       C-ANCH      6,804.00               132,835.72
-2026-04-24  AR-00080                Invoice raised       C-EAST        569.08               133,404.80
-2026-04-25  AR-00081                Settlement received  C-DELT                  4,230.55   129,174.25
-2026-04-25  AR-00082                Invoice raised       C-FAIR      5,488.36               134,662.61
-2026-04-26  AR-00083                Settlement received  C-EAST                  3,875.44   130,787.17
-2026-04-26  AR-00084                Goods dispatched     C-DELT      5,189.48               135,976.65
-2026-04-28  AR-00085                Invoice raised       C-BAYL      3,770.93               139,747.58
-2026-04-28  AR-00086    DOC-25144   Credit note issued   C-CEDW                  8,903.68   130,843.90
-2026-04-30  AR-00087                Service billed       C-ANCH      4,130.49               134,974.39
-2026-04-30  AR-00088                Goods dispatched     C-EAST      4,543.85               139,518.24
-                                    Closing balance                                         139,518.24
+                                    Opening balance                                          69,976.80
+2026-04-01  AR-00043                Invoice raised       C-CEDW      4,738.60                74,715.40
+2026-04-01  AR-00044                Invoice raised       C-EAST        787.52                75,502.92
+2026-04-02  AR-00045                Settlement received  C-DELT                  6,285.65    69,217.27
+2026-04-04  AR-00046                Goods dispatched     C-BAYL      7,426.04                76,643.31
+2026-04-04  AR-00047                Freight recharged    C-ANCH      5,303.61                81,946.92
+2026-04-05  AR-00048                Invoice raised       C-EAST      6,275.77                88,222.69
+2026-04-08  AR-00049    DOC-81205   Discount allowed     C-BAYL                  6,688.89    81,533.80
+2026-04-10  AR-00050                Invoice raised       C-BAYL      1,030.79                82,564.59
+2026-04-13  AR-00051                Goods dispatched     C-CEDW      1,108.35                83,672.94
+2026-04-14  AR-00052    DOC-10555   Payment received     C-CEDW                  3,528.41    80,144.53
+2026-04-14  AR-00053    DOC-74456   Payment received     C-CEDW                  6,622.58    73,521.95
+                                    Closing balance                                          73,521.95

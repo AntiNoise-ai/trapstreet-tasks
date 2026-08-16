@@ -4,23 +4,17 @@ Amounts in USD. 'Ref doc' is the document the customer's remittance advice or cr
 
 Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
 ------------------------------------------------------------------------------------------------------
-                                    Opening balance                                         192,555.48
-2026-06-03  AR-00091                Payment received     C-FAIR                  4,721.56   187,833.92
-2026-06-04  AR-00092    DOC-12642   Settlement received  C-EAST                    935.73   186,898.19
-2026-06-04  AR-00093                Payment received     C-FAIR                  3,410.31   183,487.88
-2026-06-05  AR-00094                Freight recharged    C-CEDA      2,967.11               186,454.99
-2026-06-06  AR-00095                Service billed       C-ANCH      2,047.96               188,502.95
-2026-06-08  AR-00096                Service billed       C-DELT      5,933.29               194,436.24
-2026-06-10  AR-00097                Goods dispatched     C-EAST      9,158.58               203,594.82
-2026-06-10  AR-00098                Invoice raised       C-ANCH      7,699.23               211,294.05
-2026-06-11  AR-00099    DOC-33924   Credit note issued   C-FAIR                  5,776.97   205,517.08
-2026-06-13  AR-00100                Service billed       C-CEDA      7,357.04               212,874.12
-2026-06-14  AR-00101                Invoice raised       C-CEDA      3,550.74               216,424.86
-2026-06-15  AR-00102    DOC-61465   Payment received     C-EAST                  5,871.03   210,553.83
-2026-06-16  AR-00103                Goods dispatched     C-EAST      6,129.45               216,683.28
-2026-06-16  AR-00104                Invoice raised       C-EAST      1,577.09               218,260.37
-2026-06-21  AR-00105                Invoice raised       C-FAIR      2,167.75               220,428.12
-2026-06-24  AR-00106                Invoice raised       C-BAYL      5,188.35               225,616.47
-2026-06-25  AR-00107                Invoice raised       C-BAYL      5,201.76               230,818.23
-2026-06-30  AR-00108                Service billed       C-BAYL      1,737.71               232,555.94
-                                    Closing balance                                         232,555.94
+                                    Opening balance                                         102,229.65
+2026-06-04  AR-00061                Freight recharged    C-EAST      5,831.87               108,061.52
+2026-06-04  AR-00062                Payment received     C-DELT                  8,013.44   100,048.08
+2026-06-08  AR-00063    DOC-84284   Settlement received  C-CEDA                  3,521.05    96,527.03
+2026-06-09  AR-00064                Service billed       C-CEDA      2,906.33                99,433.36
+2026-06-10  AR-00065                Invoice raised       C-CEDA      9,007.05               108,440.41
+2026-06-12  AR-00066                Service billed       C-CEDA      5,477.97               113,918.38
+2026-06-12  AR-00067    DOC-99001   Credit note issued   C-FAIR                  6,009.92   107,908.46
+2026-06-13  AR-00068                Invoice raised       C-DELT      2,873.94               110,782.40
+2026-06-15  AR-00069                Invoice raised       C-DELT      3,661.90               114,444.30
+2026-06-18  AR-00070                Discount allowed     C-ANCH                  1,443.22   113,001.08
+2026-06-26  AR-00071                Invoice raised       C-BAYL        890.88               113,891.96
+2026-06-29  AR-00072    DOC-69417   Settlement received  C-BAYL                  5,257.36   108,634.60
+                                    Closing balance                                         108,634.60

@@ -14,7 +14,7 @@ what you are reading before you use it.
 
 ## Question
 
-How much was still owed at the end of the year on invoices billed on or after 2026-04-21?
+How much was still owed at the end of the year on invoices billed on or after 2026-03-22?
 
 ## Output
 

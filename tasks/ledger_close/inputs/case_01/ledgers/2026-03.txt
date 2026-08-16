@@ -4,18 +4,14 @@ Amounts in USD. 'Ref doc' is the document the customer's remittance advice or cr
 
 Date        Voucher     Ref doc     Narration            Cust           Debit      Credit      Balance
 ------------------------------------------------------------------------------------------------------
-                                    Opening balance                                          65,338.18
-2026-03-06  AR-00027    DOC-17423   Credit note issued   C-ANCH                  6,084.10    59,254.08
-2026-03-07  AR-00028                Freight recharged    C-EAST      6,744.86                65,998.94
-2026-03-08  AR-00029                Invoice raised       C-EAST      2,700.53                68,699.47
-2026-03-12  AR-00030                Invoice raised       C-EAST      5,052.79                73,752.26
-2026-03-15  AR-00031                Freight recharged    C-ANCH      8,828.52                82,580.78
-2026-03-17  AR-00032                Goods dispatched     C-DELT      9,255.23                91,836.01
-2026-03-18  AR-00033    DOC-93828   Credit note issued   C-DELT                  8,263.58    83,572.43
-2026-03-22  AR-00034                Invoice raised       C-FAIR      1,362.18                84,934.61
-2026-03-23  AR-00035    DOC-47762   Payment received     C-FAIR                  8,483.33    76,451.28
-2026-03-23  AR-00036                Service billed       C-DELT      6,692.88                83,144.16
-2026-03-27  AR-00037                Service billed       C-FAIR      7,906.33                91,050.49
-2026-03-27  AR-00038    DOC-90544   Settlement received  C-ANCH                  1,813.07    89,237.42
-2026-03-29  AR-00039                Payment received     C-BAYL                  5,385.93    83,851.49
-                                    Closing balance                                          83,851.49
+                                    Opening balance                                         108,517.80
+2026-03-01  AR-00025                Service billed       C-FAIR      7,340.16               115,857.96
+2026-03-08  AR-00026    DOC-76092   Settlement received  C-ANCH                  7,483.12   108,374.84
+2026-03-15  AR-00027                Invoice raised       C-DELT      5,095.29               113,470.13
+2026-03-16  AR-00028                Goods dispatched     C-CEDW      7,854.88               121,325.01
+2026-03-17  AR-00029                Freight recharged    C-EAST      2,602.56               123,927.57
+2026-03-17  AR-00030                Invoice raised       C-FAIR      7,026.31               130,953.88
+2026-03-19  AR-00031                Freight recharged    C-ANCH      8,121.04               139,074.92
+2026-03-21  AR-00032                Invoice raised       C-EAST      2,814.44               141,889.36
+2026-03-22  AR-00033                Invoice raised       C-EAST      5,472.43               147,361.79
+                                    Closing balance                                         147,361.79

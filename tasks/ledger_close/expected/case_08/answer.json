@@ -1,10 +1,9 @@
 {
   "id": "case_08",
-  "question_kind": "settled_total",
-  "answer": "372275.05",
+  "question_kind": "open_total_cp",
+  "answer": "31878.14",
   "answer_kind": "money",
-  "tier": 3,
-  "months": 10,
-  "gap_month": 6,
-  "gap_entries": 5
+  "months": 7,
+  "gap_month": 4,
+  "gap_entries": 3
 }
