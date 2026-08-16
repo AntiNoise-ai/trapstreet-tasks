@@ -99,19 +99,42 @@ added after a calibration run produced a result it turned out not to deserve.
 
 ## Calibration
 
-`months`, `per_month`, the size of the supplement, the number of decoy files
-and `MIN_CHANGE_EVIDENCE` are the knobs. Measured against a bare DeepSeek
-Harness (no plugins, default model):
+`months`, `per_month`, the size of the supplement and the number of decoy
+files are the knobs. Measured against a bare DeepSeek Harness — no plugins,
+default profile, `deepseek-v4-flash`:
 
 | build | score | mean wall-clock |
 |---|---|---|
 | single-shot (`ledger_audit`) | 9–10 / 10 | 9–399 s |
 | 8–12 months × 18–28 entries | 1 / 10 | 1625 s |
-| 6–7 months × 12–14 entries | 6 / 10 | 509 s |
+| **this build** — 6–7 months × 12–14 entries | **5–7 / 10** | **~515 s** |
 
-Calibrate with repeated trials, not single runs. Per-question success rates on
-this family sit well away from 0 and 1, and a single run cannot distinguish a
-6 from a 5.
+That range is not imprecision in the measurement. It is two runs of the same
+solution against the same commit of this task, which scored 7/10 and then
+5/10. Per-question success on the harder questions sits near 0.5–0.7, so a
+ten-case total swings across several points between runs.
+
+**Calibrate with repeated trials.** A single run cannot tell 5 from 7, and
+this task's own history is the proof: eight rounds of design changes on the
+single-shot sibling produced 8, 8, 10, 9, 8, 9, 10 — read one at a time, each
+looked like evidence about the change just made, and repeated trials showed
+the design changes had no measurable effect at all.
+
+Per-question-kind accuracy from the ten-case run is a better signal than the
+total, and `grader.py` reports it:
+
+| question kind | accuracy |
+|---|---|
+| `open_total_cp` | 1.00 |
+| `settled_total` | 0.33 |
+| `aged_open_after` | 0.25 |
+
+A tiered variant was built and reverted: three tiers of 3/3/2 cases scored
+6/8 against the same harness, which at these sample sizes is the same number
+as 7/10, ran slower per case, and made each case worth 12.5% instead of 10%.
+Tiers are worth revisiting when a submitted configuration actually saturates
+this board — with evidence by then rather than in advance of it.
+
 
 ## Run
 
