@@ -139,6 +139,13 @@ them:
   capability**, so the derivation was dropped and a four-digit minimum is
   now enforced for numeric answers.
 
+- A modular `checksum` over every digit of every id was dropped for a
+  different reason: the judge sees only session 2, so a value session 1
+  computed *wrong* is indistinguishable from one that was never
+  remembered. The longer the arithmetic, the more of the score is
+  arithmetic rather than recall. Derivations are kept trivial on purpose —
+  the material must never be the difficulty.
+
 That guard checks a *shape*, and a shape is worth only as much as the
 generator behind it. Two later fixes are what make its promises true:
 vouchers are numbered from a random base rather than from `0001` — with
@@ -147,12 +154,6 @@ fixed guess scored 6.9%, now 0.20% — and tables are re-rolled until the
 closing balance clears four digits, which `closing_balance` alone could
 otherwise miss. `tests/test_build.py` measures both rather than asserting
 the shape a second time.
-- A modular `checksum` over every digit of every id was dropped for a
-  different reason: the judge sees only session 2, so a value session 1
-  computed *wrong* is indistinguishable from one that was never
-  remembered. The longer the arithmetic, the more of the score is
-  arithmetic rather than recall. Derivations are kept trivial on purpose —
-  the material must never be the difficulty.
 
 ## Known limitations
 
