@@ -1,0 +1,24 @@
+name: One Life (real Minecraft, hostile mobs)
+
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+# The agent answers via stdout — the LAST JSON object printed is its outcome.
+declared_outputs:
+  - stdout
+
+cases:
+  - id: one_life
+    description: >
+      From a fresh survival world with hostile mobs, an AI agent must climb the
+      Minecraft tech tree — and the run ends at its first death. The score is the
+      rung it had reached at that moment, so staying alive is the task, not a
+      detail. Phase 0 is self-reported; a video is recorded but not required.
+    tags: [minecraft, live, agent, survival, one_life]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

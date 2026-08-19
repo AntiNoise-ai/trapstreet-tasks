@@ -1,0 +1,16 @@
+{
+  "id": "one_life",
+  "goal_item": "diamond",
+  "min_count": 1,
+  "phase": "0-self-reported",
+  "video_required": false,
+  "one_life": true,
+  "milestones": [
+    { "key": "wooden_pickaxe", "score": 0.2, "items": ["wooden_pickaxe"] },
+    { "key": "stone_pickaxe", "score": 0.4, "items": ["stone_pickaxe"] },
+    { "key": "iron_ingot", "score": 0.6,
+      "items": ["iron_ingot", "iron_pickaxe", "iron_axe", "iron_sword", "iron_shovel", "iron_hoe", "iron_block"] },
+    { "key": "iron_pickaxe", "score": 0.8, "items": ["iron_pickaxe"] },
+    { "key": "diamond", "score": 1.0, "items": ["diamond", "diamond_block", "diamond_ore"] }
+  ]
+}
