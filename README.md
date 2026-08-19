@@ -42,6 +42,7 @@ Registered on [trapstreet.run](https://trapstreet.run) and accepting submissions
 | [`pdf_reader_v2`](./tasks/pdf_reader_v2) | A UK tenancy agreement — rent, dates, clauses | 20 | [pdf-reader-v2](https://trapstreet.run/tasks/pdf-reader-v2) | 3 |
 | [`debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline) | Vendor-payout reports disagree; produce correct ones | 4 | [debug-vendor-payout-pipeline](https://trapstreet.run/tasks/debug-vendor-payout-pipeline) | 3 |
 | [`core_capability_stacking_regression`](./tasks/core_capability_stacking_regression) | Does stacking capabilities degrade any one of them? | 108 | [core-capability-stacking-regression](https://trapstreet.run/tasks/core-capability-stacking-regression) | 1 |
+| [`session_memory_recall`](./tasks/session_memory_recall) | Does any value survive between two sessions? | 8 | [session-memory-recall](https://trapstreet.run/tasks/session-memory-recall) | — |
 | [`core_pdf_ocr`](./tasks/core_pdf_ocr) | Reading a rendered PDF page | 20 | [core-pdf-ocr](https://trapstreet.run/tasks/core-pdf-ocr) | — |
 | [`core_needle_in_haystack`](./tasks/core_needle_in_haystack) | Finding one fact in a long document | 15 | [core-needle-in-haystack](https://trapstreet.run/tasks/core-needle-in-haystack) | — |
 | [`core_json_schema_output`](./tasks/core_json_schema_output) | Schema-conforming function calls (BFCL v4) | 20 | [core-json-schema-output](https://trapstreet.run/tasks/core-json-schema-output) | — |
@@ -78,6 +79,9 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
   pdf-reader-v2:
     source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
+  session-memory-recall:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@e7d5a56f92b97b25f5539e3cd9bdcbdeee476183#subdirectory=tasks/session_memory_recall
+    clone_to: task   # this one ships a runner your `cmd` has to reach -- see its README
   mbti-profile:
     source: git+https://github.com/trapstreet/trapstreet-tasks@dd39d74f2401a4b690229ab1031d00618abc9e38#subdirectory=tasks/personality/mbti_profile
   do-llms-dream-of-intj:
