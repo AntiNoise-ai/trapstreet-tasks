@@ -1,0 +1,10 @@
+This is PART 2 of 2, continuing the job you started earlier.
+
+Earlier you worked through a ledger extract and computed one value:
+the total debits posted in February 2026.
+
+Report that value now.
+
+Output ONLY the value on the last line -- no explanation, no units, no
+quotes, no surrounding prose. If you genuinely do not have the value,
+output exactly: UNKNOWN

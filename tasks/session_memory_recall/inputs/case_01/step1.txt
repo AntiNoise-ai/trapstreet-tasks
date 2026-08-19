@@ -1,0 +1,33 @@
+You are working through a two-part job. This is PART 1 of 2.
+
+Below is an extract from an internal ledger.
+
+Accounts Receivable — subsidiary ledger
+Account 1200 · Trade Debtors · period 2026-01-01 to 2026-03-31 · USD
+
+Date        Voucher      Narration              Counterparty                Debit      Credit      Balance
+----------------------------------------------------------------------------------------------------------
+2026-01-01               Balance brought forward                                                   7,526.31
+2026-01-06  AR-2026-7261 Invoice raised         Fairmont Supplies        7,298.72                14,825.03
+2026-01-08  AR-2026-7262 Discount allowed       Eastgate Packaging                   5,971.91     8,853.12
+2026-01-11  AR-2026-7263 Payment received       Anchor Distributors                  4,391.04     4,462.08
+2026-01-16  AR-2026-7264 Settlement received    Eastgate Packaging                   4,462.08         0.00
+2026-01-23  AR-2026-7265 Service billed         Fairmont Supplies        5,424.78                 5,424.78
+2026-01-26  AR-2026-7266 Payment received       Fairmont Supplies                    5,424.78         0.00
+2026-02-01  AR-2026-7267 Late-payment charge    Cedarworks Ltd           4,564.58                 4,564.58
+2026-02-08  AR-2026-7268 Goods dispatched       Anchor Distributors      6,301.10                10,865.68
+2026-02-12  AR-2026-7269 Freight recharged      Fairmont Supplies        5,777.81                16,643.49
+2026-02-14  AR-2026-7270 Settlement received    BayLine Foods                        3,503.59    13,139.90
+2026-02-21  AR-2026-7271 Service billed         Cedarworks Ltd           2,401.18                15,541.08
+2026-02-27  AR-2026-7272 Goods dispatched       Cedarworks Ltd           3,368.53                18,909.61
+2026-03-04  AR-2026-7273 Goods dispatched       Cedarworks Ltd           3,649.09                22,558.70
+2026-03-09  AR-2026-7274 Freight recharged      Eastgate Packaging       4,974.83                27,533.53
+2026-03-14  AR-2026-7275 Settlement received    Eastgate Packaging                   6,643.65    20,889.88
+2026-03-18  AR-2026-7276 Invoice raised         BayLine Foods            6,546.54                27,436.42
+
+What is the closing balance on this account at the end of the period?
+
+Do the calculation now, then state the result once, in one short sentence,
+and commit it to memory. You will be asked for it later in a SEPARATE
+session -- the table below will NOT be available then, so remembering the
+result is the point of this step.

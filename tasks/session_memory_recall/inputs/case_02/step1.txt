@@ -1,0 +1,35 @@
+You are working through a two-part job. This is PART 1 of 2.
+
+Below is an extract from an internal ledger.
+
+Accounts Receivable — subsidiary ledger
+Account 1200 · Trade Debtors · period 2026-01-01 to 2026-03-31 · USD
+
+Date        Voucher      Narration              Counterparty                Debit      Credit      Balance
+----------------------------------------------------------------------------------------------------------
+2026-01-01               Balance brought forward                                                  15,622.44
+2026-01-03  AR-2026-5719 Service billed         BayLine Foods            1,031.24                16,653.68
+2026-01-05  AR-2026-5720 Invoice raised         Eastgate Packaging       8,729.39                25,383.07
+2026-01-09  AR-2026-5721 Payment received       Fairmont Supplies                    6,462.27    18,920.80
+2026-01-14  AR-2026-5722 Payment received       Anchor Distributors                  1,765.01    17,155.79
+2026-01-21  AR-2026-5723 Credit note issued     BayLine Foods                        2,166.12    14,989.67
+2026-01-25  AR-2026-5724 Credit note issued     Eastgate Packaging                   1,045.39    13,944.28
+2026-02-02  AR-2026-5725 Refund applied         Delta Freight Co                     8,065.95     5,878.33
+2026-02-05  AR-2026-5726 Service billed         Fairmont Supplies        1,574.53                 7,452.86
+2026-02-12  AR-2026-5727 Service billed         Cedarworks Ltd           5,225.64                12,678.50
+2026-02-19  AR-2026-5728 Refund applied         Anchor Distributors                  8,458.06     4,220.44
+2026-02-21  AR-2026-5729 Service billed         Fairmont Supplies        7,882.44                12,102.88
+2026-02-23  AR-2026-5730 Invoice raised         Anchor Distributors      9,132.42                21,235.30
+2026-02-26  AR-2026-5731 Refund applied         Delta Freight Co                       505.32    20,729.98
+2026-03-01  AR-2026-5732 Payment received       Anchor Distributors                  2,191.85    18,538.13
+2026-03-07  AR-2026-5733 Invoice raised         Delta Freight Co         1,614.67                20,152.80
+2026-03-14  AR-2026-5734 Payment received       Delta Freight Co                     1,192.73    18,960.07
+2026-03-17  AR-2026-5735 Invoice raised         Fairmont Supplies        7,418.00                26,378.07
+2026-03-23  AR-2026-5736 Late-payment charge    Delta Freight Co         6,945.94                33,324.01
+
+What is the closing balance on this account at the end of the period?
+
+Do the calculation now, then state the result once, in one short sentence,
+and commit it to memory. You will be asked for it later in a SEPARATE
+session -- the table below will NOT be available then, so remembering the
+result is the point of this step.

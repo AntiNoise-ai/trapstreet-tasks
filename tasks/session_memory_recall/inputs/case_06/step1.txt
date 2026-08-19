@@ -1,0 +1,33 @@
+You are working through a two-part job. This is PART 1 of 2.
+
+Below is an extract from an internal ledger.
+
+Accounts Receivable — subsidiary ledger
+Account 1200 · Trade Debtors · period 2026-01-01 to 2026-03-31 · USD
+
+Date        Voucher      Narration              Counterparty                Debit      Credit      Balance
+----------------------------------------------------------------------------------------------------------
+2026-01-01               Balance brought forward                                                   6,996.61
+2026-01-04  AR-2026-6375 Invoice raised         Fairmont Supplies        4,218.93                11,215.54
+2026-01-08  AR-2026-6376 Invoice raised         Fairmont Supplies        8,608.16                19,823.70
+2026-01-15  AR-2026-6377 Invoice raised         Fairmont Supplies        9,057.21                28,880.91
+2026-01-19  AR-2026-6378 Goods dispatched       Fairmont Supplies        5,248.67                34,129.58
+2026-01-26  AR-2026-6379 Freight recharged      Cedarworks Ltd           7,814.48                41,944.06
+2026-01-29  AR-2026-6380 Payment received       Eastgate Packaging                   4,293.69    37,650.37
+2026-02-04  AR-2026-6381 Goods dispatched       Fairmont Supplies        5,429.73                43,080.10
+2026-02-11  AR-2026-6382 Refund applied         Delta Freight Co                     5,417.50    37,662.60
+2026-02-15  AR-2026-6383 Payment received       Eastgate Packaging                   1,471.20    36,191.40
+2026-02-20  AR-2026-6384 Payment received       Cedarworks Ltd                       7,879.29    28,312.11
+2026-02-25  AR-2026-6385 Invoice raised         Anchor Distributors      4,963.82                33,275.93
+2026-02-27  AR-2026-6386 Payment received       Eastgate Packaging                   6,909.38    26,366.55
+2026-03-01  AR-2026-6387 Goods dispatched       Cedarworks Ltd           6,126.22                32,492.77
+2026-03-04  AR-2026-6388 Invoice raised         Eastgate Packaging       6,655.90                39,148.67
+2026-03-09  AR-2026-6389 Settlement received    Eastgate Packaging                   1,098.89    38,049.78
+2026-03-13  AR-2026-6390 Goods dispatched       Eastgate Packaging       2,301.22                40,351.00
+
+Total the Debit column over every entry whose Counterparty is Fairmont Supplies.
+
+Do the calculation now, then state the result once, in one short sentence,
+and commit it to memory. You will be asked for it later in a SEPARATE
+session -- the table below will NOT be available then, so remembering the
+result is the point of this step.

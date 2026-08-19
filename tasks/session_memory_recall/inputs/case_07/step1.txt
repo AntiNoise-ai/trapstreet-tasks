@@ -1,0 +1,33 @@
+You are working through a two-part job. This is PART 1 of 2.
+
+Below is an extract from an internal ledger.
+
+Accounts Receivable — subsidiary ledger
+Account 1200 · Trade Debtors · period 2026-01-01 to 2026-03-31 · USD
+
+Date        Voucher      Narration              Counterparty                Debit      Credit      Balance
+----------------------------------------------------------------------------------------------------------
+2026-01-01               Balance brought forward                                                   8,441.35
+2026-01-03  AR-2026-7362 Payment received       Eastgate Packaging                   7,620.79       820.56
+2026-01-08  AR-2026-7363 Payment received       Cedarworks Ltd                         820.56         0.00
+2026-01-12  AR-2026-7364 Invoice raised         BayLine Foods            6,735.49                 6,735.49
+2026-01-17  AR-2026-7365 Invoice raised         Anchor Distributors      1,785.58                 8,521.07
+2026-01-23  AR-2026-7366 Payment received       Eastgate Packaging                   7,388.69     1,132.38
+2026-01-26  AR-2026-7367 Payment received       Cedarworks Ltd                       1,132.38         0.00
+2026-02-02  AR-2026-7368 Invoice raised         Delta Freight Co           888.36                   888.36
+2026-02-09  AR-2026-7369 Invoice raised         Fairmont Supplies        2,964.11                 3,852.47
+2026-02-12  AR-2026-7370 Invoice raised         Cedarworks Ltd             259.58                 4,112.05
+2026-02-14  AR-2026-7371 Refund applied         BayLine Foods                        4,112.05         0.00
+2026-02-18  AR-2026-7372 Freight recharged      Anchor Distributors      4,214.10                 4,214.10
+2026-02-22  AR-2026-7373 Payment received       BayLine Foods                        4,214.10         0.00
+2026-02-25  AR-2026-7374 Invoice raised         BayLine Foods              365.00                   365.00
+2026-02-28  AR-2026-7375 Invoice raised         Fairmont Supplies        7,305.44                 7,670.44
+2026-03-03  AR-2026-7376 Invoice raised         Cedarworks Ltd           8,003.27                15,673.71
+2026-03-07  AR-2026-7377 Invoice raised         Cedarworks Ltd           2,286.24                17,959.95
+
+Total the Debit column over every entry dated in February 2026.
+
+Do the calculation now, then state the result once, in one short sentence,
+and commit it to memory. You will be asked for it later in a SEPARATE
+session -- the table below will NOT be available then, so remembering the
+result is the point of this step.

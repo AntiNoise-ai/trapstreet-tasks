@@ -1,0 +1,39 @@
+You are working through a two-part job. This is PART 1 of 2.
+
+Below is an extract from an internal ledger.
+
+Accounts Receivable — subsidiary ledger
+Account 1200 · Trade Debtors · period 2026-01-01 to 2026-03-31 · USD
+
+Date        Voucher      Narration              Counterparty                Debit      Credit      Balance
+----------------------------------------------------------------------------------------------------------
+2026-01-01               Balance brought forward                                                  21,612.05
+2026-01-06  AR-2026-7573 Freight recharged      Delta Freight Co         7,709.79                29,321.84
+2026-01-08  AR-2026-7574 Invoice raised         Anchor Distributors      4,173.18                33,495.02
+2026-01-10  AR-2026-7575 Invoice raised         Cedarworks Ltd           4,555.26                38,050.28
+2026-01-12  AR-2026-7576 Goods dispatched       Fairmont Supplies        1,754.64                39,804.92
+2026-01-17  AR-2026-7577 Invoice raised         Anchor Distributors      2,902.92                42,707.84
+2026-01-22  AR-2026-7578 Settlement received    Delta Freight Co                     6,745.66    35,962.18
+2026-01-29  AR-2026-7579 Invoice raised         Eastgate Packaging       1,224.84                37,187.02
+2026-02-02  AR-2026-7580 Credit note issued     Anchor Distributors                  9,097.93    28,089.09
+2026-02-08  AR-2026-7581 Payment received       Anchor Distributors                  2,591.74    25,497.35
+2026-02-10  AR-2026-7582 Goods dispatched       BayLine Foods            7,134.02                32,631.37
+2026-02-12  AR-2026-7583 Invoice raised         Anchor Distributors      7,887.23                40,518.60
+2026-02-14  AR-2026-7584 Invoice raised         Eastgate Packaging       2,441.09                42,959.69
+2026-02-18  AR-2026-7585 Invoice raised         Fairmont Supplies        4,231.74                47,191.43
+2026-02-25  AR-2026-7586 Invoice raised         Eastgate Packaging       8,452.68                55,644.11
+2026-03-01  AR-2026-7587 Credit note issued     Fairmont Supplies                    9,131.80    46,512.31
+2026-03-05  AR-2026-7588 Invoice raised         Eastgate Packaging       1,183.25                47,695.56
+2026-03-11  AR-2026-7589 Service billed         Delta Freight Co         4,639.46                52,335.02
+2026-03-15  AR-2026-7590 Invoice raised         BayLine Foods            8,418.66                60,753.68
+2026-03-19  AR-2026-7591 Settlement received    Delta Freight Co                     3,125.79    57,627.89
+2026-03-22  AR-2026-7592 Invoice raised         Fairmont Supplies        5,479.63                63,107.52
+2026-03-28  AR-2026-7593 Payment received       Cedarworks Ltd                       6,940.41    56,167.11
+2026-04-01  AR-2026-7594 Settlement received    Fairmont Supplies                    2,234.83    53,932.28
+
+Total the Debit column over every entry dated in March 2026.
+
+Do the calculation now, then state the result once, in one short sentence,
+and commit it to memory. You will be asked for it later in a SEPARATE
+session -- the table below will NOT be available then, so remembering the
+result is the point of this step.

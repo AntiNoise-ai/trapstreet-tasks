@@ -1,0 +1,33 @@
+You are working through a two-part job. This is PART 1 of 2.
+
+Below is an extract from an internal ledger.
+
+Accounts Receivable — subsidiary ledger
+Account 1200 · Trade Debtors · period 2026-01-01 to 2026-03-31 · USD
+
+Date        Voucher      Narration              Counterparty                Debit      Credit      Balance
+----------------------------------------------------------------------------------------------------------
+2026-01-01               Balance brought forward                                                  22,255.27
+2026-01-04  AR-2026-5804 Invoice raised         Fairmont Supplies          680.71                22,935.98
+2026-01-10  AR-2026-5805 Payment received       BayLine Foods                        9,078.95    13,857.03
+2026-01-17  AR-2026-5806 Invoice raised         Anchor Distributors      5,178.46                19,035.49
+2026-01-23  AR-2026-5807 Service billed         Anchor Distributors      8,141.60                27,177.09
+2026-01-27  AR-2026-5808 Invoice raised         BayLine Foods            1,230.56                28,407.65
+2026-02-03  AR-2026-5809 Payment received       Anchor Distributors                  4,567.00    23,840.65
+2026-02-06  AR-2026-5810 Invoice raised         Fairmont Supplies        7,346.67                31,187.32
+2026-02-09  AR-2026-5811 Invoice raised         Cedarworks Ltd           4,735.85                35,923.17
+2026-02-15  AR-2026-5812 Freight recharged      Fairmont Supplies        2,970.51                38,893.68
+2026-02-17  AR-2026-5813 Payment received       Cedarworks Ltd                       3,667.25    35,226.43
+2026-02-20  AR-2026-5814 Service billed         Cedarworks Ltd             866.60                36,093.03
+2026-02-22  AR-2026-5815 Invoice raised         Cedarworks Ltd           6,823.47                42,916.50
+2026-02-25  AR-2026-5816 Payment received       Cedarworks Ltd                       3,075.38    39,841.12
+2026-02-27  AR-2026-5817 Payment received       Eastgate Packaging                   9,331.95    30,509.17
+2026-03-01  AR-2026-5818 Credit note issued     Eastgate Packaging                   6,764.15    23,745.02
+2026-03-04  AR-2026-5819 Goods dispatched       Eastgate Packaging       6,737.57                30,482.59
+
+Identify the Voucher number of the single largest debit entry.
+
+Do the calculation now, then state the result once, in one short sentence,
+and commit it to memory. You will be asked for it later in a SEPARATE
+session -- the table below will NOT be available then, so remembering the
+result is the point of this step.
