@@ -1,4 +1,4 @@
-"""Per-case judge for pdf_chart_values.
+"""Per-case judge for pdf_chart_reading.
 
 Every question in this task asks for a small integer -- a number of
 participants, a number of ranges, a number of levels. That makes the anti-

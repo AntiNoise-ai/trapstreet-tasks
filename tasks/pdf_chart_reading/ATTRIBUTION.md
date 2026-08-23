@@ -1,4 +1,4 @@
-# Attribution — pdf_chart_values
+# Attribution — pdf_chart_reading
 
 - **Document:** *Summary of Economic Projections*, released in conjunction with
   the Federal Open Market Committee meeting of June 16–17, 2026

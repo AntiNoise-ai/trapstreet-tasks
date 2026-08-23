@@ -423,7 +423,7 @@ the eye is the thing that needs checking.
 
 ## Where it landed
 
-The successor task, `pdf_chart_values`, is 22 questions about rasterised vector
+The successor task, `pdf_chart_reading`, is 22 questions about rasterised vector
 charts in one Federal Reserve Summary of Economic Projections. The pipeline
 that scored 20/20 on the printed-number task scores **14/22** on it, with four
 of the eight failures not answers at all — the model spent its whole output

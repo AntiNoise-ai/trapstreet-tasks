@@ -1,4 +1,4 @@
-"""Overall grader for the pdf_chart_values task.
+"""Overall grader for the pdf_chart_reading task.
 
 Aggregates per-case judge results into a run-level verdict. Emits JSON to stdout —
 trap stores it as GraderResult.metrics. Convention: include `passed` (bool) and

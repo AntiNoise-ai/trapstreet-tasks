@@ -1,4 +1,4 @@
-"""Tests for pdf_chart_values.
+"""Tests for pdf_chart_reading.
 
 Two things are worth protecting. The gold, because it is measured rather than
 typed and a silent drift in the measurement would be invisible in review. And
