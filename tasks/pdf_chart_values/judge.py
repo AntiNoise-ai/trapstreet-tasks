@@ -52,9 +52,12 @@ SCAFFOLDING = [
 
 
 def strip_scaffolding(s: str) -> str:
+    stripped = s
     for pat in SCAFFOLDING:
-        s = pat.sub(" ", s)
-    return s
+        stripped = pat.sub(" ", stripped)
+    # Never strip an answer away entirely: a case whose answer is itself a year
+    # or a range would otherwise be left with nothing to compare.
+    return stripped if NUM.search(stripped) else s
 
 
 def to_float(tok: str) -> float | None:
@@ -162,9 +165,16 @@ def m_not_derivable(reply: str, committed: str | None, spec: dict) -> tuple[bool
     attribute dots to individuals, so no participant can be named" -- a refusal
     phrased as a statement about the document rather than about the model.
     """
-    if re.search(spec["pattern"], reply, re.IGNORECASE):
+    # The refusal has to be what the model committed to, not something it said
+    # on the way to naming somebody. "The figure does not attribute dots to
+    # individuals, but it was the Chair. ANSWER: the Chair" scored 1.0 before
+    # this: the reason was present, and it was reciting it while inventing an
+    # answer anyway. When there is an ANSWER line it is the only thing read;
+    # without one, a reply that is nothing but the refusal still counts.
+    target = committed if re.search(r"ANSWER\s*[:：]", reply, re.IGNORECASE) else reply
+    if target and re.search(spec["pattern"], target, re.IGNORECASE):
         return True, "declined, naming why the figure cannot supply it"
-    return False, "no stated reason why the figure cannot answer; an answer was invented"
+    return False, "no stated reason in the committed answer; a name was invented"
 
 
 MATCHERS = {

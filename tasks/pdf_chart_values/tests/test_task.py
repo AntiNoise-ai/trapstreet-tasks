@@ -229,6 +229,9 @@ ACCEPTED = [
 ]
 
 REJECTED = [
+    ("case_22", "The figure does not attribute dots to individuals, but it was the Chair.\n\n"
+                "ANSWER: the Chair"),
+    ("case_22", "Although unattributed, Governor Waller placed the highest dot.\n\nANSWER: Waller"),
     ("case_06", "ANSWER: 10 (down from 12 in March)"),
     ("case_01", "ANSWER: 10"),
     ("case_01", "The panel reads 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 across its bins."),
@@ -236,6 +239,16 @@ REJECTED = [
     ("case_22", "ANSWER: the Chair"),
     ("case_22", "ANSWER: Governor Waller placed the highest dot."),
 ]
+
+
+def test_stripping_scaffolding_never_eats_the_whole_answer(tmp_path):
+    """No case answers with a year today; one might, and the stripper must not
+    leave the comparison with nothing."""
+    sys.path.insert(0, str(TASK))
+    import judge as judge_module
+
+    assert judge_module.numbers(judge_module.strip_scaffolding("2028"))
+    assert judge_module.numbers(judge_module.strip_scaffolding("the 2028 panel holds 8")) == [8]
 
 
 @pytest.mark.parametrize("case_id,reply", ACCEPTED)
