@@ -1,0 +1,25 @@
+{
+  "answer": "8",
+  "figure": "figure_3.D",
+  "panel": "2028",
+  "type": "bin_structure",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "committed_has_value",
+      "value": 8,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "1\\.9\\s*[-‐-―]\\s*2\\.0"
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "2\\.1\\s*[-‐-―]\\s*2\\.2"
+    }
+  ]
+}

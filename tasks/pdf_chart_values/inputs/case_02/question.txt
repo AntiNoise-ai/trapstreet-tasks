@@ -1,0 +1,1 @@
+In figure 3.C, how many participants' June projections for 2027 fall in the 2.3-2.4 percent range? End your reply with a line of the form `ANSWER: <value>`.

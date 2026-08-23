@@ -1,0 +1,17 @@
+{
+  "answer": "5",
+  "figure": "figure_2",
+  "panel": "2027",
+  "type": "dot_count",
+  "difficulty": "medium",
+  "matchers": [
+    {
+      "kind": "committed_value",
+      "value": 5,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}

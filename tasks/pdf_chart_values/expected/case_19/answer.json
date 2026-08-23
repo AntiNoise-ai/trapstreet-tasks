@@ -1,0 +1,17 @@
+{
+  "answer": "3",
+  "figure": "figure_3.B",
+  "panel": "longer run",
+  "type": "bin_structure",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "committed_value",
+      "value": 3,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}

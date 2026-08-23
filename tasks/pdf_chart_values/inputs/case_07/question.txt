@@ -1,0 +1,1 @@
+In figure 3.D, "Distribution of participants' projections for core PCE inflation", how many participants project 2026 core inflation in the 3.3-3.4 percent range? End your reply with a line of the form `ANSWER: <value>`.

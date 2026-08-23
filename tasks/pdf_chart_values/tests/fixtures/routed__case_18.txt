@@ -1,0 +1,8 @@
+Looking at the 2028 panel in Figure 3.C, the bars show:
+- 1.9–2.0 range: ~12 participants
+- 2.1–2.2 range: ~4 participants
+- 2.3–2.4 range: ~1 participant
+
+Participants projecting above 2.0 percent are those in the 2.1–2.2 and 2.3–2.4 ranges, totaling approximately 5 participants.
+
+ANSWER: 5

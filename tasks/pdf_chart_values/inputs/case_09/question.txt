@@ -1,0 +1,1 @@
+In figure 3.A, how many participants project 2027 GDP growth in the 2.2-2.3 percent range? End your reply with a line of the form `ANSWER: <value>`.

@@ -1,0 +1,1 @@
+In figure 3.B, how many separate percent ranges hold two or more participants in the longer-run panel? End your reply with a line of the form `ANSWER: <value>`.

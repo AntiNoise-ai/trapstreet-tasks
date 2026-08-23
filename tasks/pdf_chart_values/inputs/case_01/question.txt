@@ -1,0 +1,1 @@
+In figure 3.C, "Distribution of participants' projections for PCE inflation", how many participants' June projections for 2026 fall in the 3.5-3.6 percent range? End your reply with a line of the form `ANSWER: <value>`.

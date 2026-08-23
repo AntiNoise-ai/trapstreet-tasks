@@ -1,0 +1,1 @@
+In figure 3.B, "Distribution of participants' projections for the unemployment rate", how many participants project a 2026 unemployment rate of 4.2-4.3 percent? End your reply with a line of the form `ANSWER: <value>`.

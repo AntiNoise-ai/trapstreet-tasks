@@ -1,0 +1,17 @@
+{
+  "answer": "10",
+  "figure": "figure_3.D",
+  "panel": "2026",
+  "type": "bin_count",
+  "difficulty": "medium",
+  "matchers": [
+    {
+      "kind": "committed_value",
+      "value": 10,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}

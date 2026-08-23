@@ -1,0 +1,17 @@
+{
+  "answer": "8",
+  "figure": "figure_2",
+  "panel": "2026",
+  "type": "dot_count",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "committed_value",
+      "value": 8,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}
