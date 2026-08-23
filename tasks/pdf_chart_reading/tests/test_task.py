@@ -280,3 +280,32 @@ def test_a_correct_answer_survives_its_phrasing(case_id, reply, tmp_path):
 @pytest.mark.parametrize("case_id,reply", REJECTED)
 def test_a_wrong_answer_stays_wrong(case_id, reply, tmp_path):
     assert run_judge(case_id, reply, tmp_path)["score"] == 0.0
+
+
+# ---------------------------------------------- a second pipeline's real output
+
+# Twenty-two replies from the text-layer arm (pdf-inspector, vanilla mode),
+# captured 2026-08-23. It scores 0/22: the figure pages carry no text, so it
+# answers "not stated in the document" to everything. Kept because a judge that
+# starts handing this arm points has stopped measuring chart reading.
+
+
+def text_only_fixture(case_id: str) -> str:
+    return (Path(__file__).parent / "fixtures" / f"text-only__{case_id}.txt").read_text()
+
+
+@pytest.mark.parametrize("case_id", sorted(CASES))
+def test_the_text_layer_arm_scores_nothing(case_id, tmp_path):
+    assert run_judge(case_id, text_only_fixture(case_id), tmp_path)["score"] == 0.0
+
+
+def test_blindness_is_not_the_same_as_reading_an_anonymous_chart(tmp_path):
+    """Both decline; only one of them looked."""
+    blind = run_judge("case_22", text_only_fixture("case_22"), tmp_path)
+    assert blind["score"] == 0.0
+    assert "does not say why" in blind["reason"]
+
+    looked = run_judge("case_22",
+                       "ANSWER: Cannot be determined - figure 2 does not identify participants",
+                       tmp_path)
+    assert looked["score"] == 1.0

@@ -179,9 +179,14 @@ def m_not_derivable(reply: str, committed: str | None, spec: dict) -> tuple[bool
     # this: the reason was present, and it was reciting it while inventing an
     # answer anyway. When there is an ANSWER line it is the only thing read;
     # without one, a reply that is nothing but the refusal still counts.
+    # A pipeline that cannot see the figure at all declines too, and its answer
+    # ("not stated in the document") is right by accident -- it is describing its
+    # own blindness, not the chart. Requiring the reason is what separates the
+    # two: the figure carries no identities, and only a reader of it can say so.
     if committed and re.search(spec["pattern"], committed, re.IGNORECASE):
         return True, "declined, naming why the figure cannot supply it"
-    return False, "no stated reason in the committed answer; a name was invented"
+    return False, ("the committed answer does not say why the figure cannot identify a "
+                   "participant")
 
 
 MATCHERS = {
