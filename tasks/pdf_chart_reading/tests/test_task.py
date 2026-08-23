@@ -132,11 +132,27 @@ def test_a_compound_answer_is_not_read_as_its_first_number(tmp_path):
     assert run_judge("case_20", reply, tmp_path)["score"] == 1.0
 
 
-def test_a_short_reply_without_the_contract_is_still_read(tmp_path):
-    """Nothing to shotgun with in three numbers, so the reply is taken at face value."""
+def test_a_reply_without_the_contract_scores_zero(tmp_path):
+    """The contract is stated in every question; a reply without it commits to nothing.
+
+    The lenient reading this replaces took the last number, which silently
+    picks 6 out of "the bar reaches 9, up from 6 in March".
+    """
     result = run_judge("case_01", "The 3.5-3.6 bar holds 9 participants.", tmp_path)
-    assert result["score"] == 1.0
-    assert "no answer line" in result["committed_via"]
+    assert result["score"] == 0.0
+    assert result["committed_via"] == "no ANSWER line"
+
+
+def test_an_empty_reply_says_it_was_empty(tmp_path):
+    """Two cases in the first real run returned nothing at all, and the report
+    called it a formatting problem."""
+    result = run_judge("case_01", "", tmp_path)
+    assert result["score"] == 0.0
+    assert result["committed_via"] == "the solution returned nothing"
+
+
+def test_a_spelled_out_number_still_counts(tmp_path):
+    assert run_judge("case_01", "ANSWER: nine", tmp_path)["score"] == 1.0
 
 
 def test_listing_the_whole_distribution_does_not_pay(tmp_path):
@@ -144,7 +160,7 @@ def test_listing_the_whole_distribution_does_not_pay(tmp_path):
     spray = "The panel reads 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 across its bins."
     result = run_judge("case_01", spray, tmp_path)
     assert result["score"] == 0.0
-    assert "more than three numbers" in result["reason"]
+    assert result["committed_via"] == "no ANSWER line"
 
 
 def test_a_distribution_plus_a_committed_answer_passes(tmp_path):
@@ -159,9 +175,9 @@ def test_hedging_fails_where_the_figure_answers(tmp_path):
 
 
 def test_the_undecidable_case_needs_a_reason_not_just_a_refusal(tmp_path):
-    bare = run_judge("case_22", "I cannot determine this.", tmp_path)
+    bare = run_judge("case_22", "ANSWER: I cannot say", tmp_path)
     assert bare["score"] == 0.0
-    reasoned = run_judge("case_22", "The dots are anonymous, so this cannot be determined.",
+    reasoned = run_judge("case_22", "ANSWER: the dots are anonymous, so this cannot be determined",
                          tmp_path)
     assert reasoned["score"] == 1.0
 
@@ -208,6 +224,7 @@ def test_an_empty_reply_scores_zero_and_says_so(case_id, tmp_path):
     result = run_judge(case_id, fixture(case_id), tmp_path)
     assert result["score"] == 0.0
     assert result["committed"] is None
+    assert result["committed_via"] == "the solution returned nothing"
 
 
 # --------------------------------------------- phrasing the judge must survive
@@ -219,16 +236,19 @@ def test_an_empty_reply_scores_zero_and_says_so(case_id, tmp_path):
 
 ACCEPTED = [
     ("case_01", "The exact figure is not shown on the chart; the bar reaches 9.\n\nANSWER: 9"),
+    ("case_22", "ANSWER: Cannot be determined; figure 2 does not label individual participants"),
     ("case_01", "ANSWER: The 3.5-3.6 bar holds 9 participants"),
     ("case_01", "ANSWER: 9, in the 3.5-3.6 range"),
     ("case_01", "ANSWER: 9 of the 18"),
     ("case_01", "Counting up.\n\nANSWER: **9**"),
     ("case_20", "ANSWER: In the 2028 panel of Figure 3.D, 1.9-2.0 and 2.1-2.2 are tied at 8 each"),
-    ("case_22", "The figure does not attribute dots to individuals, so no participant can be named."),
-    ("case_22", "Figure 2 is unattributed; there is no way to say which participant."),
+    ("case_22", "ANSWER: the figure does not attribute dots to individuals"),
+    ("case_22", "ANSWER: unattributed; there is no way to say which participant"),
 ]
 
 REJECTED = [
+    ("case_22", "The figure does not attribute dots to individuals, so no participant "
+                "can be named."),          # no ANSWER line, however right it is
     ("case_22", "The figure does not attribute dots to individuals, but it was the Chair.\n\n"
                 "ANSWER: the Chair"),
     ("case_22", "Although unattributed, Governor Waller placed the highest dot.\n\nANSWER: Waller"),

@@ -75,12 +75,22 @@ def to_float(tok: str) -> float | None:
     return -v if neg else v
 
 
+# "ANSWER: nine" is a committed answer too.
+WORD_NUMBERS = {w: i for i, w in enumerate(
+    "zero one two three four five six seven eight nine ten eleven twelve "
+    "thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty".split())}
+
+
 def numbers(s: str) -> list[float]:
     out = []
     for m in NUM.finditer(s):
         v = to_float(m.group())
         if v is not None:
             out.append(v)
+    if not out:
+        for word in re.findall(r"[a-z]+", s.lower()):
+            if word in WORD_NUMBERS:
+                out.append(float(WORD_NUMBERS[word]))
     return out
 
 
@@ -93,13 +103,13 @@ def committed_answer(reply: str) -> tuple[str | None, str]:
     hits = list(re.finditer(r"ANSWER\s*[:：]\s*(.+)", reply, re.IGNORECASE))
     if hits:
         return strip_markup(hits[-1].group(1)), "answer line"
-    # No contract line. A reply short on numbers has nothing to shotgun with, so
-    # read the figure it ends on -- "the 3.5-3.6 bar holds 9" commits to 9, not
-    # to the bin label it opens with.
-    found = list(NUM.finditer(reply))
-    if 0 < len(found) <= 3:
-        return strip_markup(found[-1].group()), "no answer line; read the closing figure"
-    return None, "no ANSWER line, and the reply carries more than three numbers"
+    if not reply.strip():
+        return None, "the solution returned nothing"
+    # No fallback. A lenient reading of an unformatted reply -- take the last
+    # number, say -- silently picks the wrong one out of "the bar reaches 9, up
+    # from 6 in March". Every question states the contract, so a reply without
+    # it has not committed to anything.
+    return None, "no ANSWER line"
 
 
 def m_committed_value(reply: str, committed: str | None, spec: dict) -> tuple[bool, str]:
@@ -151,9 +161,7 @@ def m_no_hedge(reply: str, committed: str | None, spec: dict) -> tuple[bool, str
     that zero. Once a model has committed a value, a caveat in the prose above
     it is not a punt.
     """
-    if committed is None:
-        return True, "nothing committed; committed_value carries the failure"
-    low = committed.lower()
+    low = (committed or "").lower()
     hit = next((p for p in HEDGE_PHRASES if p in low), None)
     return hit is None, f"hedge {hit!r} in the committed answer" if hit else "committed a value"
 
@@ -171,8 +179,7 @@ def m_not_derivable(reply: str, committed: str | None, spec: dict) -> tuple[bool
     # this: the reason was present, and it was reciting it while inventing an
     # answer anyway. When there is an ANSWER line it is the only thing read;
     # without one, a reply that is nothing but the refusal still counts.
-    target = committed if re.search(r"ANSWER\s*[:：]", reply, re.IGNORECASE) else reply
-    if target and re.search(spec["pattern"], target, re.IGNORECASE):
+    if committed and re.search(spec["pattern"], committed, re.IGNORECASE):
         return True, "declined, naming why the figure cannot supply it"
     return False, "no stated reason in the committed answer; a name was invented"
 
@@ -194,7 +201,12 @@ def main() -> None:
 
     committed, how = committed_answer(reply)
     details, score = [], 1.0
-    for spec in expected["matchers"]:
+    if committed is None:
+        # Uniform across matchers: nothing was committed, so nothing can pass.
+        details = [{"kind": spec["kind"], "passed": False, "detail": how}
+                   for spec in expected["matchers"]]
+        score = 0.0
+    for spec in (expected["matchers"] if committed is not None else []):
         fn = MATCHERS.get(spec["kind"])
         if fn is None:
             details.append({"kind": spec["kind"], "passed": False, "detail": "unknown matcher"})

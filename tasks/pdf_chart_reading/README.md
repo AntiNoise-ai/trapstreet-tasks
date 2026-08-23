@@ -85,10 +85,16 @@ ends with:
 
 > End your reply with a line of the form `ANSWER: <value>`.
 
-and the judge grades that line. A reply without one is still read, leniently,
-when it contains at most three numbers — there is no shotgun to catch in a
-short reply. Beyond that it scores zero and the report says the reason was
-format, not arithmetic.
+and the judge grades that line. **A reply without one scores zero**, whatever
+it says. The lenient reading this replaces took the last number in a short
+reply, which silently picks 6 out of "the bar reaches 9, up from 6 in March".
+The report distinguishes the two ways a reply can commit to nothing — no
+ANSWER line, or no reply at all, which is what happens when a model spends its
+whole output budget counting dots.
+
+A committed answer may be spelled out (`ANSWER: nine`), and may carry the
+sentence around it (`ANSWER: the 3.5-3.6 bar holds 9 participants`) — bin
+labels, figure references and years are stripped before the figure is read.
 
 Hedging fails, except on the one case where the document genuinely cannot
 answer, where hedging is required *and* must name why.

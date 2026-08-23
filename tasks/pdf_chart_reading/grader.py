@@ -55,7 +55,8 @@ def main() -> None:
 
     # Cost — sum per-case usd_cost if the solution captured usage; otherwise
     # leave it None and let the regrade/submit script stamp a known total.
-    case_costs = [c["metrics"].get("usd_cost") for c in scored if isinstance(c.get("metrics"), dict)]
+    # trap records cost per case under "cost", not in the judge's metrics.
+    case_costs = [(c.get("cost") or {}).get("cost_usd") for c in scored]
     cost_usd_total = round(sum(x for x in case_costs if x is not None), 4) if any(x is not None for x in case_costs) else None
 
     n_passed = sum(1 for c in scored if c["metrics"]["score"] == 1.0)
