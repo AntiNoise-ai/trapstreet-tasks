@@ -202,8 +202,32 @@ def test_a_reply_without_the_contract_scores_zero(tmp_path):
     assert r["score"] == 0.0 and r["committed_via"] == "no ANSWER line"
 
 
-def test_naming_a_participant_fails(tmp_path):
-    assert run_judge("case_19", "ANSWER: the Chair", tmp_path)["score"] == 0.0
+ACCEPTED_19 = [
+    "ANSWER: the chart does not identify individual participants",
+    "ANSWER: Not determinable; the data shows counts per bin, not participant identities",
+    "ANSWER: the dots are anonymous",
+    "ANSWER: cannot be determined -- the projections are submitted without attribution",
+]
+REJECTED_19 = [
+    "ANSWER: the Chair",
+    "ANSWER: Governor Waller placed it",
+    "ANSWER: Not available in the provided measurements",
+    "ANSWER: I don't have that information",
+]
+
+
+@pytest.mark.parametrize("reply", ACCEPTED_19)
+def test_a_reasoned_refusal_passes_however_it_is_worded(reply, tmp_path):
+    """"does not identify individual participants" and "not participant
+    identities" are the same reason; keying on the verb rejected the noun."""
+    assert run_judge("case_19", reply, tmp_path)["score"] == 1.0
+
+
+@pytest.mark.parametrize("reply", REJECTED_19)
+def test_a_bare_refusal_or_an_invented_name_still_fails(reply, tmp_path):
+    """The reason is what separates reading an anonymous chart from not having
+    looked at one."""
+    assert run_judge("case_19", reply, tmp_path)["score"] == 0.0
 
 
 def test_the_reverse_abstention_case_punishes_refusing(tmp_path):

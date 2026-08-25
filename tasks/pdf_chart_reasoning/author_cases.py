@@ -191,9 +191,14 @@ cases += [
          "2026?", "Not derivable -- the projections are anonymous",
          "The dots carry no identity. A model that names the Chair or any governor has "
          "invented it.",
+         # "does not identify individual participants" and "not participant
+         # identities" are the same reason; keying on the verb rejected the noun
+         # in a reply whose ANSWER line carried it. A bare refusal still fails --
+         # the reason is what separates reading an anonymous chart from not
+         # having looked at one.
          [{"kind": "not_derivable",
-           "pattern": r"anonym|not identif|does not identif|no names?\b|not attribut|"
-                      r"unattributed|cannot be determined|cannot be identified"}]),
+           "pattern": r"anonym|identif|identit|no names?\b|not attribut|"
+                      r"unattributed|without attribution|not named"}]),
     case("case_20", "abstention",
          "How many participants submitted a projection for 2028?", 17,
          "The reverse item. It looks like it needs per-participant data and it does not: a "

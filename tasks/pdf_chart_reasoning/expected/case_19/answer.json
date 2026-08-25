@@ -5,7 +5,7 @@
   "matchers": [
     {
       "kind": "not_derivable",
-      "pattern": "anonym|not identif|does not identif|no names?\\b|not attribut|unattributed|cannot be determined|cannot be identified"
+      "pattern": "anonym|identif|identit|no names?\\b|not attribut|unattributed|without attribution|not named"
     }
   ]
 }
