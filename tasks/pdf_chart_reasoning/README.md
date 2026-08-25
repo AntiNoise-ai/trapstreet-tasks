@@ -95,7 +95,16 @@ index moves in steps of about 1/18 = 0.056, so half a step keeps two adjacent
 legal values from both passing, and 0.025 of an index unit is 5.6 pixels at the
 shipped 200 dpi — readable by a careful reader, not by a glance. Cases were
 selected so that the measurement behind the gold is itself within a tenth of a
-participant of a legal value.
+participant of a legal value -- about 0.005 of an index unit, which the
+tolerance has to leave room for and does. A reply that lands within that much
+of the boundary can therefore fall either way, and one did: -0.8 against a gold
+of -0.773 misses by 0.027.
+
+Values are recorded as measured rather than snapped to the nearest 1/N. There
+is no single N to snap to -- the participant count moved between 17 and 19 over
+these nineteen years -- and snapping across all three denominators is
+meaningless, since fractions of 17, 18 and 19 sit about 0.017 apart and any
+measurement lands near one of them.
 
 ## Known limitations
 

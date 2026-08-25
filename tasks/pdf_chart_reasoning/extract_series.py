@@ -91,6 +91,13 @@ def series(page) -> dict[str, list[tuple[str, float]]]:
         slope, icept = np.polyfit([a for a, _ in cal], [b for _, b in cal], 1)
         dates = _quarterly_dates(len(pts))
         name = PANELS_4D[i] if i < len(PANELS_4D) else f"panel {i}"
+        # Values are recorded as measured, not snapped to the nearest 1/N. The
+        # participant count moved between 17 and 19 over these nineteen years,
+        # so there is no single N to snap to -- and snapping across all three
+        # denominators is meaningless, since fractions of 17, 18 and 19 sit
+        # about 0.017 apart and any measurement lands near one. The gold
+        # therefore carries up to about 0.005 of measurement error, which the
+        # tolerance has to leave room for.
         out[name] = [(f"{'' if (y, m) >= VERIFIED_FROM else '~'}{y}-{m:02d}",
                       round(slope * py + icept, 4))
                      for (y, m), (_, py) in zip(dates, pts)]
