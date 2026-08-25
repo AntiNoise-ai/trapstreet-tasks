@@ -1,0 +1,1 @@
+Figure 1 shows the central tendency of participants' projections alongside their full range. For any one variable and year, how many participants' projections lie outside the central tendency? End your reply with a line of the form `ANSWER: <value>`.

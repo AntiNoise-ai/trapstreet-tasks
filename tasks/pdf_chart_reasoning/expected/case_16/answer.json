@@ -1,0 +1,14 @@
+{
+  "answer": "1.9-2.0",
+  "capability": "semantic",
+  "difficulty": "medium",
+  "matchers": [
+    {
+      "kind": "committed_regex",
+      "pattern": "1\\.9\\s*[-‐-―]\\s*2\\.0"
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+In figure 4.E, by how much did the diffusion index for the change in real GDP move between the June 2019 SEP and the June 2026 SEP? Give the change, with its sign. End your reply with a line of the form `ANSWER: <value>`.

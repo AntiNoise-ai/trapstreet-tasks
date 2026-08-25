@@ -1,0 +1,1 @@
+In figure 4.E, "Diffusion indexes of participants' risk weightings", what was the diffusion index for the change in real GDP at the June 2019 SEP? End your reply with a line of the form `ANSWER: <value>`.

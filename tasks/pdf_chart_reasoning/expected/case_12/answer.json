@@ -1,0 +1,15 @@
+{
+  "answer": "5",
+  "capability": "count_marks",
+  "difficulty": "medium",
+  "matchers": [
+    {
+      "kind": "committed_value",
+      "value": 5,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}

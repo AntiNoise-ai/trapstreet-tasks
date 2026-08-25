@@ -1,0 +1,1 @@
+In figure 3.C, every participant's longer-run projection for PCE inflation falls in a single percent range. Which range is it? End your reply with a line of the form `ANSWER: <value>`.

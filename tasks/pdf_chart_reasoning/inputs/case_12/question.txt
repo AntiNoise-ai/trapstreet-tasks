@@ -1,0 +1,1 @@
+In figure 2, how many participants judge the appropriate midpoint at the end of 2027 to be 3.875 percent? End your reply with a line of the form `ANSWER: <value>`.

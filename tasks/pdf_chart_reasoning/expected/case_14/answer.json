@@ -1,0 +1,15 @@
+{
+  "answer": "6",
+  "capability": "semantic",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "committed_value",
+      "value": 6,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Figure 4.A shows a 70 percent confidence interval around the median projection for GDP growth. Does that interval describe how widely the participants' own projections are spread? Answer yes or no and say what it is based on. End your reply with a line of the form `ANSWER: <value>`.

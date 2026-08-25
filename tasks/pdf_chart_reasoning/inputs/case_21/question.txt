@@ -1,0 +1,1 @@
+Figures 2 and 3.E describe the same judgments in two different chart types. How many participants place the end-2026 midpoint in the range figure 3.E labels 3.63-3.87? End your reply with a line of the form `ANSWER: <value>`.

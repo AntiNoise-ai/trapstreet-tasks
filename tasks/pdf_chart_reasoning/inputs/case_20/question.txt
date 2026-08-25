@@ -1,0 +1,1 @@
+How many participants submitted a projection for 2028? End your reply with a line of the form `ANSWER: <value>`.

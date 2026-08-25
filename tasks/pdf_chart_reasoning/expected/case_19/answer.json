@@ -1,0 +1,11 @@
+{
+  "answer": "Not derivable -- the projections are anonymous",
+  "capability": "abstention",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "not_derivable",
+      "pattern": "anonym|not identif|does not identif|no names?\\b|not attribut|unattributed|cannot be determined|cannot be identified"
+    }
+  ]
+}

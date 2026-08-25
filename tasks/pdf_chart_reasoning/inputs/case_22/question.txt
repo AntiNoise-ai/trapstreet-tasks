@@ -1,0 +1,1 @@
+At the June 2020 SEP, the diffusion indexes for PCE inflation in figure 4.D (uncertainty) and figure 4.E (risk weightings) point opposite ways. How far apart were they? End your reply with a line of the form `ANSWER: <value>`.

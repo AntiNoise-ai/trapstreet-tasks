@@ -1,0 +1,1 @@
+In figure 3.E, how many participants place the end-2027 midpoint of the appropriate target range at 3.88 percent or higher? End your reply with a line of the form `ANSWER: <value>`.

@@ -1,0 +1,15 @@
+{
+  "answer": "1.764",
+  "capability": "cross_figure",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "committed_value",
+      "value": 1.764,
+      "tolerance": 0.05
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}

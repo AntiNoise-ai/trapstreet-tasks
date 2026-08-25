@@ -1,0 +1,1 @@
+Figure 2 plots each participant's judgment for the end of 2026 rounded to the nearest eighth of a percentage point. Taking the dots as plotted, what is the median of those judgments? End your reply with a line of the form `ANSWER: <value>`.

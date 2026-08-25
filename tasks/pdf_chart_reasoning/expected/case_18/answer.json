@@ -1,0 +1,11 @@
+{
+  "answer": "Not derivable -- longer-run core PCE projections are not collected",
+  "capability": "abstention",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "not_derivable",
+      "pattern": "not collected|no longer[- ]run|does not (?:have|include|show)|only .{0,20}three panels|not (?:gathered|solicited)"
+    }
+  ]
+}

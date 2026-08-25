@@ -1,0 +1,15 @@
+{
+  "answer": "9",
+  "capability": "read_length",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "committed_value",
+      "value": 9,
+      "tolerance": 0
+    },
+    {
+      "kind": "no_hedge"
+    }
+  ]
+}

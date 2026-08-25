@@ -1,0 +1,15 @@
+{
+  "answer": "No -- historical forecast errors of outside forecasters, 2006-2025",
+  "capability": "semantic",
+  "difficulty": "hard",
+  "matchers": [
+    {
+      "kind": "committed_regex",
+      "pattern": "\\bno\\b"
+    },
+    {
+      "kind": "regex_required",
+      "pattern": "historical|forecast error|root mean squared|past projection|private and government|outside forecaster"
+    }
+  ]
+}
