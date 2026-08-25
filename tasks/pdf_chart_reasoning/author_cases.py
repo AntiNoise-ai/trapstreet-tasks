@@ -150,7 +150,10 @@ cases += [
          "The interval is measurable to the pixel and means something entirely different "
          "from what it looks like: table 2's note derives it from the root mean squared "
          "error of private and government forecasters over 2006-2025.",
-         [{"kind": "committed_regex", "pattern": r"\bno\b"},
+         # "No", "it does not", "not the spread" and "rather than" are the same
+         # answer. Keying on the bare word rejected two correct replies.
+         [{"kind": "committed_regex",
+           "pattern": r"\bno\b|\bnot\b|does not|is not|rather than|instead of"},
           {"kind": "regex_required",
            "pattern": r"historical|forecast error|root mean squared|past projection|"
                       r"private and government|outside forecaster"}]),

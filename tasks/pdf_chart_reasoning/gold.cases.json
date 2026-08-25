@@ -272,7 +272,7 @@
       "matchers": [
         {
           "kind": "committed_regex",
-          "pattern": "\\bno\\b"
+          "pattern": "\\bno\\b|\\bnot\\b|does not|is not|rather than|instead of"
         },
         {
           "kind": "regex_required",

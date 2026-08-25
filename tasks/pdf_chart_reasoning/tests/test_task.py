@@ -151,6 +151,29 @@ def test_a_reading_case_is_not_answerable_from_the_text_layer():
         assert not doc[i - 1].get_text().strip(), "figure pages must carry no text"
 
 
+ACCEPTED_15 = [
+    "ANSWER: No -- it is based on historical forecast errors of outside forecasters",
+    "ANSWER: It does not. The band comes from the root mean squared error of past forecasts",
+    "ANSWER: The interval reflects historical projection errors, not the participants' spread",
+]
+REJECTED_15 = [
+    "ANSWER: Yes, it shows how widely the participants' projections are spread",
+    "ANSWER: Yes -- it is the spread of the eighteen projections",
+]
+
+
+@pytest.mark.parametrize("reply", ACCEPTED_15)
+def test_the_band_question_survives_its_phrasing(reply, tmp_path):
+    """Keying on the bare word "no" rejected two correct replies: a reader who
+    writes "it does not" has answered the question."""
+    assert run_judge("case_15", reply, tmp_path)["score"] == 1.0
+
+
+@pytest.mark.parametrize("reply", REJECTED_15)
+def test_the_band_question_still_rejects_the_wrong_answer(reply, tmp_path):
+    assert run_judge("case_15", reply, tmp_path)["score"] == 0.0
+
+
 def test_the_tolerance_admits_one_legal_value_only(tmp_path):
     """0.025 is under half of a 1/18 step, so the next legal value fails."""
     c = CASES["case_04"]
