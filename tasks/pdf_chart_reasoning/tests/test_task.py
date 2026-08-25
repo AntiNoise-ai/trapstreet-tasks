@@ -71,7 +71,9 @@ def test_the_dot_plot_and_the_histogram_agree():
 @pytest.mark.parametrize("figure", sorted(SERIES))
 def test_each_series_is_quarterly_and_skips_the_meeting_the_note_omits(figure):
     for name, pts in SERIES[figure].items():
-        dates = [d for d, _ in pts]
+        # "~" marks a month counted back rather than read, so it sorts after
+        # the digits and has to come off before the ordering is checked.
+        dates = [d.lstrip("~") for d, _ in pts]
         assert len(pts) == 75, f"{figure} {name}"
         assert "2020-03" not in dates, "the note says March 2020 is excluded"
         assert dates == sorted(dates)
