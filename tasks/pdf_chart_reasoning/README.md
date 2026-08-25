@@ -107,6 +107,12 @@ participant of a legal value.
   set imposes on a purely geometric pipeline is a design property, not a wall:
   the seven it cannot answer are the semantic and abstention groups.
 - **The predecessor is not retired.** Two tasks, two different questions.
+- **Budget the output, not just the input.** These questions invite a
+  derivation, and a solution that caps `max_tokens` at 1024 spends the whole
+  budget reasoning and returns an empty string: six of twenty-three cases in
+  the first check run were lost that way, which the report calls an empty reply
+  rather than a wrong answer. The task cannot raise a ceiling the solution
+  sets.
 
 ## Rebuild
 

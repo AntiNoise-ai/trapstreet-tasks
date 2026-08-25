@@ -225,9 +225,7 @@ def main() -> None:
     print(json.dumps({
         "score": score,
         "passed": score == 1.0,
-        "figure": expected.get("figure"),
-        "panel": expected.get("panel"),
-        "category": expected.get("type"),
+        "category": expected.get("capability"),
         "difficulty": expected.get("difficulty"),
         "committed": committed,
         "committed_via": how,
