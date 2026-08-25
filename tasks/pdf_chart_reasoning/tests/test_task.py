@@ -75,7 +75,20 @@ def test_each_series_is_quarterly_and_skips_the_meeting_the_note_omits(figure):
         assert len(pts) == 75, f"{figure} {name}"
         assert "2020-03" not in dates, "the note says March 2020 is excluded"
         assert dates == sorted(dates)
-        assert {d[5:] for d in dates} <= {"03", "06", "09", "12"}
+        assert {d.lstrip("~")[5:] for d in dates} <= {"03", "06", "09", "12"}
+
+
+@pytest.mark.parametrize("figure", sorted(SERIES))
+def test_no_case_is_authored_against_an_inferred_month(figure):
+    """Months before the SEP's settled quarterly calendar are counted back from
+    the anchor rather than read, and carry a "~". The fourth SEP was published
+    with the January 2009 minutes, so those months are not March/June/September/
+    December and this file does not pretend otherwise."""
+    inferred = {d for name in SERIES[figure] for d, _ in SERIES[figure][name]
+                if d.startswith("~")}
+    for c in GOLD["cases"]:
+        for d in inferred:
+            assert d.lstrip("~") not in c["question"], f"{c['id']} uses {d}"
 
 
 @pytest.mark.parametrize("figure", sorted(SERIES))

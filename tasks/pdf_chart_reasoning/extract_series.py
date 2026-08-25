@@ -23,6 +23,13 @@ import pymupdf
 MARK_RGB = (0.03, 0.48, 0.68)
 LAST_SLOT = (2026, 6)              # the SEP this release accompanies
 SKIPPED = (2020, 3)                # stated in the note to figure 4.D
+# The SEP has accompanied the March, June, September and December meetings for
+# most of its life, but the early ones did not follow that calendar -- the
+# fourth was published with the January 2009 minutes. Counting quarterly back
+# from the anchor therefore names the month correctly only in the settled era;
+# earlier points get a "~" so that nobody authors a question against a month
+# this file inferred rather than read.
+VERIFIED_FROM = (2012, 3)
 PANELS_4D = ["change in real GDP", "unemployment rate", "PCE inflation",
              "core PCE inflation"]
 
@@ -84,7 +91,8 @@ def series(page) -> dict[str, list[tuple[str, float]]]:
         slope, icept = np.polyfit([a for a, _ in cal], [b for _, b in cal], 1)
         dates = _quarterly_dates(len(pts))
         name = PANELS_4D[i] if i < len(PANELS_4D) else f"panel {i}"
-        out[name] = [(f"{y}-{m:02d}", round(slope * py + icept, 4))
+        out[name] = [(f"{'' if (y, m) >= VERIFIED_FROM else '~'}{y}-{m:02d}",
+                      round(slope * py + icept, 4))
                      for (y, m), (_, py) in zip(dates, pts)]
     return out
 

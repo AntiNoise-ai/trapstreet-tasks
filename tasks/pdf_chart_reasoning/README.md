@@ -70,6 +70,13 @@ the gap at the March 2020 meeting the figure's own note says is omitted. Values
 are checked against the definition in that note: the index is (higher − lower) ÷
 participants, so every value is a multiple of about 1/18.
 
+Dates before 2012 carry a `~` in `series_gold.json`. The SEP has accompanied the
+March, June, September and December meetings for most of its life, but the early
+ones did not -- the fourth was published with the January 2009 minutes -- so
+counting quarterly back from the anchor names the month correctly only in the
+settled era. No case is authored against one of those points, and a test keeps
+it that way.
+
 Semantic and abstention answers are stated by the release: table 1's footnotes
 and table 2's note.
 
