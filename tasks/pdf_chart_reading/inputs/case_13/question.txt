@@ -1,1 +1,0 @@
-In figure 2, how many participants put their longer-run value for the federal funds rate at 3.0 percent? End your reply with a line of the form `ANSWER: <value>`.

@@ -1,1 +1,0 @@
-In figure 3.E, "Distribution of participants' judgments of the midpoint of the appropriate target range for the federal funds rate", how many participants place the end-2026 midpoint in the 3.63-3.87 percent range? End your reply with a line of the form `ANSWER: <value>`.

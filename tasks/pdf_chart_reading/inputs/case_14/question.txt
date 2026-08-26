@@ -1,1 +1,0 @@
-In figure 2, how many distinct rate levels are occupied by at least one dot in the longer-run column? End your reply with a line of the form `ANSWER: <value>`.

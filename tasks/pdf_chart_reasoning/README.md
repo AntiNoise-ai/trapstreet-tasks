@@ -18,9 +18,9 @@ across seven capabilities with no capability holding more than three or four:
 
 ## Why it is built this way
 
-Its predecessor, `pdf_chart_reading`, is still published and still useful: it
-sorts pipelines into text extraction, OCR, native vision, rendered vision,
-agent loops and geometric measurement, and the spread is clean. But it spends
+Its predecessor, `pdf_chart_reading`, has been withdrawn. It sorted pipelines
+cleanly into text extraction, OCR, native vision, rendered vision, agent loops
+and geometric measurement, and that spread is what this task keeps. But it spent
 thirteen of twenty-two cases reading one bar's height, and across seven arms its
 items span **four independent directions**, with the first holding 47% of the
 variance. A pipeline that measures a bar correctly measures all thirteen; one
@@ -115,7 +115,6 @@ measurement lands near one of them.
 - **Measurement still answers sixteen of the twenty-three.** The ceiling this
   set imposes on a purely geometric pipeline is a design property, not a wall:
   the seven it cannot answer are the semantic and abstention groups.
-- **The predecessor is not retired.** Two tasks, two different questions.
 - **Budget the output, not just the input.** These questions invite a
   derivation, and a solution that caps `max_tokens` at 1024 spends the whole
   budget reasoning and returns an empty string: six of twenty-three cases in

@@ -1,1 +1,0 @@
-In figure 3.A, how many participants project 2028 GDP growth below 2.2 percent? End your reply with a line of the form `ANSWER: <value>`.

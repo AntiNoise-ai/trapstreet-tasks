@@ -1,1 +1,0 @@
-In figure 2, how many participants judge the appropriate midpoint at the end of 2028 to be 3.125 percent or lower? End your reply with a line of the form `ANSWER: <value>`.

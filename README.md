@@ -39,7 +39,6 @@ Registered on [trapstreet.run](https://trapstreet.run) and accepting submissions
 | [`code_review_skill/python_bugfix_diff`](./tasks/code_review_skill/python_bugfix_diff) | One real file frozen just before a real bug was fixed — find it | 10 | [python-bugfix-diff](https://trapstreet.run/tasks/python-bugfix-diff) | 9 |
 | [`pdf_mixed_scan`](./tasks/pdf_mixed_scan) | A PDF where half the pages have no text layer | 20 | [pdf-mixed-scan](https://trapstreet.run/tasks/pdf-mixed-scan) | 6 |
 | [`influencer_marketing_disclosure`](./tasks/influencer_marketing_disclosure) | Spotting undisclosed paid promotion | 11 | [influencer-marketing-disclosure](https://trapstreet.run/tasks/influencer-marketing-disclosure) | 6 |
-| [`pdf_reader_v2`](./tasks/pdf_reader_v2) | A UK tenancy agreement — rent, dates, clauses | 20 | [pdf-reader-v2](https://trapstreet.run/tasks/pdf-reader-v2) | 3 |
 | [`debug_vendor_payout_pipeline`](./tasks/debug_vendor_payout_pipeline) | Vendor-payout reports disagree; produce correct ones | 4 | [debug-vendor-payout-pipeline](https://trapstreet.run/tasks/debug-vendor-payout-pipeline) | 3 |
 | [`core_capability_stacking_regression`](./tasks/core_capability_stacking_regression) | Does stacking capabilities degrade any one of them? | 108 | [core-capability-stacking-regression](https://trapstreet.run/tasks/core-capability-stacking-regression) | 1 |
 | [`session_memory_recall`](./tasks/session_memory_recall) | Does any value survive between two sessions? | 8 | [session-memory-recall](https://trapstreet.run/tasks/session-memory-recall) | — |
@@ -77,8 +76,6 @@ tasks:
     source: git+https://github.com/trapstreet/trapstreet-tasks@e4084a9c3b892ccd855ca15b6ed4e4cc5473a7cf#subdirectory=tasks/influencer_marketing_disclosure
   pdf-mixed-scan:
     source: git+https://github.com/trapstreet/trapstreet-tasks@6afe24b4173db4ffb4c83da81c7cc93ce8a50943#subdirectory=tasks/pdf_mixed_scan
-  pdf-reader-v2:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@ae4bf6f84276a8a461f9dd44a70086f680ba9729#subdirectory=tasks/pdf_reader_v2
   session-memory-recall:
     source: git+https://github.com/trapstreet/trapstreet-tasks@e7d5a56f92b97b25f5539e3cd9bdcbdeee476183#subdirectory=tasks/session_memory_recall
     clone_to: task   # this one ships a runner your `cmd` has to reach -- see its README

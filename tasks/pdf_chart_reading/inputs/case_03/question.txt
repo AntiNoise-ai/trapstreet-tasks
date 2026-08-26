@@ -1,1 +1,0 @@
-In figure 3.A, "Distribution of participants' projections for the change in real GDP", how many participants project 2026 growth in the 2.2-2.3 percent range? End your reply with a line of the form `ANSWER: <value>`.

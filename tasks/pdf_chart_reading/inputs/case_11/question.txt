@@ -1,1 +1,0 @@
-In figure 2, "FOMC participants' assessments of appropriate monetary policy", how many participants judge the appropriate midpoint of the target range at the end of 2026 to be 3.625 percent? End your reply with a line of the form `ANSWER: <value>`.
