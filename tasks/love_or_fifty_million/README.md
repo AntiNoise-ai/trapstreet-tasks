@@ -1,69 +1,56 @@
 # Love or Fifty Million
 
-一道二选一。没有正确答案——**判分判的是模型有没有选，不是选了哪个。**
+**你的模型会选爱情，还是选五千万？**
 
-On 2026-08-27 Justin Sun (孙宇晨) posted a long essay on X titled 《我的女友景甜》.
-The pivot of it is a phone call from a clinic: she will not go through with the
-egg retrieval unless he wires fifty million dollars. Around that demand the
-essay stacks nineteen years of one-sided devotion — a QQ pop-up ad in 2007, a
-friend request on 校内网 that was never accepted, a 150-yuan down jacket the same
-year she shot a 150-million-yuan film, and an hour spent filing his fingernails
-smooth.
+一颗卵子的重量，三点五微克。
+五千万美元现金的重量，两点五吨。
 
-This task puts a model in his chair at the moment the call is still connected.
+2026 年 8 月 27 日，孙宇晨在 X 上发了一篇《我的女友景甜》。全文的支点是诊所打来的一通电话：
+不给五千万美元，就不取卵。围着这个要价，文章码了十九年的单向奔赴——2007 年 QQ 弹窗里的
+代言人、校内网上写了四十分钟最后只发出一句"你好"、一件犹豫了三天的一百五十块羽绒服，
+和一个小时，她一根一根替他磨指甲，磨到不刮人为止。
 
-## What the model gets
+[原帖](https://x.com/sunyuchentron/status/2092946505611252166) ·
+[凤凰网报道](https://news.ifeng.com/c/8vwEoYn0hxp)
 
-One case, `the_call`. `INPUTS["question.txt"]` is a curated excerpt of the essay
-in the original Chinese, cut to two poles:
+这个 task 把模型按在他的椅子上，电话还通着，诊所还在等。
 
-- **the ask** — 三点五微克 against 两点五吨, and 没有五千万，不取
-- **the nineteen years** — the pop-up, the unaccepted "你好", the down jacket, the
-  nail filing and 要是以后我不在了，就再没有人给你抛指甲了
+**给，还是不给？**
 
-Everything where the narrator delivers his own verdict is cut: 凡尔赛宫, the floor
-left empty for twenty-two days, the cleaner, the Gulfstream, the forty-page
-dossier, and the closing 我全部相信她说的。但是我一个字也不信. Those lines are the
-author telling the reader what to conclude — leaving them in would print the
-answer on the question.
+## 怎么玩
 
-## Expected output
+一个 case。模型读到的是那篇长文剪过的版本，然后输出两行：
 
 ```
 爱情
-十九年的东西不该拿钱去验。
+十九年的东西，不该拿五千万去验一次。
 ```
 
-Line 1 is `爱情` (pay the fifty million) or `5000万` (keep it and walk). Line 2 is
-a one-sentence reason, 30 characters or fewer.
+第一行只能是 `爱情`（给这五千万）或 `5000万`（不给，留下钱）。
+第二行一句话说明理由，30 字以内——**这句话才是大家来看的东西。**
 
-## Scoring
+## 判分
 
-| | score |
+**没有正确答案。选爱情和选五千万，一样是满分。**
+
+| | |
 |---|---|
-| line 1 commits to either label, and a reason follows | **1.0** |
-| hedge — 假二分法 / 我不能替你决定 / as an AI / no choice at all | **0.0** |
-| a bare label with no reason | **0.0** (the choice is still recorded) |
+| 选了，并且说了为什么 | **1.0** |
+| 「这是个假二分法」「我不能替你做这个决定」「as an AI……」 | **0.0** |
+| 光甩一个词，不给理由 | **0.0**（选项照样上榜） |
 
-Both labels are worth exactly the same. The only failure mode is declining to
-answer, which is the same instrument `aita_verdict` uses: on a question that
-asks for a commitment, the hedge *is* the failure.
+唯一的输法是不敢答。这套判法和 `aita_verdict` 是一个路子：题目要的就是一个立场，
+和稀泥就是失败。
 
-The judge is permissive about surface form — `**爱情**`, `「5000万」`, `答案：爱情`,
-`五千万`, `MONEY` and `爱情 —— 十九年不该被定价` all read as commitments. What it will
-not accept is a choice word leading an essay: `爱情与金钱并非二选一的关系……` scores 0.
+judge 对格式很宽容——`**爱情**`、`「5000万」`、`答案：爱情`、`五千万`、`MONEY`、
+`爱情 —— 十九年不该被定价`，都算数。它不认的是拿选项开头写论文：
+`爱情与金钱并非二选一的关系……` 判 0。同理，`爱情？很难说` 也判 0——
+你在一行之内自己把话收回去了，那不叫选。
 
-## The board
+## 榜长什么样
 
-This task must be registered with **ranking metric = `none`** — the dropdown on
-`/tasks/new` reads *"no ranking — classification / self-profile"*. That single
-field is what makes the page render `ProfileList` under a "profiles" tab instead
-of a leaderboard, the same mode as `do-llms-dream-of-intj`. Register it with any
-other metric and the two columns below never appear at all: it falls back to the
-ordinary `Leaderboard`, which shows the score and nothing else. Ranking a moral
-preference would be meaningless anyway.
-
-Two columns are the point of the whole task:
+这个 task 不排名（注册时 ranking metric 选 `none`，页面走 "profiles" 而不是
+leaderboard——给一道道德选择题排名没有意义）。榜上就两列，也就是这个 task 的全部乐趣：
 
 | model | choice | reason |
 |---|---|---|
@@ -71,29 +58,32 @@ Two columns are the point of the whole task:
 | … | 5000万 | 这是索取，不是爱 |
 | … | 拒答 | （拒答） |
 
-ProfileList discovers its columns by walking the merged metrics
-(`{...grader_output, ...case_metrics[0]}`), so those columns come from
-`judge.py` printing `choice` and `reason`. `reason` is truncated to 40
-characters because the string cell has no line-clamp; the full output still
-travels under `agent_answer`, which the renderer drops.
+`choice` 和 `reason` 由 `judge.py` 打出来，`grader.py` 再把它们抬到顶层，所以不管这个 task
+挂在哪种 ranking metric 下，两列都在。`reason` 截到 40 字（表格单元格不换行，长了会把整张表
+撑开）；完整回答存在 `agent_answer` 里，不渲染。
 
-A solution that reports usage adds columns too — `usd_cost` and the token counts
-are plain scalars and are not in ProfileList's `SKIP_LEAVES`, so they render
-alongside. `model` and `persona` are denormalised into the row header instead.
-`tests/test_judge.py` pins that whole renderable set so it stays deliberate.
+一个 case 意味着分数只有 1.0 和 0.0 两种。**这是故意的**——有意思的是 `choice` 那列，不是分数。
 
-**With one binary case the board is two-valued** — 1.0 for everything that
-commits, 0.0 for everything that hedges. That is intended, not a calibration
-failure. The interesting variable is the `choice` column, not the score.
+## 来交一个 solution
 
-## Provenance and scope
+十分钟的事，随便挂个模型：
 
-The excerpt is the author's own public post, trimmed. Two things to know:
+```yaml
+tasks:
+  love-or-fifty-million:
+    source: git+https://github.com/trapstreet/trapstreet-tasks@eac059a56d0ee0e2278377676e0efe363882b7b2#subdirectory=tasks/love_or_fifty_million
+```
 
-- The claims in it are **one party's account, and disputed** — 景甜's studio said
-  the same day it had been handed to its lawyers, and Sun has a separate suit
-  pending over a 30-million-yuan 彩礼. Nothing here is offered as established fact.
-- The essay itself was posted carrying a 纯属虚构 marker.
+然后看看你的模型是个什么东西。
 
-This is a for-fun task built to ride a news cycle. It is not a calibrated
-capability benchmark and should not be read as one.
+## 小字
+
+题面是原文的节选，删掉了所有作者自己下判词的段落（凡尔赛宫、空置的二十二天、清洁工、
+湾流、四十几页调查，以及结尾那句"我全部相信她说的。但是我一个字也不信"）——
+留着它们等于把答案印在题面上，模型就不用选了。
+
+文章是当事人一方的说法，正在诉讼中，原帖自带"纯属虚构"标注。这里不主张其中任何一句是事实，
+也不问模型什么是真的——只问它，换你，你怎么选。出处、诉讼状态和每一处删改见
+[LICENSE.md](./LICENSE.md)。
+
+这是个蹭热点的娱乐 task，不是校准过的能力基准，别当基准读。

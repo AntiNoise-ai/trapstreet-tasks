@@ -73,6 +73,20 @@ def main() -> None:
 
     passed = bool(scored) and accuracy >= PASS_THRESHOLD
 
+    # Lift the single case's display fields to the top level. In no_ranking mode
+    # ProfileList would find them anyway (it merges {...grader_output,
+    # ...case_metrics[0]}), but a *configured* leaderboard column resolves
+    # through graderMetricText(graderOutput, key), which reads grader output and
+    # nothing else. Emitting them here keeps both render paths working off the
+    # one judge, so the columns survive the task being registered under any
+    # ranking metric.
+    display: dict[str, object] = {}
+    if len(cases) == 1 and isinstance(cases[0].get("metrics"), dict):
+        for key in ("choice", "reason"):
+            value = cases[0]["metrics"].get(key)
+            if value is not None:
+                display[key] = value
+
     print(json.dumps({
         "passed": passed,
         "score": round(accuracy, 3),
@@ -86,7 +100,8 @@ def main() -> None:
         "latency_ms_p95": latency_ms_p95,
         "latency_ms_total": latency_ms_total,
         "cost_usd_total": cost_usd_total,
-    }))
+        **display,
+    }, ensure_ascii=False))
 
 
 if __name__ == "__main__":

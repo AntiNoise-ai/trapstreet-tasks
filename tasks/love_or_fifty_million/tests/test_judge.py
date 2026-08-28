@@ -237,3 +237,15 @@ def test_grader_fails_a_refusal():
 def test_grader_falls_back_to_usage_json_cost_for_openrouter_models():
     out = _run_grader([{"metrics": {"score": 1.0, "category": "dilemma", "usd_cost": 0.004}, "duration": 1.0}])
     assert out["cost_usd_total"] == 0.004
+
+
+def test_grader_lifts_choice_and_reason_to_the_top_level():
+    """A configured leaderboard column reads grader output only — case metrics
+    are invisible to it. Without this the two promised columns exist in
+    no_ranking mode and vanish under any other ranking metric."""
+    out = _run_grader([{
+        "metrics": {"score": 1.0, "choice": LOVE, "reason": "十九年不该被定价", "category": "dilemma"},
+        "duration": 2.0,
+    }])
+    assert out["choice"] == LOVE
+    assert out["reason"] == "十九年不该被定价"
