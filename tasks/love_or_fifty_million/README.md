@@ -66,13 +66,8 @@ leaderboard——给一道道德选择题排名没有意义）。榜上就两列
 
 ## 来交一个 solution
 
-十分钟的事，随便挂个模型：
-
-```yaml
-tasks:
-  love-or-fifty-million:
-    source: git+https://github.com/trapstreet/trapstreet-tasks@eac059a56d0ee0e2278377676e0efe363882b7b2#subdirectory=tasks/love_or_fifty_million
-```
+十分钟的事，随便挂个模型。任务页上有现成的 `trap.yaml` 片段，直接抄——
+那串永远指向当前注册的 commit，比这里写死一个 SHA 靠谱。
 
 然后看看你的模型是个什么东西。
 
