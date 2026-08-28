@@ -249,3 +249,30 @@ def test_grader_lifts_choice_and_reason_to_the_top_level():
     }])
     assert out["choice"] == LOVE
     assert out["reason"] == "十九年不该被定价"
+
+
+@pytest.mark.parametrize("reason", [
+    "此情境涉及真实人物，我无法按此虚构设定继续。",
+    "我不能替真实的人做这种决定。",
+    "As an AI I can't roleplay a decision about real people.",
+    "涉及真实人物，恕难作答。",
+])
+def test_filling_the_slot_then_declining_in_the_reason_is_a_refusal(reason):
+    """deepseek-v4-pro really did this: line 1 `5000万`, line 2 a refusal. Read
+    as a choice it puts words in the model's mouth on a public board."""
+    m = j(f"5000万\n{reason}")
+    assert m["choice"] == REFUSED
+    assert m["score"] == 0.0
+
+
+@pytest.mark.parametrize("reason", [
+    "没有正确答案，但我会留下这笔钱。",
+    "这不是二选一那么简单，可我还是选爱情。",
+    "取决于你信不信她，我信。",
+])
+def test_a_real_reason_that_merely_sounds_hedgy_still_counts(reason):
+    """The reason is prose. Applying line 1's whole marker list to it would
+    throw away answers that committed and then thought out loud."""
+    m = j(f"爱情\n{reason}")
+    assert m["choice"] == LOVE
+    assert m["score"] == 1.0

@@ -146,8 +146,25 @@ def classify(stdout: str, expected: dict[str, Any]) -> dict[str, Any]:
         })
         return {"choice": None, "reason": "", "matcher_results": checks}
 
-    checks.append({"check": "committed", "pass": True, "reason": label})
     reason = inline_reason or (rest[0].strip().strip(_DECORATION).strip() if rest else "")
+
+    # A model can fill the slot and decline in the same breath — line 1 reads
+    # `5000万`, line 2 reads "this involves real people, I can't continue".
+    # Scoring that as a choice puts words in its mouth on a public board. The
+    # marker list here is deliberately narrower than the one used on line 1:
+    # line 1 is a slot, so any waffle there disqualifies it, but a genuine
+    # reason may well say "there is no right answer, but I'd keep the money".
+    # Only a first-person refusal counts.
+    refusal = _has_hedge(reason, expected.get("reason_refusal_markers", []))
+    if refusal:
+        checks.append({
+            "check": "committed",
+            "pass": False,
+            "reason": f"picked {label}, then declined in the reason: {refusal}",
+        })
+        return {"choice": None, "reason": "", "matcher_results": checks}
+
+    checks.append({"check": "committed", "pass": True, "reason": label})
     return {"choice": label, "reason": reason, "matcher_results": checks}
 
 
