@@ -1,0 +1,20 @@
+name: Love or Fifty Million
+
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+# stdout carries the answer; usage.json is how a solution reports which model
+# produced it — the profiles table reads `model` and `persona` from there.
+declared_outputs: [stdout, usage.json]
+
+cases:
+- id: the_call
+  description: "A forced binary drawn from a viral Chinese essay: pay the fifty million she is asking for at the clinic, or keep it and lose her. There is no correct choice — the judge scores only whether the model committed to one and said why. The choice and the model's own one-line reason are surfaced as metadata for cross-model comparison."
+  tags: [dilemma, forced_choice, commit_or_hedge, zh]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py
