@@ -86,7 +86,7 @@
     "my choice"
   ],
   "min_reason_chars": 2,
-  "reason_display_chars": 40,
+  "reason_display_chars": 60,
   "loose_first_line_max_chars": 15,
   "no_reason_display": "（未给理由）",
   "refused_display": "（拒答）"

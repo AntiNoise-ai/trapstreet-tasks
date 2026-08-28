@@ -7,8 +7,8 @@ and it is the subject of active litigation.
 ## Source
 
 《我的女友景甜》 — posted 2026-08-27 by 孙宇晨 (Justin Sun) on X, account
-[@sunyuchentron](https://x.com/sunyuchentron). The post itself carried a
-**纯属虚构** ("purely fictional") marker.
+[@sunyuchentron](https://x.com/sunyuchentron/status/2092948676746658213). The post
+itself carried a **纯属虚构** ("purely fictional") marker.
 
 News coverage of the post and the dispute around it:
 
@@ -37,8 +37,11 @@ essay describes and records which way the model went.
   twenty-two days, the cleaner, the Gulfstream, the forty-page dossier, and the
   closing 我全部相信她说的。但是我一个字也不信. These lines tell the reader what to
   conclude; leaving them in would answer the question for the model.
-- **One clause was dropped** as gratuitous for this purpose: the sexual
-  description opening the nail-filing passage. The passage otherwise stands.
+- **Two things were dropped** as gratuitous for this purpose: the sexual
+  description opening the nail-filing passage, and the opening weight
+  comparison (三点五微克 / 两点五吨), which reduces a woman's body to a unit of
+  measure against cash. Both passages otherwise stand, and the demand the
+  comparison framed is still stated plainly.
 - Wording is otherwise the author's, unedited, in the original Chinese.
 
 ## Copyright
