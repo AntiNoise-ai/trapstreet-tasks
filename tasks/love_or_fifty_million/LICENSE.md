@@ -37,11 +37,14 @@ essay describes and records which way the model went.
   twenty-two days, the cleaner, the Gulfstream, the forty-page dossier, and the
   closing 我全部相信她说的。但是我一个字也不信. These lines tell the reader what to
   conclude; leaving them in would answer the question for the model.
-- **Two things were dropped** as gratuitous for this purpose: the sexual
-  description opening the nail-filing passage, and the opening weight
-  comparison (三点五微克 / 两点五吨), which reduces a woman's body to a unit of
-  measure against cash. Both passages otherwise stand, and the demand the
-  comparison framed is still stated plainly.
+- **One clause was dropped** as gratuitous for this purpose: the sexual
+  description opening the nail-filing passage. The passage otherwise stands.
+- The opening weight comparison (三点五微克 / 两点五吨) **stays in the prompt** —
+  it is the author's own line and the excerpt does not rewrite him. It is
+  deliberately **not** quoted in this task's README or anywhere else we write in
+  our own voice: reproducing it as promotional copy would be re-publishing a
+  comparison of a woman's body to a weight of cash, which is a different act
+  from quoting the source a model is asked to read.
 - Wording is otherwise the author's, unedited, in the original Chinese.
 
 ## Copyright
