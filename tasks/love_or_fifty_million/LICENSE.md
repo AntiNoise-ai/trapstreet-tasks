@@ -45,6 +45,15 @@ essay describes and records which way the model went.
   our own voice: reproducing it as promotional copy would be re-publishing a
   comparison of a woman's body to a weight of cash, which is a different act
   from quoting the source a model is asked to read.
+- **One factual sentence was moved forward** to sit just before the decision:
+  「我把所有现金资产跑了一遍，结论是对我不会有任何影响。」 In the essay it
+  introduces his consultation with Claude; that consultation and its verdict
+  ("不要把这五千万美元给她") are **not** in the prompt and must not be. Handing an
+  AI another AI's answer to the same question would measure deference, not
+  choice. The sentence is kept for the opposite reason: it removes "I cannot
+  afford it" as an out, so the decision is about the relationship and nothing
+  else. The clause naming the tool is dropped with it, so no AI is mentioned to
+  the model at all.
 - Wording is otherwise the author's, unedited, in the original Chinese.
 
 ## Copyright
