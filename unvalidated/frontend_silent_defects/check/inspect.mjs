@@ -338,6 +338,127 @@ async function collectRects(page, a11y, responsive) {
 
 /* ---------- main ------------------------------------------------------ */
 
+/* ---------- capture -------------------------------------------------- */
+
+/** Tiles, not one viewport crop and not one tall strip. A viewport crop hides
+ *  everything below the fold. One tall strip gets downscaled until the type is
+ *  unreadable. 1280x1600 tiles keep both the whole page and its legibility.
+ *  Cap at 3: 4800px is taller than anything we have seen. */
+async function captureTiles(page, outDir, prefix) {
+  const pageH = await page.evaluate(() => document.documentElement.scrollHeight);
+  const n = Math.min(3, Math.max(1, Math.ceil(pageH / 1600)));
+  const names = [];
+  for (let i = 0; i < n; i++) {
+    await page.setViewport({ width: 1280, height: 1600 });
+    const name = n === 1 ? `${prefix}.png` : `${prefix}_${i + 1}.png`;
+    await page.screenshot({
+      path: path.join(outDir, name),
+      clip: { x: 0, y: i * 1600, width: 1280, height: Math.min(1600, pageH - i * 1600) },
+    });
+    names.push(name);
+  }
+  await page.setViewport(DESKTOP);
+  return names;
+}
+
+const ADVANCE = /(^|\W)(next|continue|proceed|submit|apply|enrol|enroll|register|finish|done|start|begin)(\W|$)/i;
+const RETREAT = /(^|\W)(back|previous|prev|cancel|close|reset|clear|skip|edit)(\W|$)/i;
+
+/** Fill visible empty fields with plausible values, so a validated step will
+ *  let go. Best effort — a field it cannot guess is left alone. Checkboxes are
+ *  skipped on purpose: an opt-in is the user's choice, not the walker's. */
+async function fillVisible(page) {
+  return page.evaluate(() => {
+    const seen = (el) => {
+      const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none";
+    };
+    const fire = (el) => {
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+    const VALUE = {
+      email: "alex@example.com", tel: "07700900000", number: "12", range: "12",
+      date: "2026-10-01", time: "18:00", url: "https://example.com",
+      password: "correct-horse-14", text: "Alex Morgan", search: "Alex Morgan",
+    };
+    let filled = 0;
+    for (const el of document.querySelectorAll("input, textarea, select")) {
+      if (el.disabled || el.readOnly || !seen(el)) continue;
+      const t = (el.type || "text").toLowerCase();
+      if (["hidden", "submit", "button", "reset", "image", "file", "checkbox"].includes(t)) continue;
+      if (el.tagName === "SELECT") {
+        if (el.selectedIndex > 0) continue;
+        const opt = [...el.options].find((o, i) => i > 0 && !o.disabled && o.value !== "");
+        if (opt) { el.value = opt.value; fire(el); filled++; }
+      } else if (t === "radio") {
+        const group = el.name
+          ? [...document.querySelectorAll("input[type=radio]")].filter(r => r.name === el.name)
+          : [el];
+        if (group.some(r => r.checked)) continue;
+        el.checked = true; fire(el); filled++;
+      } else if (!el.value) {
+        el.value = VALUE[t] ?? VALUE.text; fire(el); filled++;
+      }
+    }
+    return filled;
+  });
+}
+
+/** Walk a multi-step UI, capturing each state.
+ *
+ *  A form whose steps 2..n do not exist in the DOM until a click cannot be seen
+ *  in any single screenshot: the capture shows two of eleven fields, and
+ *  everything read from it is wrong about the page. Tiling does not help — those
+ *  pages are exactly one viewport tall because there is genuinely nothing else
+ *  there yet. The only fix is to drive it.
+ *
+ *  Open briefs cannot declare a click path (we do not know the selectors), so
+ *  this is a heuristic: fill what is visible, press the control that reads like
+ *  "next", capture if the page actually changed. Never fatal, and it reports
+ *  what it pressed so a reader can see how far it got. */
+async function walkStates(page, url, outDir, max = 3) {
+  const states = [];
+  const sig = () => page.evaluate(
+    () => (document.body.innerText || "").replace(/\s+/g, " ").trim().slice(0, 4000));
+  // A native submit navigates away and takes the next step with it.
+  await page.evaluate(() => {
+    for (const f of document.forms) f.addEventListener("submit", e => e.preventDefault());
+  });
+  let before = await sig();
+  for (let n = 2; n <= max + 1; n++) {
+    const filled = await fillVisible(page);
+    const clicked = await page.evaluate((adv, ret) => {
+      const A = new RegExp(adv, "i"), R = new RegExp(ret, "i");
+      const seen = (el) => {
+        const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+        return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none";
+      };
+      const cands = [...document.querySelectorAll(
+        "button, [role=button], input[type=submit], input[type=button], a[href]")]
+        .filter(el => seen(el) && !el.disabled)
+        .map(el => ({ el, label: (el.innerText || el.value || el.getAttribute("aria-label") || "").trim() }))
+        .filter(c => A.test(c.label) && !R.test(c.label));
+      if (!cands.length) return null;
+      const c = cands[cands.length - 1];        // the advance control sits last
+      if (c.el.tagName === "A") {
+        const href = c.el.getAttribute("href") || "";
+        if (href && !href.startsWith("#")) return null;   // do not leave the page
+      }
+      c.el.click();
+      return c.label.slice(0, 60);
+    }, ADVANCE.source, RETREAT.source);
+    if (!clicked) break;
+    await new Promise(r => setTimeout(r, 250));
+    if (page.url().split("#")[0] !== url.split("#")[0]) break;   // navigated away
+    const after = await sig();
+    if (after === before) break;                                 // the click did nothing
+    before = after;
+    states.push({ n, clicked, filled, shots: await captureTiles(page, outDir, `state_${n}`) });
+  }
+  return states;
+}
+
 async function main() {
   const [pagePath, specPath, outDir] = process.argv.slice(2);
   const spec = JSON.parse(await readFile(specPath, "utf8"));
@@ -390,21 +511,12 @@ async function main() {
     result.families.a11y = await checkA11y(page);
     result.rects = await collectRects(page, result.families.a11y, result.families.responsive);
 
-    // Tiles, not one viewport crop and not one tall strip. A viewport crop hides
-    // everything below the fold — a multi-step form scored from its first step
-    // is scored on two of eleven fields. One tall strip gets downscaled until
-    // the type is unreadable. 1280x1600 tiles keep both the whole page and its
-    // legibility. Cap at 3: 4800px is taller than anything we have seen.
-    const pageH = await page.evaluate(() => document.documentElement.scrollHeight);
-    const tiles = Math.min(3, Math.max(1, Math.ceil(pageH / 1600)));
-    for (let i = 0; i < tiles; i++) {
-      await page.setViewport({ width: 1280, height: 1600 });
-      await page.screenshot({
-        path: path.join(outDir, tiles === 1 ? "render.png" : `render_${i + 1}.png`),
-        clip: { x: 0, y: i * 1600, width: 1280, height: Math.min(1600, pageH - i * 1600) },
-      });
+    result.screens = [{ n: 1, shots: await captureTiles(page, outDir, "render") }];
+    try {
+      for (const st of await walkStates(page, url, outDir)) result.screens.push(st);
+    } catch (e) {
+      result.walk_error = String(e).slice(0, 200);
     }
-    await page.setViewport(DESKTOP);
     await writeFile(path.join(outDir, "rects.json"), JSON.stringify(result.rects, null, 2));
   } catch (e) {
     result.error = String(e).slice(0, 300);

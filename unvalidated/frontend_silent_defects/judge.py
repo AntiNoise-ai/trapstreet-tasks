@@ -205,8 +205,12 @@ def main() -> None:
         "overflow_px_375": resp.get("overflow"),
         "console_errors": len(report.get("console_errors") or []),
         "html_bytes": len(html),
+        # How many distinct states the walker reached. 1 means the page never
+        # advanced — either it is a single screen, or nothing looked like "next".
+        "states_captured": len(report.get("screens") or []),
         "artifacts": {
-            "render": str(out_dir / "render.png"),
+            "screens": [str(out_dir / n)
+                        for st in (report.get("screens") or []) for n in st["shots"]],
             "rects": str(out_dir / "rects.json"),
         },
     }))

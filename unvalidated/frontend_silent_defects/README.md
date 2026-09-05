@@ -54,14 +54,16 @@ because the counts are worth seeing, and for nothing else.
 
 ```
 check/inspect.mjs   the browser half — puppeteer-core against system Chrome,
-                    axe-core injected. Emits per-check results, tiled
-                    render*.png, and rects.json (the gallery overlay's boxes).
+                    axe-core injected. Emits per-check results, one tiled
+                    capture per UI state, and rects.json (the gallery
+                    overlay's boxes).
 check/panel.py      an LLM judge panel. NOT WIRED IN — see below.
 check/anchors/      seven blind-sorted screenshots the panel used. Kept as
                     record; nothing reads them.
 judge.py            pulls the page out of stdout, calls the inspector,
                     turns one family into one score.
-fixtures/           good / broken / counterfactual — the judge's own test set.
+fixtures/           good / broken / counterfactual / wizard — the judge's own
+                    test set.
 inputs/case_NN/     the brief handed to the solution.
 expected/case_NN/   which family decides this case, and its assertions.
 ```
@@ -123,8 +125,28 @@ Two findings survive it. **Seven anchors were not enough**, and sorting them
 *overall* cannot calibrate *per-axis* scores — the doc flagged that as a caveat
 and this run promoted it to a cause. And **the three form cases were never
 judgeable from an image at all**: those pages are exactly one viewport tall
-because steps 2–4 do not exist until a click. Tiling the screenshots proved that
-rather than fixing it. A static image cannot score a stateful UI.
+because steps 2–4 do not exist until a click, so every capture showed two of
+eleven fields. Tiling the screenshots proved that rather than fixing it. That
+one was a defect in the *input*, not the judge, and it is fixed — see below.
+
+## Capturing a UI that has states
+
+Fixed 2026-09-05, after the panel run made the cost visible.
+
+The inspector now **walks** the page instead of photographing it once. It fills
+the visible fields with plausible values, presses the control that reads like
+"next", and captures again — up to four states, stopping the moment a click
+changes nothing or would leave the page. Each state is captured as 1280×1600
+tiles, so neither the fold nor legibility is lost. `states_captured` and, per
+state, the label it pressed are reported.
+
+Open briefs cannot declare a click path — we do not know the selectors — so this
+is a heuristic and it is honest about being one: it reports what it pressed, and
+a page it cannot advance simply reports one state. `fixtures/wizard.html` is a
+three-step form whose steps 2 and 3 are not in the DOM until step 1 validates,
+and `tests/test_judge.py` fails if the walker stops short of it.
+
+This does not rescue the panel. It removes one reason the panel had no chance.
 
 ## Known open questions
 

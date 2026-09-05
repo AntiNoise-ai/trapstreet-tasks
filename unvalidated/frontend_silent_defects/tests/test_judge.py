@@ -80,6 +80,21 @@ def test_anti_default_case() -> None:
     assert b["score"] == 0.0, "a default-shaped page passed the anti-default brief"
 
 
+def test_walker_reaches_later_steps() -> None:
+    """A three-step form must be captured three times, not once.
+
+    `fixtures/wizard.html` puts steps 2 and 3 outside the DOM until step 1
+    validates — the shape that made the open form briefs unjudgeable from a
+    screenshot. If the walker regresses, states_captured drops to 1 and any
+    judge reading these images is reading a third of the page.
+    """
+    wiz = (TASK / "fixtures" / "wizard.html").read_text()
+    r = run_judge(wiz, "case_09")
+    print(f"wizard      states_captured={r['states_captured']} floor={r['floor_passed']}")
+    assert r["states_captured"] >= 3, f"walker stalled at {r['states_captured']} state(s)"
+    assert len(r["artifacts"]["screens"]) >= 3
+
+
 def test_garbage_input_scores_zero() -> None:
     r = run_judge("I could not complete this task.", "case_01")
     assert r["score"] == 0.0 and r["failure_reason"] == "no_html"
@@ -89,5 +104,6 @@ def test_garbage_input_scores_zero() -> None:
 if __name__ == "__main__":
     test_fixtures_separate()
     test_anti_default_case()
+    test_walker_reaches_later_steps()
     test_garbage_input_scores_zero()
     print("\nall passed")

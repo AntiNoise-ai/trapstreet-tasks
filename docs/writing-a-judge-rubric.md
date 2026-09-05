@@ -165,8 +165,14 @@ And one thing that is not a rubric problem at all: **a static image cannot score
 a stateful UI.** Three of the nine pages were multi-step form flows whose later
 steps do not exist in the DOM until a click. Every screenshot of them is one
 viewport tall and shows two of eleven fields. Tiling the capture proved this
-rather than fixing it. Before writing a rubric, check that the artefact you are
-handing the judge actually contains the thing you are asking about.
+rather than fixing it; the actual fix was to **drive** the page — fill the
+visible fields, press the thing that says "next", capture each state — which the
+inspector now does.
+
+The general form: **before writing a rubric, check that the artefact you hand the
+judge contains the thing you are asking about.** This is upstream of every
+prompt decision and it is much cheaper to check. A judge scoring `structure` on
+a third of a form is not a calibration problem.
 
 Where that leaves the alternative: pairwise is still the better primitive, but
 after two failed pointwise runs the honest prerequisite is *more labelled pages*,

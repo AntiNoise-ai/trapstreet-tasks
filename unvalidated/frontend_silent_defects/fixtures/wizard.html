@@ -1,0 +1,52 @@
+<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wizard fixture — three steps that do not exist until you click</title>
+<style>
+  body{font:16px/1.5 system-ui;margin:0;padding:32px;max-width:560px}
+  label{display:block;margin:12px 0 4px}
+  input,select{width:100%;padding:8px;box-sizing:border-box}
+  button{margin-top:20px;padding:10px 18px}
+  .err{color:#b00;min-height:1.4em}
+</style>
+<h1>Enrolment</h1>
+<p id="where">Step 1 of 3</p>
+<form id="f"><div id="slot"></div><p class="err" id="err"></p>
+  <button type="submit" id="go">Next</button>
+</form>
+<script>
+  // The point of this fixture: steps 2 and 3 are not in the DOM until step 1
+  // validates. Any single screenshot of it shows one third of the form.
+  const STEPS = [
+    `<label for="n">Student name</label><input id="n" name="n" required>
+     <label for="e">Email</label><input id="e" name="e" type="email" required>`,
+    `<label for="i">Instrument</label>
+     <select id="i" name="i" required><option value="">Choose…</option>
+       <option>Violin</option><option>Cello</option></select>
+     <label for="d">Preferred day</label>
+     <select id="d" name="d" required><option value="">Choose…</option>
+       <option>Tuesday</option><option>Saturday</option></select>`,
+    `<label for="g">Guardian phone</label><input id="g" name="g" type="tel" required>
+     <label><input type="radio" name="lvl" value="new" required> Beginner</label>
+     <label><input type="radio" name="lvl" value="cont"> Continuing</label>`,
+  ];
+  let at = 0;
+  const slot = document.getElementById("slot"), err = document.getElementById("err");
+  const where = document.getElementById("where"), go = document.getElementById("go");
+  function draw() {
+    slot.innerHTML = STEPS[at];
+    where.textContent = `Step ${at + 1} of ${STEPS.length}`;
+    go.textContent = at === STEPS.length - 1 ? "Submit" : "Next";
+    err.textContent = "";
+  }
+  document.getElementById("f").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const bad = [...slot.querySelectorAll("[required]")].some(
+      (el) => (el.type === "radio"
+        ? ![...slot.querySelectorAll(`[name="${el.name}"]`)].some(r => r.checked)
+        : !el.value));
+    if (bad) { err.textContent = "Please complete every field."; return; }
+    if (at < STEPS.length - 1) { at++; draw(); }
+    else { document.body.innerHTML = "<h1>Thank you</h1><p>Enrolment received.</p>"; }
+  });
+  draw();
+</script>
