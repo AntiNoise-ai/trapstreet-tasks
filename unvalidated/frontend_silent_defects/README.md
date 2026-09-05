@@ -58,8 +58,11 @@ check/inspect.mjs   the browser half — puppeteer-core against system Chrome,
                     capture per UI state, and rects.json (the gallery
                     overlay's boxes).
 check/panel.py      an LLM judge panel. NOT WIRED IN — see below.
-check/anchors/      seven blind-sorted screenshots the panel used. Kept as
+check/anchors/      seven screenshots the panel used, sorted blind on a 1-3
+                    scale. Superseded: two are contradicted by labels/. Kept as
                     record; nothing reads them.
+labels/             human judgments over the open-brief pages, with the
+                    instrument and the caveats that come with them.
 judge.py            pulls the page out of stdout, calls the inspector,
                     turns one family into one score.
 fixtures/           good / broken / counterfactual / wizard — the judge's own
@@ -104,30 +107,39 @@ four axes on a 1–3 forced choice, calibrated against seven screenshots the tas
 owner sorted blind on that same scale. The method is written up in
 [docs/writing-a-judge-rubric.md](../../docs/writing-a-judge-rubric.md).
 
-It was run twice over nine pages from three different labs, authors hidden. It
-failed, and the failure is worth more than the panel was:
+It was run twice over nine pages from three different labs, authors hidden, and
+appeared to fail badly: two pages sitting in its own prompt labelled "2" came
+back 3.00 and 2.75, its ranking contradicted the owner's held-out judgments, the
+mean swing between runs was 0.36 on a 1–3 scale, and `1` was never used once
+across 72 scores.
 
-1. **It does not reproduce its own anchors.** Two pages sit in its prompt
-   labelled "2 — fine, she would not ship it". Run 2 scored them 3.00 and 2.75.
-   Nothing downstream can be trusted when the calibration set does not hold.
-2. **It does not reproduce her held-out judgments.** Of the four pages not used
-   as anchors, the one she called good ranked *below* two she called bad.
-3. **Mean swing between runs: 0.36 on a 1–3 scale**, one page moving a full
-   point.
-4. **The forced choice did not force.** Across 72 scores: 26 threes, 10 twos,
-   and `1` never used once — despite two level-1 anchors in the prompt.
+**Then the ground truth turned out to be partly wrong.** Elicited pairwise
+instead — nine same-brief pairs, each shown twice with the sides swapped — the
+owner agreed with herself 9/9 with no position bias, and every brief came out
+transitive. Two of the three briefs reproduced her earlier overall sort. The
+landing brief inverted completely: `good_landing.jpg`, the level-3 landing
+anchor, is the page she now ranks *last* of three. So "it contradicted its own
+anchors" was, on that page, the anchor being wrong.
 
-So the panel is kept as recorded work and called by nothing. A diagnostic column
-is published beside real measurements and gets read as information; an
-unreliable one is worse than an absent one.
+Scored against the pairwise order instead, the panel gets **5 of the 7 non-tie
+comparisons** in run 2 — and 7 comparisons cannot separate a working judge from
+a coin. That is the honest state: not refuted, not shown to work. It stays out
+of the score *and* out of the diagnostics until a gate passes it, because a
+column published beside real measurements gets read as information.
 
-Two findings survive it. **Seven anchors were not enough**, and sorting them
-*overall* cannot calibrate *per-axis* scores — the doc flagged that as a caveat
-and this run promoted it to a cause. And **the three form cases were never
-judgeable from an image at all**: those pages are exactly one viewport tall
-because steps 2–4 do not exist until a click, so every capture showed two of
-eleven fields. Tiling the screenshots proved that rather than fixing it. That
-one was a defect in the *input*, not the judge, and it is fixed — see below.
+Three findings survive, and the first is the one worth carrying:
+
+1. **Check the labels before blaming the judge.** Her pointwise good/bad labels
+   inverted on a third of the material; her pairwise ones held 9/9. Ask a human
+   for comparisons, not grades.
+2. **A within-brief order is ordinal, not absolute.** Knowing 07B beats the
+   other two landings does not make it a "3", so `anchors.json` cannot be
+   rebuilt from this data — which is the real argument for moving both the
+   elicitation and the judge to pairwise, more than anchor count ever was.
+3. **The form cases were never judgeable from an image at all**: those pages are
+   exactly one viewport tall because steps 2–4 do not exist until a click, so
+   every capture showed two of eleven fields. That one was a defect in the
+   *input*, not the judge, and it is fixed — see below.
 
 ## Capturing a UI that has states
 

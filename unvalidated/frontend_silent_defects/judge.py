@@ -170,12 +170,13 @@ def main() -> None:
         floor_ok, floor_why = None, None
         score, why = grade(report, family, expected.get("spec", {}))
 
-    # The judge panel is deliberately NOT wired in. check/panel.py and its seven
-    # anchors are kept as recorded work; they are not called. Run twice over nine
-    # pages, the panel failed to reproduce the owner's held-out judgments AND its
-    # own anchors — two pages labelled "2" in its prompt came back 3.00 and 2.75.
-    # A diagnostic column is published next to real measurements and gets read as
-    # information, so an unreliable one is worse than an absent one. See README.
+    # The judge panel is NOT wired in — but not for the reason first written here.
+    # It appeared to contradict its own anchors; two of those anchors turned out
+    # to be wrong (labels/pairwise_2026-09-05.txt). Scored against the corrected
+    # ground truth it gets 5 of 7 comparisons, which is neither working nor noise
+    # — seven comparisons cannot tell those apart. So it stays out of the score
+    # AND out of the diagnostics until a real gate passes it: a column published
+    # beside real measurements gets read as information. See README.
 
     fams = report.get("families", {}) or {}
     a11y = fams.get("a11y") or {}

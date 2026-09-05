@@ -141,24 +141,43 @@ this document.
 
 - **It contradicted its own anchors.** Two of the seven calibration screenshots
   sit in the prompt labelled "2". On the second run the panel scored those same
-  two images 3.00 and 2.75. When the calibration set does not hold, nothing
-  downstream can be read.
+  two images 3.00 and 2.75.
 - **It did not reproduce the owner's held-out judgments.** Of the four pages kept
   out of the anchor set, the one she called good ranked below two she called bad.
-- **Mean swing between the two runs was 0.36 on a 1–3 scale.**
-- **The forced choice did not force.** 72 scores: 26 threes, 10 twos, zero ones —
-  with two level-1 anchors sitting in the prompt.
+- **Mean swing between the two runs was 0.36 on a 1–3 scale**, and the forced
+  choice did not force: 72 scores, 26 threes, 10 twos, zero ones.
 
-Two corrections to what is written above:
+I wrote that up as decisive. It was not, and the correction is the most useful
+thing here.
 
-**Seven anchors is not "three or four well-chosen examples" scaled up — it is
-still too few.** The 20/80 rule is not refuted here; the anchors *were* the 80%,
-and they still did not transfer. What this run shows is the floor is higher than
-it looks.
+**The labels were partly wrong.** Asked again for the same judgments *pairwise* —
+nine same-brief pairs, each shown twice with the sides swapped — she agreed with
+herself 9/9, showed no position bias, and produced a transitive order on all
+three briefs. Two of the three reproduced her earlier overall sort. The third
+inverted completely: the page she had called good, and which had become a
+**level-3 anchor**, now ranked last of three in both showings. Re-scored against
+that order the panel gets 5 of 7 non-tie comparisons — not a working judge, not
+noise, just too few comparisons to tell.
 
-**An overall sort cannot calibrate per-axis scores.** That is listed as an honest
-limit in the panel's own docstring. This run promoted it from caveat to probable
-cause: she ranked pages whole, the panel was asked for `structure` and
+Three things follow.
+
+**Check the labels before blaming the judge.** This is the cheap step and it is
+easy to skip, because the labels are the part you produced and the judge is the
+part you suspect.
+
+**Elicit comparisons, not grades.** Her pointwise labels inverted on a third of
+the material; her pairwise labels held. That is the same asymmetry the papers
+report for model judges, showing up in the human — which makes pairwise the
+right primitive on *both* sides of the comparison, not just the judge's.
+
+**Within-item order is ordinal, and an anchor scale is absolute.** Knowing which
+of three landing pages is best does not tell you whether the best one is a "3".
+So a pairwise-elicited ground truth cannot rebuild a pointwise anchor set — the
+elicitation and the judge have to move together. That, more than anchor count,
+is the argument for switching.
+
+Still true, and still worth keeping: **an overall sort cannot calibrate per-axis
+scores.** She ranked pages whole; the panel was asked for `structure` and
 `execution` separately, and the anchors said nothing about either.
 
 And one thing that is not a rubric problem at all: **a static image cannot score
