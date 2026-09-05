@@ -1,1 +1,0 @@
-What is the day 47 days from now in the yyyy-mm-dd format if the day before tomorrow is  2005-Oct-25? Format your answer as a JSON. JSON = {"explanation": <your step by step solution>, "answer": "yyyy-mm-dd"}.

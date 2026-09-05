@@ -1,0 +1,1151 @@
+{
+  "id": "case_06",
+  "category": "robustness",
+  "lever": "hostile data",
+  "spec": {
+    "behaviour": [
+      {
+        "name": "annual toggle switches every price",
+        "expect": [
+          {
+            "selector": "[data-testid=price]",
+            "nth": 0,
+            "textChanged": true
+          },
+          {
+            "selector": "[data-testid=price]",
+            "nth": 2,
+            "textChanged": true
+          }
+        ],
+        "steps": [
+          {
+            "action": "click",
+            "selector": "[data-testid=billing-toggle]"
+          },
+          {
+            "action": "wait",
+            "ms": 120
+          }
+        ]
+      },
+      {
+        "name": "three tiers render",
+        "expect": [
+          {
+            "selector": "[data-testid=tier]",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "responsive": {
+      "width": 375,
+      "height": 812,
+      "max_overflow_px": 1
+    },
+    "robustness": [
+      {
+        "name": "no plans at all",
+        "data": [],
+        "expectCount": 0,
+        "expectNonEmpty": true,
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "a single plan",
+        "data": [
+          {
+            "name": "Solo",
+            "monthly": 9,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "expectCount": 1,
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "fifty plans",
+        "data": [
+          {
+            "name": "Plan 0",
+            "monthly": 1,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 1",
+            "monthly": 2,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 2",
+            "monthly": 3,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 3",
+            "monthly": 4,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 4",
+            "monthly": 5,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 5",
+            "monthly": 6,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 6",
+            "monthly": 7,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 7",
+            "monthly": 8,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 8",
+            "monthly": 9,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 9",
+            "monthly": 10,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 10",
+            "monthly": 11,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 11",
+            "monthly": 12,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 12",
+            "monthly": 13,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 13",
+            "monthly": 14,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 14",
+            "monthly": 15,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 15",
+            "monthly": 16,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 16",
+            "monthly": 17,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 17",
+            "monthly": 18,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 18",
+            "monthly": 19,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 19",
+            "monthly": 20,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 20",
+            "monthly": 21,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 21",
+            "monthly": 22,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 22",
+            "monthly": 23,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 23",
+            "monthly": 24,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 24",
+            "monthly": 25,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 25",
+            "monthly": 26,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 26",
+            "monthly": 27,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 27",
+            "monthly": 28,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 28",
+            "monthly": 29,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 29",
+            "monthly": 30,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 30",
+            "monthly": 31,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 31",
+            "monthly": 32,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 32",
+            "monthly": 33,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 33",
+            "monthly": 34,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 34",
+            "monthly": 35,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 35",
+            "monthly": 36,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 36",
+            "monthly": 37,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 37",
+            "monthly": 38,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 38",
+            "monthly": 39,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 39",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 40",
+            "monthly": 41,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 41",
+            "monthly": 42,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 42",
+            "monthly": 43,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 43",
+            "monthly": 44,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 44",
+            "monthly": 45,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 45",
+            "monthly": 46,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 46",
+            "monthly": 47,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 47",
+            "monthly": 48,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 48",
+            "monthly": 49,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 49",
+            "monthly": 50,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "expectCount": 50,
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "240-character plan name",
+        "data": [
+          {
+            "name": "Enterprise Plus Global Multi-Region Compliance and Dedicated Success Management Programme for Organisations Operating Across More Than Forty Jurisdictions With Bespoke Procurement Requirements and Annual Security Review Obligations",
+            "monthly": 120,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Starter",
+            "monthly": 12,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "selector": "[data-testid=tier] h2"
+      },
+      {
+        "name": "markup inside a plan name",
+        "data": [
+          {
+            "name": "<img src=x onerror=\"document.title='pwned'\">",
+            "monthly": 12,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Pro",
+            "monthly": 90,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "forbidSelector": "img[onerror]",
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "features key missing",
+        "data": [
+          {
+            "name": "Bare",
+            "monthly": 19
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Pro",
+            "monthly": 90,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "features is null",
+        "data": [
+          {
+            "name": "Null",
+            "monthly": 19,
+            "features": null
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Pro",
+            "monthly": 90,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "a free plan priced 0",
+        "data": [
+          {
+            "name": "Free",
+            "monthly": 0,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Pro",
+            "monthly": 90,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "a negative price",
+        "data": [
+          {
+            "name": "Credit",
+            "monthly": -5,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Pro",
+            "monthly": 90,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "a nine-digit price",
+        "data": [
+          {
+            "name": "Moon",
+            "monthly": 999999999,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Pro",
+            "monthly": 90,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "right-to-left plan name",
+        "data": [
+          {
+            "name": "خطة المؤسسات الكبرى للمناطق المتعددة",
+            "monthly": 120,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Starter",
+            "monthly": 12,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "emoji and combining marks in a name",
+        "data": [
+          {
+            "name": "Té́aḿ 🚀🇬🇧 Ultrá",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Pro",
+            "monthly": 90,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "selector": "[data-testid=tier]"
+      },
+      {
+        "name": "fifty plans on a phone",
+        "viewport": "phone",
+        "data": [
+          {
+            "name": "Plan 0",
+            "monthly": 1,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 1",
+            "monthly": 2,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 2",
+            "monthly": 3,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 3",
+            "monthly": 4,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 4",
+            "monthly": 5,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 5",
+            "monthly": 6,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 6",
+            "monthly": 7,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 7",
+            "monthly": 8,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 8",
+            "monthly": 9,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 9",
+            "monthly": 10,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 10",
+            "monthly": 11,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 11",
+            "monthly": 12,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 12",
+            "monthly": 13,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 13",
+            "monthly": 14,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 14",
+            "monthly": 15,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 15",
+            "monthly": 16,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 16",
+            "monthly": 17,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 17",
+            "monthly": 18,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 18",
+            "monthly": 19,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 19",
+            "monthly": 20,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 20",
+            "monthly": 21,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 21",
+            "monthly": 22,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 22",
+            "monthly": 23,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 23",
+            "monthly": 24,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 24",
+            "monthly": 25,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 25",
+            "monthly": 26,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 26",
+            "monthly": 27,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 27",
+            "monthly": 28,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 28",
+            "monthly": 29,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 29",
+            "monthly": 30,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 30",
+            "monthly": 31,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 31",
+            "monthly": 32,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 32",
+            "monthly": 33,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 33",
+            "monthly": 34,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 34",
+            "monthly": 35,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 35",
+            "monthly": 36,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 36",
+            "monthly": 37,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 37",
+            "monthly": 38,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 38",
+            "monthly": 39,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 39",
+            "monthly": 40,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 40",
+            "monthly": 41,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 41",
+            "monthly": 42,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 42",
+            "monthly": 43,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 43",
+            "monthly": 44,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 44",
+            "monthly": 45,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 45",
+            "monthly": 46,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 46",
+            "monthly": 47,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 47",
+            "monthly": 48,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 48",
+            "monthly": 49,
+            "features": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "Plan 49",
+            "monthly": 50,
+            "features": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "expectCount": 50,
+        "selector": "[data-testid=tier]"
+      }
+    ]
+  }
+}

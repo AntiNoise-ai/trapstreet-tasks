@@ -1,0 +1,14 @@
+{
+  "constraints": [
+    { "name": "the cheapest tier is the highlighted one",
+      "kind": "odd_one_out", "selector": "[data-testid=tier]", "expectIndex": 2 },
+    { "name": "prices read left-to-right descending",
+      "kind": "numeric_order", "selector": "[data-testid=price]", "order": "desc" },
+    { "name": "no CSS grid anywhere",
+      "kind": "no_computed", "property": "display", "banned": ["grid", "inline-grid"] },
+    { "name": "nothing loaded from off the page",
+      "kind": "no_external" },
+    { "name": "no emoji in the source",
+      "kind": "source_absent", "pattern": "\\p{Extended_Pictographic}", "flags": "u" }
+  ]
+}

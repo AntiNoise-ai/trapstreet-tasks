@@ -1,1 +1,0 @@
-Calculate the time taken to play a solitaire game 24 times if Bob takes 16 minutes and 15 seconds to play a solitaire game. If the answer is X hours, Y minutes, and Z seconds,  Report the values of X, Y and Z as a json of the form {"explanation": <your step by step solution>, "X": X, "Y": Y, "Z": Z}.

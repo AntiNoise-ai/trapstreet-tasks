@@ -1,0 +1,37 @@
+[
+  {
+    "file": "good_landing.jpg",
+    "level": 3,
+    "kind": "landing page"
+  },
+  {
+    "file": "good_dashboard.jpg",
+    "level": 3,
+    "kind": "dashboard"
+  },
+  {
+    "file": "good_form.jpg",
+    "level": 3,
+    "kind": "form flow"
+  },
+  {
+    "file": "weak_landing.jpg",
+    "level": 2,
+    "kind": "landing page"
+  },
+  {
+    "file": "weak_dashboard.jpg",
+    "level": 2,
+    "kind": "dashboard"
+  },
+  {
+    "file": "bad_landing.jpg",
+    "level": 1,
+    "kind": "landing page"
+  },
+  {
+    "file": "bad_dashboard.jpg",
+    "level": 1,
+    "kind": "dashboard"
+  }
+]

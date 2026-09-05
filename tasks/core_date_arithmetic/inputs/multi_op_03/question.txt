@@ -1,1 +1,0 @@
-The average time taken to learn a magic trick is 14 minutes and 29 seconds. Calculate the time taken to learn 23 magic tricks at the same rate.  Report the answer in the form of a JSON {"explanation": <your step by step solution>, "X": X, "Y": Y, "Z": Z}, where the time taken is X hours, Y minutes, and Z seconds.

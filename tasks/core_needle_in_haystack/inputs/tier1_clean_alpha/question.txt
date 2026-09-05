@@ -1,5 +1,0 @@
-The document contains 12 chunks retrieved by a search system.
-
-Somewhere in one of these chunks is a "magic codeword" for "Alpha" — a 4-digit number.
-
-Find it and answer with ONLY the 4-digit number, no explanation, no prefix, no quotes.

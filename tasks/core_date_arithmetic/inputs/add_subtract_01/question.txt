@@ -1,1 +1,0 @@
-If the current date is May 22, 2023, what is the date 368 days from now? Return your answer as a JSON in the following format: JSON = {"explanation": <your step by step solution>, "date": "mm/dd/yyyy"}

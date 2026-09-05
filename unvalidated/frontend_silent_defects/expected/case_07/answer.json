@@ -1,0 +1,18 @@
+{
+  "id": "case_07",
+  "category": "open",
+  "lever": "open brief \u2014 landing page",
+  "spec": {
+    "constraints": [
+      {
+        "name": "nothing loaded from off the page",
+        "kind": "no_external"
+      }
+    ],
+    "responsive": {
+      "width": 375,
+      "height": 812,
+      "max_overflow_px": 1
+    }
+  }
+}

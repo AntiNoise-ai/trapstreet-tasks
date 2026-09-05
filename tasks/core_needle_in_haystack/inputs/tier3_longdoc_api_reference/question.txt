@@ -1,5 +1,0 @@
-The document is a long coherent document (contract / handbook / reference / policy / manual). Several sections contain similar-format clauses, each with a "magic codeword" (a 4-digit number) for a specific category.
-
-Find the magic codeword specifically for the "Analytics" category / clause / subsystem.
-
-Answer with ONLY the 4-digit number, no explanation, no prefix, no quotes.

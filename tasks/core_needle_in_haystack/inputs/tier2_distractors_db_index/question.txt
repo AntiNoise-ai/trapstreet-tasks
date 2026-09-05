@@ -1,5 +1,0 @@
-The document contains 18 chunks retrieved by a search system. Some chunks describe categories in the same domain, each with a "magic codeword" (a 4-digit number). Other chunks are unrelated retrieval noise.
-
-Find the magic codeword specifically for "Bloom".
-
-Answer with ONLY the 4-digit number, no explanation, no prefix, no quotes.

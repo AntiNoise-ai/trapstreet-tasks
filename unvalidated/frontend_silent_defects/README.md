@@ -1,0 +1,145 @@
+# frontend_silent_defects — the page looks finished
+
+**Not yet validated.** One arm has run against it and passed everything; it has
+never been shown to separate two tools. It stays in `unvalidated/` until it does.
+
+## What it measures
+
+A tool is given a brief and prints one self-contained HTML page. The judge opens
+that page in real Chromium and asks things a screenshot cannot answer:
+
+- **behaviour** — click the annual toggle. Do the prices change?
+- **responsive** — at 375px, does anything stick out of the viewport?
+- **robustness** — swap in a 240-character plan name. Does the layout hold?
+- **constraints** — were the explicit prohibitions in the brief actually obeyed?
+
+All of these fail *invisibly*. Two pages scoring 1.00 and 0.33 look the same side
+by side, which is the reason this exists: a preference vote cannot find the
+difference, because the voter is looking at the same picture.
+
+## The cases
+
+| case | family | what it varies |
+|---|---|---|
+| 01 | behaviour | baseline — one brief, plainly stated |
+| 02 | constraints | constraint count, k≈7 (compositional load) |
+| 03 | behaviour | a counterfactual requirement, against the obvious default |
+| 04 | constraints | prohibitions — what the page must *not* do |
+| 05 | behaviour | same checks as 01, brief padded with irrelevant context |
+| 06 | robustness | 13 hostile `window.__DATA__` payloads |
+| 07–09 | open | free briefs — landing page, dashboard, form flow |
+
+Cases 07–09 emit `score: null`. They run every check as a floor (loads, throws
+nothing, survives 375px) and are reported as `floor_passed`, but nothing ranks
+them. There is no gold that settles whether a landing page is good.
+
+## Why contrast and labels are diagnostics, not score
+
+The judge runs axe-core and publishes the counts, but they never move `score`.
+
+A contrast failure is fixed by one bolt-on step: run a checker before returning.
+Any tool can copy that the week it sees this board, so a score built on it would
+saturate in one release cycle. Behaviour and robustness have no such step — a
+dead toggle is fixed by building it right.
+
+There is a second reason, found while testing rather than argued: on
+`fixtures/broken.html` — a page with an unlabelled email input and two `<div>`s
+acting as buttons — **axe's entire ruleset reports one thing, contrast.** `label`
+does not fire, because a `placeholder` counts as an accessible name;
+`button-name` does not fire, because a `<div>` has no button role to name. So the
+a11y family is both the most gameable *and* the least sensitive. It rides along
+because the counts are worth seeing, and for nothing else.
+
+## Layout
+
+```
+check/inspect.mjs   the browser half — puppeteer-core against system Chrome,
+                    axe-core injected. Emits per-check results, tiled
+                    render*.png, and rects.json (the gallery overlay's boxes).
+check/panel.py      an LLM judge panel. NOT WIRED IN — see below.
+check/anchors/      seven blind-sorted screenshots the panel used. Kept as
+                    record; nothing reads them.
+judge.py            pulls the page out of stdout, calls the inspector,
+                    turns one family into one score.
+fixtures/           good / broken / counterfactual — the judge's own test set.
+inputs/case_NN/     the brief handed to the solution.
+expected/case_NN/   which family decides this case, and its assertions.
+```
+
+The inspector needs Node and a Chrome on the machine; it downloads no browser.
+Set `CHROME_PATH` if Chrome is not at the macOS default.
+
+```bash
+npm install --prefix check
+node check/inspect.mjs fixtures/broken.html check/spec.example.json /tmp/out
+```
+
+## First real run, 2026-08-31 — and the judge bug it found
+
+One arm (`opus-ceiling`, a bare `claude-opus-5` relay) over the six scored cases.
+
+**It passed everything.** 20/20 on the five levers, then 13/13 on the hostile-data
+case. The task does not currently separate anything at the frontier.
+
+The hostile-data case *appeared* to catch it — 0.0, "1 element(s) clip their
+content" on the 240-character plan name. That was the judge being wrong. The page
+had line-clamped the heading to three lines, added an ellipsis, and put the full
+string in a `title` attribute: correct handling, better than this repo's own
+`fixtures/good.html`, which simply wraps. The check now fires only when content
+vanishes with **no** affordance — no ellipsis, no title, no aria-label.
+
+Two things follow. The repo's claim that every task's first real run turns up a
+judge defect held again. And the axis is wrong: METR measures task length as the
+dominant predictor of agent success (R²=0.83), with frontier models near-100%
+under about four human-minutes. This brief is a ten-minute job. No number of
+extra constraints closes that gap.
+
+## The judge panel, and why it is not wired in
+
+`check/panel.py` is a three-lens LLM judge — a design director who sees the
+render, an engineer who sees only the source, a client checking the brief — over
+four axes on a 1–3 forced choice, calibrated against seven screenshots the task
+owner sorted blind on that same scale. The method is written up in
+[docs/writing-a-judge-rubric.md](../../docs/writing-a-judge-rubric.md).
+
+It was run twice over nine pages from three different labs, authors hidden. It
+failed, and the failure is worth more than the panel was:
+
+1. **It does not reproduce its own anchors.** Two pages sit in its prompt
+   labelled "2 — fine, she would not ship it". Run 2 scored them 3.00 and 2.75.
+   Nothing downstream can be trusted when the calibration set does not hold.
+2. **It does not reproduce her held-out judgments.** Of the four pages not used
+   as anchors, the one she called good ranked *below* two she called bad.
+3. **Mean swing between runs: 0.36 on a 1–3 scale**, one page moving a full
+   point.
+4. **The forced choice did not force.** Across 72 scores: 26 threes, 10 twos,
+   and `1` never used once — despite two level-1 anchors in the prompt.
+
+So the panel is kept as recorded work and called by nothing. A diagnostic column
+is published beside real measurements and gets read as information; an
+unreliable one is worse than an absent one.
+
+Two findings survive it. **Seven anchors were not enough**, and sorting them
+*overall* cannot calibrate *per-axis* scores — the doc flagged that as a caveat
+and this run promoted it to a cause. And **the three form cases were never
+judgeable from an image at all**: those pages are exactly one viewport tall
+because steps 2–4 do not exist until a click. Tiling the screenshots proved that
+rather than fixing it. A static image cannot score a stateful UI.
+
+## Known open questions
+
+- **Does it discriminate?** Still unrun with more than one arm. The gate is
+  per-case zero-variance: any case every arm passes, or every arm fails, gets
+  cut. Point-biserial comes later, when there are enough arms for a correlation
+  to mean anything.
+- **A "cheat arm" is planned** — a solution that runs axe-core on its own output
+  before returning. Whichever family it tops is a family with a short life.
+- **`expected/` is readable by solutions.** trap-cli runs solutions unsandboxed
+  with an absolute `inputs_dir`, and the assertions are in `expected/`. For a
+  build task that is less broken than it sounds (satisfying the assertions *is*
+  the job), but a solution can target the exact checks instead of building well,
+  and that has to be handled before this ships.
+- **Cases 07–09 have never run through `tp run`.** They were generated out of
+  band for the anchor set. Note that an arm with a low `max_tokens` will truncate
+  on an open brief and score `no_html` — a contract miss, not a capability
+  failure, and `contract_miss` marks it as such.

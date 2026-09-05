@@ -1,0 +1,50 @@
+dirs:
+  inputs: inputs/
+  expected: expected/
+
+harness:
+  needs: [one_shot]
+
+# Probe ladder. Every case is the same pricing-page brief plus ONE difficulty
+# lever, so a run reads as lever x arm. Every case is checked by every family
+# that has a spec; `category` names the family that decides the score, the rest
+# ride along in `families_passed`.
+#
+# case_05 carries the same checks as case_01 and differs only in the brief —
+# five sentences of true but irrelevant product context. The gap between them
+# is the no-op distractor effect, and nothing else.
+cases:
+- id: case_01
+  description: "Baseline — build the page, nothing extra"
+  tags: [baseline, scored]
+- id: case_02
+  description: "Constraint count — five more independent positive requirements"
+  tags: [constraint_count, scored]
+- id: case_03
+  description: "Counterfactual — highlight the cheapest tier, prices descending"
+  tags: [counterfactual, scored]
+- id: case_04
+  description: "Prohibitions — no grid, nothing external, no emoji"
+  tags: [prohibitions, scored]
+- id: case_06
+  description: "Hostile data — 13 adversarial __DATA__ payloads, all must survive"
+  tags: [robustness, scored, hostile_data]
+- id: case_05
+  description: "No-op distractor — baseline checks, brief padded with irrelevant context"
+  tags: [distractor, scored]
+
+- id: case_07
+  description: "Open brief — a landing page that has to change someone's mind"
+  tags: [open, unranked, panel]
+- id: case_08
+  description: "Open brief — one screen for five trustees who look for two minutes"
+  tags: [open, unranked, panel]
+- id: case_09
+  description: "Open brief — an eleven-field form people actually finish"
+  tags: [open, unranked, panel]
+
+judge:
+  cmd: python3 judge.py
+
+grader:
+  cmd: python3 grader.py

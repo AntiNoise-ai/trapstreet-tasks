@@ -1,2 +1,0 @@
-Calculate the number of possibilities for a 30 minutes meeting that has to start on the hour or half hour. Mason and Liamwork from 9am to 5pm. Mason's booked: 9 to12:30,  4 to 5. 
-Liam's booked:9:30 to noon, 2:30 to 4. Format your answer as a JSON. Eg. JSON = {"explanation": <your step by step solution>, "answer":<number>}. Do not include units in the JSON value.

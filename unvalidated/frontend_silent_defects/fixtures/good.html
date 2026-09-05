@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing</title>
+<style>
+  :root { --ink:#14181f; --muted:#4a5361; --line:#d6dce3; --accent:#1d4ed8; }
+  * { box-sizing:border-box }
+  body { margin:0; font:16px/1.6 system-ui, sans-serif; color:var(--ink); background:#fff }
+  main { max-width:960px; margin:0 auto; padding:32px 20px }
+  h1 { font-size:32px; margin:0 0 8px }
+  p.lede { color:var(--muted); margin:0 0 24px }
+  .toggle { display:inline-flex; gap:4px; border:1px solid var(--line); border-radius:6px; padding:3px; margin-bottom:28px }
+  .toggle button { border:0; background:transparent; color:var(--muted); font:inherit; padding:6px 14px; border-radius:4px; cursor:pointer }
+  .toggle button[aria-pressed="true"] { background:var(--accent); color:#fff }
+  .tiers { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px }
+  .tier { border:1px solid var(--line); border-radius:8px; padding:18px; display:flex; flex-direction:column; gap:8px }
+  .tier h2 { font-size:18px; margin:0; overflow-wrap:anywhere }
+  .tier .price { font-size:28px; font-weight:700 }
+  .tier ul { margin:0; padding-left:18px; color:var(--muted); font-size:14px }
+  .tier a.cta { margin-top:auto; display:block; text-align:center; background:var(--accent); color:#fff; text-decoration:none; padding:9px; border-radius:6px }
+  form { margin-top:32px; display:flex; gap:8px; flex-wrap:wrap; align-items:end }
+  label { display:block; font-size:14px; color:var(--muted) }
+  input { font:inherit; padding:8px; border:1px solid var(--line); border-radius:6px; min-width:0 }
+</style>
+</head>
+<body>
+<main>
+  <h1>Pricing</h1>
+  <p class="lede">Plans for teams of every size.</p>
+
+  <div class="toggle" role="group" aria-label="Billing period">
+    <button type="button" data-testid="billing-monthly" aria-pressed="true">Monthly</button>
+    <button type="button" data-testid="billing-toggle" aria-pressed="false">Annual</button>
+  </div>
+
+  <section class="tiers" id="tiers"></section>
+
+  <form>
+    <div>
+      <label for="email">Work email</label>
+      <input id="email" type="email" data-testid="email" placeholder="you@company.com">
+    </div>
+    <button type="submit" class="cta" style="background:var(--accent);color:#fff;border:0;padding:9px 16px;border-radius:6px;font:inherit">Contact sales</button>
+  </form>
+</main>
+
+<script>
+  const DEFAULT = [
+    { name: "Starter",    monthly: 12,  features: ["1 project", "Community support"] },
+    { name: "Team",       monthly: 40,  features: ["10 projects", "Email support"] },
+    { name: "Enterprise", monthly: 120, features: ["Unlimited", "SLA"] },
+  ];
+  const data = Array.isArray(window.__DATA__) ? window.__DATA__ : DEFAULT;
+  let annual = false;
+
+  function render() {
+    document.getElementById("tiers").innerHTML = data.map(t => `
+      <article class="tier" data-testid="tier">
+        <h2>${t.name}</h2>
+        <div class="price" data-testid="price">$${annual ? Math.round(t.monthly * 10) : t.monthly}<span style="font-size:14px;font-weight:400;color:var(--muted)">/${annual ? "yr" : "mo"}</span></div>
+        <ul>${(t.features || []).map(f => `<li>${f}</li>`).join("")}</ul>
+        <a class="cta" href="#buy">Choose ${t.name}</a>
+      </article>`).join("");
+  }
+
+  document.querySelector('[data-testid="billing-toggle"]').addEventListener("click", () => {
+    annual = true;
+    document.querySelector('[data-testid="billing-toggle"]').setAttribute("aria-pressed", "true");
+    document.querySelector('[data-testid="billing-monthly"]').setAttribute("aria-pressed", "false");
+    render();
+  });
+  document.querySelector('[data-testid="billing-monthly"]').addEventListener("click", () => {
+    annual = false;
+    document.querySelector('[data-testid="billing-monthly"]').setAttribute("aria-pressed", "true");
+    document.querySelector('[data-testid="billing-toggle"]').setAttribute("aria-pressed", "false");
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>

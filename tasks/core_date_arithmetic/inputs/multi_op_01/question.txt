@@ -1,1 +1,0 @@
-Christina has bought a robot that helps with everyday tasks. It takes the robot 4:37:15 hours:minutes:seconds to take one lesson, on average. Christina wants the robot to take 7 lessons. It took the robot A hours, B minutes, and C seconds. Report the values of A, B and C as a json of the form {"explanation": <your step by step solution>, "A": A, "B": B, "C": C}.

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing</title>
+<style>
+  /* Built to the anti-default brief: cheapest tier highlighted, prices
+     descending, flexbox not grid, nothing loaded from off the page. */
+  * { box-sizing:border-box }
+  body { margin:0; font:16px/1.6 system-ui, sans-serif; color:#14181f; background:#fff }
+  main { max-width:960px; margin:0 auto; padding:32px 20px }
+  h1 { font-size:32px; margin:0 0 8px }
+  p.lede { color:#4a5361; margin:0 0 24px }
+  .toggle { display:inline-flex; gap:4px; border:1px solid #d6dce3; border-radius:6px; padding:3px; margin-bottom:28px }
+  .toggle button { border:0; background:transparent; color:#4a5361; font:inherit; padding:6px 14px; border-radius:4px; cursor:pointer }
+  .toggle button[aria-pressed="true"] { background:#1d4ed8; color:#fff }
+  .tiers { display:flex; flex-wrap:wrap; gap:16px }
+  .tier { flex:1 1 220px; border:1px solid #d6dce3; border-radius:8px; padding:18px; display:flex; flex-direction:column; gap:8px; background:#fff }
+  .tier.pick { border-color:#1d4ed8; border-width:2px; background:#eef3fe }
+  .tier h2 { font-size:18px; margin:0; overflow-wrap:anywhere }
+  .tier .price { font-size:28px; font-weight:700 }
+  .tier ul { margin:0; padding-left:18px; color:#4a5361; font-size:14px }
+  .tier a.cta { margin-top:auto; display:block; text-align:center; background:#1d4ed8; color:#fff; text-decoration:none; padding:9px; border-radius:6px }
+  form { margin-top:32px; display:flex; gap:8px; flex-wrap:wrap; align-items:end }
+  label { display:block; font-size:14px; color:#4a5361 }
+  input { font:inherit; padding:8px; border:1px solid #d6dce3; border-radius:6px; min-width:0 }
+</style>
+</head>
+<body>
+<main>
+  <h1>Pricing</h1>
+  <p class="lede">Commit for a year and we pass the saving on. Month to month costs more.</p>
+
+  <div class="toggle" role="group" aria-label="Billing period">
+    <button type="button" data-testid="billing-monthly" aria-pressed="true">Monthly</button>
+    <button type="button" data-testid="billing-toggle" aria-pressed="false">Annual</button>
+  </div>
+
+  <section class="tiers" id="tiers"></section>
+
+  <form>
+    <div>
+      <label for="email">Work email</label>
+      <input id="email" type="email" data-testid="email" placeholder="you@company.com">
+    </div>
+    <button type="submit" style="background:#1d4ed8;color:#fff;border:0;padding:9px 16px;border-radius:6px;font:inherit">Contact sales</button>
+  </form>
+  <footer style="margin-top:40px;padding-top:16px;border-top:1px solid #d6dce3;color:#4a5361;font-size:14px">
+    Prices exclude VAT. Cancel any time.
+  </footer>
+</main>
+
+<script>
+  // Descending on purpose: the flagship sits on the left, the entry plan last.
+  const DEFAULT = [
+    { name: "Enterprise", monthly: 120, features: ["Unlimited", "SLA"] },
+    { name: "Team",       monthly: 40,  features: ["10 projects", "Email support"] },
+    { name: "Starter",    monthly: 12,  features: ["1 project", "Community support"] },
+  ];
+  const data = Array.isArray(window.__DATA__) ? window.__DATA__ : DEFAULT;
+  let annual = false;
+
+  function render() {
+    // The cheapest plan is the one we highlight, not the middle one.
+    const prices = data.map(t => t.monthly);
+    const cheapest = prices.indexOf(Math.min(...prices));
+    document.getElementById("tiers").innerHTML = data.map((t, i) => `
+      <article class="tier${i === cheapest ? " pick" : ""}" data-testid="tier">
+        <h2>${t.name}</h2>
+        <div class="price" data-testid="price">$${annual ? Math.round(t.monthly * 10) : t.monthly}<span style="font-size:14px;font-weight:400;color:#4a5361">/${annual ? "yr" : "mo"}</span></div>
+        <ul>${(t.features || []).map(f => `<li>${f}</li>`).join("")}</ul>
+        <a class="cta" href="#buy">Choose ${t.name}</a>
+      </article>`).join("");
+  }
+
+  for (const [id, on] of [["billing-toggle", true], ["billing-monthly", false]]) {
+    document.querySelector(`[data-testid="${id}"]`).addEventListener("click", () => {
+      annual = on;
+      document.querySelector('[data-testid="billing-toggle"]').setAttribute("aria-pressed", String(on));
+      document.querySelector('[data-testid="billing-monthly"]').setAttribute("aria-pressed", String(!on));
+      render();
+    });
+  }
+
+  render();
+</script>
+</body>
+</html>

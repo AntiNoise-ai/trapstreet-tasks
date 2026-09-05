@@ -1,1 +1,0 @@
-Abigail and Jack were born on 2023-Dec-30 and 2024-Jun-29 respectively. When Jack was 202 days old, how old was Abigail in days? Return your answer as a JSON like: JSON = {"explanation": <your step by step solution>, "answer": <num_days>}. Do not include the units in the JSON value.

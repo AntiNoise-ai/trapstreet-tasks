@@ -1,1 +1,0 @@
-If it is Tuesday, what is the day 10 hours from now? Format your answer as a JSON. JSON = {'explanation': <your step by step solution>, 'answer': <your_answer>}. Do not include units in the answer. If the information provided is not enough to calculate the answer, or if there is more than one possible answer, reply {'answer': 'unanswerable'}.

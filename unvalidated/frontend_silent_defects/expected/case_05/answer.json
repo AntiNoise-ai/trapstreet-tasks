@@ -1,0 +1,77 @@
+{
+  "id": "case_05",
+  "category": "behaviour",
+  "lever": "no-op distractor",
+  "spec": {
+    "behaviour": [
+      {
+        "name": "annual toggle switches every price",
+        "expect": [
+          {
+            "selector": "[data-testid=price]",
+            "nth": 0,
+            "textChanged": true
+          },
+          {
+            "selector": "[data-testid=price]",
+            "nth": 2,
+            "textChanged": true
+          }
+        ],
+        "steps": [
+          {
+            "action": "click",
+            "selector": "[data-testid=billing-toggle]"
+          },
+          {
+            "action": "wait",
+            "ms": 120
+          }
+        ]
+      },
+      {
+        "name": "three tiers render",
+        "expect": [
+          {
+            "selector": "[data-testid=tier]",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "responsive": {
+      "width": 375,
+      "height": 812,
+      "max_overflow_px": 1
+    },
+    "robustness": [
+      {
+        "name": "240-character plan name",
+        "selector": "[data-testid=tier] h2",
+        "data": [
+          {
+            "name": "Enterprise Plus Global Multi-Region Compliance and Dedicated Success Management Programme for Organisations Operating Across More Than Forty Jurisdictions With Bespoke Procurement Requirements and Annual Security Review Obligations",
+            "monthly": 120,
+            "features": [
+              "Unlimited"
+            ]
+          },
+          {
+            "name": "Team",
+            "monthly": 40,
+            "features": [
+              "10 projects"
+            ]
+          },
+          {
+            "name": "Starter",
+            "monthly": 12,
+            "features": [
+              "1 project"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
