@@ -1,0 +1,37 @@
+# Forced-choice pairwise labels, task owner, 2026-09-05.
+# Nine same-brief pairs, each shown twice with the sides swapped and at least
+# five trials between the two showings. Stimuli: the nine open-brief pages from
+# three labs, authors hidden. Instrument: artifact f97fabca.
+#
+# t01's 1974738ms is a walk-away, not a deliberation.
+
+t01  07AC  L=07A R=07C  ->07C  1974738ms
+t02  07AB  L=07B R=07A  ->07B  27633ms
+t03  08BC  L=08B R=08C  ->08B  4229ms
+t04  09AB  L=09B R=09A  ->09A  5364ms
+t05  07BC  L=07B R=07C  ->07B  5317ms
+t06  08AB  L=08B R=08A  ->08B  13147ms
+t07  09BC  L=09B R=09C  ->09C  5281ms
+t08  09AC  L=09C R=09A  ->09A  66433ms
+t09  08AC  L=08A R=08C  ->08C  2415ms
+t10  07BC  L=07C R=07B  ->07B  4265ms
+t11  08AB  L=08A R=08B  ->08B  1899ms
+t12  09BC  L=09C R=09B  ->09C  2866ms
+t13  09AC  L=09A R=09C  ->09A  3732ms
+t14  08AC  L=08C R=08A  ->08C  3250ms
+t15  07AC  L=07C R=07A  ->07C  3782ms
+t16  07AB  L=07A R=07B  ->07B  2269ms
+t17  08BC  L=08C R=08B  ->08B  9330ms
+t18  09AB  L=09A R=09B  ->09A  3565ms
+
+self-agreement 9/9   left-picks 9/18
+
+# Derived order, per brief, fully transitive in all three:
+#   07 landing    07B > 07C > 07A
+#   08 dashboard  08B > 08C > 08A
+#   09 form       09A > 09C > 09B
+#
+# Against her earlier overall good/bad sort (good: 07A 08B 09A 09C):
+#   08 reproduces, 09 reproduces, 07 inverts completely - the page she called
+#   good is now last of three. good_landing.jpg, the level-3 landing anchor,
+#   is 07A.
