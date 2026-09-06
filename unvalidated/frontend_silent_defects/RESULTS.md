@@ -93,3 +93,52 @@ be trusted. It stays in `unvalidated/` permanently.
 trap-cli recorded `cost_usd_total: null` for all three — the SDK paths this
 relay uses are not wired into its cost tracking. Estimated from output size
 (~13KB of HTML per page, 18 pages): well under $1.50.
+
+---
+
+# The rebuilt version — one arm so far
+
+**2026-09-06, `kimi-k3` against Moonshot directly.** Seven scored cases, dense
+scoring, the generated hostile family and the budget case both live.
+
+| case | lever | score | checks |
+|---|---|---|---|
+| case_01 | baseline | 1.000 | 2/2 |
+| case_02 | constraint count (k≈7) | **0.571** | 4/7 |
+| case_03 | counterfactual | 1.000 | 2/2 |
+| case_04 | prohibitions | 1.000 | 3/3 |
+| case_05 | no-op distractor | 1.000 | 2/2 |
+| case_06 | 13 written + **40 generated** payloads | 1.000 | **53/53** |
+| case_10 | budget (70 / 42 / 10,500) | 1.000 | 3/3 |
+
+**The two new mechanisms did not bite.**
+
+*Generated hostile data:* 53/53. All forty generated payloads survived —
+prototype pollution, lone surrogates, 300 combining marks, whole-`__DATA__`
+type swaps, five injection strings. The generator is not toothless: it found a
+live XSS in this repo's own `fixtures/good.html` on its first run. The model's
+page is simply better than our fixture was.
+
+*Budget:* 3/3. Stated in the brief, the ceiling is easy to hold. It separates
+budgeted from unbudgeted output — `fixtures/overbuilt.html`, real output from
+the morning run, misses all three limits — but that is not a capability
+difference, it is the difference between being told and not being told.
+
+**The one that moved is the one we already had, and it wobbles.** case_02 is the
+seven-constraint case. Three runs of the same model:
+
+| run | endpoint | case_02 |
+|---|---|---|
+| 10:49 | OpenRouter | 7/7 |
+| 16:42 | OpenRouter | 6/7 |
+| 17:58 | Moonshot direct | 4/7 |
+
+The 4/7 failure is real, not a judge artifact — the page is complete (ends in a
+proper `</html>`, 12,601 bytes) and simply never emits `data-testid="tier"` or
+`data-testid="price"`. It dropped the tier-rendering requirement outright.
+
+Two readings are still open and one run cannot separate them: run-to-run
+variance, or a difference between the routed and the direct endpoint. What is
+already clear is that **a case whose score moves 7/7 → 4/7 across runs of one
+model cannot be read from a single run**, which puts a question over the
+morning's 18/18 as well. Repeats come before more arms.
