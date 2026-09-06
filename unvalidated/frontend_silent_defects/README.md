@@ -1,7 +1,9 @@
 # frontend_silent_defects — the page looks finished
 
-**Not yet validated.** One arm has run against it and passed everything; it has
-never been shown to separate two tools. It stays in `unvalidated/` until it does.
+**It does not discriminate, and it does not ship.** Three frontier arms, six
+scored cases, eighteen scores, every one of them 1.00 — see
+[RESULTS.md](RESULTS.md). It stays in `unvalidated/` permanently. Everything
+below is kept because the instrument works and the write-up is the point.
 
 ## What it measures
 
@@ -181,12 +183,14 @@ This does not rescue the panel. It removes one reason the panel had no chance.
 
 ## Known open questions
 
-- **Does it discriminate?** Still unrun with more than one arm. The gate is
-  per-case zero-variance: any case every arm passes, or every arm fails, gets
-  cut. Point-biserial comes later, when there are enough arms for a correlation
-  to mean anything.
-- **A "cheat arm" is planned** — a solution that runs axe-core on its own output
-  before returning. Whichever family it tops is a family with a short life.
+Most of these were answered by the run in [RESULTS.md](RESULTS.md).
+
+- ~~**Does it discriminate?**~~ Answered 2026-09-06: no. Every case is
+  zero-variance across three frontier arms, so by the task's own gate every case
+  gets cut, which is the whole task.
+- ~~**A "cheat arm" is planned**~~ — moot. It was going to show that the a11y
+  families saturate on one bolt-on step; there is no scored family left to
+  protect.
 - **`expected/` is readable by solutions.** trap-cli runs solutions unsandboxed
   with an absolute `inputs_dir`, and the assertions are in `expected/`. For a
   build task that is less broken than it sounds (satisfying the assertions *is*
