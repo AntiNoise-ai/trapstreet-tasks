@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northstar — Pricing</title>
+<style>
+  :root{
+    --bg:#0a0c11;
+    --panel:rgba(255,255,255,.035);
+    --border:rgba(255,255,255,.09);
+    --text:#eef1f7;
+    --muted:#98a1b3;
+    --accent:#6d5cff;
+    --accent-2:#4d9fff;
+    --radius:20px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Inter",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .glow{
+    position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(640px 420px at 15% -10%, rgba(109,92,255,.28), transparent 60%),
+      radial-gradient(720px 520px at 90% 0%, rgba(77,159,255,.16), transparent 60%),
+      radial-gradient(900px 600px at 50% 110%, rgba(109,92,255,.10), transparent 60%);
+  }
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+  /* Header */
+  .site-header{padding:22px 0}
+  .site-header__inner{display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;letter-spacing:.2px}
+  .brand__mark{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 0 18px rgba(109,92,255,.55)}
+  .nav{display:flex;align-items:center;gap:26px;font-size:.92rem;color:var(--muted)}
+  .nav a:hover{color:var(--text)}
+  .nav__cta{color:var(--text);border:1px solid var(--border);padding:8px 16px;border-radius:999px;transition:border-color .2s}
+  .nav__cta:hover{border-color:rgba(255,255,255,.3)}
+
+  /* Hero */
+  .hero{text-align:center;padding:84px 0 0}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.3rem);line-height:1.12;letter-spacing:-.02em;font-weight:750}
+  .hero h1 .grad{background:linear-gradient(90deg,#a99bff,var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero__sub{color:var(--muted);margin:16px auto 0;max-width:580px;font-size:1.05rem}
+
+  /* Billing switch */
+  .billing{
+    margin-top:36px;display:inline-flex;gap:4px;padding:4px;
+    background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;
+  }
+  .billing button{
+    appearance:none;border:0;background:transparent;color:var(--muted);
+    font-weight:600;font-size:.92rem;padding:9px 18px;border-radius:999px;
+    display:inline-flex;align-items:center;gap:8px;transition:background .2s,color .2s,box-shadow .2s;
+  }
+  .billing button:hover{color:var(--text)}
+  .billing button.active{
+    background:linear-gradient(135deg,var(--accent),#553cf0);color:#fff;
+    box-shadow:0 6px 18px -6px rgba(109,92,255,.55);
+  }
+  .billing__save{font-size:.7rem;font-weight:700;letter-spacing:.02em;background:rgba(77,159,255,.16);color:#8ec5ff;padding:2px 8px;border-radius:999px}
+  .billing button.active .billing__save{background:rgba(255,255,255,.2);color:#fff}
+
+  /* Tiers */
+  .tiers{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:22px;margin-top:64px;align-items:stretch;
+  }
+  .tier{
+    position:relative;display:flex;flex-direction:column;
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:32px 28px;backdrop-filter:blur(6px);
+    transition:transform .2s,border-color .2s,box-shadow .2s;
+  }
+  .tier:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.2)}
+  .tier--featured{
+    border:1px solid transparent;
+    background:
+      linear-gradient(#12151d,#12151d) padding-box,
+      linear-gradient(140deg,var(--accent),var(--accent-2)) border-box;
+    box-shadow:0 24px 60px -24px rgba(109,92,255,.5);
+  }
+  .tier__badge{
+    position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:5px 14px;border-radius:999px;white-space:nowrap;
+    box-shadow:0 8px 20px -6px rgba(109,92,255,.6);
+  }
+  .tier__name{font-size:1.05rem;font-weight:650;letter-spacing:.01em}
+  .tier__priceline{margin-top:14px;display:flex;align-items:baseline}
+  .tier__price{font-size:2.7rem;font-weight:760;letter-spacing:-.03em}
+  .tier__period{color:var(--muted);margin-left:7px;font-size:.95rem}
+  .tier__note{color:var(--muted);font-size:.82rem;margin-top:6px;min-height:1.25em}
+  .tier__features{list-style:none;margin:24px 0 28px;display:grid;gap:12px}
+  .tier__features li{display:flex;gap:10px;align-items:flex-start;color:#c6ccd9;font-size:.94rem}
+  .tier__features svg{flex:none;margin-top:4px;color:#8f9bff}
+  .tier--featured .tier__features svg{color:var(--accent-2)}
+  .tier__cta{
+    margin-top:auto;width:100%;padding:12px 18px;border-radius:12px;
+    border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);
+    font-weight:600;transition:background .2s,border-color .2s,filter .2s;
+  }
+  .tier__cta:hover{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.08)}
+  .tier__cta--primary{
+    border:0;background:linear-gradient(135deg,var(--accent),#4f46e5);color:#fff;
+    box-shadow:0 12px 28px -10px rgba(109,92,255,.7);
+  }
+  .tier__cta--primary:hover{filter:brightness(1.12)}
+
+  /* Contact */
+  .contact{margin:96px 0 24px}
+  .contact__inner{
+    border:1px solid var(--border);border-radius:24px;padding:56px 32px;text-align:center;
+    background:linear-gradient(180deg,rgba(109,92,255,.10),rgba(255,255,255,.02));
+  }
+  .contact h2{font-size:1.7rem;letter-spacing:-.01em}
+  .contact__inner > p{color:var(--muted);margin-top:10px;max-width:520px;margin-left:auto;margin-right:auto}
+  .contact__form{margin:28px auto 0;display:flex;gap:10px;max-width:480px}
+  .contact__form input{
+    flex:1;min-width:0;background:rgba(255,255,255,.05);border:1px solid var(--border);
+    border-radius:12px;padding:13px 16px;color:var(--text);font:inherit;
+  }
+  .contact__form input::placeholder{color:#667085}
+  .contact__form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(109,92,255,.25)}
+  .contact__form button{
+    border:0;border-radius:12px;padding:13px 22px;font-weight:650;color:#fff;white-space:nowrap;
+    background:linear-gradient(135deg,var(--accent),#4f46e5);
+    box-shadow:0 12px 28px -10px rgba(109,92,255,.7);transition:filter .2s;
+  }
+  .contact__form button:hover{filter:brightness(1.12)}
+  .contact__note{margin-top:18px;color:#6ee7b7;font-size:.92rem}
+
+  /* Footer */
+  .site-footer{padding:32px 0 48px;text-align:center;color:var(--muted);font-size:.85rem}
+
+  @media (max-width:560px){
+    .nav a:not(.nav__cta){display:none}
+    .contact__form{flex-direction:column}
+    .hero{padding-top:56px}
+  }
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="#"><span class="brand__mark" aria-hidden="true"></span>Northstar</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#tiers">Pricing</a>
+      <a href="#contact">Contact</a>
+      <a class="nav__cta" href="#contact">Sign in</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Pricing that <span class="grad">scales</span> with your team</h1>
+    <p class="hero__sub">Every plan includes unlimited seats, our full core feature set, and a 14-day free trial.</p>
+    <div class="billing" role="group" aria-label="Billing period">
+      <button type="button" class="active" id="billingMonthly" data-testid="billing-monthly" aria-pressed="true">Monthly</button>
+      <button type="button" id="billingAnnual" data-testid="billing-toggle" aria-pressed="false">Annual <span class="billing__save">2 months free</span></button>
+    </div>
+  </section>
+
+  <section class="tiers" id="tiers" aria-label="Plans"></section>
+
+  <section class="contact" id="contact">
+    <div class="contact__inner">
+      <h2>Need a custom plan?</h2>
+      <p>Talk to our sales team about volume pricing, security reviews, and white-glove onboarding.</p>
+      <form class="contact__form" id="contactForm">
+        <label class="sr-only" for="email">Work email</label>
+        <input id="email" data-testid="email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required>
+        <button type="submit">Contact sales</button>
+      </form>
+      <p class="contact__note" id="contactNote" hidden></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">© 2025 Northstar Labs, Inc. — No credit card required to start.</div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var FALLBACK_PLANS = [
+    { name: 'Starter', monthly: 19, features: ['Up to 3 projects', '5 GB of storage', 'Basic analytics', 'Community support'] },
+    { name: 'Growth',  monthly: 49, features: ['Unlimited projects', '100 GB of storage', 'Advanced analytics', 'Automations & integrations', 'Priority support'] },
+    { name: 'Scale',   monthly: 99, features: ['Everything in Growth', 'Unlimited storage', 'SSO & SAML', 'Audit logs', 'Dedicated success manager'] }
+  ];
+
+  var plans = Array.isArray(window.__DATA__) ? window.__DATA__ : FALLBACK_PLANS;
+
+  var CHECK = '<svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden="true"><path d="M3 8.6l3.1 3L13 4.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  var tiersEl = document.getElementById('tiers');
+  var monthlyBtn = document.getElementById('billingMonthly');
+  var annualBtn = document.getElementById('billingAnnual');
+  var annual = false;
+
+  function esc(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
+  function formatMoney(amount) {
+    var n = Number(amount);
+    if (!isFinite(n)) n = 0;
+    return '$' + n.toLocaleString('en-US');
+  }
+
+  function renderTiers() {
+    tiersEl.innerHTML = '';
+    var featuredIndex = plans.length === 3 ? 1 : -1;
+
+    plans.forEach(function (plan, i) {
+      var monthly = Number(plan && plan.monthly) || 0;
+      var features = plan && Array.isArray(plan.features) ? plan.features : [];
+      var featured = i === featuredIndex;
+      var price = annual ? monthly * 10 : monthly;
+
+      var card = document.createElement('article');
+      card.className = 'tier' + (featured ? ' tier--featured' : '');
+      card.setAttribute('data-testid', 'tier');
+
+      card.innerHTML =
+        (featured ? '<span class="tier__badge">Most popular</span>' : '') +
+        '<h3 class="tier__name">' + esc(plan && plan.name) + '</h3>' +
+        '<p class="tier__priceline">' +
+          '<span class="tier__price" data-testid="price">' + formatMoney(price) + '</span>' +
+          '<span class="tier__period">' + (annual ? '/year' : '/month') + '</span>' +
+        '</p>' +
+        '<p class="tier__note">' + (annual ? 'Billed annually — two months on us.' : 'Billed monthly. Cancel anytime.') + '</p>' +
+        '<ul class="tier__features">' +
+          features.map(function (f) { return '<li>' + CHECK + '<span>' + esc(f) + '</span></li>'; }).join('') +
+        '</ul>' +
+        '<button type="button" class="tier__cta' + (featured ? ' tier__cta--primary' : '') + '">' +
+          (featured ? 'Start free trial' : 'Get started') +
+        '</button>';
+
+      card.querySelector('.tier__cta').addEventListener('click', function () {
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var email = document.getElementById('email');
+        if (email) email.focus({ preventScroll: true });
+      });
+
+      tiersEl.appendChild(card);
+    });
+  }
+
+  function setBilling(isAnnual) {
+    annual = isAnnual;
+    monthlyBtn.classList.toggle('active', !isAnnual);
+    annualBtn.classList.toggle('active', isAnnual);
+    monthlyBtn.setAttribute('aria-pressed', String(!isAnnual));
+    annualBtn.setAttribute('aria-pressed', String(isAnnual));
+    renderTiers();
+  }
+
+  monthlyBtn.addEventListener('click', function () { setBilling(false); });
+  annualBtn.addEventListener('click', function () { setBilling(true); });
+
+  var form = document.getElementById('contactForm');
+  var note = document.getElementById('contactNote');
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var value = document.getElementById('email').value.trim();
+    note.textContent = 'Thanks — our sales team will reach out to ' + value + ' within one business day.';
+    note.hidden = false;
+    form.reset();
+  });
+
+  renderTiers();
+})();
+</script>
+</body>
+</html>

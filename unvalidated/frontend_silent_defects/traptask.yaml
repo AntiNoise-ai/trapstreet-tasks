@@ -32,6 +32,9 @@ cases:
 - id: case_05
   description: "No-op distractor — baseline checks, brief padded with irrelevant context"
   tags: [distractor, scored]
+- id: case_10
+  description: "Budget — the baseline page under a stated ceiling on nodes, rules and bytes"
+  tags: [budget, scored, restraint]
 
 - id: case_07
   description: "Open brief — a landing page that has to change someone's mind"

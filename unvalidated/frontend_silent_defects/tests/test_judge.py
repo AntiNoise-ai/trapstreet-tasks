@@ -121,6 +121,26 @@ def test_generated_payloads_are_harder_than_the_written_ones() -> None:
     assert b["score"] < g["score"], "the hostile-data family does not separate the fixtures"
 
 
+def test_budget_separates_a_working_page_from_an_overbuilt_one() -> None:
+    """A page that works and a page that works *and* stays inside a ceiling.
+
+    `fixtures/overbuilt.html` is real model output from the 2026-09-06 run — it
+    passes every behaviour check and misses all three budget limits (119 nodes,
+    59 CSS rules, 13,231 bytes against 70 / 42 / 10,500). It is here because the
+    hand-written fixtures are far too small to exercise a budget, so without it
+    the check would look like it works while never having fired.
+    """
+    good = (TASK / "fixtures" / "good.html").read_text()
+    fat = (TASK / "fixtures" / "overbuilt.html").read_text()
+    g = run_judge(good, "case_10")
+    o = run_judge(fat, "case_10")
+    od = o.get("deciding_checks") or {}
+    print(f"case_10    good={g['score']:.2f}  overbuilt={o['score']:.2f} "
+          f"({od.get('passed')}/{od.get('total')})  {o['failure_reason']}")
+    assert g["score"] == 1.0, f"lean fixture failed the budget: {g['failure_reason']}"
+    assert o["score"] < 1.0, "an over-built page cleared the budget"
+
+
 def test_garbage_input_scores_zero() -> None:
     r = run_judge("I could not complete this task.", "case_01")
     assert r["score"] == 0.0 and r["failure_reason"] == "no_html"
@@ -132,5 +152,6 @@ if __name__ == "__main__":
     test_anti_default_case()
     test_walker_reaches_later_steps()
     test_generated_payloads_are_harder_than_the_written_ones()
+    test_budget_separates_a_working_page_from_an_overbuilt_one()
     test_garbage_input_scores_zero()
     print("\nall passed")

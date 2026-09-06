@@ -348,9 +348,10 @@ async function checkRobustness(browser, url, variants) {
 }
 
 /* ---------- constraint checks (the difficulty levers) ----------------- *
- * Five kinds, all deterministic:
+ * Six kinds, all deterministic:
  *   odd_one_out     which sibling is visually distinguished, by index
  *   numeric_order   numbers pulled from a set, in a required order
+ *   budget          a counted ceiling: DOM nodes, CSS rules or source bytes
  *   no_computed     no element resolves a CSS property to a banned value
  *   no_external     no subresource loaded from off the page
  *   source_absent   a regex that must not appear in the HTML source
@@ -432,6 +433,30 @@ async function checkConstraint(page, source, c) {
     return hits.length === 0
       ? { name: c.name, ok: true }
       : { name: c.name, ok: false, why: `external resources: ${hits.join("; ")}` };
+  }
+
+  // A budget. This is what survives translating FrontierCode's scope discipline
+  // to a task with no baseline: it grades restraint against a stated ceiling
+  // rather than against a reference patch, because a page generated from a
+  // brief has no "before" to be measured against. One metric per entry, so a
+  // page that holds two of three limits scores two of three.
+  //
+  // The numbers are calibrated, not guessed: across eighteen pages from three
+  // frontier models built with no budget stated, nodes ran 67-119, CSS rules
+  // 39-61, and source 9475-16473 bytes. Exactly one of the eighteen met all
+  // three limits at once - proof the combination is reachable, and that almost
+  // nothing reaches it by accident.
+  if (c.kind === "budget") {
+    const m = await page.evaluate(() => {
+      let rules = 0;
+      for (const sh of document.styleSheets) { try { rules += sh.cssRules.length; } catch { /* cross-origin */ } }
+      return { nodes: document.querySelectorAll("*").length, css_rules: rules };
+    });
+    const got = c.metric === "bytes" ? source.length : m[c.metric];
+    if (got === undefined) return { name: c.name, ok: false, why: `unknown budget metric ${c.metric}` };
+    return got > c.max
+      ? { name: c.name, ok: false, why: `${got} ${c.metric} — the budget is ${c.max}` }
+      : { name: c.name, ok: true };
   }
 
   if (c.kind === "source_absent") {

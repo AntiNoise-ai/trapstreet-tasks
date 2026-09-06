@@ -1,9 +1,14 @@
 # frontend_silent_defects — the page looks finished
 
-**It does not discriminate, and it does not ship.** Three frontier arms, six
-scored cases, eighteen scores, every one of them 1.00 — see
-[RESULTS.md](RESULTS.md). It stays in `unvalidated/` permanently. Everything
-below is kept because the instrument works and the write-up is the point.
+**The version measured on 2026-09-06 did not discriminate** — three frontier
+arms, six scored cases, eighteen scores, all 1.00. See [RESULTS.md](RESULTS.md);
+that verdict stands for that version and is not withdrawn.
+
+**The instrument has since been rebuilt** with the two mechanisms from
+[docs/raising-task-difficulty.md](../../docs/raising-task-difficulty.md) that a
+one-shot generation task can actually use — generated hostile payloads and a
+calibrated budget — on top of dense scoring. **The rebuilt version is unrun.**
+It stays in `unvalidated/` until three arms go through it again.
 
 ## What it measures
 
@@ -28,12 +33,46 @@ difference, because the voter is looking at the same picture.
 | 03 | behaviour | a counterfactual requirement, against the obvious default |
 | 04 | constraints | prohibitions — what the page must *not* do |
 | 05 | behaviour | same checks as 01, brief padded with irrelevant context |
-| 06 | robustness | 13 hostile `window.__DATA__` payloads |
+| 06 | robustness | 13 written + 40 generated hostile `__DATA__` payloads |
+| 10 | constraints | a calibrated budget on nodes, CSS rules and bytes |
 | 07–09 | open | free briefs — landing page, dashboard, form flow |
 
 Cases 07–09 emit `score: null`. They run every check as a floor (loads, throws
 nothing, survives 375px) and are reported as `floor_passed`, but nothing ranks
 them. There is no gold that settles whether a landing page is good.
+
+## What changed after the 18/18
+
+**Scoring is dense.** `grade()` returns the fraction of the deciding family's
+checks that passed, not 1.0-or-nothing. Binary cost nothing while every arm
+scored 1.00; it becomes the dominant failure mode the moment a case is hard,
+because every arm lands on 0.0 and the board cannot say which got closer.
+Long-Horizon-Terminal-Bench measured 62.8% of runs making partial progress that
+pass/fail discards. **Blockers** survive: a check the spec marks `blocker` takes
+the case to zero — a page that executes injected content gets no partial credit.
+
+**The hostile data is generated, not written.** `case_06` keeps its thirteen
+written payloads and adds forty seeded generated ones over 29 hostile atoms —
+lone surrogates, RTL overrides, 300 combining marks, prototype pollution, whole
+`__DATA__` type swaps, five injection strings. A written list has a ceiling the
+author can see; three frontier arms took the old thirteen 13/13. The recipe
+crossing the process boundary is JSON-safe and the values are built in-page,
+because `undefined`, `NaN` and cyclic objects do not survive serialisation.
+
+It found a live XSS in this repo's own `fixtures/good.html` on the first run —
+an `<img src=x onerror>` in a plan name executed. The fixture now builds nodes
+instead of interpolating into `innerHTML`.
+
+**`case_10` grades restraint against a calibrated ceiling.** 70 DOM elements,
+42 CSS rules, 10,500 source bytes, all stated in the brief. The numbers come
+from measuring the eighteen pages the three arms actually produced with no
+budget stated: nodes ran 67–119, rules 39–61, bytes 9,475–16,473, and **exactly
+one of the eighteen met all three at once**. Reachable, and not by accident.
+
+This is as far as FrontierCode's scope discipline translates. It measures scope
+against a reference patch; a page generated from a brief has no *before*, so
+what survives is a stated ceiling rather than a comparison. Whether that is
+enough to separate anything is the open question.
 
 ## Why contrast and labels are diagnostics, not score
 
