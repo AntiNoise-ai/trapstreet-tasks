@@ -57,7 +57,10 @@ check/inspect.mjs   the browser half — puppeteer-core against system Chrome,
                     axe-core injected. Emits per-check results, one tiled
                     capture per UI state, and rects.json (the gallery
                     overlay's boxes).
-check/panel.py      an LLM judge panel. NOT WIRED IN — see below.
+check/panel.py      a pointwise LLM judge panel. NOT WIRED IN — see below.
+check/pairwise_gate.py
+                    the gate that retired it: nine forced choices against the
+                    owner's own comparisons.
 check/anchors/      seven screenshots the panel used, sorted blind on a 1-3
                     scale. Superseded: two are contradicted by labels/. Kept as
                     record; nothing reads them.
@@ -121,11 +124,27 @@ landing brief inverted completely: `good_landing.jpg`, the level-3 landing
 anchor, is the page she now ranks *last* of three. So "it contradicted its own
 anchors" was, on that page, the anchor being wrong.
 
-Scored against the pairwise order instead, the panel gets **5 of the 7 non-tie
-comparisons** in run 2 — and 7 comparisons cannot separate a working judge from
-a coin. That is the honest state: not refuted, not shown to work. It stays out
-of the score *and* out of the diagnostics until a gate passes it, because a
-column published beside real measurements gets read as information.
+So the panel was rebuilt as a **pairwise** judge — two attempts at one brief,
+the same words she was given, forced choice — and put through a gate written
+before it ran: nine same-brief pairs with the first/second order balanced,
+stop at ≤6/9, and ≥8/9 to pass.
+
+**It scored 5/9. Chance is 4.5.** It picked the first-shown page 4 times out of
+9 and her page was first 4 times out of 9, so position bias explains nothing.
+Per brief: dashboard 3/3, landing 1/3, form 1/3. Stage 2 was not bought.
+
+That is the honest verdict the anchor mismatch was not. The judge is out of the
+score and out of the diagnostics, and `check/panel.py`, `check/anchors/` and
+`check/pairwise_gate.py` are kept only as record.
+
+One confound and one hypothesis, both worth carrying. The form stimuli are
+pre-walker captures showing about two of eleven fields, so that brief was never
+fairly asked — the landing brief was, and it went 1/3. And every reason the
+judge gave is about information completeness or reassurance: "concrete proof",
+"scannable", "all key metrics", "reassuring microcopy". It reads the copy and
+the feature inventory. On a dashboard, where completeness genuinely is the job,
+it goes 3/3; where restraint decides it, 2/6. With n=9 that is a mechanism worth
+naming, not a finding.
 
 Three findings survive, and the first is the one worth carrying:
 

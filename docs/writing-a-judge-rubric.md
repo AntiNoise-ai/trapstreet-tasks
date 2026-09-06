@@ -193,9 +193,35 @@ judge contains the thing you are asking about.** This is upstream of every
 prompt decision and it is much cheaper to check. A judge scoring `structure` on
 a third of a form is not a calibration problem.
 
-Where that leaves the alternative: pairwise is still the better primitive, but
-after two failed pointwise runs the honest prerequisite is *more labelled pages*,
-not a third prompt shape over the same nine.
+### The pairwise version, and what it settled
+
+So we built it: same brief, two attempts, the same words the human was given,
+forced choice. Nine same-brief pairs — nine pages exist, so nine comparisons
+exist, and no amount of re-running raises that ceiling. First/second order
+balanced, and the stopping rule written down before the run.
+
+**5/9 against a chance of 4.5.** Balanced order rules out position bias. The
+human is reliable at 9/9 on exactly these pairs, so the disagreement is real:
+the judge and the person are attending to different things.
+
+What the reasons show is more useful than the score. Every one of them is about
+information completeness or reassurance — "concrete proof", "scannable", "all
+key metrics", "reassuring microcopy". It grades the copy and the feature
+inventory. On the dashboard brief, where completeness genuinely *is* the job, it
+went 3/3. On the two where restraint and craft decide it, 2/6.
+
+That is the shape of the thing to check next time, and it is checkable cheaply:
+**does the judge's stated reason name the dimension you are trying to measure?**
+If every explanation is about how much is on the page, you have built a
+completeness detector, and it will look excellent on any brief where more is
+better.
+
+Two rules that came out of this, in order of how much they saved:
+
+1. **Write the stopping rule before the run.** Ours was ≤6/9 stop, ≥8/9 pass.
+   At 5/9 there was nothing to argue about and no second stage to pay for.
+2. **Nine pairs is a screen, not a validation.** It is enough to kill something
+   and not enough to bless it. Spend it in that direction.
 
 ## Sources
 
