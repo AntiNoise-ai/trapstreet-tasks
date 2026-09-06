@@ -113,6 +113,63 @@ with an absolute inputs path. A solution that can read the gold can read
 whatever defines "the broken version". Whether that closes the exploit or widens
 it has to be settled *before* the idea is costed, not after.
 
+## Which of these a one-shot generation task can actually use
+
+Applied to `frontend_silent_defects` — a task where the tool is handed a brief
+and prints one self-contained page. Of eight mechanisms, **two add difficulty**:
+
+| mechanism | usable here | why |
+|---|---|---|
+| dynamic stress generation | **yes, directly** | a hand-written payload list has a ceiling the author can see |
+| budget / over-build limits | **yes, adapted** | see below — it is not the same thing as scope discipline |
+| dense scoring | yes, but adds none | it makes difficulty *readable*, it does not create it |
+| blockers / non-blockers | yes, but adds none | an aggregation rule |
+| empirical calibration | yes, but adds none | a process, not a knob |
+| regression safety | **no** | needs an existing codebase to not break |
+| test correctness / reverse-classical | **no**, not without changing the task's shape | needs the tool to write tests, and collides with a readable `expected/` |
+| BenchEvolver | **no** | needs a reference solution with an executable oracle |
+
+**Scope discipline does not port, and the reason matters.** FrontierCode
+measures it against a reference patch — "changes touch only necessary files and
+lines". A page generated from a brief has no *before*. If the tool adds an FAQ
+section nobody asked for, there is no baseline that says whether that is
+overreach or judgement. Written as an explicit list of forbidden things it
+collapses back into `case_04`, which all three arms passed. What survives the
+translation is a **budget** — a cap on DOM nodes, CSS rules, source bytes,
+stated in the brief — which is measurable, and whose numbers must be calibrated
+from real submissions rather than guessed.
+
+## Why most of them do not port: relational vs absolute
+
+Sorting the dimensions by whether they are still unsaturated turns up a pattern
+the papers do not state, and it is the most useful thing in this document:
+
+> **Every unsaturated dimension is relational — defined against something that
+> already exists.** Regression safety, against a codebase you must not break.
+> Scope discipline, against a reference patch. Test correctness, against a
+> broken version your tests have to catch.
+>
+> **Every saturated dimension is absolute** — does it work, does it survive bad
+> input, does it hold at 375px, did it obey the stated constraints.
+
+FrontierCode's own blocker / non-blocker split falls the same way: its blockers
+are the relational criteria; its non-blockers are the absolute ones (style,
+mechanical cleanliness) that it explicitly declines to let decide a score.
+
+If that holds, our 18/18 is not "the brief was too short" and not quite "we
+graded the wrong dimension" either. It is structural:
+
+> **A one-shot generation task has no baseline, and every dimension that still
+> separates frontier models is measured against a baseline.**
+
+This is an inference, not a result. It is also cheap to test, because it makes a
+falsifiable prediction about the one absolute knob left: **if dynamically
+generated hostile data also fails to separate the arms, the absolute dimensions
+are saturated across the board and the shape is the problem.** If it does
+separate, the inference is wrong and the task is repairable in place.
+
+That test is the next thing built.
+
 ## Numbers worth keeping
 
 | | |
