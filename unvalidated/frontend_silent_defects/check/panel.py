@@ -13,6 +13,13 @@ separates better, but that it reaches where the instrument cannot.
 they are a free partial oracle. A judge that scores adherence 3 on a page that
 failed three constraint checks has disqualified itself, at no labelling cost.
 
+SUPERSEDED. The four axes below (`structure`, `execution`, `tech`, `adherence`)
+were mine, and they did not work — the rubric they carry is left exactly as it
+scored so the failure stays legible. The replacement is in `pairwise_gate.py`,
+rebuilt on UICrit's five empirical critique clusters and on Sadler's
+standard-gap-fix format; the reasoning is in docs/writing-a-judge-rubric.md.
+Read that before reusing anything here.
+
 Scale, axis split and the anchoring rule: see docs/writing-a-judge-rubric.md.
 The 1-3 forced choice replaces an earlier 0-10 copied from Startrise; wide
 scales cluster in the middle (inter-rater reliability 0.45-0.60 on 1-5), and

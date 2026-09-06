@@ -21,7 +21,12 @@ Nine pairs is the whole instrument — nine pages exist, so nine same-brief
 comparisons exist. No amount of re-running raises that ceiling. This is a screen
 before spending on more pages, not a validation.
 
-    ANTHROPIC_API_KEY=... python3 check/pairwise_gate.py
+    ANTHROPIC_API_KEY=... python3 check/pairwise_gate.py [v1|v2]
+
+v1 is the rubric that scored 5/9. v2 is rebuilt on how designers actually
+critique — see docs/writing-a-judge-rubric.md. Only the prompt and its schema
+differ between them: same nine pairs, same order, same model, so the comparison
+has one variable.
 """
 from __future__ import annotations
 
@@ -51,21 +56,67 @@ TRIALS = [
 ]
 
 STANCE = (
-    "You are reading two attempts at the same brief and deciding which is the "
-    "better piece of work. You do not know who or what produced either, and "
-    "speculating about that is out of scope."
+    "You are an experienced product designer running a critique. You are looking "
+    "at two attempts at the same brief and deciding which is the better piece of "
+    "work. You do not know who or what produced either, and speculating about "
+    "that is out of scope."
 )
 
-# Deliberately the same words the human was given. Asking the judge a different
-# question than the label was elicited with would make the comparison meaningless.
-ASK = (
+# v1 — the rubric that scored 5/9 against a chance of 4.5. Kept so a change to
+# the wording can be measured against it on the same nine pairs.
+ASK_V1 = (
     "Same brief, two attempts. Pick the one you would rather put your name on. "
     "No ties — if it is close, choose anyway.\n\n"
     "Judge the work, not the taste: whether it made the right moves for this "
     "brief, whether the craft holds up, whether it did what was asked."
 )
 
-SCHEMA = {
+# v2 — rebuilt on how designers actually critique. Three changes, each from a
+# specific finding; see docs/writing-a-judge-rubric.md.
+#
+#   * The five things to look at are UICrit's empirical clusters over 3,059
+#     critiques by seven professional designers, not axes I invented.
+#   * The standard is named before the verdict — Sadler's format, which every
+#     annotator in that dataset was required to follow. A judge that cannot
+#     state the standard is reacting, not critiquing.
+#   * The negative constraint is written down, because v1's failure was
+#     specific and one-directional: every reason it gave was about how much was
+#     on the page.
+ASK_V2 = """Same brief, two attempts. One is better work. Say which.
+
+Look at five things, and only these five. They are what designers actually
+argue about when they critique an interface:
+
+  layout        Positioning and alignment. Is there a visual hierarchy, and
+                does it put the important thing first? Are related things
+                grouped? Is the arrangement simple, or merely full?
+  contrast      Do text, controls and icons separate from what is behind them?
+  readability   Size and weight of type. Can the body text be read without
+                effort, and does the type scale mean something?
+  controls      Is each interactive thing obviously interactive, and does it
+                say what it will do?
+  learnability  Without being told, can you see what this page is for, and
+                what each region of it is?
+
+**Do not count features.** A page that does one thing well is better work than
+one that does five adequately. If your reason for preferring a design is that
+it contains more — more sections, more copy, more reassurance, more proof —
+discard that reason and look again at the five above. More is not better, and
+a longer page is not a more considered one.
+
+Work in this order and do not skip a step:
+
+  1. `standard` — for THIS brief, what would good look like? One sentence,
+     written before you have chosen, and about the brief rather than about
+     either attempt.
+  2. `gap` — the single largest way one of the two falls short of that
+     standard. Name which attempt and which of the five it belongs to.
+  3. `choice` — first or second. No ties; if it is close, choose anyway.
+  4. `why` — one sentence."""
+
+ASKS = {"v1": ASK_V1, "v2": ASK_V2}
+
+SCHEMA_V1 = {
     "type": "object",
     "properties": {
         "choice": {"type": "string", "enum": ["first", "second"]},
@@ -75,6 +126,23 @@ SCHEMA = {
     "additionalProperties": False,
 }
 
+# The field order is the point, not decoration: a JSON schema is filled in
+# order, so `standard` and `gap` are written before `choice` exists to be
+# rationalised. Reversing these two lines would undo most of v2.
+SCHEMA_V2 = {
+    "type": "object",
+    "properties": {
+        "standard": {"type": "string", "description": "What good would look like for this brief. One sentence, about the brief, not about either attempt."},
+        "gap": {"type": "string", "description": "The largest shortfall against that standard. Name the attempt and which of the five it is."},
+        "choice": {"type": "string", "enum": ["first", "second"]},
+        "why": {"type": "string", "description": "One sentence."},
+    },
+    "required": ["standard", "gap", "choice", "why"],
+    "additionalProperties": False,
+}
+
+SCHEMAS = {"v1": SCHEMA_V1, "v2": SCHEMA_V2}
+
 
 def img(page: str) -> dict:
     return {"type": "image", "source": {
@@ -82,16 +150,16 @@ def img(page: str) -> dict:
         "data": base64.standard_b64encode((PAGES / f"{page}.jpg").read_bytes()).decode()}}
 
 
-def ask(client: anthropic.Anthropic, brief: str, first: str, second: str) -> dict:
+def ask(client: anthropic.Anthropic, brief: str, first: str, second: str, rubric: str) -> dict:
     content = [
         {"type": "text", "text": f"The brief both were built from:\n\n{brief}"},
         {"type": "text", "text": "The first attempt:"}, img(first),
         {"type": "text", "text": "The second attempt:"}, img(second),
-        {"type": "text", "text": ASK},
+        {"type": "text", "text": ASKS[rubric]},
     ]
     resp = client.messages.create(
         model=MODEL, max_tokens=4000, system=STANCE,
-        output_config={"format": {"type": "json_schema", "schema": SCHEMA},
+        output_config={"format": {"type": "json_schema", "schema": SCHEMAS[rubric]},
                        "effort": os.environ.get("TRAP_PANEL_EFFORT", "medium")},
         messages=[{"role": "user", "content": content}],
     )
@@ -100,19 +168,23 @@ def ask(client: anthropic.Anthropic, brief: str, first: str, second: str) -> dic
 
 
 def main() -> None:
+    rubric = sys.argv[1] if len(sys.argv) > 1 else "v2"
+    if rubric not in ASKS:
+        raise SystemExit(f"rubric must be one of {sorted(ASKS)}")
+    print(f"  rubric {rubric}, model {MODEL}\n")
     client = anthropic.Anthropic(max_retries=5)
     briefs = {b: (TASK / "inputs" / f"case_{b}" / "brief.md").read_text() for b in ("07", "08", "09")}
 
     rows, by_brief = [], {}
     for brief, first, second, hers in TRIALS:
-        r = ask(client, briefs[brief], first, second)
+        r = ask(client, briefs[brief], first, second, rubric)
         chose = first if r["choice"] == "first" else second
         ok = chose == hers
         by_brief.setdefault(brief, []).append(ok)
         rows.append({"brief": brief, "first": first, "second": second,
                      "hers": hers, "judge": chose, "ok": ok,
                      "her_page_position": "first" if hers == first else "second",
-                     "why": r["why"]})
+                     "standard": r.get("standard"), "gap": r.get("gap"), "why": r["why"]})
         print(f"  {first} vs {second}   hers={hers}  judge={chose}  {'ok' if ok else 'MISS'}")
         print(f"      {r['why'][:150]}")
 
@@ -126,8 +198,8 @@ def main() -> None:
     print("\n  " + ("GATE PASSED — buy stage 2" if n >= 8 else
                     "stage 2 is worth buying" if n == 7 else
                     "STOP — it does not judge"))
-    (TASK / "labels" / "gate_stage1.json").write_text(json.dumps(
-        {"model": MODEL, "total": n, "rows": rows}, indent=2))
+    (TASK / "labels" / f"gate_stage1_{rubric}.json").write_text(json.dumps(
+        {"model": MODEL, "rubric": rubric, "total": n, "rows": rows}, indent=2))
 
 
 if __name__ == "__main__":
