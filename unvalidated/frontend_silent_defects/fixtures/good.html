@@ -55,14 +55,51 @@
   const data = Array.isArray(window.__DATA__) ? window.__DATA__ : DEFAULT;
   let annual = false;
 
+  // Text goes in as text. The generated hostile-payload family found this the
+  // hard way: an interpolated `<img src=x onerror=...>` in a plan name ran.
+  // Template interpolation into innerHTML is the defect, and escaping the
+  // string is not the fix — building the nodes is.
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = String(text);
+    return n;
+  };
+
   function render() {
-    document.getElementById("tiers").innerHTML = data.map(t => `
-      <article class="tier" data-testid="tier">
-        <h2>${t.name}</h2>
-        <div class="price" data-testid="price">$${annual ? Math.round(t.monthly * 10) : t.monthly}<span style="font-size:14px;font-weight:400;color:var(--muted)">/${annual ? "yr" : "mo"}</span></div>
-        <ul>${(t.features || []).map(f => `<li>${f}</li>`).join("")}</ul>
-        <a class="cta" href="#buy">Choose ${t.name}</a>
-      </article>`).join("");
+    const host = document.getElementById("tiers");
+    host.textContent = "";
+    for (const t of data) {
+      const card = el("article", "tier");
+      card.dataset.testid = "tier";
+      card.append(el("h2", null, t.name));
+
+      const price = el("div", "price");
+      price.dataset.testid = "price";
+      const n = Number(t.monthly);
+      const shown = annual ? Math.round(n * 10) : n;
+      // Money is money: an integer or two places. Printing a raw float puts
+      // $0.30000000000000004 in a card and pushes it out of its own box.
+      price.textContent = "$" + (Number.isFinite(shown)
+        ? (Number.isInteger(shown) ? shown : shown.toFixed(2)) : "—");
+      const unit = el("span", null, "/" + (annual ? "yr" : "mo"));
+      unit.setAttribute("style", "font-size:14px;font-weight:400;color:var(--muted)");
+      price.append(unit);
+      card.append(price);
+
+      const ul = el("ul");
+      // `features` arrives as whatever the caller sent — a string, a number,
+      // a nested array, nothing at all. Anything not a list renders as no list.
+      for (const f of Array.isArray(t.features) ? t.features : []) {
+        ul.append(el("li", null, typeof f === "object" ? JSON.stringify(f) : f));
+      }
+      card.append(ul);
+
+      const cta = el("a", "cta", "Choose " + String(t.name ?? "").slice(0, 40));
+      cta.href = "#buy";
+      card.append(cta);
+      host.append(card);
+    }
   }
 
   document.querySelector('[data-testid="billing-toggle"]').addEventListener("click", () => {

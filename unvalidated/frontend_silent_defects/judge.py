@@ -77,32 +77,25 @@ def run_inspector(html: str, spec: dict, out_dir: Path) -> dict:
         return {"loaded": False, "error": f"inspector emitted non-JSON: {proc.stdout[:200]}"}
 
 
-def grade(report: dict, family: str, spec: dict) -> tuple[float, str | None]:
-    """1.0 only if every check in the deciding family passed."""
+def grade(report: dict, family: str, spec: dict) -> tuple[float, str | None, dict]:
+    """Score the deciding family as the fraction of its checks that passed.
+
+    Dense, not binary, and the reason is measured rather than argued:
+    Long-Horizon-Terminal-Bench found 62.8% of runs at real difficulty make
+    partial progress that a pass/fail rule discards. Binary cost us nothing
+    while every arm scored 1.00; the moment a case gets hard it becomes the
+    dominant failure mode, because every arm lands on 0.0 and the board cannot
+    say which one got closer.
+
+    Blockers survive the change. A check the spec marks `"blocker": true` takes
+    the whole case to zero when it fails — partial credit for a page that does
+    not load, or that executes injected markup, would be worse than useless.
+    Loading at all is an implicit blocker.
+    """
     if not report.get("loaded"):
-        return 0.0, report.get("error") or "page did not load"
+        return 0.0, report.get("error") or "page did not load", {}
 
     fam = report.get("families", {})
-    if family == "behaviour":
-        checks = fam.get("behaviour") or []
-        if not checks:
-            return 0.0, "no behaviour assertions ran"
-        bad = [c for c in checks if not c["ok"]]
-        return (0.0, bad[0]["why"]) if bad else (1.0, None)
-
-    if family == "constraints":
-        checks = fam.get("constraints") or []
-        if not checks:
-            return 0.0, "no constraint checks ran"
-        bad = [c for c in checks if not c["ok"]]
-        return (0.0, f"{bad[0]['name']}: {bad[0]['why']}") if bad else (1.0, None)
-
-    if family == "robustness":
-        checks = fam.get("robustness") or []
-        if not checks:
-            return 0.0, "no robustness variants ran"
-        bad = [c for c in checks if not c["ok"]]
-        return (0.0, f"{bad[0]['name']}: {bad[0]['why']}") if bad else (1.0, None)
 
     if family == "responsive":
         r = fam.get("responsive") or {}
@@ -110,14 +103,33 @@ def grade(report: dict, family: str, spec: dict) -> tuple[float, str | None]:
         width = want.get("width", 375)
         tol = want.get("max_overflow_px", 1)
         if r.get("width") != width:
-            return 0.0, f"inspector measured {r.get('width')}px, case wants {width}px"
+            return 0.0, f"inspector measured {r.get('width')}px, case wants {width}px", {}
         over = r.get("overflow", 0)
         if over > tol:
             top = (r.get("culprits") or [{}])[0]
-            return 0.0, f"overflows {width}px by {over}px (worst: <{top.get('tag','?')}> {top.get('over','?')}px)"
-        return 1.0, None
+            return 0.0, (f"overflows {width}px by {over}px "
+                         f"(worst: <{top.get('tag','?')}> {top.get('over','?')}px)"), {"passed": 0, "total": 1}
+        return 1.0, None, {"passed": 1, "total": 1}
 
-    return 0.0, f"unknown scored family {family!r}"
+    if family not in ("behaviour", "constraints", "robustness"):
+        return 0.0, f"unknown scored family {family!r}", {}
+
+    checks = fam.get(family) or []
+    if not checks:
+        return 0.0, f"no {family} checks ran", {}
+
+    bad = [c for c in checks if not c["ok"]]
+    detail = {"passed": len(checks) - len(bad), "total": len(checks),
+              "failed": [c["name"] for c in bad][:8]}
+
+    blocked = [c for c in bad if c.get("blocker")]
+    if blocked:
+        return 0.0, f"blocker — {blocked[0]['name']}: {blocked[0]['why']}", detail
+
+    score = detail["passed"] / detail["total"]
+    if bad:
+        return score, f"{len(bad)}/{len(checks)} failed, first: {bad[0]['name']}: {bad[0]['why']}", detail
+    return 1.0, None, detail
 
 
 def _floor(report: dict, spec: dict) -> tuple[bool, str | None]:
@@ -165,10 +177,10 @@ def main() -> None:
     report = run_inspector(html, expected.get("spec", {}), out_dir)
     if family in OPEN_FAMILIES:
         floor_ok, floor_why = _floor(report, expected.get("spec", {}))
-        score, why = None, None
+        score, why, detail = None, None, {}
     else:
         floor_ok, floor_why = None, None
-        score, why = grade(report, family, expected.get("spec", {}))
+        score, why, detail = grade(report, family, expected.get("spec", {}))
 
     # The judge panel is NOT wired in — but not for the reason first written here.
     # It appeared to contradict its own anchors; two of those anchors turned out
@@ -196,6 +208,7 @@ def main() -> None:
         **base,
         "score": score,
         "failure_reason": None if score in (1.0, None) else (why or "failed"),
+        "deciding_checks": detail or None,
         "floor_passed": floor_ok,
         "floor_failure": floor_why,
         "contract_miss": False,

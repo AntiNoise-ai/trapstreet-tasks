@@ -49,10 +49,15 @@ def test_fixtures_separate() -> None:
     for case_id in BASELINE:
         g = run_judge(good, case_id)
         b = run_judge(broken, case_id)
-        print(f"{case_id:9s} good={g['score']}  broken={b['score']}   "
-              f"broken_reason={b['failure_reason']}")
+        dc = b.get("deciding_checks") or {}
+        print(f"{case_id:9s} good={g['score']}  broken={b['score']} "
+              f"({dc.get('passed')}/{dc.get('total')})  reason={b['failure_reason']}")
         assert g["score"] == 1.0, f"{case_id}: good fixture scored {g['score']} — {g['failure_reason']}"
-        assert b["score"] == 0.0, f"{case_id}: broken fixture scored {b['score']}"
+        # Dense scoring: the broken fixture fails some checks, not all, so the
+        # assertion is separation rather than a clean zero. A hard 0.0 here would
+        # only mean the fixture happens to fail everything in the family.
+        assert b["score"] < g["score"], f"{case_id}: broken {b['score']} !< good {g['score']}"
+        assert b["score"] < 1.0, f"{case_id}: broken fixture scored {b['score']}"
         assert "render.png" in g["_artifacts_written"], "no screenshot written"
         assert "rects.json" in g["_artifacts_written"], "no rects written"
 
@@ -77,7 +82,8 @@ def test_anti_default_case() -> None:
     print(f"{ANTI_DEFAULT:9s} counterfactual={a['score']}  plain-good={b['score']}   "
           f"plain_reason={b['failure_reason']}")
     assert a["score"] == 1.0, f"counterfactual fixture failed: {a['failure_reason']}"
-    assert b["score"] == 0.0, "a default-shaped page passed the anti-default brief"
+    assert b["score"] < 1.0, "a default-shaped page passed the anti-default brief"
+    assert b["score"] < a["score"], "the counterfactual lever did not separate"
 
 
 def test_walker_reaches_later_steps() -> None:
@@ -95,6 +101,26 @@ def test_walker_reaches_later_steps() -> None:
     assert len(r["artifacts"]["screens"]) >= 3
 
 
+def test_generated_payloads_are_harder_than_the_written_ones() -> None:
+    """The generated family must be able to fail a page the written one passes.
+
+    This is the point of the generator and it is worth a regression test: the
+    thirteen hand-written payloads were taken 13/13 by three frontier arms, and
+    the first generated run found a live XSS in this repo's own `good.html`
+    (an `<img onerror>` in a plan name executed). A generator whose payloads all
+    pass everything has silently reverted to a written list.
+    """
+    good = (TASK / "fixtures" / "good.html").read_text()
+    broken = (TASK / "fixtures" / "broken.html").read_text()
+    g = run_judge(good, "case_06")
+    b = run_judge(broken, "case_06")
+    gd, bd = g.get("deciding_checks") or {}, b.get("deciding_checks") or {}
+    print(f"case_06    good={g['score']:.3f} ({gd.get('passed')}/{gd.get('total')})  "
+          f"broken={b['score']:.3f} ({bd.get('passed')}/{bd.get('total')})")
+    assert gd.get("total", 0) >= 40, f"only {gd.get('total')} variants ran — the generator is not wired in"
+    assert b["score"] < g["score"], "the hostile-data family does not separate the fixtures"
+
+
 def test_garbage_input_scores_zero() -> None:
     r = run_judge("I could not complete this task.", "case_01")
     assert r["score"] == 0.0 and r["failure_reason"] == "no_html"
@@ -105,5 +131,6 @@ if __name__ == "__main__":
     test_fixtures_separate()
     test_anti_default_case()
     test_walker_reaches_later_steps()
+    test_generated_payloads_are_harder_than_the_written_ones()
     test_garbage_input_scores_zero()
     print("\nall passed")

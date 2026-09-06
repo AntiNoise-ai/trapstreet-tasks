@@ -131,6 +131,140 @@ async function checkResponsive(page, want = {}) {
  * Robustness: re-render the page against hostile data and see if it survives.
  * The brief requires the page to read window.__DATA__, so the judge can swap it.
  */
+/* ---------- hostile payload generation ------------------------------- *
+ * A hand-written list of payloads has a ceiling the author can see: ours was
+ * thirteen, and three frontier arms took 13/13. A generator does not have that
+ * ceiling, cannot be memorised, and cannot be targeted case by case.
+ *
+ * Seeded, so a run is reproducible and two arms get byte-identical payloads.
+ * The recipe crossing the process boundary is JSON-safe; the hostile values
+ * themselves are built inside the page, because `undefined`, `NaN`, cyclic
+ * objects and lone surrogates do not survive serialisation.
+ */
+
+// mulberry32 — small, seeded, and identical across platforms.
+function rng(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const ATOM_NAMES = [
+  "empty", "spaces", "newlines", "long240", "long4000", "wideCJK", "zwj",
+  "rtlOverride", "combining", "zeroWidth", "loneSurrogate",
+  "htmlScript", "htmlImg", "htmlBreakout", "templateExpr", "mustache",
+  "nullish", "undef", "nan", "numZero", "numNeg", "numHuge", "numFloat",
+  "boolTrue", "emptyArr", "emptyObj", "deepNest", "cyclic", "numericString",
+];
+// Injection atoms: a page that lets one of these run has failed in a way no
+// amount of partial credit should soften. See `blocker` below.
+const INJECTION = new Set(["htmlScript", "htmlImg", "htmlBreakout", "mustache", "templateExpr"]);
+
+const COUNTS = [0, 1, 2, 3, 7, 25];
+
+/** Build the variant list. Returns the same shape the static `robustness`
+ *  spec produces, so downstream code does not care where a variant came from. */
+function generateVariants(gen) {
+  const rand = rng(gen.seed ?? 1);
+  const pick = (xs) => xs[Math.floor(rand() * xs.length)];
+  const fields = gen.fields ?? ["name", "monthly", "features"];
+  const n = gen.n ?? 40;
+  const out = [];
+  const seen = new Set();
+
+  while (out.length < n) {
+    const kind = pick(["field", "field", "field", "drop", "count", "whole", "pollute", "nest"]);
+    let mutations, name;
+    if (kind === "field") {
+      const i = Math.floor(rand() * 3), f = pick(fields), atom = pick(ATOM_NAMES);
+      mutations = [{ op: "field", index: i, field: f, atom }];
+      name = `plans[${i}].${f} = ${atom}`;
+    } else if (kind === "drop") {
+      const i = Math.floor(rand() * 3), f = pick(fields);
+      mutations = [{ op: "drop", index: i, field: f }];
+      name = `plans[${i}] has no ${f}`;
+    } else if (kind === "count") {
+      const c = pick(COUNTS);
+      mutations = [{ op: "count", n: c }];
+      name = `${c} plan(s)`;
+    } else if (kind === "whole") {
+      const atom = pick(ATOM_NAMES);
+      mutations = [{ op: "whole", atom }];
+      name = `__DATA__ is ${atom}, not an array`;
+    } else if (kind === "pollute") {
+      mutations = [{ op: "pollute" }];
+      name = "__proto__ injected into a plan";
+    } else {
+      const i = Math.floor(rand() * 3);
+      mutations = [{ op: "nest", index: i }];
+      name = `plans[${i}].features is nested three deep`;
+    }
+    if (seen.has(name)) continue;
+    seen.add(name);
+
+    const v = {
+      name,
+      recipe: { base: gen.base ?? [], mutations },
+      selector: gen.selector ?? "*[data-testid]",
+      forbidSelector: gen.forbidSelector ?? "[data-ghost], [data-testid=tier] script",
+      generated: true,
+    };
+    // Only a count mutation leaves the payload well-formed enough to predict
+    // how many cards should render. Everything else keeps the universal checks
+    // (does not throw, does not overflow, renders something, executes nothing)
+    // and asserts nothing about the count.
+    if (kind === "count") v.expectCount = mutations[0].n;
+    if (mutations.some(m => INJECTION.has(m.atom))) v.injection = true;
+    out.push(v);
+  }
+  return out;
+}
+
+/** Materialise a recipe inside the page. Runs as a string in page context. */
+function materialise(recipe) {
+  const A = {
+    empty: "", spaces: "   ", newlines: "\n\n\t",
+    long240: "L".repeat(240), long4000: "L".repeat(4000),
+    wideCJK: "廣".repeat(200),
+    zwj: "\u{1F468}‍\u{1F469}‍\u{1F467}".repeat(30),
+    rtlOverride: "‮eman-live",
+    combining: "a" + "́".repeat(300),
+    zeroWidth: "​".repeat(400),
+    loneSurrogate: "ok\uD800tail",
+    htmlScript: "<scr" + "ipt>window.__pwned=1</scr" + "ipt>",
+    htmlImg: '<img src=x onerror="window.__pwned=1">',
+    htmlBreakout: '</div><div data-testid="tier" data-ghost="1">ghost</div>',
+    templateExpr: "${window.__pwned=1}",
+    mustache: "{{constructor.constructor('window.__pwned=1')()}}",
+    nullish: null, undef: undefined, nan: NaN,
+    numZero: 0, numNeg: -1, numHuge: 1e21, numFloat: 0.30000000000000004,
+    boolTrue: true, emptyArr: [], emptyObj: {},
+    numericString: "12",
+    get deepNest() { let o = {}, c = o; for (let i = 0; i < 60; i++) { c.n = {}; c = c.n; } return o; },
+    get cyclic() { const o = { name: "loop" }; o.self = o; return o; },
+  };
+  let data = JSON.parse(JSON.stringify(recipe.base));
+  for (const m of recipe.mutations) {
+    if (m.op === "whole") { data = A[m.atom]; break; }
+    if (m.op === "count") {
+      const proto = recipe.base[0] ?? { name: "Plan", monthly: 9, features: ["A"] };
+      data = Array.from({ length: m.n }, (_, i) =>
+        ({ ...JSON.parse(JSON.stringify(proto)), name: `${proto.name} ${i + 1}` }));
+      continue;
+    }
+    if (!Array.isArray(data) || !data[m.index]) continue;
+    if (m.op === "field") data[m.index][m.field] = A[m.atom];
+    else if (m.op === "drop") delete data[m.index][m.field];
+    else if (m.op === "nest") data[m.index].features = [[[data[m.index].features]]];
+    else if (m.op === "pollute") data[m.index]["__proto__"] = { polluted: 1 };
+  }
+  return data;
+}
+
 async function checkRobustness(browser, url, variants) {
   const results = [];
   for (const v of variants) {
@@ -138,9 +272,14 @@ async function checkRobustness(browser, url, variants) {
     const errors = [];
     page.on("pageerror", e => errors.push(String(e).slice(0, 120)));
     await page.setViewport(v.viewport === "phone" ? PHONE : DESKTOP);
-    await page.evaluateOnNewDocument((data) => {
-      window.__DATA__ = data;
-    }, v.data);
+    if (v.recipe) {
+      await page.evaluateOnNewDocument((recipe, src) => {
+        // eslint-disable-next-line no-new-func
+        window.__DATA__ = new Function("recipe", `return (${src})(recipe)`)(recipe);
+      }, v.recipe, materialise.toString());
+    } else {
+      await page.evaluateOnNewDocument((data) => { window.__DATA__ = data; }, v.data);
+    }
     let out, loadErr = null;
     try {
       await page.goto(url, { waitUntil: "load", timeout: 15000 });
@@ -170,6 +309,7 @@ async function checkRobustness(browser, url, variants) {
           clipped,
           bodyText: (document.body.innerText || "").trim().length,
           forbidden: forbid ? document.querySelectorAll(forbid).length : 0,
+          pwned: window.__pwned !== undefined,
           title: document.title,
         };
       }, v.selector ?? "*[data-testid]", v.forbidSelector ?? null);
@@ -187,12 +327,21 @@ async function checkRobustness(browser, url, variants) {
       if (v.expectNonEmpty !== false && out.bodyText === 0)
         fails.push("page rendered nothing at all");
       if (out.forbidden > 0) fails.push(`injected markup became ${out.forbidden} live element(s)`);
+      if (out.pwned) fails.push("injected code EXECUTED (window.__pwned is set)");
       if (v.expectTitle !== undefined && out.title !== v.expectTitle)
         fails.push(`document.title is now ${JSON.stringify(out.title)}`);
     }
     if (errors.length) fails.push(`threw: ${errors[0]}`);
 
-    results.push({ name: v.name, ok: fails.length === 0, why: fails.length ? fails.join("; ") : null });
+    // A page that executes injected content has failed in a way partial credit
+    // must not soften — this is the blocker, in FrontierCode's sense.
+    const breached = !loadErr && out && (out.pwned || out.forbidden > 0);
+    results.push({
+      name: v.name, ok: fails.length === 0,
+      why: fails.length ? fails.join("; ") : null,
+      ...(breached ? { blocker: true } : {}),
+      ...(v.generated ? { generated: true } : {}),
+    });
     await page.close();
   }
   return results;
@@ -503,8 +652,10 @@ async function main() {
     await page.goto(url, { waitUntil: "load" });
     result.families.responsive = await checkResponsive(page, spec.responsive);
 
-    if ((spec.robustness ?? []).length)
-      result.families.robustness = await checkRobustness(browser, url, spec.robustness);
+    const variants = [...(spec.robustness ?? []),
+                      ...(spec.robustness_gen ? generateVariants(spec.robustness_gen) : [])];
+    if (variants.length)
+      result.families.robustness = await checkRobustness(browser, url, variants);
 
     await page.goto(url, { waitUntil: "load" });
     await new Promise(r => setTimeout(r, 120));
