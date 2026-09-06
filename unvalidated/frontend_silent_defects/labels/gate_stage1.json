@@ -1,0 +1,100 @@
+{
+  "model": "claude-sonnet-5",
+  "total": 5,
+  "rows": [
+    {
+      "brief": "07",
+      "first": "07C",
+      "second": "07A",
+      "hers": "07C",
+      "judge": "07C",
+      "ok": true,
+      "her_page_position": "first",
+      "why": "The first attempt backs up its headline claim with concrete, credible proof (an actual command, a diff-style config view, specific checks performed) which is exactly what a skeptical solo developer needs in fifteen seconds, whereas the second leans on style and a headline that contradicts itself (\"Lose the weekend\" reads as a negative before you parse it as the goal)."
+    },
+    {
+      "brief": "07",
+      "first": "07A",
+      "second": "07B",
+      "hers": "07B",
+      "judge": "07A",
+      "ok": false,
+      "her_page_position": "second",
+      "why": "The first attempt pairs a punchier, more benefit-driven headline with a concrete visual (a mock terminal showing the actual install/discovery flow) and clear CTAs, making its 15-second pitch land harder."
+    },
+    {
+      "brief": "07",
+      "first": "07B",
+      "second": "07C",
+      "hers": "07B",
+      "judge": "07C",
+      "ok": false,
+      "her_page_position": "first",
+      "why": "The second attempt backs up its bold headline claim with concrete proof (the diff-style config, the 0 CHANGES badge, the no-card/delete-one-env-var undo path), which more directly dismantles the fear of a wasted weekend than the first's copy alone."
+    },
+    {
+      "brief": "08",
+      "first": "08C",
+      "second": "08B",
+      "hers": "08B",
+      "judge": "08B",
+      "ok": true,
+      "her_page_position": "second",
+      "why": "The second surfaces the Pike Street crisis and per-site stock/volunteer detail explicitly (with a dedicated action card and visual bars), giving trustees the 'one thing that is not right' at a glance, while the first buries site-level detail below the fold and relies on prose alone."
+    },
+    {
+      "brief": "08",
+      "first": "08B",
+      "second": "08A",
+      "hers": "08B",
+      "judge": "08B",
+      "ok": true,
+      "her_page_position": "first",
+      "why": "The first delivers a complete, scannable dashboard with all key metrics, a clear trend chart, and per-site stock detail visible at a glance, while the second's narrative framing (though clever) pushes the crucial site data below the fold, working against a two-minute glance-and-go audience."
+    },
+    {
+      "brief": "08",
+      "first": "08A",
+      "second": "08C",
+      "hers": "08C",
+      "judge": "08C",
+      "ok": true,
+      "her_page_position": "second",
+      "why": "The second attempt leads with clear at-a-glance metrics and a status badge, giving trustees an immediate feeling before the narrative, while still surfacing the Pike Street alert prominently."
+    },
+    {
+      "brief": "09",
+      "first": "09A",
+      "second": "09B",
+      "hers": "09A",
+      "judge": "09B",
+      "ok": false,
+      "her_page_position": "first",
+      "why": "The second attempt reads as more polished and trustworthy, with a clear branded header, tighter step/progress labeling, and reassuring microcopy that directly addresses the delicate under-18 question without feeling redundant."
+    },
+    {
+      "brief": "09",
+      "first": "09B",
+      "second": "09C",
+      "hers": "09C",
+      "judge": "09B",
+      "ok": false,
+      "her_page_position": "second",
+      "why": "The first attempt's calmer, more restrained design keeps focus on the single task at hand, which better serves a form whose whole point is reducing abandonment."
+    },
+    {
+      "brief": "09",
+      "first": "09C",
+      "second": "09A",
+      "hers": "09A",
+      "judge": "09A",
+      "ok": true,
+      "her_page_position": "second",
+      "why": "The second attempt adds warmer, more reassuring micro-copy (specific term dates, a named contact, explicit reassurance about optional fields and persistence of answers) that directly addresses the brief's core anxiety around abandonment and the delicate bursary question."
+    }
+  ],
+  "verdict": "stopped at stage 1",
+  "reading": "5/9 against a chance of 4.5/9, with the first/second order balanced (the judge picked the first-shown page 4/9, her page was first 4/9), so position bias explains nothing. Per brief: 08 dashboard 3/3, 07 landing 1/3, 09 form 1/3. Stage 2 was not bought - the rule set before running was <=6/9 stop.",
+  "caveat": "The 09 stimuli are the pre-walker captures: one viewport of an eleven-field multi-step form, so the judge saw about two fields. That confounds 09. 07 has no such excuse - those are complete landing pages.",
+  "hypothesis": "Every stated reason is about information completeness or reassurance - 'concrete proof', 'scannable', 'all key metrics', 'reassuring microcopy'. It reads the copy and the feature inventory. On a dashboard, where completeness genuinely is the job, it goes 3/3. Where restraint and craft decide it, 2/6. n=9, so this is a hypothesis with a mechanism, not a finding."
+}
