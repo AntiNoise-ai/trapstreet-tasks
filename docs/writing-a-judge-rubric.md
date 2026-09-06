@@ -223,11 +223,91 @@ Two rules that came out of this, in order of how much they saved:
 2. **Nine pairs is a screen, not a validation.** It is enough to kill something
    and not enough to bless it. Spend it in that direction.
 
+## What design critique actually looks like
+
+The axes in the first version of this document were mine. They read plausibly
+and they did not work. This section is what replaced them, taken from how
+designers actually critique rather than from how I imagined they would.
+
+The primary source is [UICrit](https://arxiv.org/abs/2407.08850) (Google
+DeepMind / UC Berkeley): **3,059 design critiques over 983 UI screens, written
+by seven professional designers** with one to sixteen years of experience, each
+grounded against Nielsen's ten usability heuristics, CrowdCrit's visual design
+critiques, and the Apple HIG.
+
+### The number that should govern how much you trust a design judge
+
+Of **5,927** design comments the paper's zero-shot model generated, human
+designers validated **776 — 13.1%**. Nearly nine in ten machine critiques of a
+UI were not valid observations at all.
+
+That is the context our own 5/9 belongs in, and it means a disappointing result
+from a design judge is the expected result, not a sign you wrote the rubric
+badly. It also names the fix that worked there: **few-shot examples selected by
+task and visual similarity, plus visual prompting**, together worth a **55%
+gain over zero-shot** — confirmed by a user study with design experts.
+
+### The three-part format every critique has to have
+
+The dataset's annotators were required to put three things in **every** comment,
+following Sadler's format for effective feedback:
+
+1. **the expected standard** — what good design would look like here
+2. **the gap** — how the current design differs from it
+3. **how to close it** — what would fix it
+
+This is the device my rubric lacked entirely. Mine asked for a score and "one
+sentence, the single most decisive observation", which lets a judge assert a
+preference without ever naming the standard it is judging against. Naming the
+standard first is what separates a critique from a reaction — the same
+distinction Connor and Irizarry build their whole framework on: **critique
+evaluates a design against its intent; feedback can be any reaction at all.**
+
+### The five things designers actually talk about
+
+The paper clustered its 3,059 critiques and the themes came out empirically,
+not from a framework someone wrote down first:
+
+| cluster | n | what it covers |
+|---|---|---|
+| **Layout** | 696 | positioning and alignment, visual hierarchy, logical grouping of elements, simplicity of the layout |
+| **Color contrast** | 655 | text, icons and buttons against their background |
+| **Text readability** | 591 | font size and weight |
+| **Usability of buttons** | 601 | whether a control's purpose is clear, and its visual design |
+| **Learnability** | 601 | whether the purpose of an icon, a region, or the whole screen is intelligible without being told |
+
+Two things to notice. **Nothing here is about how much is on the page** — which
+is what our judge scored on, every time, in its own words. And none of it
+matches the axes I invented (`structure`, `execution`, `tech`, `adherence`);
+the closest, `execution`, bundles four of these five into one number and so
+cannot report which one failed.
+
+NN/g's vocabulary for the same territory is **scale, hierarchy, balance,
+contrast, and Gestalt** — worth knowing as the terms a designer will use out
+loud, though the detailed guidance sits behind their course.
+
+### What this changes about writing one
+
+- **Score the five things designers argue about**, not four categories you
+  invented. They are empirical, they are separable, and a failure lands in one
+  of them rather than being averaged away.
+- **Demand the standard before the verdict.** Expected standard → gap → fix. A
+  judge that cannot state the standard is reacting.
+- **Write the negative constraint you actually observed.** Ours rewarded
+  completeness; nothing in the rubric told it not to. A rubric that only says
+  what is good leaves every unstated bias in place.
+- **Expect few-shot to matter more than wording.** The measured 55% gain came
+  from retrieved similar examples, not from a better-written instruction — which
+  is the 20/80 rule again, arriving from a second direction.
+
 ## Sources
 
 - Startrise, [LLM-as-a-Judge Bias: The 839-Call Audit](https://www.startrise.io/blog/llm-judge-bias/) and [the benchmark's rubric](https://www.startrise.io/benchmark/)
 - [Reliability without Validity: LLM-as-a-Judge across Agreement, Consistency and Bias](https://arxiv.org/html/2606.19544v1) (arXiv 2606.19544)
 - [The Coin Flip Judge? Reliability and Bias in LLM-as-a-Judge](https://arxiv.org/pdf/2606.13685) (arXiv 2606.13685)
+- [UICrit: Enhancing Automated Design Evaluation with a UI Critique Dataset](https://arxiv.org/abs/2407.08850) — Duan, Chen, Li, Hartmann, Li (arXiv 2407.08850)
+- Connor & Irizarry, *Discussing Design: Improving Communication and Collaboration through Critique* — for the critique/reaction distinction
+- [Visual design principles in action](https://www.nngroup.com/videos/visual-design-principles-in-action/) — Nielsen Norman Group
 - The 20/80 rule and the three-point scale come from a practitioner writing about
   ad-copy rubrics on Reddit, not from a paper. Both are consistent with the
   measurements above, which is why they are here.
