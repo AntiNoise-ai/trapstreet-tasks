@@ -1,0 +1,45 @@
+# Third-party material in this task
+
+## The benchmark: Martian Code Review Bench
+
+Golden comments, the judging pipeline (`judge/extract.py`, `judge/dedup.py`,
+`judge/match.py`, `judge/score_profiles.py`) and the case selection come from
+
+    https://github.com/withmartian/code-review-benchmark        MIT
+
+Copyright (c) 2025 Martian (withmartian.com). The MIT text is kept verbatim at
+`judge/LICENSE.martian`. The judging code is vendored **unmodified** on purpose:
+changing it would make our numbers incomparable with the 21 tools Martian
+publishes. Our own code is confined to `judge/adapter.py` and `build/`.
+
+Cite as:
+
+    Zverianskii, A., Zhang, A., Clyne, J., Garcia, A., Barez, F., Upadhyay, S.
+    Code Review Bench. https://github.com/withmartian/code-review-benchmark 2026. MIT.
+
+## The reviewed code: five upstream projects
+
+Each question inlines a diff (and surrounding file context) from a real merged
+pull request. That content stays under its own project's licence, reproduced
+here and repeated in every question's `source` block, with copyright notices
+left intact.
+
+| Project | PRs | Licence as declared upstream |
+|---|---|---|
+| Keycloak   | 10 | Apache-2.0 |
+| Grafana    | 10 | AGPL-3.0 |
+| Cal.com    | 10 | AGPL-3.0 (the `ee/` enterprise tree is separately licensed) |
+| Discourse  | 10 | GPL-2.0 |
+| Sentry     | 10 | FSL-1.1-Apache-2.0 |
+
+Two notes on the last row, since it is the only non-OSI licence here. The FSL
+permits redistribution provided the terms accompany the material and copyright
+notices are not removed, and restricts only **Competing Use** — redistribution
+as a commercial substitute for Sentry's own offering. A code-review benchmark is
+not that. The licence also converts to Apache-2.0 two years after each release.
+
+`build/fetch_prs.py` records the upstream repository, PR number and commit for
+every case in the private manifest, so any question can be traced to its source.
+
+**Not legal advice.** These are the licences as the upstream projects declare
+them; if a specific file carries a different header, that header governs.

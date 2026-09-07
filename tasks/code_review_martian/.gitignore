@@ -1,0 +1,3 @@
+# fetched PR diffs — regeneratable from build/fetch_prs.py, and third-party
+# source we do not need in git twice (questions.yaml carries what ships).
+_cache/
