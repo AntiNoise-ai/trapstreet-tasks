@@ -1,13 +1,25 @@
 # pdf_chart_reasoning — the public half
 
-This is no longer a trap-cli task. It is the public half of a split one: the
-twenty-three questions and the single document they are about. The answers, the
-judge, the grader and the machinery that authored them are held privately.
+The public half of a split task: the twenty-three questions and the single
+document they are about. The answers, the judge, the grader and the machinery
+that authored them are held privately, so **`tp run` will not score against this
+directory** — nothing here can tell you whether an answer is right.
 
-`traplite-question.yaml` is the served artifact — a benchmark run fetches it by
-a commit-pinned URL and asks each question of a fresh agent. It is *rendered*
-from the private side and must not be edited here; an edit would be overwritten
-and would not move any score.
+Two files serve the same cases to two different readers, and both are *rendered*
+from the private side. Editing either here would be overwritten and would not
+move any score.
+
+- `traptask.yaml` — the case list. The platform reads it, then builds each
+  case's input from `inputs/`: the question inlined, the document handed over as
+  a pinned URL. Grading happens on a worker that holds the answers.
+- `traplite-question.yaml` — the same questions as one self-contained string
+  each, for a client that fetches this file by URL and has no way to be handed a
+  file at all.
+
+Case descriptions are the questions themselves. They deliberately do not name
+what each case tests: three of the twenty-three are answerable only by
+declining, they are worded exactly like the twenty that are not, and saying so
+here would give that away.
 
 ## Do not move or rename anything here
 
