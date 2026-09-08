@@ -94,6 +94,34 @@ failures below were found only by descending to the figure:
   trial's figures are usable, in a document that passes every check at the
   document level.
 
+## Two checks that only fire at the figure, and decide everything
+
+**Resolution.** A figure can pass every exposure and licence check, have
+separable colours, and still be unable to produce a number. Require the
+extraction to reproduce a count the figure itself prints:
+
+| figure | density | extracted | printed |
+|---|---|---|---|
+| waterfall, 94 bars in 922 px | 9.8 px/bar | 56/45 and 54/38, two methods | N=47 |
+| ECDF, 51 steps in 410 px | 8.0 px/step | 48 | n=51 |
+| Kaplan-Meier, 3900 px wide | ample | reproduces | at-risk row |
+
+Neither failure is visible by looking at the figure, and neither is a colour
+problem. A figure that cannot reproduce its own printed count cannot produce
+gold.
+
+**A figure that prints its own values is a table.** A vector forest plot listed
+`n/N` and `ORR (95% CI)` for all twenty-four subgroups in a column beside the
+markers. Its geometry duplicates its labels, so a question about it measures
+OCR. `pdf_chart_reasoning`'s README had already found this shape in its own
+document — "figure 1 is a rendering of table 1 ... anything asked of it is
+answerable without looking at it" — and it recurs wherever a chart is drawn to
+be read precisely, which is most of the time in a regulatory filing.
+
+Together these two are why a document that passes at the document level can
+still yield **one** usable figure. Count usable figures before authoring, not
+documents.
+
 ## Measuring gold: the metric that works
 
 Gold has to be measured, never eyeballed — `pdf_chart_reasoning`'s extractor
