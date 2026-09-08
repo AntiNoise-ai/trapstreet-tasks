@@ -127,6 +127,25 @@ Together these two are why a document that passes at the document level can
 still yield **one** usable figure. Count usable figures before authoring, not
 documents.
 
+## Screen the presentation deck, not only the briefing document
+
+The two are posted for the same meeting and carry the same analyses, and the
+sponsor's slides are often **vector where the briefing document is raster**. That
+one difference decides check 5: a waterfall that could not reproduce its own
+N=47 as a 922-pixel image extracts exactly from paths in the deck — 45 blue bars
+and 45 red, matched, heights to two decimals, at a different data cutoff.
+
+The best figure found in this search was in a deck and not in the document it
+accompanies: a per-lesion waterfall of about two hundred vector bars, grouped by
+patient with the patient identifiers on the axis, no per-bar values printed, and
+a summary in the footer — "66.0% (35/53) had a reduction of >30%" — that serves
+as the invariant an extraction has to reproduce.
+
+Vector is not a problem to be avoided, either. A vector chart is exactly
+measurable, and the reason `pdf_chart_reasoning` rasterised its document was to
+stop a *solution* measuring it that way. That step belongs at the end, after the
+gold is extracted, and the machinery for it already exists.
+
 ## Measuring gold: the metric that works
 
 Gold has to be measured, never eyeballed — `pdf_chart_reasoning`'s extractor
