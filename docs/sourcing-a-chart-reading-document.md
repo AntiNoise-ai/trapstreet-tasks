@@ -5,10 +5,11 @@ nowhere else. That sentence is easy to write and hard to satisfy, because the
 institutions that publish the best charts are the same institutions that publish
 the data behind them.
 
-This is what four admission checks rejected, and what survived. Everything below
-was measured on the documents named, not inferred.
+This is what the admission checks rejected, and what survived. Everything below
+was measured on the documents named, not inferred. Four of the six checks are
+about the document; the two that decided the outcome are about the figure.
 
-## The four checks
+## The checks
 
 1. **Are the values only in the figure?** Not just absent from the document's
    tables — absent from everything the publisher releases.
@@ -17,9 +18,13 @@ was measured on the documents named, not inferred.
 3. **Is redistribution permitted?** Including for each figure separately.
 4. **Is the underlying dataset published somewhere else?** A registry, a data
    portal, a supplement.
+5. **Can the figure reproduce a count it prints?** If not, it has no resolution
+   to spare and cannot produce gold.
+6. **Does the figure print its own values?** Then it is a table, and a question
+   about it measures OCR.
 
-A document passes only if every check passes. **A figure passes only if every
-check passes for that figure** — see "Per figure, not per document" below.
+A document passes only if 1–4 pass. **A figure passes only if all six pass for
+that figure**, and 5 and 6 are where most figures die.
 
 ## Why US federal agency publications fail
 
