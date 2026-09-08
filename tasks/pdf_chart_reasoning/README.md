@@ -12,9 +12,10 @@ and would not move any score.
 ## Do not move or rename anything here
 
 `inputs/case_01/document.pdf` is **load-bearing**. Twenty-three live questions
-name it by a raw URL pinned to commit `3610f4b`, because the benchmark format
+name it by a raw URL pinned to commit `2978c07`, because the benchmark format
 that serves them carries no inputs of its own and 5.7 MB cannot be inlined into
-a question string.
+a question string. That commit is chosen so the document is reachable at it and
+the answers are not.
 
 A commit-pinned raw URL keeps resolving after the file is deleted at HEAD, so
 removing this directory would not break those questions today. Keeping it means
