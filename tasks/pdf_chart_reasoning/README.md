@@ -1,9 +1,13 @@
-# pdf_chart_reasoning — input only
+# pdf_chart_reasoning — the public half
 
-This is no longer a task. It is one document and the twenty-three questions
-asked about it, kept public because a benchmark's inputs are public by
-definition. The answers, the judge, the grader and the machinery that authored
-them are held privately.
+This is no longer a trap-cli task. It is the public half of a split one: the
+twenty-three questions and the single document they are about. The answers, the
+judge, the grader and the machinery that authored them are held privately.
+
+`traplite-question.yaml` is the served artifact — a benchmark run fetches it by
+a commit-pinned URL and asks each question of a fresh agent. It is *rendered*
+from the private side and must not be edited here; an edit would be overwritten
+and would not move any score.
 
 ## Do not move or rename anything here
 
@@ -30,6 +34,7 @@ Source and licence: see `ATTRIBUTION.md`.
 
 ## The questions
 
-`inputs/case_*/question.txt` are the questions as asked. They are rendered from
-the private authoring side, not edited here — a change made in this directory
-would be overwritten and would not move any published score.
+`inputs/case_*/question.txt` are the same twenty-three questions in the layout a
+local runner expects. `traplite-question.yaml` carries them again, each prefixed
+with the document's URL, because the format that serves it has no way to hand an
+agent a file.

@@ -1,0 +1,232 @@
+name: pdf_chart_reasoning
+
+cases:
+  - id: case_01
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 3.B, "Distribution of participants' projections for the unemployment rate", how many participants project a 2026 rate in the 4.2-4.3 percent range? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_02
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 3.A, "Distribution of participants' projections for the change in real GDP", how many participants project 2026 growth in the 2.2-2.3 percent range? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_03
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 3.B, how many participants project a 2028 unemployment rate in the 4.2-4.3 percent range? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_04
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 4.E, "Diffusion indexes of participants' risk weightings", what was the diffusion index for the change in real GDP at the June 2019 SEP? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_05
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 4.D, "Diffusion indexes of participants' uncertainty assessments", what was the diffusion index for PCE inflation at the June 2019 SEP? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_06
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 4.E, what was the diffusion index for PCE inflation at the June 2020 SEP? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_07
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 4.E, by how much did the diffusion index for the change in real GDP move between the June 2019 SEP and the June 2026 SEP? Give the change, with its sign. End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_08
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 3.E, how many participants place the end-2027 midpoint of the appropriate target range at 3.88 percent or higher? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_09
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 3.A, how many participants project 2028 GDP growth below 2.2 percent? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_10
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 3.C, how many participants project 2028 PCE inflation above 2.0 percent? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_11
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 2, "FOMC participants' assessments of appropriate monetary policy", how many participants judge the appropriate midpoint of the target range at the end of 2026 to be 3.625 percent? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_12
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 2, how many participants judge the appropriate midpoint at the end of 2027 to be 3.875 percent? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_13
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 2, how many distinct rate levels are occupied by at least one dot in the longer-run column? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_14
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      Figure 1 shows the central tendency of participants' projections alongside their full range. For any one variable and year, how many participants' projections lie outside the central tendency? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_15
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      Figure 4.A shows a 70 percent confidence interval around the median projection for GDP growth. Does that interval describe how widely the participants' own projections are spread? Answer yes or no and say what it is based on. End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_16
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 3.C, every participant's longer-run projection for PCE inflation falls in a single percent range. Which range is it? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_17
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      Figure 2 plots each participant's judgment for the end of 2026 rounded to the nearest eighth of a percentage point. Taking the dots as plotted, what is the median of those judgments? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_18
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 3.D, how many participants put their longer-run projection for core PCE inflation in the 1.9-2.0 percent range? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_19
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 2, which FOMC participant placed the single highest dot for the end of 2026? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_20
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      How many participants submitted a projection for 2028? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_21
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      Figures 2 and 3.E describe the same judgments in two different chart types. How many participants place the end-2026 midpoint in the range figure 3.E labels 3.63-3.87? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_22
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      At the June 2020 SEP, the diffusion indexes for PCE inflation in figure 4.D (uncertainty) and figure 4.E (risk weightings) point opposite ways. How far apart were they? End your reply with a line of the form `ANSWER: <value>`.
+
+  - id: case_23
+    question: |-
+      This question is about one document, a PDF at:
+      https://raw.githubusercontent.com/trapstreet/trapstreet-tasks/2978c073058f8e02703884c5876d72e33961febe/tasks/pdf_chart_reasoning/inputs/case_01/document.pdf
+
+      17 pages, 5710685 bytes, sha256 928ada96541980e3df50fb44f83f158b8a77120f509ea066f15fb1fa9ca76caa.
+      Download it and answer from it alone -- do not consult any other source.
+
+      In figure 2's longer-run column, two participants sit at 3.375 percent. Which of figure 3.E's longer-run percent ranges contains them? End your reply with a line of the form `ANSWER: <value>`.
