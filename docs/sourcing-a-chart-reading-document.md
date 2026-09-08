@@ -1,0 +1,135 @@
+# Sourcing a document for a chart-reading task
+
+A chart-reading task needs a document whose figures encode values that exist
+nowhere else. That sentence is easy to write and hard to satisfy, because the
+institutions that publish the best charts are the same institutions that publish
+the data behind them.
+
+This is what four admission checks rejected, and what survived. Everything below
+was measured on the documents named, not inferred.
+
+## The four checks
+
+1. **Are the values only in the figure?** Not just absent from the document's
+   tables — absent from everything the publisher releases.
+2. **Is there a text alternative?** `/Alt` or `/ActualText` in the PDF, or an
+   accessible HTML version on the publisher's site.
+3. **Is redistribution permitted?** Including for each figure separately.
+4. **Is the underlying dataset published somewhere else?** A registry, a data
+   portal, a supplement.
+
+A document passes only if every check passes. **A figure passes only if every
+check passes for that figure** — see "Per figure, not per document" below.
+
+## Why US federal agency publications fail
+
+Section 508 requires federal agencies to provide accessible alternatives for
+their charts. **The accessible alternative to a chart is the data.**
+
+The Federal Reserve's Summary of Economic Projections was the source for
+`pdf_chart_reasoning`, on the belief that its diffusion-index figures carried
+values printed in no table. The PDF does. The release does not: the accessible
+version publishes every series quarter by quarter.
+
+```
+Figure 4.D. Diffusion indexes of participants' uncertainty assessments
+  SEP              Change in real GDP   Unemployment   PCE inflation   Core PCE
+  October 2007     0.76                 0.53           0.35            0.06
+  January 2008     0.88                 0.76           0.29            0.29
+  ...
+```
+
+Thirteen figures, all covered, every release. The Financial Stability Report is
+published the same way. This is a legal obligation rather than an oversight, so
+it holds for the whole class: **an agency's own publications cannot source this
+kind of task.**
+
+The exception is a document an agency *hosts* without authoring. FDA advisory
+committee briefing materials are written by the sponsor and posted under a
+publication obligation; FDA attaches only a notice that the file "may not be
+fully accessible." Measured across three such documents: `/Alt` and
+`/ActualText` occurrences, zero.
+
+## Why open data and registries fail
+
+Two more families rejected, both for check 4:
+
+- **Vaccine immunogenicity.** A Moderna influenza package looked ideal until its
+  trial was checked: `NCT05827978` has results posted on ClinicalTrials.gov,
+  which is where the GMTs and seroconversion rates live. Results reporting is
+  mandatory within a year of primary completion, so **a completed trial is an
+  exposed trial**.
+- **Public-health surveillance.** A US influenza surveillance deck carried 23
+  measurable figures; CDC FluView Interactive publishes the same data weekly,
+  with an R package to fetch it.
+
+## What survives
+
+Sponsor briefing packages about trials that are still running. That is a narrow
+class, and the narrowness is the point: everything wider has a data release
+attached to it.
+
+Two further filters within it, both of which rejected real candidates:
+
+- **Scanned pages are a different task.** One 96-page briefing document had 46
+  pages with no text layer at all. Questions about it would measure OCR and page
+  layout, which is what the retired `pdf_mixed_scan` measured and why it was
+  retired.
+- **Third-party reprints are not ours to redistribute.** A sponsor slide deck
+  carried 19 figure pages citing journal figures — "Copyright 2025 Massachusetts
+  Medical Society. Reprinted with permission." The permission was granted to the
+  sponsor.
+
+## Per figure, not per document
+
+A document that passes as a whole still contains figures that do not. Both
+failures below were found only by descending to the figure:
+
+- **The prose states the curve.** One package's text reads "The 1-year, 2-year,
+  and 3-year survival rates were 75.3%, 61.0%, and 47.2%" — three points of a
+  Kaplan-Meier figure, printed. Its median is stated too. Landmark and median
+  questions about that figure need no figure.
+- **One package, several trials.** A cell-therapy briefing plotted three trials.
+  Two of them are complete with results posted; one is not. Only the third
+  trial's figures are usable, in a document that passes every check at the
+  document level.
+
+## Measuring gold: the metric that works
+
+Gold has to be measured, never eyeballed — `pdf_chart_reasoning`'s extractor
+records the author reading one panel as 1/4/5/4/1 where the geometry said
+2/5/6/4/1. When the source figures are raster, the measurement is over pixels,
+and the question is whether a curve survives as a separable block of colour.
+
+**Distinct colour count is the wrong test.** Measured on one document:
+
+| figure | distinct colours | saturated core pixels | separable? |
+|---|---|---|---|
+| spider plot | 5,567 | 19,659 | **yes** |
+| Kaplan-Meier | 786 | 0 | **no** — its curves are greys |
+
+The colour count says the opposite of the truth on both. The test that works is
+**saturated core pixels**: how many pixels sit in frequent, saturated colours.
+A synthetic render puts a curve in one exact RGB; anti-aliasing only blurs its
+edge. A figure drawn in greys and pastels has no core at all, whatever its
+colour count.
+
+Two properties worth wanting in the source, both satisfied by a high-resolution
+synthetic render:
+
+- **Already raster.** Then "the value exists only as pixels" needs no
+  rasterisation step, and there is no vector path for a geometry reader to
+  measure exactly and be correct by construction.
+- **Invariants printed on the figure.** Kaplan-Meier plots draw their at-risk
+  counts and annotate their medians. Those are not exposure — they are inside
+  the image, published nowhere — and they are what a measurement is validated
+  against, the way `extract_gold.py` validated bar heights against the
+  participant count the release stated in words.
+
+## What this costs
+
+Screening a document takes minutes and is worth automating; the two scripts that
+run these checks live with the task that uses them. Choosing the document is
+cheap. Writing the extractor for its particular figures is not, and it does not
+transfer between documents: different renderers, different palettes, different
+resolutions. Budget the sourcing at hours and the gold pipeline at days.
