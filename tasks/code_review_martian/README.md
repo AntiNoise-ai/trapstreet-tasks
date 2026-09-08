@@ -53,15 +53,29 @@ neither rewarded nor penalised. That is the mechanism worth borrowing on its own
 it stops a tool being punished for finding a real issue the profile does not
 score, which is the same failure our own `unadjudicated` channel exists to avoid.
 
-## Build
+## Layout
 
 ```
-build/fetch_prs.py         fetch the 50 diffs into _cache/ (regeneratable)
-build/render_questions.py  _cache/ -> questions.yaml
+traplite-question.yaml   49 cases; each names its diff by pinned raw URL + sha256
+prs/*.diff               the diffs, byte-identical to GitHub's .diff endpoint
+prs/index.json           size and hash per case
+judge/                   Martian's pipeline, unmodified, plus our adapter
+NOTICE                   per-project licences, repeated in every question
 ```
 
-`questions.yaml` is what traplite's `{{QUESTIONS_YAML_URL}}` points at, pinned to
-a commit. The orchestrating agent loads the **whole** file before launching one
-subagent per case, so total size is capped by that agent's context rather than by
-anything in git — the cap lives in the renderer, and any PR excluded by it is
-recorded in the manifest with the reason.
+The questions reference their material rather than carrying it, following what
+`pdf_chart_reasoning` settled. Inlined, the 49 diffs made a 1.39 MB spec that an
+orchestrating agent must hold whole before launching anything; referenced, the
+spec is 86 KB and each subagent fetches only its own diff. Both halves live in
+this repository at one commit, so there is one pin to keep straight rather than
+two.
+
+**A pinned commit decides what else its URL can reach.** Nothing in this task's
+public tree has ever held a golden comment — checked, not assumed. But Martian
+publishes them, so no pin makes this hold-out: every question asks the solver not
+to open the upstream pull request, where the reviewer's own comments may sit, and
+that request is unenforceable. Self-reported, as above.
+
+Build scripts are in the private half's `tools/`, beside the gold they read:
+`fetch_prs.py` pulls the diffs, `build_traplite_questions.py --sha <40-hex>`
+renders the spec against the commit that serves them.
