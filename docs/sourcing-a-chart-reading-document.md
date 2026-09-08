@@ -178,6 +178,36 @@ synthetic render:
   against, the way `extract_gold.py` validated bar heights against the
   participant count the release stated in words.
 
+## A vector figure does not test perception
+
+Measured 2026-09-08. Six questions about a vector waterfall — two counts, a
+value with its unit, an axis-semantics question, a printed-integer read, and one
+whose premise the figure cannot satisfy — put to a frontier model, one fresh
+agent each. **All six correct.**
+
+The reason is in the transcripts. Four of the six reached for the same thing
+unprompted: *"the chart is vector, so I extracted the bar rectangles rather than
+eyeballing the image"*, one of them exporting the geometry with `pdftocairo
+-svg`. On a vector chart there is nothing to perceive — the bar heights are
+numbers in the file, and a capable agent reads them. The questions measured
+whether it occurred to the agent to parse paths.
+
+So **the rasterisation step is not a formality, and the DPI is the difficulty
+axis.** `pdf_chart_reasoning` rasterised at 200 DPI on the author's judgement;
+that number is measurable instead. The same document supplies both ends of the
+scale: the vector original, where everything is exact, and the briefing
+document's own raster copy of the same analysis at 9.8 pixels per bar, where
+two independent segmentations could not reproduce the figure's stated N. The
+useful range is between them, and the gold does not move while you sweep it —
+it comes from the vector original either way.
+
+One caution the same probe turned up. Asked how many bars stand above a dashed
+reference line, the model answered 13 and added that the lowest of them has its
+top edge hidden inside the 1.5 pt dashed stroke, so *a visual count lands on
+12*. The geometric answer and the perceived answer differ. An item like that
+changes its own answer when the figure is rasterised, so its gold has to be
+re-derived at each rendering — or it should not be asked.
+
 ## What this costs
 
 Screening a document takes minutes and is worth automating; the two scripts that
